@@ -1,0 +1,868 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="勒马听风">
+  <meta name="keywords" content="hexo,theme,fluid,linux,ops,运维,分享">
+  
+    <meta name="description" content="ssh: secure shell protocol, 22&#x2F;tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH服务">
+<meta property="og:url" content="https://itshare.work/2022/09/12/ssh%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="Echops-菜鸟进阶之路">
+<meta property="og:description" content="ssh: secure shell protocol, 22&#x2F;tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://itshare.work/image.assets/20220925210633.png">
+<meta property="article:published_time" content="2022-09-12T14:01:08.000Z">
+<meta property="article:modified_time" content="2022-11-12T15:07:57.091Z">
+<meta property="article:author" content="yuankun">
+<meta property="article:tag" content="Linux从入门到放弃">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://itshare.work/image.assets/20220925210633.png">
+  
+  
+  
+  <title>SSH服务 - Echops-菜鸟进阶之路</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"itshare.work","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"hQDROocUhxVs3CipuQjO33sY-gzGzoHsz","app_key":"CHcmi9bz6KRRaChFJVSY14g1","server_url":"https://hqdroocu.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Echops</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SSH服务"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-12 22:01" pubdate>
+          2022年9月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          50 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">SSH服务</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p class="note note-success">ssh: secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议</p>
+<span id="more"></span>
+
+
+<h1 id="ssh服务介绍"><a href="#ssh服务介绍" class="headerlink" title="ssh服务介绍"></a>ssh服务介绍</h1><p>ssh: secure shell protocol, 22&#x2F;tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议<br><strong>具体的软件实现：</strong></p>
+<ul>
+<li>OpenSSH：ssh协议的开源实现，CentOS 默认安装</li>
+<li>dropbear：另一个ssh协议的开源项目的实现</li>
+</ul>
+<p><strong>SSH 协议版本</strong></p>
+<ul>
+<li>v1：基于CRC-32做MAC，不安全；man-in-middle</li>
+<li>v2：双方主机协议选择安全的MAC方式，基于DH算法做密钥交换，基于RSA或DSA实现身份认证</li>
+</ul>
+<h1 id="openssh-服务"><a href="#openssh-服务" class="headerlink" title="openssh 服务"></a>openssh 服务</h1><p>OpenSSH是SSH （Secure SHell） 协议的免费开源实现，一般在各种Linux版本中会默认安装，基于C&#x2F;S结构<br><strong>Openssh软件相关包：</strong></p>
+<ul>
+<li>openssh</li>
+<li>openssh-clients</li>
+<li>openssh-server</li>
+</ul>
+<h2 id="客户端-ssh命令"><a href="#客户端-ssh命令" class="headerlink" title="客户端 ssh命令"></a>客户端 ssh命令</h2><p>ssh命令是ssh客户端，允许实现对远程系统经验证地加密安全访问<br>当用户远程连接ssh服务器时，会复制ssh服务器&#x2F;etc&#x2F;ssh&#x2F;ssh_host*key.pub文件中的公钥到客户机的~&#x2F;.ssh&#x2F;know_hosts中。下次连接时，会自动匹配相对应的私钥，不能匹配，将拒绝连接<br> **ssh客户端配置文件： &#x2F;etc&#x2F;ssh&#x2F;ssh_config **<br>**主要配置:  **</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">#StrictHostKeyChecking ask<br>#首次登录不显示检查提示<br>StrictHostKeyChecking no<br># IdentityFile ~/.ssh/id_rsa<br># IdentityFile ~/.ssh/id_dsa<br># IdentityFile ~/.ssh/id_ecdsa<br># IdentityFile ~/.ssh/id_ed25519<br># Port 22<br></code></pre></td></tr></table></figure>
+
+<p><strong>范例：禁止首次连接的询问过程</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">[root@centos7 ~]#sed -i.bak &#x27;/StrictHostKeyChecking/s/.*/StrictHostKeyChecking<br>no/&#x27; /etc/ssh/ssh_config<br></code></pre></td></tr></table></figure>
+
+<p><strong>格式</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">ssh [user@]host [COMMAND]<br>ssh [-l user] host [COMMAND]<br></code></pre></td></tr></table></figure>
+
+<p><strong>常用选项</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">-p port #远程服务器监听的端口<br>-b #指定连接的源IP<br>-v #调试模式<br>-C #压缩方式<br>-X #支持x11转发<br>-t #强制伪tty分配，如：ssh -t remoteserver1 ssh -t remoteserver2 ssh<br>remoteserver3<br>-o option 如：-o StrictHostKeyChecking=no<br>-i &lt;file&gt; #指定私钥文件路径，实现基于key验证，默认使用文件： ~/.ssh/id_dsa,<br>~/.ssh/id_ecdsa, ~/.ssh/id_ed25519，~/.ssh/id_rsa等<br></code></pre></td></tr></table></figure>
+
+<p><strong>在远程主机执行本地脚本</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">[root@rocky ~]# cat test.sh <br>#!/bin/bash<br>hostname -I<br>[root@rocky ~]# ssh root@192.168.179.145 /bin/bash &lt;test.sh <br>root@192.168.179.145&#x27;s password: <br>192.168.179.145 <br>[root@rocky ~]# <br></code></pre></td></tr></table></figure>
+
+<h2 id="其他ssh客户端工具"><a href="#其他ssh客户端工具" class="headerlink" title="其他ssh客户端工具"></a>其他ssh客户端工具</h2><h3 id="scp命令"><a href="#scp命令" class="headerlink" title="scp命令"></a>scp命令</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">scp [options] SRC... DEST/<br></code></pre></td></tr></table></figure>
+
+<p><strong>方式：</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">scp [options] [user@]host:/sourcefile /destpath<br>scp [options] /sourcefile [user@]host:/destpath<br>scp [options] [user@]host1:/sourcetpath [user@]host2:/destpath<br></code></pre></td></tr></table></figure>
+
+<p><strong>常用选项</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">-C 压缩数据流<br>-r 递归复制<br>-p 保持原文件的属性信息<br>-q 静默模式<br>-P PORT 指明remote host的监听的端口<br></code></pre></td></tr></table></figure>
+<p><strong>范例:从远程机器复制文件到本地目录</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">scp root@10.10.10.10:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/ <br></code></pre></td></tr></table></figure>
+
+<p><strong>范例： 上传本地文件到远程机器指定目录</strong> </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">scp /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest<br></code></pre></td></tr></table></figure>
+
+<p class="note note-success"> 注:复制目录加上选项-r</p>
+###  rsync命令
+
+<p>rsync工具可以基于ssh和rsync协议实现高效率的远程系统之间复制文件，使用安全的shell连接做为传输方式，比scp更快，基于增量数据同步，即只复制两方不同的文件，此工具来自于rsync包<br><strong>注意：通信两端主机都需要安装 rsync 软件</strong>  </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">rsync -av /etc server1:/tmp/ #复制目录和目录下文件<br>rsync -av /etc/ server1:/tmp/ #只复制目录下文件<br></code></pre></td></tr></table></figure>
+
+<p>** 常用选型**</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">-n 模拟复制过程<br>-v 显示详细过程<br>-r 递归复制目录树<br>-p 保留权限<br>-t 保留修改时间戳<br>-g 保留组信息<br>-o 保留所有者信息<br>-l 将软链接文件本身进行复制（默认）<br>-L 将软链接文件指向的文件复制<br>-u 如果接收者的文件比发送者的文件较新，将忽略同步<br>-z 压缩，节约网络带宽<br>-a 存档，相当于-rlptgoD，但不保留ACL（-A）和SELinux属性（-X）<br>--delete 源数据删除，目标数据也自动同步删除<br>--progress 显示进度<br>--bwlimit=5120 #限速以KB为单位,5120表示5MB<br></code></pre></td></tr></table></figure>
+
+<p><strong>范例:复制文件到远程主机目录下</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">rsync ./test.sh root@192.168.179.145:/root<br></code></pre></td></tr></table></figure>
+
+<h3 id="自动登录-ssh工具-sshpass"><a href="#自动登录-ssh工具-sshpass" class="headerlink" title="自动登录 ssh工具 sshpass"></a>自动登录 ssh工具 sshpass</h3><p>由EPEL源提供，ssh登陆不能在命令行中指定密码。sshpass的出现，解决了这一问题。sshpass用于非<br>交互SSH的密码验证，一般用在sh脚本中，无须再次输入密码（本机known_hosts文件中有的主机才能<br>生效）。它允许你用 -p 参数指定明文密码，然后直接登录远程服务器，它支持密码从命令行、文件、环<br>境变量中读取。<br><strong>格式：</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">sshpass [option] command parameters<br></code></pre></td></tr></table></figure>
+
+<p><strong>常用选项</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">-p password #后跟密码它允许你用 -p 参数指定明文密码，然后直接登录远程服务器<br>-f filename #后跟保存密码的文件名，密码是文件内容的第一行<br>-e #将环境变量SSHPASS作为密码<br></code></pre></td></tr></table></figure>
+
+<p><strong>范例:登录远程主机执行指定命令</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs TEXT"># 检测sshpass是否安装<br>[root@rocky ~]# rpm -q sshpass<br>package sshpass is not installed<br># 安装sshpass<br>[root@rocky ~]# yum install sshpass<br># 登录远程主机，首次登录不显示检查提示，执行hostname -I命令<br>[root@rocky ~]# sshpass -p 123456 ssh -o StrictHostKeyChecking=no root@192.168.179.145 hostname -I<br>192.168.179.145 <br>[root@rocky ~]# <br></code></pre></td></tr></table></figure>
+
+<h2 id="实现基于密钥登录方式验证"><a href="#实现基于密钥登录方式验证" class="headerlink" title="实现基于密钥登录方式验证"></a>实现基于密钥登录方式验证</h2><p><strong>在客户端生成密钥对</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">ssh-keygen -t rsa [-P &#x27;password&#x27;] [-f “~/.ssh/id_rsa&quot;]<br></code></pre></td></tr></table></figure>
+
+<p><strong>把公钥文件传输至远程服务器对应用户的家目录</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">ssh-copy-id [-i [identity_file]] [user@]host<br></code></pre></td></tr></table></figure>
+
+<p><strong>重设私钥口令：</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">ssh-keygen -p<br></code></pre></td></tr></table></figure>
+
+<p>在SecureCRT或Xshell实现基于key验证<br>在SecureCRT工具—&gt;创建公钥—&gt;生成Identity.pub文件<br>转化为openssh兼容格式（适合SecureCRT，Xshell不需要转化格式），并复制到需登录主机上相应文<br>件authorized_keys中,注意权限必须为600，在需登录的ssh主机上执行：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">ssh-keygen -i -f Identity.pub &gt;&gt; .ssh/authorized_keys<br></code></pre></td></tr></table></figure>
+
+<p><strong>范例：实现基于 key 验证</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">[root@centos8 ~]#ssh-keygen<br>Generating public/private rsa key pair.<br>Enter file in which to save the key (/root/.ssh/id_rsa): #回车，接受默认值<br>Enter passphrase (empty for no passphrase): #回车，接受默认值，空密码<br>Enter same passphrase again: #回车，接受默认值<br>Your identification has been saved in /root/.ssh/id_rsa.<br>Your public key has been saved in /root/.ssh/id_rsa.pub.<br>The key fingerprint is:<br>SHA256:vpPtmqRv1llmoSvqT2Lx5C0LPGTE0pvdAqhDqlR5jLY root@centos8.wangxiaochun.com<br>The key&#x27;s randomart image is:<br>+---[RSA 3072]----+<br>| |<br>| ++ |<br>| .=oo= |<br>| oo.oo = . . |<br>|..oE * S .. . |<br>|o . + * o. + |<br>|. * B+.* |<br>| . B*== |<br>| .+*B=. |<br>+----[SHA256]-----+<br>[root@centos8 ~]#ll .ssh/<br>total 8<br>-rw------- 1 root root 2622 May 22 09:51 id_rsa<br>-rw-r--r-- 1 root root 583 May 22 09:51 id_rsa.pub<br>[root@centos8 ~]#<br><br># 将本主机的公钥复制到远程主机的authorized_keys中<br>[root@centos8 ~]#ssh-copy-id root@10.0.0.7<br>/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed:<br>&quot;/root/.ssh/id_rsa.pub&quot;<br>The authenticity of host &#x27;10.0.0.7 (10.0.0.7)&#x27; can&#x27;t be established.<br>ECDSA key fingerprint is SHA256:s//WMgPVXmOjqfOg3f3X0nmaPZF+Fj5vPdWCnAzDcpU.<br>Are you sure you want to continue connecting (yes/no/[fingerprint])? yes<br>/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter<br>out any that are already installed<br>/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are<br>prompted now it is to install the new keys<br>root@10.0.0.7&#x27;s password: #输入远程用户的密码<br>Number of key(s) added: 1<br>Now try logging into the machine, with: &quot;ssh &#x27;10.0.0.7&#x27;&quot;<br>and check to make sure that only the key(s) you wanted were added.<br><br>#对私钥加密<br>[root@centos8 ~]#ssh-keygen -p<br></code></pre></td></tr></table></figure>
+
+<h2 id="ssh服务配置"><a href="#ssh服务配置" class="headerlink" title="ssh服务配置"></a>ssh服务配置</h2><p><strong>服务器端：sshd<br>服务器端的配置文件: &#x2F;etc&#x2F;ssh&#x2F;sshd_config<br>服务器端的配置文件帮助：man 5 sshd_config<br>常用参数：</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">Port 22 #生产建议修改<br>ListenAddress ip<br>LoginGraceTime 2m<br>PermitRootLogin yes #默认ubuntu不允许root远程ssh登录<br>StrictModes yes #检查.ssh/文件的所有者，权限等<br>MaxAuthTries 6 #pecifies the maximum number of authentication<br>attempts permitted per connection. Once the number of failures reaches half this<br>value, additional failures are logged. The default is 6.<br>MaxSessions 10 #同一个连接最大会话<br>PubkeyAuthentication yes #基于key验证<br>PermitEmptyPasswords no #空密码连接<br>PasswordAuthentication yes #基于用户名和密码连接<br>GatewayPorts no<br>ClientAliveInterval 10 #单位:秒<br>ClientAliveCountMax 3 #默认3<br>UseDNS yes #提高速度可改为no<br>GSSAPIAuthentication yes #提高速度可改为no<br>MaxStartups #未认证连接最大值，默认值10<br>Banner /path/file<br>#以下可以限制可登录用户的办法：<br>AllowUsers user1 user2 user3<br>DenyUsers user1 user2 user3<br>AllowGroups g1 g2<br>DenyGroups g1 g2<br></code></pre></td></tr></table></figure>
+
+<p><strong>范例：设置 ssh 空闲60s 自动注销</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">Vim /etc/ssh/sshd_config<br>ClientAliveInterval 60<br>ClientAliveCountMax 0<br>Service sshd restart<br>#注意：新开一个连接才有效<br></code></pre></td></tr></table></figure>
+
+<p><strong>范例：解决ssh登录缓慢的问题</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs TEXT">vim /etc/ssh/sshd_config<br>UseDNS no<br>GSSAPIAuthentication no<br>systemctl restart sshd<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="category-chain-item">Linux基础</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/">#Linux从入门到放弃</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SSH服务</div>
+      <div>https://itshare.work/2022/09/12/ssh服务/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>勒马听风</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/12/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/" title="批量修改多台主机的root密码为随机密码">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">批量修改多台主机的root密码为随机密码</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/" title="Rocky上实现私有CA和证书申请">
+                        <span class="hidden-mobile">Rocky上实现私有CA和证书申请</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"hQDROocUhxVs3CipuQjO33sY-gzGzoHsz","appKey":"CHcmi9bz6KRRaChFJVSY14g1","path":"window.location.pathname","placeholder":"请在这里书写你想说的话······","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>由<a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>强力驱动</span> <i class="iconfont icon-love"></i> <span>主题</span> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量
+        <span id="leancloud-site-pv"></span>
+        次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访问客数
+        <span id="leancloud-site-uv"></span>
+        人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      黔ICP备2022006994号-2
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=http://beian.miit.gov.cn/"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+          
+          <span>黔公网安备2022006994号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/caidai.js"></script>
+<script src="/js/love.main.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
