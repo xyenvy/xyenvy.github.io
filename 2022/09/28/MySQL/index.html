@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://itshare.work/image.assets/1664376571963.png">
 <meta property="article:published_time" content="2022-09-28T14:42:41.000Z">
-<meta property="article:modified_time" content="2022-11-12T14:18:34.710Z">
+<meta property="article:modified_time" content="2022-11-19T08:19:54.152Z">
 <meta property="article:author" content="yuankun">
 <meta property="article:tag" content="MySQL基础">
 <meta name="twitter:card" content="summary_large_image">
@@ -256,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          4k 字
         
       </span>
     
@@ -267,7 +267,7 @@
         
         
         
-          19 分钟
+          34 分钟
         
       </span>
     
@@ -321,6 +321,7 @@
                 <p class="note note-success"> MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件之一 </p>
 <span id="more"></span>
 
+<h1 id="MySQL的特性"><a href="#MySQL的特性" class="headerlink" title="MySQL的特性"></a>MySQL的特性</h1><p><img src="/../image.assets/1668695639684.png" srcset="/img/loading.gif" lazyload alt="1668695639684"></p>
 <h1 id="MySQL安装"><a href="#MySQL安装" class="headerlink" title="MySQL安装"></a>MySQL安装</h1><h2 id="安装方式介绍"><a href="#安装方式介绍" class="headerlink" title="安装方式介绍"></a>安装方式介绍</h2><p>程序包管理器管理的程序包<br>源代码编译安装<br>二进制格式的程序包：展开至特定路径，并经过简单配置后即可使用</p>
 <h3 id="rpm安装"><a href="#rpm安装" class="headerlink" title="rpm安装"></a>rpm安装</h3><p>CentOS 安装光盘<br>项目官方：<a target="_blank" rel="noopener" href="https://downloads.mariadb.org/mariadb/repositories/">https://downloads.mariadb.org/mariadb/repositories/</a><br>国内镜像：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/mariadb/yum/">https://mirrors.tuna.tsinghua.edu.cn/mariadb/yum/</a><br><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/mysql/yum/">https://mirrors.tuna.tsinghua.edu.cn/mysql/yum/</a></p>
 <p><strong>范例1：CentOS 7 利用yum源安装MySQL8.0</strong></p>
@@ -412,6 +413,49 @@
 
 <p>登录成功：</p>
 <p> <img src="/../image.assets/1664459241867.png" srcset="/img/loading.gif" lazyload alt="1664459241867"> </p>
+<h3 id="源码编译安装"><a href="#源码编译安装" class="headerlink" title="源码编译安装"></a>源码编译安装</h3><h1 id="MySQL多实例"><a href="#MySQL多实例" class="headerlink" title="MySQL多实例"></a>MySQL多实例</h1><h1 id="SQL语言"><a href="#SQL语言" class="headerlink" title="SQL语言"></a>SQL语言</h1><h2 id="SQL语言的兴起与语法标准"><a href="#SQL语言的兴起与语法标准" class="headerlink" title="SQL语言的兴起与语法标准"></a>SQL语言的兴起与语法标准</h2><h3 id="SQL语句分类"><a href="#SQL语句分类" class="headerlink" title="SQL语句分类"></a>SQL语句分类</h3><ul>
+<li>DDL: Data Defination Language 数据定义语言<br>CREATE，DROP，ALTER</li>
+<li>DML: Data Manipulation Language 数据操纵语言<br>INSERT，DELETE，UPDATE<br>软件开发：CRUD</li>
+<li>DQL：Data Query Language 数据查询语言<br>SELECT</li>
+<li>DCL：Data Control Language 数据控制语言<br>GRANT，REVOKE</li>
+<li>TCL：Transaction Control Language 事务控制语言<br>COMMIT，ROLLBACK，SAVEPOINT</li>
+</ul>
+<h3 id="字符集和排序"><a href="#字符集和排序" class="headerlink" title="字符集和排序"></a>字符集和排序</h3><ul>
+<li>查看所有支持的字符集</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> <span class="hljs-type">character</span> <span class="hljs-keyword">set</span>;<br><span class="hljs-keyword">show</span> charset;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查看支持的所有排序</li>
+</ul>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-keyword">show</span> collation;<br><span class="hljs-meta">#注意</span><br>utf8_general_ci不区分大小写<br>utf8_bin 区分大小写<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查看当前使用的排序规则</li>
+</ul>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">mysql&gt; show variables like &#x27;collation%&#x27;;</span><br><span class="hljs-section">+----------------------+-------------------+</span><br><span class="hljs-section">| Variable_name        | Value             |</span><br><span class="hljs-section">+----------------------+-------------------+</span><br>| collation<span class="hljs-emphasis">_connection | utf8_general_ci   |</span><br><span class="hljs-emphasis">| collation_database   | latin1_swedish_ci |</span><br><span class="hljs-emphasis">| collation_server     | latin1_swedish_</span>ci |<br><span class="hljs-code">+----------------------+</span>-------------------+<br>3 rows in set (0.01 sec)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>设置服务器端默认字符集</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs csharp">vim /etc/my.cnf<br><span class="hljs-meta">#针对mysql客户端</span><br>[<span class="hljs-meta">mysql</span>]<br><span class="hljs-literal">default</span>-character-<span class="hljs-keyword">set</span>=utf8mb4<br><span class="hljs-meta">#针对所有MySQL客户端</span><br>[<span class="hljs-meta">client</span>]<br><span class="hljs-literal">default</span>-character-<span class="hljs-keyword">set</span>=utf8mb4<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查看当前字符集的使用情况</li>
+</ul>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">mysql&gt; show variables like &#x27;character%&#x27;;<br>+--------------------------+----------------------------------------------------------------+<br>|<span class="hljs-string"> Variable_name            </span>|<span class="hljs-string"> Value                                                          </span>|<br>+--------------------------+----------------------------------------------------------------+<br>|<span class="hljs-string"> character_set_client     </span>|<span class="hljs-string"> utf8mb4                                                        </span>|<br>|<span class="hljs-string"> character_set_connection </span>|<span class="hljs-string"> utf8mb4                                                        </span>|<br>|<span class="hljs-string"> character_set_database   </span>|<span class="hljs-string"> latin1                                                         </span>|<br>|<span class="hljs-string"> character_set_filesystem </span>|<span class="hljs-string"> binary                                                         </span>|<br>|<span class="hljs-string"> character_set_results    </span>|<span class="hljs-string"> utf8mb4                                                        </span>|<br>|<span class="hljs-string"> character_set_server     </span>|<span class="hljs-string"> latin1                                                         </span>|<br>|<span class="hljs-string"> character_set_system     </span>|<span class="hljs-string"> utf8                                                           </span>|<br>|<span class="hljs-string"> character_sets_dir       </span>|<span class="hljs-string"> /usr/local/mysql-5.7.39-linux-glibc2.12-x86_64/share/charsets/ </span>|<br>+--------------------------+----------------------------------------------------------------+<br>8 rows in set (0.00 sec)<br><br>mysql&gt; <br></code></pre></td></tr></table></figure>
+
+<p><strong>面试题: VARCHAR(50) 能存放几个 UTF8 编码的汉字？</strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scss">存放的汉字个数与版本相关。<br>mysql <span class="hljs-number">4.0</span>以下版本，<span class="hljs-built_in">varchar</span>(<span class="hljs-number">50</span>) 指的是 <span class="hljs-number">50</span> 字节，如果存放 UTF8 格式编码的汉字时（每个汉字<span class="hljs-number">3</span>字<br>节），只能存放<span class="hljs-number">16</span> 个。<br>mysql <span class="hljs-number">5.0</span>以上版本，<span class="hljs-built_in">varchar</span>(<span class="hljs-number">50</span>) 指的是 <span class="hljs-number">50</span> 字符，无论存放的是数字、字母还是 UTF8 编码的汉字，<br>都可以存放 <span class="hljs-number">50</span> 个。<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
 
                 
               </div>
