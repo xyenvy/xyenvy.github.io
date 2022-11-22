@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://itshare.work/image.assets/1664376571963.png">
 <meta property="article:published_time" content="2022-09-28T14:42:41.000Z">
-<meta property="article:modified_time" content="2022-11-19T08:19:54.152Z">
+<meta property="article:modified_time" content="2022-11-21T15:51:40.413Z">
 <meta property="article:author" content="yuankun">
 <meta property="article:tag" content="MySQL基础">
 <meta name="twitter:card" content="summary_large_image">
@@ -256,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4k 字
+          13k 字
         
       </span>
     
@@ -267,7 +267,7 @@
         
         
         
-          34 分钟
+          111 分钟
         
       </span>
     
@@ -314,6 +314,14 @@
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">MySQL数据库基础和安装使用</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年11月21日 晚上
+                  
+                
+              </p>
             
             
               <div class="markdown-body">
@@ -448,15 +456,212 @@
 <p><strong>面试题: VARCHAR(50) 能存放几个 UTF8 编码的汉字？</strong></p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scss">存放的汉字个数与版本相关。<br>mysql <span class="hljs-number">4.0</span>以下版本，<span class="hljs-built_in">varchar</span>(<span class="hljs-number">50</span>) 指的是 <span class="hljs-number">50</span> 字节，如果存放 UTF8 格式编码的汉字时（每个汉字<span class="hljs-number">3</span>字<br>节），只能存放<span class="hljs-number">16</span> 个。<br>mysql <span class="hljs-number">5.0</span>以上版本，<span class="hljs-built_in">varchar</span>(<span class="hljs-number">50</span>) 指的是 <span class="hljs-number">50</span> 字符，无论存放的是数字、字母还是 UTF8 编码的汉字，<br>都可以存放 <span class="hljs-number">50</span> 个。<br></code></pre></td></tr></table></figure>
 
+<h1 id="MySQL用户管理"><a href="#MySQL用户管理" class="headerlink" title="ＭySQL用户管理"></a>ＭySQL用户管理</h1><ul>
+<li>相关数据库和表</li>
+</ul>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">元数据数据库：mysql<br>系统授权表：db, host, <span class="hljs-keyword">user</span>,columns_priv, tables_priv, procs_priv, proxies_priv<br></code></pre></td></tr></table></figure>
 
+<ul>
+<li>用户账号</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-string">&#x27;USERNAME&#x27;</span>@<span class="hljs-string">&#x27;HOST&#x27;</span><br>@<span class="hljs-string">&#x27;HOST&#x27;</span>: 主机名： <span class="hljs-symbol">user1@</span><span class="hljs-string">&#x27;web1.magedu.org&#x27;</span><br>IP地址或Network<br>通配符： % _<br>示例：<span class="hljs-symbol">wang@</span><span class="hljs-string">&#x27;172.16.%.%&#x27;</span><br><span class="hljs-symbol">user2@</span><span class="hljs-string">&#x27;192.168.1.%&#x27;</span><br><span class="hljs-symbol">mage@</span><span class="hljs-string">&#x27;10.0.0.0/255.255.0.0&#x27;</span><br></code></pre></td></tr></table></figure>
 
+<ul>
+<li>创建用户：create user</li>
+</ul>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> <span class="hljs-string">&#x27;USERNAME&#x27;</span>@<span class="hljs-string">&#x27;HOST&#x27;</span> [IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;password&#x27;</span>]；<br>#示例:<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">user</span> test@<span class="hljs-string">&#x27;10.0.0.0/255.255.255.0&#x27;</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;123456&#x27;</span>;<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">user</span> test2@<span class="hljs-string">&#x27;10.0.0.%&#x27;</span> identified <span class="hljs-keyword">by</span> <span class="hljs-number">123456</span><br></code></pre></td></tr></table></figure>
 
+<p>新建用户的默认权限：USAGE</p>
+<ul>
+<li>用户重命名：RENAME USER</li>
+</ul>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">RENAME <span class="hljs-keyword">USER</span> <span class="hljs-title">old_user_name</span> TO new_user_name;<br></code></pre></td></tr></table></figure>
 
+<ul>
+<li>删除用户</li>
+</ul>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">USER</span> <span class="hljs-string">&#x27;USERNAME&#x27;</span>@<span class="hljs-string">&#x27;HOST&#x27;</span><br></code></pre></td></tr></table></figure>
 
+<p><strong>删除空用户</strong></p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">USER</span> <span class="hljs-string">&#x27;&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span>;<br></code></pre></td></tr></table></figure>
 
+<p><strong>修改密码</strong></p>
+<ul>
+<li>注意</li>
+</ul>
+<p>新版mysql中用户密码可以保存在mysql.user表的authentication_string字段中<br>如果mysql.user表的authentication_string和password字段都保存密码，authentication_string<br>优先生效</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">#方法<span class="hljs-number">1</span>,用户可以也可通过此方式修改自已的密码<br><span class="hljs-keyword">SET</span> <span class="hljs-keyword">PASSWORD</span> <span class="hljs-keyword">FOR</span> <span class="hljs-string">&#x27;user&#x27;</span>@<span class="hljs-string">&#x27;host&#x27;</span> = <span class="hljs-keyword">PASSWORD</span>(<span class="hljs-string">&#x27;password&#x27;</span>); #MySQL8<span class="hljs-number">.0</span> 版本不支持此方法,<br>因为<span class="hljs-keyword">password</span>函数被取消<br><span class="hljs-keyword">set</span> <span class="hljs-keyword">password</span> <span class="hljs-keyword">for</span> root@<span class="hljs-string">&#x27;localhost&#x27;</span>=<span class="hljs-string">&#x27;123456&#x27;</span> ; #MySQL8<span class="hljs-number">.0</span>版本支持此方法,此方式直接将密码<br><span class="hljs-number">123456</span>加密后存放在mysql.<span class="hljs-keyword">user</span>表的authentication_string字段<br>#方法<span class="hljs-number">2</span><br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">USER</span> test@<span class="hljs-string">&#x27;%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;centos&#x27;</span>; #通用改密码方法, 用户可以也可通过此方式修<br>改自已的密码,MySQL8 版本修改密码<br>#方法<span class="hljs-number">3</span> 此方式MySQL8<span class="hljs-number">.0</span>不支持,因为<span class="hljs-keyword">password</span>函数被取消<br><span class="hljs-keyword">UPDATE</span> mysql.<span class="hljs-keyword">user</span> <span class="hljs-keyword">SET</span> <span class="hljs-keyword">password</span>=<span class="hljs-keyword">PASSWORD</span>(<span class="hljs-string">&#x27;password&#x27;</span>) <span class="hljs-keyword">WHERE</span> clause;<br><span class="hljs-meta">#mariadb 10.3</span><br><span class="hljs-keyword">update</span> mysql.<span class="hljs-keyword">user</span> <span class="hljs-keyword">set</span> authentication_string=<span class="hljs-keyword">password</span>(<span class="hljs-string">&#x27;ubuntu&#x27;</span>) <span class="hljs-keyword">where</span><br><span class="hljs-keyword">user</span>=<span class="hljs-string">&#x27;mage&#x27;</span>;<br>#此方法需要执行下面指令才能生效：<br>FLUSH <span class="hljs-keyword">PRIVILEGES</span>;<br></code></pre></td></tr></table></figure>
 
+<p><strong>忘记管理员密码解决方法</strong></p>
+<ol>
+<li>启动mysqld进程时，为其使用如下选项：</li>
+</ol>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-comment">--skip-grant-tables</span><br><span class="hljs-comment">--skip-networking</span><br></code></pre></td></tr></table></figure>
 
+<ol start="2">
+<li>使用UPDATE命令修改管理员密码</li>
+<li>关闭mysqld进程，移除上述两个选项，重启mysqld</li>
+</ol>
+<p>范例:Mariadb 和MySQL5.6版之前破解root密码</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">[root@centos8 ~]#vim /etc/my.cnf<br>[mysqld]<br>skip-<span class="hljs-keyword">grant</span>-<span class="hljs-keyword">tables</span><br>skip-networking<br>[root@centos8 ~]#systemctl <span class="hljs-keyword">restart</span> mysqld|mariadb<br>[root@centos8 ~]#mysql<br>#方法<span class="hljs-number">1</span><br><span class="hljs-meta">#mariadb 旧版和MySQL5.6版之前</span><br>MariaDB [(<span class="hljs-keyword">none</span>)]&gt; <span class="hljs-keyword">update</span> mysql.<span class="hljs-keyword">user</span> <span class="hljs-keyword">set</span> <span class="hljs-keyword">password</span>=<span class="hljs-keyword">password</span>(<span class="hljs-string">&#x27;ubuntu&#x27;</span>) <span class="hljs-keyword">where</span><br><span class="hljs-keyword">user</span>=<span class="hljs-string">&#x27;root&#x27;</span>;<br><span class="hljs-meta">#mariadb 新版</span><br>MariaDB [(<span class="hljs-keyword">none</span>)]&gt; <span class="hljs-keyword">update</span> mysql.<span class="hljs-keyword">user</span> <span class="hljs-keyword">set</span> authentication_string=<span class="hljs-keyword">password</span>(<span class="hljs-string">&#x27;ubuntu&#x27;</span>)<br><span class="hljs-keyword">where</span> <span class="hljs-keyword">user</span>=<span class="hljs-string">&#x27;root&#x27;</span>;<br>#方法<span class="hljs-number">2</span><br>MariaDB [(<span class="hljs-keyword">none</span>)]&gt; flush <span class="hljs-keyword">privileges</span>;<br>MariaDB [(<span class="hljs-keyword">none</span>)]&gt; <span class="hljs-keyword">alter</span> <span class="hljs-keyword">user</span> root@<span class="hljs-string">&#x27;localhost&#x27;</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;ubuntu&#x27;</span>;<br>[root@centos8 ~]#vim /etc/my.cnf<br>[mysqld]<br><span class="hljs-meta">#skip-grant-tables</span><br><span class="hljs-meta">#skip-networking</span><br><br>[root@centos8 ~]#systemctl <span class="hljs-keyword">restart</span> mysqld|mariadb<br>[root@centos8 ~]#mysql -uroot -pubuntu<br></code></pre></td></tr></table></figure>
 
+<p>范例: MySQL5.7和8.0 破解root密码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs csharp">[<span class="hljs-meta">root@centos8 ~</span>]<span class="hljs-meta">#vim /etc/my.cnf</span><br>[<span class="hljs-meta">mysqld</span>]<br>skip-grant-tables<br>skip-networking <span class="hljs-meta">#MySQL8.0不需要</span><br>[<span class="hljs-meta">root@centos8 ~</span>]<span class="hljs-meta">#systemctl restart mysqld</span><br><span class="hljs-meta">#方法1</span><br>mysql&gt; update mysql.user <span class="hljs-keyword">set</span> authentication_string=<span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-keyword">where</span> user=<span class="hljs-string">&#x27;root&#x27;</span> <span class="hljs-keyword">and</span><br>host=<span class="hljs-string">&#x27;localhost&#x27;</span>;<br><span class="hljs-meta">#方法2</span><br>mysql&gt; flush privileges;<br><span class="hljs-meta">#再执行下面任意一个命令</span><br>mysql&gt; alter user root@<span class="hljs-string">&#x27;localhost&#x27;</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;ubuntu&#x27;</span>;<br>mysql&gt; <span class="hljs-keyword">set</span> password <span class="hljs-keyword">for</span> root@<span class="hljs-string">&#x27;localhost&#x27;</span>=<span class="hljs-string">&#x27;ubuntu&#x27;</span>;<br>[<span class="hljs-meta">root@centos8 ~</span>]<span class="hljs-meta">#vim /etc/my.cnf</span><br>[<span class="hljs-meta">mysqld</span>]<br><span class="hljs-meta">#skip-grant-tables</span><br><span class="hljs-meta">#skip-networking</span><br>[<span class="hljs-meta">root@centos8 ~</span>]<span class="hljs-meta">#systemctl restart mysqld</span><br>[<span class="hljs-meta">root@centos8 ~</span>]<span class="hljs-meta">#mysql -uroot -pubuntu</span><br></code></pre></td></tr></table></figure>
+
+<p>范例: 删库跑路之清空root密码方法</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-meta">#此方法适用于包安装方式的MySQL或Mariadb</span><br>[root<span class="hljs-symbol">@centos8</span> ~]<span class="hljs-meta">#systemctl stop mysqld</span><br>[root<span class="hljs-symbol">@centos8</span> ~]<span class="hljs-meta">#rm -rf /var/lib/mysql/*</span><br>[root<span class="hljs-symbol">@centos8</span> ~]<span class="hljs-meta">#systemctl start mysqld</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="权限管理"><a href="#权限管理" class="headerlink" title="权限管理"></a>权限管理</h1><p><strong>权限类别：</strong></p>
+<ul>
+<li><p>管理类</p>
+</li>
+<li><p>程序类</p>
+</li>
+<li><p>数据库级别</p>
+</li>
+<li><p>表级别</p>
+</li>
+<li><p>字段级别</p>
+</li>
+</ul>
+<p><strong>管理类：</strong></p>
+<ul>
+<li>CREATE USER</li>
+<li>FILE</li>
+<li>SUPER</li>
+<li>SHOW DATABASES</li>
+<li>RELOAD</li>
+<li>SHUTDOWN</li>
+<li>REPLICATION SLAVE</li>
+<li>REPLICATION CLIENT</li>
+<li>LOCK TABLES</li>
+<li>PROCESS</li>
+<li>CREATE TEMPORARY TABLES</li>
+</ul>
+<p><strong>程序类：针对 FUNCTION、PROCEDURE、TRIGGER</strong></p>
+<ul>
+<li>CREATE</li>
+<li>ALTER</li>
+<li>DROP</li>
+<li>EXCUTE<br><strong>库和表级别：针对 DATABASE、TABLE</strong></li>
+<li>ALTER</li>
+<li>CREATE</li>
+<li>CREATE VIEW</li>
+<li>DROP INDEX</li>
+<li>SHOW VIEW</li>
+<li>WITH GRANT OPTION：能将自己获得的权限转赠给其他用户<br><strong>数据操作</strong></li>
+<li>SELECT<br>-INSERT</li>
+<li>DELETE</li>
+<li>UPDATE<br><strong>字段级别</strong></li>
+<li>SELECT(col1,col2,…)</li>
+<li>UPDATE(col1,col2,…)</li>
+<li>INSERT(col1,col2,…)<br><strong>所有权限</strong></li>
+<li>ALL PRIVILEGES 或 ALL</li>
+</ul>
+<p><strong>授权</strong></p>
+<ul>
+<li>授权：GRANT</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> (col1), <span class="hljs-keyword">INSERT</span> (col1,col2) <span class="hljs-keyword">ON</span> mydb.mytbl <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;someuser&#x27;</span>@<span class="hljs-string">&#x27;somehost&#x27;</span>;<br><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> wordpress.* <span class="hljs-keyword">TO</span> wordpress@<span class="hljs-string">&#x27;10.0.0.%&#x27;</span> ;<br><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">PRIVILEGES</span> <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;10.0.0.%&#x27;</span> <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">OPTION</span>;<br>#创建用户和授权同时执行的方式在MySQL8<span class="hljs-number">.0</span>取消了<br><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> wordpress.* <span class="hljs-keyword">TO</span> wordpress@<span class="hljs-string">&#x27;192.168.8.%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;magedu&#x27;</span>;<br><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">PRIVILEGES</span> <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;192.168.8.%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;magedu&#x27;</span><br><span class="hljs-keyword">WITH</span> <span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">OPTION</span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>取消授权</strong></p>
+<ul>
+<li>取消授权：REVOKE</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">REVOKE</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> *.* <span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;testuser&#x27;</span>@<span class="hljs-string">&#x27;172.16.0.%&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>查看指定用户获得的授权</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql">Help <span class="hljs-keyword">SHOW</span> GRANTS<br><span class="hljs-keyword">SHOW</span> GRANTS <span class="hljs-keyword">FOR</span> <span class="hljs-string">&#x27;user&#x27;</span>@<span class="hljs-string">&#x27;host&#x27;</span>;<br><span class="hljs-keyword">SHOW</span> GRANTS <span class="hljs-keyword">FOR</span> <span class="hljs-built_in">CURRENT_USER</span>[()];<br></code></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong><br>MariaDB服务进程启动时会读取mysql库中所有授权表至内存<br>(1) GRANT或REVOKE等执行权限操作会保存于系统表中，MariaDB的服务进程通常会自动重读授权表，<br>使之生效<br>(2) 对于不能够或不能及时重读授权表的命令，可手动让MariaDB的服务进程重读授权表：<br>mysql&gt; FLUSH PRIVILEGES;</p>
+<h1 id="MyISAM-存储引擎"><a href="#MyISAM-存储引擎" class="headerlink" title="MyISAM 存储引擎"></a>MyISAM 存储引擎</h1><h2 id="MyISAM-引擎特点"><a href="#MyISAM-引擎特点" class="headerlink" title="MyISAM 引擎特点"></a>MyISAM 引擎特点</h2><ul>
+<li>不支持事务</li>
+<li>表级锁定</li>
+<li>读写相互阻塞，写入不能读，读时不能写</li>
+<li>只缓存索引</li>
+<li>不支持外键约束</li>
+<li>不支持聚簇索引</li>
+<li>读取数据较快，占用资源较少</li>
+<li>不支持MVCC（多版本并发控制机制）高并发</li>
+<li>崩溃恢复性较差</li>
+<li>MySQL5.5.5 前默认的数据库引擎</li>
+</ul>
+<h2 id="MyISAM-存储引擎适用场景"><a href="#MyISAM-存储引擎适用场景" class="headerlink" title="MyISAM 存储引擎适用场景"></a>MyISAM 存储引擎适用场景</h2><ul>
+<li>只读（或者写较少）</li>
+<li>表较小（可以接受长时间进行修复操作）</li>
+</ul>
+<h2 id="MyISAM-引擎文件"><a href="#MyISAM-引擎文件" class="headerlink" title="MyISAM 引擎文件"></a>MyISAM 引擎文件</h2><ul>
+<li>tbl_name.frm 表格式定义</li>
+<li>tbl_name.MYD 数据文件</li>
+<li>tbl_name.MYI 索引文件</li>
+</ul>
+<h1 id="InnoDB-引擎"><a href="#InnoDB-引擎" class="headerlink" title="InnoDB 引擎"></a>InnoDB 引擎</h1><h2 id="InnoDB引擎特点"><a href="#InnoDB引擎特点" class="headerlink" title="InnoDB引擎特点"></a>InnoDB引擎特点</h2><ul>
+<li>行级锁</li>
+<li>支持事务，适合处理大量短期事务</li>
+<li>读写阻塞与事务隔离级别相关</li>
+<li>可缓存数据和索引</li>
+<li>支持聚簇索引</li>
+<li>崩溃恢复性更好</li>
+<li>支持MVCC高并发</li>
+<li>从MySQL5.5后支持全文索引</li>
+<li>从MySQL5.5.5开始为默认的数据库引擎</li>
+</ul>
+<h1 id="管理存储引擎"><a href="#管理存储引擎" class="headerlink" title="管理存储引擎"></a>管理存储引擎</h1><p>查看mysql支持的存储引擎</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">show engines<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<p>查看当前默认的存储引擎</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams">show <span class="hljs-keyword">variables</span> like <span class="hljs-comment">&#x27;%storage_engine%&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>设置默认的存储引擎</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">vim <span class="hljs-regexp">/etc/my</span>.cnf<br>[mysqld]<br>default_storage_engine= InnoDB<br></code></pre></td></tr></table></figure>
+
+<p>查看库中所有表使用的存储引擎</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">table</span> status <span class="hljs-keyword">from</span> db_name;<br></code></pre></td></tr></table></figure>
+
+<p>查看库中指定表的存储引擎</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">table</span> status <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;tb_name&#x27;</span>;<br><span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> tb_name;<br></code></pre></td></tr></table></figure>
+
+<p>设置表的存储引擎：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">CREATE</span></span> <span class="hljs-keyword">TABLE</span> tb_name(... ) ENGINE=InnoDB;<br>ALTER <span class="hljs-keyword">TABLE</span> tb_name <span class="hljs-comment">ENGINE=InnoDB</span>;<br></code></pre></td></tr></table></figure>
+
+<h1 id="实战案例：数据库冷备份和热备份"><a href="#实战案例：数据库冷备份和热备份" class="headerlink" title="实战案例：数据库冷备份和热备份"></a>实战案例：数据库冷备份和热备份</h1><p>MySQL8.0</p>
+<p>冷备份：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs autoit">备份过程<br><span class="hljs-meta"># 停止数据库</span><br>systemctl stop mysql<br><span class="hljs-meta"># rsync可以保留文件属性</span><br>[root<span class="hljs-symbol">@centos8</span> ~]<span class="hljs-meta">#rsync -a /var/lib/mysql 10.0.0.28:/data/</span><br><span class="hljs-meta">#如果配置及二进制文件相关有特殊设置也需要备份</span><br><span class="hljs-meta">#还原</span><br>[root<span class="hljs-symbol">@centos8</span> ~]<span class="hljs-meta">#yum -y install mysql-server</span><br>[root<span class="hljs-symbol">@centos8</span> ~]<span class="hljs-meta">#cp -a /data/mysql/* /var/lib/mysql/</span><br>[root<span class="hljs-symbol">@centos8</span> ~]<span class="hljs-meta">#systemctl start mysqld</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="mysqldump备份工具"><a href="#mysqldump备份工具" class="headerlink" title="mysqldump备份工具"></a>mysqldump备份工具</h1><p>mysqldump 说明<br>逻辑备份工具：<br>mysqldump, mydumper, phpMyAdmin<br>Schema和数据存储在一起、巨大的SQL语句、单个巨大的备份文件<br>mysqldump是MySQL的客户端命令，通过mysql协议连接至mysql服务器进行备份<br>命令格式:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css">mysqldump <span class="hljs-selector-attr">[OPTIONS]</span> database <span class="hljs-selector-attr">[tables]</span> #支持指定数据库和指定多表的备份，但数据库本身定义<br>不备份<br>mysqldump <span class="hljs-selector-attr">[OPTIONS]</span> -<span class="hljs-selector-tag">B</span> DB1 <span class="hljs-selector-attr">[DB2 DB3...]</span> #支持指定数据库备份，包含数据库本身定义也会备份<br>mysqldump <span class="hljs-selector-attr">[OPTIONS]</span> -<span class="hljs-selector-tag">A</span> <span class="hljs-selector-attr">[OPTIONS]</span> #备份所有数据库，包含数据库本身定义也会备份<br></code></pre></td></tr></table></figure>
+
+<p>mysqldump参考：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>dev.mysql.com<span class="hljs-regexp">/doc/</span>refman<span class="hljs-regexp">/5.7/</span>en/mysqldump.html<br></code></pre></td></tr></table></figure>
+
+<p>mysqldump 常见通用选项：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">-u, <span class="hljs-params">--user=name</span> User for login <span class="hljs-keyword">if</span> not current user<br>-p, <span class="hljs-params">--password</span>[=name] Password to use when connecting to server<br>-A, <span class="hljs-params">--all-databases</span> <span class="hljs-comment">#备份所有数据库，含create database</span><br>-B, <span class="hljs-params">--databases</span> db_name… <span class="hljs-comment">#指定备份的数据库，包括create database语句</span><br>-E, <span class="hljs-params">--events</span>：<span class="hljs-comment">#备份相关的所有event scheduler</span><br>-R, <span class="hljs-params">--routines</span>：<span class="hljs-comment">#备份所有存储过程和自定义函数</span><br><span class="hljs-params">--triggers</span>：<span class="hljs-comment">#备份表相关触发器，默认启用,用--skip-triggers，不备份触发器</span><br><span class="hljs-params">--default-character-set=utf8</span> <span class="hljs-comment">#指定字符集</span><br><span class="hljs-params">--master-data</span>[=<span class="hljs-comment">#]：#注意：MySQL8.0.26版以后，此选项变为--source-data</span><br><span class="hljs-comment">#此选项须启用二进制日志</span><br><span class="hljs-comment">#1：所备份的数据之前加一条记录为CHANGE MASTER TO语句，非注释，不指定#，默认为1，适合于主从复</span><br>制多机使用<br><span class="hljs-comment">#2：记录为被注释的#CHANGE MASTER TO语句，适合于单机使用,适用于备份还原</span><br><span class="hljs-comment">#此选项会自动关闭--lock-tables功能，自动打开-x | --lock-all-tables功能（除非开启--</span><br>single-transaction）<br>-F, <span class="hljs-params">--flush-logs</span> <span class="hljs-comment">#备份前滚动日志，锁定表完成后，执行flush logs命令,生成新的二进制日志文件，</span><br>配合-A 或 -B 选项时，会导致刷新多次数据库。建议在同一时刻执行转储和日志刷新，可通过和<span class="hljs-params">--single-</span><br>transaction或-x，<span class="hljs-params">--master-data</span> 一起使用实现，此时只刷新一次二进制日志<br><span class="hljs-params">--compact</span> <span class="hljs-comment">#去掉注释，适合调试，节约备份占用的空间,生产不使用</span><br>-d, <span class="hljs-params">--no-data</span> <span class="hljs-comment">#只备份表结构,不备份数据,即只备份create table</span><br>-t, <span class="hljs-params">--no-create-info</span> <span class="hljs-comment">#只备份数据,不备份表结构,即不备份create table</span><br>-n,<span class="hljs-params">--no-create-db</span> <span class="hljs-comment">#不备份create database，可被-A或-B覆盖</span><br><span class="hljs-params">--flush-privileges</span> <span class="hljs-comment">#备份mysql或相关时需要使用</span><br>-f, <span class="hljs-params">--force</span> <span class="hljs-comment">#忽略SQL错误，继续执行</span><br><span class="hljs-params">--hex-blob</span> <span class="hljs-comment">#使用十六进制符号转储二进制列，当有包括BINARY,VARBINARY,BLOB，</span><br>BIT的数据类型的列时使用，避免乱码<br>-q, <span class="hljs-params">--quick</span> <span class="hljs-comment">#不缓存查询，直接输出，加快备份速度</span><br></code></pre></td></tr></table></figure>
+
+<p>mysqldump的MyISAM存储引擎相关的备份选项：<br>MyISAM不支持事务，只能支持温备；不支持热备，所以必须先锁定要备份的库，而后启动备份操作</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs csharp">-x,--<span class="hljs-keyword">lock</span>-all-tables <span class="hljs-meta">#加全局读锁，锁定所有库的所有表，同时加--single-transaction或--</span><br><span class="hljs-keyword">lock</span>-tables选项会关闭此选项功能，注意：数据量大时，可能会导致长时间无法并发访问数据库<br>-l,--<span class="hljs-keyword">lock</span>-tables <span class="hljs-meta">#对于需要备份的每个数据库，在启动备份之前分别锁定其所有表，默认为on,--</span><br>skip-<span class="hljs-keyword">lock</span>-tables选项可禁用,对备份MyISAM的多个库,可能会造成数据不一致<br><span class="hljs-meta">#注：以上选项对InnoDB表一样生效，实现温备，但不推荐使用</span><br></code></pre></td></tr></table></figure>
+
+<p>mysqldump的InnoDB存储引擎相关的备份选项：<br>InnoDB 存储引擎支持事务,可以利用事务的相应的隔离级别,实现热备，也可以实现温备但不建议用</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-comment">--single-transaction</span><br>#此选项Innodb中推荐使用，不适用MyISAM，此选项会开始备份前，先执行<span class="hljs-keyword">START</span> <span class="hljs-keyword">TRANSACTION</span>指令开启<br>事务<br>#此选项通过在单个事务中转储所有表来创建一致的快照。 仅适用于存储在支持多版本控制的存储引擎中的表<br>（目前只有InnoDB可以）; 转储不保证与其他存储引擎保持一致。 在进行单事务转储时，要确保有效的转储<br>文件（正确的表内容和二进制日志位置），没有其他连接应该使用以下语句：<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span>，<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span>，<br><span class="hljs-keyword">RENAME</span> <span class="hljs-keyword">TABLE</span>，<span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span>,此选项和<span class="hljs-comment">--lock-tables（此选项隐含提交挂起的事务）选项是相互</span><br>排斥,备份大型表时，建议将<span class="hljs-comment">--single-transaction选项和--quick结合一起使用</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="生产环境实战备份策略"><a href="#生产环境实战备份策略" class="headerlink" title="生产环境实战备份策略"></a>生产环境实战备份策略</h1><p>InnoDB建议备份策略</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">mysqldump -uroot -p -A -F -E -R <span class="hljs-params">--triggers</span> <span class="hljs-params">--single-transaction</span> <span class="hljs-params">--master-data=1</span><br><span class="hljs-params">--flush-privileges</span> <span class="hljs-params">--default-character-set=utf8</span> <span class="hljs-params">--hex-blob</span><br>&gt;$&#123;BACKUP&#125;<span class="hljs-string">/fullbak_</span>$&#123;BACKUP_TIME&#125;<span class="hljs-string">.sql</span><br></code></pre></td></tr></table></figure>
+
+<p>MyISAM建议备份策略</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">mysqldump -uroot -p -A -F -E -R -x <span class="hljs-params">--master-data=1</span> <span class="hljs-params">--flush-privileges</span> --<br>triggers <span class="hljs-params">--default-character-set=utf8</span> <span class="hljs-params">--hex-blob</span><br>&gt;$&#123;BACKUP&#125;<span class="hljs-string">/fullbak_</span>$&#123;BACKUP_TIME&#125;<span class="hljs-string">.sql</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="mysqldump-备份还原实战案例"><a href="#mysqldump-备份还原实战案例" class="headerlink" title="mysqldump 备份还原实战案例"></a>mysqldump 备份还原实战案例</h1><h2 id="实战案例：特定数据库的备份脚本"><a href="#实战案例：特定数据库的备份脚本" class="headerlink" title="实战案例：特定数据库的备份脚本"></a>实战案例：特定数据库的备份脚本</h2><p>系统：centos8.5</p>
+<p>mysql:8.0</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>TIME=`<span class="hljs-built_in">date</span> +%F_%H-%M-%S`<br><span class="hljs-comment"># 备份目录</span><br>DIR=/mysql_backup<br><span class="hljs-comment"># 备份数据库</span><br>DB=hellodb<br><span class="hljs-comment"># 数据库密码</span><br>PASSWD=123456<br><br><span class="hljs-comment"># 判断备份数据库目录是否存在</span><br><br>[ -d <span class="hljs-variable">$DIR</span> ] || <span class="hljs-built_in">mkdir</span> <span class="hljs-variable">$DIR</span><br><br><span class="hljs-comment"># 备份</span><br>mysqldump -uroot -p<span class="hljs-string">&quot;<span class="hljs-variable">$PASSWD</span>&quot;</span> -F -E -R --triggers --single-transaction --master-data=2 --default-character-set=utf8mb4 -q -B <span class="hljs-variable">$DB</span> | gzip &gt; <span class="hljs-variable">$&#123;DIR&#125;</span>/<span class="hljs-variable">$&#123;DB&#125;</span>_<span class="hljs-variable">$&#123;TIME&#125;</span>.sql.gz<br></code></pre></td></tr></table></figure>
+
+<h1 id="实战案例：分库备份的实战脚本"><a href="#实战案例：分库备份的实战脚本" class="headerlink" title="实战案例：分库备份的实战脚本"></a>实战案例：分库备份的实战脚本</h1><ul>
+<li>系统：centos8.5</li>
+<li>MySQL版本：8.0</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>TIME=`<span class="hljs-built_in">date</span> +%F_%H-%M-%S`<br>DIR=/backup<br>PASS=123456<br>[ -d <span class="hljs-string">&quot;<span class="hljs-variable">$DIR</span>&quot;</span> ] || <span class="hljs-built_in">mkdir</span> <span class="hljs-variable">$DIR</span><br><span class="hljs-keyword">for</span> DB <span class="hljs-keyword">in</span> `mysql -uroot -p<span class="hljs-string">&quot;<span class="hljs-variable">$PASS</span>&quot;</span> -e <span class="hljs-string">&#x27;show databases&#x27;</span> | grep -Ev <span class="hljs-string">&quot;^Database|.*schema$&quot;</span>`;<span class="hljs-keyword">do</span><br>    mysqldump -uroot -p<span class="hljs-string">&quot;<span class="hljs-variable">$PASS</span>&quot;</span> -F --single-transaction --master-data=2 --default-character-set=utf8mb4 -q -B <span class="hljs-variable">$DB</span> | gzip &gt; <span class="hljs-variable">$&#123;DIR&#125;</span>/<span class="hljs-variable">$&#123;DB&#125;</span>_<span class="hljs-variable">$&#123;TIME&#125;</span>.sql.gz<br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="实战案例：完全备份和还原"><a href="#实战案例：完全备份和还原" class="headerlink" title="实战案例：完全备份和还原"></a>实战案例：完全备份和还原</h1><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">#开启二进制日志<br>[root@centos8 ~]#vim /etc/my.cnf.d/mariadb-<span class="hljs-keyword">server</span>.cnf<br>[mysqld]<br><span class="hljs-keyword">log</span>-bin<br>#备份<br>[root@centos8 ~]#mysqldump -uroot -pmagedu -A -F <span class="hljs-comment">--single-transaction --master-</span><br>data=<span class="hljs-number">2</span> |gzip &gt; /backup/<span class="hljs-keyword">all</span>-`<span class="hljs-type">date</span> +%F`.<span class="hljs-keyword">sql</span>.gz<br>#还原<br>[root@centos8 backup]#dnf install mariadb-<span class="hljs-keyword">server</span><br>[root@centos8 backup]#gzip -d <span class="hljs-keyword">all</span><span class="hljs-number">-2019</span><span class="hljs-number">-11</span><span class="hljs-number">-27.</span><span class="hljs-keyword">sql</span>.gz<br>[root@centos8 ~]#mysql<br>MariaDB [(<span class="hljs-keyword">none</span>)]&gt; <span class="hljs-keyword">set</span> sql_log_bin=<span class="hljs-keyword">off</span>;<br>MariaDB [(<span class="hljs-keyword">none</span>)]&gt; source /backup/<span class="hljs-keyword">all</span><span class="hljs-number">-2019</span><span class="hljs-number">-11</span><span class="hljs-number">-27.</span><span class="hljs-keyword">sql</span><br>MariaDB [(<span class="hljs-keyword">none</span>)]&gt; <span class="hljs-keyword">set</span> sql_log_bin=<span class="hljs-keyword">on</span>;<br></code></pre></td></tr></table></figure>
+
+<h1 id="实战案例：利用二进制日志，还原数据库最新状态"><a href="#实战案例：利用二进制日志，还原数据库最新状态" class="headerlink" title="实战案例：利用二进制日志，还原数据库最新状态"></a>实战案例：利用二进制日志，还原数据库最新状态</h1>
                 
               </div>
             
@@ -517,6 +722,11 @@
           <div>2022年9月28日</div>
         </div>
       
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年11月21日</div>
+        </div>
       
       
         <div class="license-meta-item">

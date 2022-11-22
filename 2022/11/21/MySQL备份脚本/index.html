@@ -18,24 +18,24 @@
   <meta name="author" content="yuankun">
   <meta name="keywords" content="hexo,theme,fluid,linux,ops,运维,分享">
   
-    <meta name="description" content="我只是搬运工，如果文中有冒犯到你的地方，请告知我删除内容，或添加来源。">
+    <meta name="description" content="硬件故障、软件故障、自然灾害、黑客攻击、误操作测试等数据丢失场景">
 <meta property="og:type" content="article">
-<meta property="og:title" content="软件测试基础面试题">
-<meta property="og:url" content="https://itshare.work/2022/11/03/SoftwareTestingQuestions/index.html">
+<meta property="og:title" content="MySQL备份和恢复">
+<meta property="og:url" content="https://itshare.work/2022/11/21/MySQL%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/index.html">
 <meta property="og:site_name" content="Echops-菜鸟进阶之路">
-<meta property="og:description" content="我只是搬运工，如果文中有冒犯到你的地方，请告知我删除内容，或添加来源。">
+<meta property="og:description" content="硬件故障、软件故障、自然灾害、黑客攻击、误操作测试等数据丢失场景">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://itshare.work/image/SoftwareTestingQuestions.assets/1667448360234.png">
-<meta property="article:published_time" content="2022-11-03T03:54:32.000Z">
-<meta property="article:modified_time" content="2022-11-10T12:20:36.147Z">
+<meta property="og:image" content="https://itshare.work/image.assets/1655458551.png">
+<meta property="article:published_time" content="2022-11-21T14:28:03.000Z">
+<meta property="article:modified_time" content="2022-11-21T15:02:25.620Z">
 <meta property="article:author" content="yuankun">
-<meta property="article:tag" content="软件测试工程师面试基础">
+<meta property="article:tag" content="MySQL基础">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://itshare.work/image/SoftwareTestingQuestions.assets/1667448360234.png">
+<meta name="twitter:image" content="https://itshare.work/image.assets/1655458551.png">
   
   
   
-  <title>软件测试基础面试题 - Echops-菜鸟进阶之路</title>
+  <title>MySQL备份和恢复 - Echops-菜鸟进阶之路</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -233,7 +233,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="软件测试基础面试题"></span>
+            <span id="subtitle" data-typed-text="MySQL备份和恢复"></span>
           
         </div>
 
@@ -244,8 +244,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-03 11:54" pubdate>
-          2022年11月3日 中午
+        <time datetime="2022-11-21 22:28" pubdate>
+          2022年11月21日 晚上
         </time>
       </span>
     
@@ -256,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k 字
+          792 字
         
       </span>
     
@@ -267,7 +267,7 @@
         
         
         
-          9 分钟
+          7 分钟
         
       </span>
     
@@ -313,12 +313,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">软件测试基础面试题</h1>
+            <h1 style="display: none">MySQL备份和恢复</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2022年11月10日 晚上
+                    本文最后更新于：2022年11月21日 晚上
                   
                 
               </p>
@@ -326,7 +326,18 @@
             
               <div class="markdown-body">
                 
-                <h1 id="APP测试"><a href="#APP测试" class="headerlink" title="APP测试"></a>APP测试</h1><h2 id="APP专项测试有哪些？"><a href="#APP专项测试有哪些？" class="headerlink" title="APP专项测试有哪些？"></a>APP专项测试有哪些？</h2><p>专项的测试方法，包括：兼容性测试、流量测试、电量测试、弱网络测试、稳定性测试、 安全测试和环境相关测试。<br>　 　第一：兼容性测试<br>　　针对App通常会考虑这些方面：<br>　　1） 操作系统版本<br>　　包括Andoird版本，iOS版本<br>　　2）屏幕分辨率<br>　　3）不同厂家的ROM<br>　　4) 网络类型<br>　　比如Wifi、3G、4G下的功能情况<br>　　 第二：流量测试<br>　　在 移动产品的测试中，很有必要对App使用的流量进行度量，大致来说，流量可以从用户使用的的相关性角度分为：一类是用户的操作直接导致的流量消耗；另一类是后台，即在用户没有直接使用情况下的流量消耗。<br>　　 第三：电量测试<br>　　在木器电池 技术没有取得巨大突破前提下，这方面始终会存在一些瓶颈，如果一些App架构设计的不好，或者代码偶缺陷，就可能导致电量消耗比较高，所以电量测试也是很重要的。<br>　 　第四：弱网络测试<br>　　 移动互联网产品相比PC互联网产品，有一个特点是前者使用的网络比较多样，除了Wif之外，很多时候是在移动网络下使用的，移动网络遇到的情况又比较复杂，比如地铁、隧道、体育场等。所以网络不稳定的情况是比较容易发生的，很多情况下App的一些问题是在复杂的网络情况下才会暴露，与其让用户发现和投诉这些问题，不如我们在测试阶段尽量模拟这样的网络情况，及早发现和修复这些问题。<br>　　 第五：稳定性测试<br>　　在保证基本功能正确基础之上，App的稳定性就显得非常重要，如果一个App经常出现闪退或者卡死，那么用户体验就会受到很大伤害，在有其他竞争产品的情况下很容易造成用户的流失。<br>　　 第六：安全测试<br>　　包括安装包的安全测试（能否反编译代码、安装包是否签名等）、敏感信息测试、软键盘劫持、账户安全、数据通信安全等。服务器端的 SQL注入测试、XSS跨站脚本攻击等。<br>　　 第七：环境相关的测试<br>　　在实际项目中，有一些缺陷我发现是和App所处的运行环境相关的，所以设计测试的时候，要多考虑这些场景，比如：<br>　 　1）干扰测试<br>　　收到 电话、收到 短信、收到通知栏消息、无电提示框弹出、第三方安全软件告警弹出。<br>　　2）权限测试<br>　　一些用户在实际使用App的时候回有意识阻止某些功能。例如有的用户感觉让某个App访问电话本或者相册可能泄漏隐私，就在手机中设置了禁止了该App访问相册的权限。<br>　　3）边界测试<br>　　手机环境本身也有其边界情况需要在测试中覆盖。常见的场景有：<br>　　可用存储空间过少、没有SD卡&#x2F;双SD卡、飞行模式、系统时间有误（晚于和早于标准时间）、第三方依赖（比如我们的App依赖第三方App，但是现在第三方App没有安装或者版本过低的测试情况）</p>
+                <h1 id="实战案例：特定数据库的备份脚本"><a href="#实战案例：特定数据库的备份脚本" class="headerlink" title="实战案例：特定数据库的备份脚本"></a>实战案例：特定数据库的备份脚本</h1><ul>
+<li>系统：centos8.5</li>
+<li>MySQL版本：8.0</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br>TIME=`date +%F_%H-%M-%S`<br><span class="hljs-meta prompt_"># </span><span class="language-bash">备份目录</span><br>DIR=/mysql_backup<br><span class="hljs-meta prompt_"># </span><span class="language-bash">备份数据库</span><br>DB=hellodb<br><span class="hljs-meta prompt_"># </span><span class="language-bash">数据库密码</span><br>PASSWD=123456<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">判断备份数据库目录是否存在</span><br>[ -d $DIR ] || mkdir $DIR<br><span class="hljs-meta prompt_"># </span><span class="language-bash">备份</span><br>mysqldump -uroot -p&quot;$PASSWD&quot; -F -E -R --triggers --single-transaction --master-data=2 --default-character-set=utf8mb4 -q -B $DB | gzip &gt; $&#123;DIR&#125;/$&#123;DB&#125;_$&#123;TIME&#125;.sql.gz<br></code></pre></td></tr></table></figure>
+
+<h1 id="实战案例：分库备份的实战脚本"><a href="#实战案例：分库备份的实战脚本" class="headerlink" title="实战案例：分库备份的实战脚本"></a>实战案例：分库备份的实战脚本</h1><ul>
+<li>系统：centos8.5</li>
+<li>MySQL版本：8.0</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>TIME=`<span class="hljs-built_in">date</span> +%F_%H-%M-%S`<br>DIR=/backup<br>PASS=123456<br>[ -d <span class="hljs-string">&quot;<span class="hljs-variable">$DIR</span>&quot;</span> ] || <span class="hljs-built_in">mkdir</span> <span class="hljs-variable">$DIR</span><br><span class="hljs-keyword">for</span> DB <span class="hljs-keyword">in</span> `mysql -uroot -p<span class="hljs-string">&quot;<span class="hljs-variable">$PASS</span>&quot;</span> -e <span class="hljs-string">&#x27;show databases&#x27;</span> | grep -Ev <span class="hljs-string">&quot;^Database|.*schema$&quot;</span>`;<span class="hljs-keyword">do</span><br>    mysqldump -uroot -p<span class="hljs-string">&quot;<span class="hljs-variable">$PASS</span>&quot;</span> -F --single-transaction --master-data=2 --default-character-set=utf8mb4 -q -B <span class="hljs-variable">$DB</span> | gzip &gt; <span class="hljs-variable">$&#123;DIR&#125;</span>/<span class="hljs-variable">$&#123;DB&#125;</span>_<span class="hljs-variable">$&#123;TIME&#125;</span>.sql.gz<br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -342,6 +353,16 @@
 <span class="category-chains">
   
   
+    
+      <span class="category-chain">
+        
+  <a href="/categories/shell%E8%84%9A%E6%9C%AC/" class="category-chain-item">shell脚本</a>
+  
+  
+
+      </span>
+    
+  
 </span>
 
     </div>
@@ -350,7 +371,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80/">#软件测试工程师面试基础</a>
+        <a href="/tags/MySQL%E5%9F%BA%E7%A1%80/">#MySQL基础</a>
       
     </div>
   
@@ -362,8 +383,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>软件测试基础面试题</div>
-      <div>https://itshare.work/2022/11/03/SoftwareTestingQuestions/</div>
+      <div>MySQL备份和恢复</div>
+      <div>https://itshare.work/2022/11/21/MySQL备份脚本/</div>
     </div>
     <div class="license-meta">
       
@@ -375,13 +396,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月3日</div>
+          <div>2022年11月21日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年11月10日</div>
+          <div>2022年11月21日</div>
         </div>
       
       
@@ -407,6 +428,23 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/15/http/" title="HTTP超文本传输协议">
+                        <span class="hidden-mobile">HTTP超文本传输协议</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 

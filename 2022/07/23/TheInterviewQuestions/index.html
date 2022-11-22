@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://itshare.work/image.assets/442587.jpg">
 <meta property="article:published_time" content="2022-07-23T12:57:17.000Z">
-<meta property="article:modified_time" content="2022-11-12T15:33:32.748Z">
+<meta property="article:modified_time" content="2022-11-20T03:59:09.278Z">
 <meta property="article:author" content="yuankun">
 <meta property="article:tag" content="hexo,theme,fluid,linux,ops,运维,分享">
 <meta name="twitter:card" content="summary_large_image">
@@ -256,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          2.7k 字
         
       </span>
     
@@ -267,7 +267,7 @@
         
         
         
-          16 分钟
+          23 分钟
         
       </span>
     
@@ -314,6 +314,14 @@
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">Linux运维面试葵花宝典</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年11月20日 中午
+                  
+                
+              </p>
             
             
               <div class="markdown-body">
@@ -374,6 +382,18 @@
 <p><img src="/../img/1662386034301.png" srcset="/img/loading.gif" lazyload alt="1662386034301"></p>
 <p><strong>面试题</strong><br>4.1 解释top命令每一行的意义<br>4.2 如果查看一个进程的是否是多线程<br>4.3 如果实现秒级的计划任务<br>4.4 说明cron计划任务的格式</p>
 <h1 id="iptables有几个表以及每个表有几个链？"><a href="#iptables有几个表以及每个表有几个链？" class="headerlink" title="iptables有几个表以及每个表有几个链？"></a>iptables有几个表以及每个表有几个链？</h1><p>五表五链</p>
+<h1 id="MySQL相关面试题"><a href="#MySQL相关面试题" class="headerlink" title="MySQL相关面试题"></a>MySQL相关面试题</h1><p> <strong>面试题: VARCHAR(50) 能存放几个 UTF8 编码的汉字？</strong> </p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scss">存放的汉字个数与版本相关。<br>mysql <span class="hljs-number">4.0</span>以下版本，<span class="hljs-built_in">varchar</span>(<span class="hljs-number">50</span>) 指的是 <span class="hljs-number">50</span> 字节，如果存放 UTF8 格式编码的汉字时（每个汉字<span class="hljs-number">3</span>字<br>节），只能存放<span class="hljs-number">16</span> 个。<br>mysql <span class="hljs-number">5.0</span>以上版本，<span class="hljs-built_in">varchar</span>(<span class="hljs-number">50</span>) 指的是 <span class="hljs-number">50</span> 字符，无论存放的是数字、字母还是 UTF8 编码的汉字，<br>都可以存放 <span class="hljs-number">50</span> 个。<br></code></pre></td></tr></table></figure>
+
+<p><strong>MyISAM与MyISAM 的区别</strong></p>
+<p><strong>面试题: InnoDB中一颗的B+树可以存放多少行数据？</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs routeros">假设定义一颗B+树高度为2，即一个根节点和若干叶子节点。那么这棵B+树的存放总行记录数=根节点指针数*<br>单个叶子记录的行数。这里先计算叶子节点，B+树中的单个叶子节点的大小为16K，假设每一条目为1K，那么<br>记录数即为16(16k/<span class="hljs-attribute">1K</span>=16)，然后计算非叶子节点能够存放多少个指针，假设主键ID为bigint类型，那么长<br>度为8字节，而指针大小在InnoDB中是设置为6个字节，这样加起来一共是14个字节。那么通过页大小/(主键<br>ID大小+指针大小），即16384/<span class="hljs-attribute">14</span>=1170个指针，所以一颗高度为2的B+树能存放16*1170=18720条这样的<br>记录。根据这个原理就可以算出一颗高度为3的B+树可以存放16<span class="hljs-number">*1170</span><span class="hljs-number">*1170</span>=21902400条记录。所以在<br>InnoDB中B+树高度一般为2-3层，它就能满足千万级的数据存储<br></code></pre></td></tr></table></figure>
+
+<p><strong>事务特性</strong></p>
+<p>ACID特性：<br>A：atomicity 原子性；整个事务中的所有操作要么全部成功执行，要么全部失败后回滚<br>C：consistency一致性；数据库总是从一个一致性状态转换为另一个一致性状态,类似于能量守恒定<br>律(N50周启皓语录)<br>I：Isolation隔离性；一个事务所做出的操作在提交之前，是不能为其它事务所见；隔离有多种隔离<br>级别，实现并发<br>D：durability持久性；一旦事务提交，其所做的修改会永久保存于数据库中</p>
+<p><strong>事务隔离级别</strong></p>
+<p><img src="/../image.assets/1668916687561.png" srcset="/img/loading.gif" lazyload alt="1668916687561"></p>
+<p><img src="/../image.assets/1668916735065.png" srcset="/img/loading.gif" lazyload alt="1668916735065"></p>
 
                 
               </div>
@@ -407,6 +427,11 @@
           <div>2022年7月23日</div>
         </div>
       
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年11月20日</div>
+        </div>
       
       
         <div class="license-meta-item">
