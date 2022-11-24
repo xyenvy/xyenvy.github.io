@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://itshare.work/image.assets/442587.jpg">
 <meta property="article:published_time" content="2022-07-23T12:57:17.000Z">
-<meta property="article:modified_time" content="2022-11-20T03:59:09.278Z">
+<meta property="article:modified_time" content="2022-11-24T11:04:22.688Z">
 <meta property="article:author" content="yuankun">
 <meta property="article:tag" content="hexo,theme,fluid,linux,ops,运维,分享">
 <meta name="twitter:card" content="summary_large_image">
@@ -256,7 +256,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          3.4k 字
         
       </span>
     
@@ -267,7 +267,7 @@
         
         
         
-          23 分钟
+          28 分钟
         
       </span>
     
@@ -318,7 +318,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2022年11月20日 中午
+                    本文最后更新于：2022年11月24日 晚上
                   
                 
               </p>
@@ -394,6 +394,23 @@
 <p><strong>事务隔离级别</strong></p>
 <p><img src="/../image.assets/1668916687561.png" srcset="/img/loading.gif" lazyload alt="1668916687561"></p>
 <p><img src="/../image.assets/1668916735065.png" srcset="/img/loading.gif" lazyload alt="1668916735065"></p>
+<p><strong>MySQL 主从数据不一致</strong><br><strong>造成主从不一致的原因</strong>**</p>
+<ul>
+<li>主库binlog格式为Statement，同步到从库执行后可能造成主从不一致。</li>
+<li>主库执行更改前有执行set sql_log_bin&#x3D;0，会使主库不记录binlog，从库也无法变更这部分数据。</li>
+<li>从节点未设置只读，误操作写入数据</li>
+<li>主库或从库意外宕机，宕机可能会造成binlog或者relaylog文件出现损坏，导致主从不一致</li>
+<li>主从实例版本不一致，特别是高版本是主，低版本为从的情况下，主数据库上面支持的功能，从数</li>
+<li>据库上面可能不支持该功能</li>
+<li>主从sql_mode 不一致</li>
+<li>MySQL自身bug导致</li>
+</ul>
+<p><strong>主从不一致修复方法</strong></p>
+<ul>
+<li>将从库重新实现<br>虽然这也是一种解决方法，但是这个方案恢复时间比较慢，而且有时候从库也是承担一部分的查询<br>操作的，不能贸然重建。</li>
+<li>使用percona-toolkit工具辅助<br>PT工具包中包含pt-table-checksum和pt-table-sync两个工具，主要用于检测主从是否一致以及修<br>复数据不一致情况。这种方案优点是修复速度快，不需要停止主从辅助，缺点是需要知识积累，需<br>要时间去学习，去测试，特别是在生产环境，还是要小心使用<br>关于使用方法，可以参考下面链接：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/feiren/p/7777218.html">https://www.cnblogs.com/feiren/p/7777218.html</a></li>
+<li>手动重建不一致的表<br>在从库发现某几张表与主库数据不一致，而这几张表数据量也比较大，手工比对数据不现实，并且<br>重做整个库也比较慢，这个时候可以只重做这几张表来修复主从不一致<br>这种方案缺点是在执行导入期间需要暂时停止从库复制，不过也是可以接受的</li>
+</ul>
 
                 
               </div>
@@ -430,7 +447,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年11月20日</div>
+          <div>2022年11月24日</div>
         </div>
       
       
