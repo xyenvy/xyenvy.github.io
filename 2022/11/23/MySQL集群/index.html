@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://itshare.work/image.assets/1669183196363.png">
 <meta property="article:published_time" content="2022-11-23T05:38:59.000Z">
-<meta property="article:modified_time" content="2022-11-25T09:51:44.001Z">
+<meta property="article:modified_time" content="2022-11-25T15:52:30.428Z">
 <meta property="article:author" content="yuankun">
 <meta property="article:tag" content="MySQL基础">
 <meta name="twitter:card" content="summary_large_image">
@@ -318,7 +318,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2022年11月25日 下午
+                    本文最后更新于：2022年11月25日 晚上
                   
                 
               </p>
@@ -432,7 +432,7 @@
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk">vim <span class="hljs-regexp">/etc/my</span>.cnf<br>[mysqld]<br>server-id=<span class="hljs-number">157</span><br>log-bin=<span class="hljs-regexp">/data/my</span>sql/slave2-bin<br><br><span class="hljs-comment"># 还原数据库</span><br>vim <span class="hljs-regexp">/data/</span>all.sql<br></code></pre></td></tr></table></figure>
 
 <p><img src="/../image.assets/1669346692481.png" srcset="/img/loading.gif" lazyload alt="1669346692481"></p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">mysql&gt; <span class="hljs-built_in">set</span> <span class="hljs-attribute">sql_log_bin</span>=0;<br>mysql&gt; source /data/all.sql<br>mysql&gt; <span class="hljs-built_in">set</span> <span class="hljs-attribute">sql_log_bin</span>=0;<br>mysql&gt; start slave;<br></code></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">mysql&gt; <span class="hljs-built_in">set</span> <span class="hljs-attribute">sql_log_bin</span>=0;<br>mysql&gt; source /data/all.sql<br>mysql&gt; <span class="hljs-built_in">set</span> <span class="hljs-attribute">sql_log_bin</span>=1;<br>mysql&gt; start slave;<br></code></pre></td></tr></table></figure>
 
 <h3 id="半同步复制"><a href="#半同步复制" class="headerlink" title="半同步复制"></a>半同步复制</h3><p><img src="/../image.assets/1669367459560.png" srcset="/img/loading.gif" lazyload alt="1669367459560"></p>
 <p>范例：centos7.9在MySQL5.7.38实现半同步复制</p>
