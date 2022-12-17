@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Redis一键安装脚本</title>
+    <link href="/2022/12/17/Redis%E4%B8%80%E4%BB%B6%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/"/>
+    <url>/2022/12/17/Redis%E4%B8%80%E4%BB%B6%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>script</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Linux从入门到放弃</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Centos系统yum源配置</title>
     <link href="/2022/12/17/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/"/>
     <url>/2022/12/17/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/</url>
@@ -138,7 +163,7 @@
     
     <categories>
       
-      <category>shell脚本</category>
+      <category>script</category>
       
     </categories>
     
@@ -188,7 +213,7 @@
     
     <categories>
       
-      <category>shell脚本</category>
+      <category>script</category>
       
     </categories>
     
@@ -642,6 +667,17 @@
     <url>/</url>
     
     <content type="html"><![CDATA[<span id="more"></span><h1 id="关于博客"><a href="#关于博客" class="headerlink" title="关于博客"></a>关于博客</h1><p>为什么我要搭建这个博客呢？ 因为生命在于折腾 因为平时学习查找资料的时候，偶尔会发现一些非常精致的个人网站，那个时候就在想，什么时候俺也要整一个，然后用来写博客 。无奈由于各种原因 (懒)，一直没有捡起来，后来总算是找到一个不错的应用，折腾着建起来了，也打算督促自己克服懒癌，来记录一些东西。</p>]]></content>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>script</title>
+    <link href="/"/>
+    <url>/</url>
+    
+    <content type="html"><![CDATA[]]></content>
     
   </entry>
   
