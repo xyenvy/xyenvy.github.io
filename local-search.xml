@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Centos系统yum源配置</title>
+    <link href="/2022/12/17/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/"/>
+    <url>/2022/12/17/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/</url>
+    
+    <content type="html"><![CDATA[<ul><li><p>系统<br>Centos7.9</p></li><li><p>步骤</p></li></ul><p>1.备份</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">[root@centos7-master ~]# mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak<br></code></pre></td></tr></table></figure><p>2.创建&#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo文件并复制如下内容</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs text">[base]<br>name=CentOS-$releasever - Base<br>baseurl=http://mirrors.163.com/centos/$releasever/os/$basearch/<br>        http://mirrors.aliyun.com/centos/$releasever/os/$basearch/<br>        http://mirrors.cloud.tencent.com/centos/$releasever/os/$basearch/<br>        http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/<br>        http://mirrors.huaweicloud.com/centos/$releasever/os/$basearch/<br>        http://mirror.centos.org/centos/$releasever/os/$basearch/<br>gpgcheck=0<br><br>#released updates <br>[updates]<br>name=CentOS-$releasever - Updates<br>baseurl=http://mirrors.163.com/centos/$releasever/updates/$basearch/<br>        http://mirrors.aliyun.com/centos/$releasever/updates/$basearch/<br>        http://mirrors.cloud.tencent.com/centos/$releasever/updates/$basearch/<br>        http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/<br>http://mirrors.huaweicloud.com/centos/$releasever/updates/$basearch/<br>        http://mirror.centos.org/centos/$releasever/updates/$basearch/<br>gpgcheck=0<br><br>#additional packages that may be useful<br>[extras]<br>name=CentOS-$releasever - Extras<br>baseurl=http://mirrors.163.com/centos/$releasever/extras/$basearch/<br>        http://mirrors.aliyun.com/centos/$releasever/extras/$basearch/<br>http://mirrors.cloud.tencent.com/centos/$releasever/extras/$basearch/<br>        http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/<br>        http://mirrors.huaweicloud.com/centos/$releasever/extras/$basearch/<br>http://mirror.centos.org/centos/$releasever/extras/$basearch/<br>gpgcheck=0<br><br>#additional packages that extend functionality of existing packages<br>[centosplus]<br>name=CentOS-$releasever - Plus<br>baseurl=http://mirrors.163.com/centos/$releasever/centosplus/$basearch/<br>        http://mirrors.aliyun.com/centos/$releasever/centosplus/$basearch/<br>        http://mirrors.cloud.tencent.com/centos/$releasever/centosplus/$basearch/<br>        http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/<br>        http://mirrors.huaweicloud.com/centos/$releasever/centosplus/$basearch/<br>http://mirror.centos.org/centos/$releasever/centosplus/$basearch/<br>gpgcheck=0<br>enabled=1<br></code></pre></td></tr></table></figure><p>3.清除缓存</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">yum clean all<br></code></pre></td></tr></table></figure><p>4.重新生成缓存</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">yum makecache<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Linux基础</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Linux从入门到放弃</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Redis集群和高可用</title>
     <link href="/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/"/>
     <url>/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/</url>
