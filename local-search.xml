@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>常用shell脚本</title>
+    <link href="/2023/01/11/%E5%B8%B8%E7%94%A8shell%E8%84%9A%E6%9C%AC/"/>
+    <url>/2023/01/11/%E5%B8%B8%E7%94%A8shell%E8%84%9A%E6%9C%AC/</url>
+    
+    <content type="html"><![CDATA[<h3 id="显示系统信息"><a href="#显示系统信息" class="headerlink" title="显示系统信息"></a>显示系统信息</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"></span><br><span class="language-bash">HOSTNAME=`hostname`</span><br>IP=`ip a show ens33 | grep &quot;inet&quot; | grep -v &quot;inet6&quot; | awk &#x27;&#123;print $2&#125;&#x27; | cut -d&#x27;/&#x27; -f1`<br>SYSTEM=`cat /etc/centos-release`<br>CORE=`uname -r`<br>CPU=`cat /proc/cpuinfo | grep &#x27;model name&#x27; |uniq | cut -d: -f2`<br>MEMORY=`free -mh | grep -i &quot;mem&quot; | awk &#x27;&#123;print$2&#125;&#x27;`<br>DISKNUM=`fdisk -l | grep -i &quot;/dev&quot; | grep -i &quot;disk&quot; | wc -l`<br>systemname=(&quot;HOSTNAME&quot; &quot;IP&quot; &quot;SYSTEM VERSION&quot; &quot;CORE VERSION&quot; &quot;CPU&quot; &quot;MEMORY SIZE&quot;)<br>systeminfo=(&quot;$HOSTNAME&quot; &quot;$IP&quot; &quot;$SYSTEM&quot; &quot;$CORE&quot; &quot;$CPU&quot; &quot;$MEMORY&quot;)<br>for s in `seq 1 $DISKNUM`;do<br>    eval DISK$s=`fdisk -l | grep -i &quot;/dev&quot; | grep -i &quot;disk&quot; | head -$s | tail -1|  awk &#x27;&#123;print $2$3$4&#125;&#x27; | cut -d&#x27;,&#x27; -f1`<br>    eval systeminfo[$(($s+5))]=&#x27;$&#x27;DISK$s<br>    systemname[$(($s+5))]=&quot;DISK$s SIZE&quot;<br>done<br>for i in $&#123;!systeminfo[*]&#125;;do<br>    echo &quot;--------------------------------------------------------------&quot;<br>    printf &quot;|%-15s| %-43s|\n&quot; &quot;$&#123;systemname[$i]&#125;&quot; &quot;$&#123;systeminfo[$i]&#125;&quot;<br>done<br>echo &quot;--------------------------------------------------------------&quot;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>shell脚本</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Linux从入门到放弃</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Nginx核心配置文件</title>
     <link href="/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"/>
     <url>/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</url>
