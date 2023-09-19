@@ -77,12 +77,12 @@ var _hmt = _hmt || [];
 <meta property="og:description" content="centos、ubuntu批量修改多台主机的root密码为随机密码" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xyenvy.github.io/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/" />
-<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/24.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-09-12T23:35:13+00:00" />
 <meta property="article:modified_time" content="2022-09-12T23:35:13+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/24.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" />
 <meta name="twitter:title" content="批量修改主机密码为随机字符"/>
 <meta name="twitter:description" content="centos、ubuntu批量修改多台主机的root密码为随机密码"/>
 
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "#!/bin/bash # 检查sshpass是否安装，没有安装则安装sshpass rpm -q sshpass \u0026\u003e /dev/null || yum install sshpass # 主机root用户密码 export SSHPASS=123456 # 主机地址 NET=192.168.179 # 主机地址 for i in {20..140};do { # 生成随机密码 PASS=`openssl rand -base64 9` # 链接远程主机并修改root用户密码 StrictHostKeyChecking=no 跳过检查 sshpass -e ssh -o StrictHostKeyChecking=no ${NET}.${i} \"echo root:${PASS} | chpasswd \u0026\u003e /dev/null\" # IP和密码重定向到文件中 echo $NET.$i:$PASS \u003e\u003e host.txt }\u0026 # 后台运行 done wait sshpass使用帮助\n[root@centos7 data]# sshpass --help sshpass: invalid option -- '-' Usage: sshpass [-f|-d|-p|-e] [-hV] command parameters -f filename Take password to use from file -d number Use number as file descriptor for getting password -p password Provide password as argument (security unwise) -e Password is passed as env-var \"SSHPASS\" With no parameters - password will be taken from stdin -P prompt Which string should sshpass search for to detect a password prompt -v Be verbose about what you're doing -h Show help (this screen) -V Print version information At most one of -f, -d, -p or -e should be used [root@centos7 data]# ",
   "wordCount" : "251",
   "inLanguage": "en",
-  "image":"http://oss.itshare.work/itshare-work-images/24.jpg","datePublished": "2022-09-12T23:35:13Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg","datePublished": "2022-09-12T23:35:13Z",
   "dateModified": "2022-09-12T23:35:13Z",
   "author":[{
     "@type": "Person",
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/24.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" alt="">
     
 </figure>
         <div class="post-content"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>#!/bin/bash
