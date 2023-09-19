@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>OpenVPN安装和使用 | Hopeful</title>
+<meta name="keywords" content="OpenVPN, vip, vpn">
+<meta name="description" content="OpenVPN 是Linux下开源VPN的应用，提供了良好的性能和友好的用户GUI;OpenVPN 是一个基于 OpenSSL 库的应用层 VPN 实现。和传统 VPN 相比，它的优点是简单易用">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="OpenVPN安装和使用" />
+<meta property="og:description" content="OpenVPN 是Linux下开源VPN的应用，提供了良好的性能和友好的用户GUI;OpenVPN 是一个基于 OpenSSL 库的应用层 VPN 实现。和传统 VPN 相比，它的优点是简单易用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/25.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-17T21:51:21+00:00" />
+<meta property="article:modified_time" content="2023-03-17T21:51:21+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/25.jpg" />
+<meta name="twitter:title" content="OpenVPN安装和使用"/>
+<meta name="twitter:description" content="OpenVPN 是Linux下开源VPN的应用，提供了良好的性能和友好的用户GUI;OpenVPN 是一个基于 OpenSSL 库的应用层 VPN 实现。和传统 VPN 相比，它的优点是简单易用"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "OpenVPN安装和使用",
+      "item": "https://xyenvy.github.io/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OpenVPN安装和使用",
+  "name": "OpenVPN安装和使用",
+  "description": "OpenVPN 是Linux下开源VPN的应用，提供了良好的性能和友好的用户GUI;OpenVPN 是一个基于 OpenSSL 库的应用层 VPN 实现。和传统 VPN 相比，它的优点是简单易用",
+  "keywords": [
+    "OpenVPN", "vip", "vpn"
+  ],
+  "articleBody": "准备部署OpenVPN环境 部署环境如下 共四台主机 1 openvpn server： CentOS 7.9 ens33:192.168.1.110/24 NAT模式,模拟公网IP ens36:172.30.0.1/24 仅主机模式,私网IP 2 内网主机两台 第一台主机 ens33172.30.0.100/24 仅主机模式,私网IP，无需网关 第二台主机 ens33172.30.0.200/24 仅主机模式,私网IP，无需网关\n3 Windows 客户端 Windows 10/11\n安装 OpenVPN 安装 OpenVPN 和证书工具 #OpenVPN服务器端 [root@openvpn-centos7 ~]#yum -y install openvpn #证书管理工具 [root@openvpn-centos7 ~]#yum -y install easy-rsa # 安装版本 [root@openvpn-centos7 ~]# yum list openvpn Loaded plugins: fastestmirror Loading mirror speeds from cached hostfile * base: mirrors.ustc.edu.cn * epel: ftp.riken.jp * extras: mirrors.163.com * updates: mirrors.ustc.edu.cn Installed Packages openvpn.x86_64 2.4.12-1.el7 @epel 准备相关配置文件 # 生成服务器配置文件 [root@openvpn-centos7 ~]# cp /usr/share/doc/openvpn-2.4.12/sample/sample-config-files/server.conf /etc/openvpn # 准备证书颁发相关文件 [root@openvpn-centos7 ~]# cp -r /usr/share/easy-rsa/ /etc/openvpn/easy-rsa-server # 准备颁发证书相关变量的配置文件 [root@openvpn-centos7 ~]# cp /usr/share/doc/easy-rsa-3.0.8/vars.example /etc/openvpn/easy-rsa-server/3/vars # 建议修改给CA和OpenVPN服务器颁发的证书的有效期,可适当加长 [root@openvpn-centos7 ~]# vim /etc/openvpn/easy-rsa-server/3/vars #CA的证书默认有效期为10年,可以适当延长,比如:36500天 #set_var EASYRSA_CA_EXPIRE 3650 set_var EASYRSA_CA_EXPIRE 36500 #服务器证书默为为825天,可适当加长,比如:3650天 #set_var EASYRSA_CERT_EXPIRE 825 #将上面行修改为下面 set_var EASYRSA_CERT_EXPIRE 3650 准备证书相关文件 初始化PKI和CA颁发机构环境 初始化PKI生成PKI相关目录和文件 # 进入该目录下 [root@openvpn-centos7 3]# pwd /etc/openvpn/easy-rsa-server/3 #初始化数据,在当前目录下生成pki目录及相关文件 [root@openvpn-centos7 3]# ./easyrsa init-pki Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars init-pki complete; you may now create a CA or requests. Your newly created PKI dir is: /etc/openvpn/easy-rsa-server/3/pki [root@openvpn-centos7 3]# tree . ├── easyrsa ├── openssl-easyrsa.cnf ├── pki #生成一个新目录及相关文件 │ ├── openssl-easyrsa.cnf │ ├── private │ ├── reqs │ └── safessl-easyrsa.cnf ├── vars └── x509-types ├── ca ├── client ├── code-signing ├── COMMON ├── email ├── kdc ├── server └── serverClient 4 directories, 13 files 创建 CA 机构环境 # 进入该目录下 [root@openvpn-centos7 3]# pwd /etc/openvpn/easy-rsa-server/3 [root@openvpn-centos7 3]# tree pki/ pki/ ├── openssl-easyrsa.cnf ├── private ├── reqs └── safessl-easyrsa.cnf 2 directories, 2 files [root@openvpn-centos7 3]# ./easyrsa build-ca nopass # nopass 不需要密码 Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars Using SSL: openssl OpenSSL 1.0.2k-fips 26 Jan 2017 Generating RSA private key, 2048 bit long modulus ....+++ ......+++ e is 65537 (0x10001) You are about to be asked to enter information that will be incorporated into your certificate request. What you are about to enter is what is called a Distinguished Name or a DN. There are quite a few fields but you can leave some blank For some fields there will be a default value, If you enter '.', the field will be left blank. ----- Common Name (eg: your user, host, or server name) [Easy-RSA CA]: # 回车接受默认值 CA creation complete and you may now import and sign cert requests. Your new CA certificate file for publishing is at: /etc/openvpn/easy-rsa-server/3/pki/ca.crt #生成自签名的证书文件 [root@openvpn-centos7 3]#tree pki pki ├── ca.crt #生成的自签名的证书文件 ├── certs_by_serial ├── index.txt ├── index.txt.attr ├── issued ├── openssl-easyrsa.cnf ├── private │ └── ca.key #生成的私钥文件 ├── renewed │ ├── certs_by_serial │ ├── private_by_serial │ └── reqs_by_serial ├── reqs ├── revoked │ ├── certs_by_serial │ ├── private_by_serial │ └── reqs_by_serial ├── safessl-easyrsa.cnf └── serial 12 directories, 7 files 创建服务端证书申请 # 进入该目录 [root@openvpn-centos7 3]# pwd /etc/openvpn/easy-rsa-server/3 [root@openvpn-centos7 3]# [root@openvpn-centos7 3]# ./easyrsa gen-req server nopass Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars Using SSL: openssl OpenSSL 1.0.2k-fips 26 Jan 2017 Generating a 2048 bit RSA private key ..........................................................................................................................................................+++ ......................+++ writing new private key to '/etc/openvpn/easy-rsa-server/3/pki/easy-rsa-1605.nDSXm1/tmp.2RnHiQ' ----- You are about to be asked to enter information that will be incorporated into your certificate request. What you are about to enter is what is called a Distinguished Name or a DN. There are quite a few fields but you can leave some blank For some fields there will be a default value, If you enter '.', the field will be left blank. ----- Common Name (eg: your user, host, or server name) [server]: #接受Common Name的默认 值,直接回车 Keypair and certificate request completed. Your files are: req: /etc/openvpn/easy-rsa-server/3/pki/reqs/server.req #生成请求文件 key: /etc/openvpn/easy-rsa-server/3/pki/private/server.key #生成私钥文件 [root@openvpn-centos7 3]#tree pki pki ├── ca.crt ├── certs_by_serial ├── index.txt ├── index.txt.attr ├── issued ├── openssl-easyrsa.cnf ├── private │ ├── ca.key │ └── server.key #生成私钥文件 ├── renewed │ ├── certs_by_serial │ ├── private_by_serial │ └── reqs_by_serial ├── reqs │ └── server.req #生成请求文件 ├── revoked │ ├── certs_by_serial │ ├── private_by_serial │ └── reqs_by_serial ├── safessl-easyrsa.cnf └── serial 12 directories, 9 files 颁发服务端证书 颁发服务端证书 #将上面server.req的申请,颁发server类型的证书 [root@openvpn-centos7 3]#cd /etc/openvpn/easy-rsa-server/3 #第一个server表示证书的类型,第二个server表示请求文件名的前缀 [root@openvpn-centos7 3]# ./easyrsa sign server server Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars Using SSL: openssl OpenSSL 1.0.2k-fips 26 Jan 2017 You are about to sign the following certificate. Please check over the details shown below for accuracy. Note that this request has not been cryptographically verified. Please be sure it came from a trusted source or that you have verified the request checksum with the sender. Request subject, to be signed as a server certificate for 3650 days: subject= commonName = server Type the word 'yes' to continue, or any other input to abort. Confirm request details: yes # 输入yes Using configuration from /etc/openvpn/easy-rsa-server/3/pki/easy-rsa-1634.ZCYI5M/tmp.2SsU9O Check that the request matches the signature Signature ok The Subject's Distinguished Name is as follows commonName :ASN.1 12:'server' Certificate is to be certified until Mar 15 01:27:03 2033 GMT (3650 days) Write out database with 1 new entries Data Base Updated Certificate created at: /etc/openvpn/easy-rsa-server/3/pki/issued/server.crt #生 成服务器证书文件 验证结果 [root@openvpn-centos7 3]# tree pki/ pki/ ├── ca.crt ├── certs_by_serial │ └── EAD7A4786FA803EDD9A7166D0EC694C3.pem #生成的服务器证书文件 ├── index.txt ├── index.txt.attr ├── index.txt.attr.old ├── index.txt.old ├── issued │ └── server.crt #生成的服务器证书文件 ├── openssl-easyrsa.cnf ├── private │ ├── ca.key │ └── server.key ├── renewed │ ├── certs_by_serial │ ├── private_by_serial │ └── reqs_by_serial ├── reqs │ └── server.req ├── revoked │ ├── certs_by_serial │ ├── private_by_serial │ └── reqs_by_serial ├── safessl-easyrsa.cnf ├── serial └── serial.old 12 directories, 14 files 创建 Diffie-Hellman 密钥 创建 Diffie-Hellman 密钥 [root@openvpn-centos7 3]# ./easyrsa gen-dh Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars Using SSL: openssl OpenSSL 1.0.2k-fips 26 Jan 2017 Generating DH parameters, 2048 bit long safe prime, generator 2 This is going to take a long time ...............................................................................................................................................................................+. # 得等一会 DH parameters of size 2048 created at /etc/openvpn/easy-rsa-server/3/pki/dh.pem #查看生成的文件 [root@openvpn-centos7 3]# ll pki/dh.pem -rw------- 1 root root 424 Mar 18 09:34 pki/dh.pem [root@openvpn-centos7 3]# 准备客户端证书环境 上面服务端证书配置完成，下面是配置客户端证书\n[root@openvpn-centos7 /]# cp -a /usr/share/easy-rsa/ /etc/openvpn/easy-rsa-client # 进入该目录下 [root@openvpn-centos7 3]# pwd /etc/openvpn/easy-rsa-client/3 #生成证书申请所需目录pki和文件 [root@openvpn-centos7 3]# ./easyrsa init-pki init-pki complete; you may now create a CA or requests. Your newly created PKI dir is: /etc/openvpn/easy-rsa-client/3/pki 创建客户端证书申请 # 进入该目录下 [root@openvpn-centos7 3]# pwd /etc/openvpn/easy-rsa-client/3 #生成客户端用户的证书申请,dev用户 [root@openvpn-centos7 3]# ./easyrsa gen-req dev nopass Using SSL: openssl OpenSSL 1.0.2k-fips 26 Jan 2017 Generating a 2048 bit RSA private key ......................................................+++ .........................................................................................................................................................................................................+++ writing new private key to '/etc/openvpn/easy-rsa-client/3/pki/easy-rsa-1749.UROzYa/tmp.HqONRu' ----- You are about to be asked to enter information that will be incorporated into your certificate request. What you are about to enter is what is called a Distinguished Name or a DN. There are quite a few fields but you can leave some blank For some fields there will be a default value, If you enter '.', the field will be left blank. ----- Common Name (eg: your user, host, or server name) [dev]: # 回车接受默认值 Keypair and certificate request completed. Your files are: req: /etc/openvpn/easy-rsa-client/3/pki/reqs/dev.req #私钥文件 key: /etc/openvpn/easy-rsa-client/3/pki/private/dev.key #证书申请文件 #生成两个新文件 [root@openvpn-centos7 3]# tree . ├── easyrsa ├── openssl-easyrsa.cnf ├── pki │ ├── openssl-easyrsa.cnf │ ├── private │ │ └── dev.key #私钥文件 │ ├── reqs │ │ └── dev.req #证书申请文件 │ └── safessl-easyrsa.cnf └── x509-types ├── ca ├── client ├── code-signing ├── COMMON ├── email ├── kdc ├── server └── serverClient 4 directories, 14 files 颁发客户端证书 # 进入该目录下 [root@openvpn-centos7 3]# pwd /etc/openvpn/easy-rsa-server/3 [root@openvpn-centos7 3]# [root@openvpn-centos7 3]# ./easyrsa import-req /etc/openvpn/easy-rsa-client/3/pki/reqs/dev.req dev Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars Using SSL: openssl OpenSSL 1.0.2k-fips 26 Jan 2017 The request has been successfully imported with a short name of: dev You may now use this name to perform signing operations on this request. [root@openvpn-centos7 3]# tree pki/ pki/ ├── ca.crt ├── certs_by_serial │ └── EAD7A4786FA803EDD9A7166D0EC694C3.pem ├── dh.pem ├── index.txt ├── index.txt.attr ├── index.txt.attr.old ├── index.txt.old ├── issued │ └── server.crt ├── openssl-easyrsa.cnf ├── private │ ├── ca.key │ └── server.key ├── renewed │ ├── certs_by_serial │ ├── private_by_serial │ └── reqs_by_serial ├── reqs │ ├── dev.req\t# 导入的文件 │ └── server.req ├── revoked │ ├── certs_by_serial │ ├── private_by_serial │ └── reqs_by_serial ├── safessl-easyrsa.cnf ├── serial └── serial.old 12 directories, 16 files #修改给客户端颁发的证书的有效期 [root@openvpn-centos7 3]##vim vars #建议修改给客户端颁发证书的有效期,可适当减少,比如:90天 #set_var EASYRSA_CERT_EXPIRE 825 #将上面行修改为下面 set_var EASYRSA_CERT_EXPIRE 90 #颁发客户端证书 [root@openvpn-centos7 3]# ./easyrsa sign client dev Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars Using SSL: openssl OpenSSL 1.0.2k-fips 26 Jan 2017 You are about to sign the following certificate. Please check over the details shown below for accuracy. Note that this request has not been cryptographically verified. Please be sure it came from a trusted source or that you have verified the request checksum with the sender. Request subject, to be signed as a client certificate for 3650 days: subject= commonName = dev Type the word 'yes' to continue, or any other input to abort. Confirm request details: yes # 输入yes Using configuration from /etc/openvpn/easy-rsa-server/3/pki/easy-rsa-1998.yxi0PJ/tmp.IJUwSd Check that the request matches the signature Signature ok The Subject's Distinguished Name is as follows commonName :ASN.1 12:'dev' Certificate is to be certified until Mar 15 01:51:32 2033 GMT (3650 days) Write out database with 1 new entries Data Base Updated Certificate created at: /etc/openvpn/easy-rsa-server/3/pki/issued/dev.crt #证书文件 将CA和服务器证书相关文件复制到服务器相应的目录 [root@openvpn-centos7 3]# mkdir /etc/openvpn/certs [root@openvpn-centos7 3]# cp /etc/openvpn/easy-rsa-server/3/pki/ca.crt /etc/openvpn/certs/ [root@openvpn-centos7 3]# cp /etc/openvpn/easy-rsa-server/3/pki/issued/server.crt /etc/openvpn/certs/ [root@openvpn-centos7 3]# cp /etc/openvpn/easy-rsa-server/3/pki/private/server.key [root@openvpn-centos7 3]# cp /etc/openvpn/easy-rsa-server/3/pki/dh.pem /etc/openvpn/certs/ [root@openvpn-centos7 3]# ll /etc/openvpn/certs/ total 20 -rw------- 1 root root 1176 Mar 18 09:54 ca.crt -rw------- 1 root root 424 Mar 18 09:57 dh.pem -rw------- 1 root root 4552 Mar 18 09:56 server.crt -rw------- 1 root root 1704 Mar 18 09:55 server.key 将客户端私钥与证书相关文件复制到服务器相关的目录 [root@openvpn-centos7 3]# mkdir /etc/openvpn/client/dev [root@openvpn-centos7 3]# cp /etc/openvpn/easy-rsa-server/3/pki/ca.crt /etc/openvpn/easy-rsa-server/3/pki/issued/dev.crt /etc/openvpn/easy-rsa-server/3/pki/reqs/dev.req /etc/openvpn/client/dev/ [root@openvpn-centos7 3]# ll /etc/openvpn/client/dev/ total 16 -rw------- 1 root root 1176 Mar 18 10:01 ca.crt -rw------- 1 root root 4425 Mar 18 10:01 dev.crt -rw------- 1 root root 883 Mar 18 10:01 dev.req [root@openvpn-centos7 3]# 准备 OpenVPN 服务器配置文件 ;local a.b.c.d #本机监听IP,默认为本机所有IP port 1194 #端口 ;proto tcp #协议,生产推荐使用TCP proto udp #默认协议udp ;dev tap #创建以太网隧道设备，tap设备实现以太网帧通过Openvpn隧道，可提供非IP协议如 IPX和AppleTalk等的支持，tap等当于一个以太网设备，它操作第二层数据包如以太网数据帧。 dev tun #创建IP路由隧道，生产推存使用tun.互联网使用tun,一个tun设备大多时候被用于基 于IP协议的通讯。tun模拟了网络层设备，操作第三层数据包比如IP数据封包。 ;dev-node MyTap #TAP-Win32的设备驱动。非windows系统不需要 ca ca.crt #ca证书文件 cert server.crt #服务器证书文件 key server.key #服务器私钥文件 dh dh2048.pem #dh参数文件 ;topology subnet server 10.8.0.0 255.255.255.0 #客户端连接后自动分配的IP网段，默认会给服务器分配此网段的第 一个IP将做为客户端的网关,注意不要和内网网段相同 ifconfig-pool-persist ipp.txt #记录客户端和虚拟ip地址分配的文件 ;server-bridge 10.8.0.4 255.255.255.0 10.8.0.50 10.8.0.100 #配置网桥模式，无需配置, 建议注释 ;server-bridge ;push \"route 192.168.10.0 255.255.255.0\" #推送给客户端的到达服务器后面网段的静态路由， 网关是服务器地址10.8.0.1 ;push \"route 192.168.10.100 255.255.255.255\" #用255.255.255.255可实现只能访问内网单个 主机的功能,比如:jumpserver ;push \"route 192.168.20.0 255.255.255.0\" #推送路由信息到客户端，以允许客户端能够连接到 服务器背后的其它私有网络 ;client-config-dir ccd #为特定客户端添加路由信息，此路由是客户端后面的网段而非服务端的网 段，无需设置 ;route 192.168.40.128 255.255.255.248 ;client-config-dir ccd ;route 10.9.0.0 255.255.255.252 ;learn-address ./script #指定外部脚本文件，实现创建不同组的iptables规 则，无需配置 ;push \"redirect-gateway def1 bypass-dhcp\" #启用此配置后客户端所有流量都将通过VPN服务器进 行转发，因此生产一般无需配置此项 ;push \"dhcp-option DNS 208.67.222.222\" #推送DNS服务器地址，无需配置 ;push \"dhcp-option DNS 208.67.220.220\" ;client-to-client #允许不同的客户端直接通信,不安全,生产环境一般无 需配置 ;duplicate-cn #多个用户共用一个证书，一般用于测试环境，生产环境建议一个用户一个证 书,无需开启 keepalive 10 120 #设置服务端活动的检测的间隔和超时时间，每隔10秒ping一次，120秒没有 回应则认为已经断线 tls-auth ta.key 0 #访止DoS等攻击的安全增强配置,服务器和每个客户端都需要拥有此密钥文 件。第二个参数在服务器端为0，客户端为1 cipher AES-256-CBC #加密算法 ;compress lz4-v2 #启用Openvpn2.4.X新版压缩算法 ;push \"compress lz4-v2\" #推送客户端使用新版压缩算法,和下面的comp-lzo不要同时使用 ;comp-lzo #旧户端兼容的压缩配置，需要客户端配置开启压缩,openvpn2.4.X等新版可以不 用开启 ;max-clients 100 #最多支持的客户端数量 ;user nobody #指定openvpn服务的用户 ;group nobody #指定openvpn服务的组 persist-key #重启服务时默认会重新读取key文件，开启此配置后保持使用第一次的key文件, 生产环境无需开启 persist-tun #Don’t close and reopen TUN/TAP device or run up/down scripts across SIGUSR1 or --ping-restart restarts,生产环境建议无需开启 status openvpn-status.log #服务器状态记录文件，每分钟记录一次相关信息 ;log openvpn.log #第一种日志记录方式,并指定日志路径，log会在openvpn启动的时候清 空日志文件,不建议使用 ;log-append openvpn.log #第二种日志记录方式,并指定日志路径，重启openvpn后在之前的日志后 面追加新的日志,生产环境建议使用 verb 3 #设置日志级别，0-9，级别越高记录的内容越详细,0 表示静默运行，只记 录致命错误,4 表示合理的常规用法,5 和 6 可以帮助调试连接错误。9 表示极度冗余，输出非常详细的日志 信息 ;mute 20 #对相同类别的信息只记录前20条到日志文件中 explicit-exit-notify 1 #当服务端重启后通知客户端自动重新连接服务器，此项配置仅能用于udp模 式，tcp模式无需配置即能实现重新连接功能,且开启此项后tcp配置后将导致openvpn服务无法启动,所以 tcp时必须不能开启此项 script-security 3 # 允许使用自定义脚本 auth-user-pass-verify /etc/openvpn/checkpsw.sh via-env #指定自定义脚本路径 username-as-common-name #开启用户密码验证 client-cert-not-required #只支持用户和密码方式验证,不支持证书,无此配置表示需要证书和用户密 码多种验证 修改服务器端配置文件 [root@openvpn-centos7 openvpn]# grep '^[a-Z].*' /etc/openvpn/server.conf port 1194 proto tcp dev tun ca /etc/openvpn/certs/ca.crt cert /etc/openvpn/certs/server.crt key /etc/openvpn/certs/server.key # This file should be kept secret dh /etc/openvpn/certs/dh.pem server 10.8.0.0 255.255.255.0 ifconfig-pool-persist ipp.txt push \"route 172.30.0.0 255.255.255.0\" keepalive 10 120 tls-auth ta.key 0 # This file is secret cipher AES-256-CBC compress lz4-v2 push \"compress lz4-v2\" max-clients 2048 user openvpn group openvpn persist-key persist-tun status /var/log/openvpn/openvpn-status.log log-append /var/log/openvpn/openvpn.log verb 3 mute 20 explicit-exit-notify 1 [root@openvpn-centos7 openvpn]# #准备目志相关目录 [root@openvpn-centos7 openvpn]# getent passwd openvpn openvpn❌998:996:OpenVPN:/etc/openvpn:/sbin/nologin [root@openvpn-centos7 openvpn]# mkdir /var/log/openvpn [root@openvpn-centos7 openvpn]# chown openvpn.openvpn /var/log/openvpn [root@openvpn-centos7 openvpn]# ll -d /var/log/openvpn drwxr-xr-x 2 openvpn openvpn 6 Mar 18 10:16 /var/log/openvpn [root@openvpn-centos7 openvpn]# 启动 OpenVPN 服务 [root@openvpn-centos7 server]# systemctl enable --now openvpn@server # 启动报如下错误请在终端执行该命令 openvpn --genkey --secret /etc/openvpn/ta.key Sat Mar 18 11:05:32 2023 WARNING: cannot stat file 'ta.key': No such file or directory (errno=2) Options error: --tls-auth fails with 'ta.key': No such file or directory (errno=2) Options error: Please correct these errors. Use --help for more information. # 查看状态 [root@openvpn-centos7 server]# systemctl status openvpn@server ● openvpn@server.service - OpenVPN Robust And Highly Flexible Tunneling Application On server Loaded: loaded (/usr/lib/systemd/system/openvpn@.service; enabled; vendor preset: disabled) Active: active (running) since Sat 2023-03-18 11:23:23 CST; 1min 59s ago Main PID: 2769 (openvpn) Status: \"Initialization Sequence Completed\" CGroup: /system.slice/system-openvpn.slice/openvpn@server.service └─2769 /usr/sbin/openvpn --cd /etc/openvpn/ --config server.conf Mar 18 11:23:23 openvpn-centos7 systemd[1]: Starting OpenVPN Robust And Highly Flexible Tunneling Application On server... Mar 18 11:23:23 openvpn-centos7 systemd[1]: Started OpenVPN Robust And Highly Flexible Tunneling Application On server 准备 OpenVPN 客户端配置文件 客户端默认范例配置文件说明 [root@openvpn-centos7 server]#grep '^[[:alpha:]].*' /usr/share/doc/openvpn/sample/sample- config-files/client.conf client #指明客户端 dev tun #指定和服务端一致的接口类型 proto udp #指定和服务端一致的协议类型 remote my-server-1 1194 #服务器端的ip或FQDN及端口 resolv-retry infinite #指定服务器端FQDN而非IP时，当客户端重新连接后会重新解FQDN对应的IP nobind #客户端不绑定监听端口，随机打开端口连接到服务端的端口 persist-key persist-tun ca ca.crt cert client.crt key client.key remote-cert-tls server #使用服务器证书校验方式 tls-auth ta.key 1 #安全加强 cipher AES-256-CBC verb 3 生成客户端用户的配置文件 #生成客户端文件,文件后缀必须为.ovpn [root@openvpn-centos7 server]#grep '^[[:alpha:]].*' /usr/share/doc/openvpn/sample/sample- config-files/client.conf \u003e /etc/openvpn/client/wangxiaochun/client.ovpn #修改配置文件,内容如下 [root@openvpn-centos7 server]#vim /etc/openvpn/client/wangxiaochun/client.ovpn [root@openvpn-centos7 server]#cat /etc/openvpn/client/wangxiaochun/client.ovpn client dev tun proto tcp remote 192.1681.110 1194 #生产中为OpenVPN公网IP或者FQDN resolv-retry infinite nobind #persist-key #persist-tun ca ca.crt cert dev.crt key dev.key remote-cert-tls server #tls-auth ta.key 1 cipher AES-256-CBC verb 3 #此值不能随意指定,否则无法通信 compress lz4-v2 #此项在OpenVPN2.4.X版本使用,需要和服务器端保持一致,如不指定,默认使用 comp-lz压缩 实现 OpenVPN 客户端 Windows 客户端安装省略 Windows 客户端配置准备 保存证书到openvpn 客户端安装目录\n#在服务器打包证书并下载发送给windows客户端 [root@openvpn-centos7 dev]# pwd /etc/openvpn/client/dev [root@openvpn-centos7 dev]# ll total 20 -rw------- 1 root root 1176 Mar 18 10:01 ca.crt -rw------- 1 root root 4425 Mar 18 10:01 dev.crt -rw-r--r-- 1 root root 235 Mar 18 11:35 dev.ovpn -rw------- 1 root root 883 Mar 18 10:01 dev.req [root@openvpn-centos7 dev]# # 放置到windows客户端默认安装目录下 C:\\Program Files\\OpenVPN\\config 目录 实现访问VPN服务器的内网主机 #在服务器开启ip_forward转发功能 [root@openvpn-centos7 dev]#echo net.ipv4.ip_forward = 1 \u003e\u003e /etc/sysctl.conf [root@openvpn-centos7 dev]#sysctl -p net.ipv4.ip_forward = 1 配置实现内网服务器回应外网的请求的路由 #阿里云服务器不支持修改路由 [root@web1 ~]#route add -net 10.8.0.0/24 gw 172.30.0.1 在OpenVPN服务器配置 iptables 规则 #添加SNAT规则 #方法1 [root@openvpn-centos7 ~]#echo 'iptables -t nat -A POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j MASQUERADE' \u003e\u003e /etc/rc.d/rc.local #方法2 [root@openvpn-centos7 ~]#echo 'iptables -t nat -A POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to-source 172.30.0.1' \u003e\u003e /etc/rc.d/rc.local 吊销指定的用户的证书 [root@openvpn-centos7 ~]# cd /etc/openvpn/easy-rsa-server/3 [root@openvpn-centos7 3]#./easyrsa revoke dev ",
+  "wordCount" : "5169",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/25.jpg","datePublished": "2023-03-17T21:51:21Z",
+  "dateModified": "2023-03-17T21:51:21Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                OpenVPN安装和使用
+            </h1>
+            <div class="post-description">
+                OpenVPN 是Linux下开源VPN的应用，提供了良好的性能和友好的用户GUI;OpenVPN 是一个基于 OpenSSL 库的应用层 VPN 实现。和传统 VPN 相比，它的优点是简单易用
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023-03-17
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>5169字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>11分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/openvpn/" style="color: var(--secondary)!important;">OpenVPN</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/25.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%87%86%e5%a4%87%e9%83%a8%e7%bd%b2openvpn%e7%8e%af%e5%a2%83" aria-label="准备部署OpenVPN环境">准备部署OpenVPN环境</a><ul>
+                        
+                <li>
+                    <a href="#%e9%83%a8%e7%bd%b2%e7%8e%af%e5%a2%83%e5%a6%82%e4%b8%8b" aria-label="部署环境如下">部署环境如下</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85-openvpn" aria-label="安装 OpenVPN">安装 OpenVPN</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85-openvpn-%e5%92%8c%e8%af%81%e4%b9%a6%e5%b7%a5%e5%85%b7" aria-label="安装 OpenVPN 和证书工具">安装 OpenVPN 和证书工具</a></li>
+                <li>
+                    <a href="#%e5%87%86%e5%a4%87%e7%9b%b8%e5%85%b3%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="准备相关配置文件">准备相关配置文件</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%87%86%e5%a4%87%e8%af%81%e4%b9%a6%e7%9b%b8%e5%85%b3%e6%96%87%e4%bb%b6" aria-label="准备证书相关文件">准备证书相关文件</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%9d%e5%a7%8b%e5%8c%96pki%e5%92%8cca%e9%a2%81%e5%8f%91%e6%9c%ba%e6%9e%84%e7%8e%af%e5%a2%83" aria-label="初始化PKI和CA颁发机构环境">初始化PKI和CA颁发机构环境</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%9d%e5%a7%8b%e5%8c%96pki%e7%94%9f%e6%88%90pki%e7%9b%b8%e5%85%b3%e7%9b%ae%e5%bd%95%e5%92%8c%e6%96%87%e4%bb%b6" aria-label="初始化PKI生成PKI相关目录和文件">初始化PKI生成PKI相关目录和文件</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba-ca-%e6%9c%ba%e6%9e%84%e7%8e%af%e5%a2%83" aria-label="创建 CA 机构环境">创建 CA 机构环境</a></li>
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba%e6%9c%8d%e5%8a%a1%e7%ab%af%e8%af%81%e4%b9%a6%e7%94%b3%e8%af%b7" aria-label="创建服务端证书申请">创建服务端证书申请</a></li>
+                <li>
+                    <a href="#%e9%a2%81%e5%8f%91%e6%9c%8d%e5%8a%a1%e7%ab%af%e8%af%81%e4%b9%a6" aria-label="颁发服务端证书">颁发服务端证书</a><ul>
+                        
+                <li>
+                    <a href="#%e9%a2%81%e5%8f%91%e6%9c%8d%e5%8a%a1%e7%ab%af%e8%af%81%e4%b9%a6-1" aria-label="颁发服务端证书">颁发服务端证书</a></li>
+                <li>
+                    <a href="#%e9%aa%8c%e8%af%81%e7%bb%93%e6%9e%9c" aria-label="验证结果">验证结果</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba-diffie-hellman-%e5%af%86%e9%92%a5" aria-label="创建 Diffie-Hellman 密钥">创建 Diffie-Hellman 密钥</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba-diffie-hellman-%e5%af%86%e9%92%a5-1" aria-label="创建 Diffie-Hellman 密钥">创建 Diffie-Hellman 密钥</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%87%86%e5%a4%87%e5%ae%a2%e6%88%b7%e7%ab%af%e8%af%81%e4%b9%a6%e7%8e%af%e5%a2%83" aria-label="准备客户端证书环境">准备客户端证书环境</a></li>
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba%e5%ae%a2%e6%88%b7%e7%ab%af%e8%af%81%e4%b9%a6%e7%94%b3%e8%af%b7" aria-label="创建客户端证书申请">创建客户端证书申请</a></li>
+                <li>
+                    <a href="#%e9%a2%81%e5%8f%91%e5%ae%a2%e6%88%b7%e7%ab%af%e8%af%81%e4%b9%a6" aria-label="颁发客户端证书">颁发客户端证书</a></li>
+                <li>
+                    <a href="#%e5%b0%86ca%e5%92%8c%e6%9c%8d%e5%8a%a1%e5%99%a8%e8%af%81%e4%b9%a6%e7%9b%b8%e5%85%b3%e6%96%87%e4%bb%b6%e5%a4%8d%e5%88%b6%e5%88%b0%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%9b%b8%e5%ba%94%e7%9a%84%e7%9b%ae%e5%bd%95" aria-label="将CA和服务器证书相关文件复制到服务器相应的目录">将CA和服务器证书相关文件复制到服务器相应的目录</a></li>
+                <li>
+                    <a href="#%e5%b0%86%e5%ae%a2%e6%88%b7%e7%ab%af%e7%a7%81%e9%92%a5%e4%b8%8e%e8%af%81%e4%b9%a6%e7%9b%b8%e5%85%b3%e6%96%87%e4%bb%b6%e5%a4%8d%e5%88%b6%e5%88%b0%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%9b%b8%e5%85%b3%e7%9a%84%e7%9b%ae%e5%bd%95" aria-label="将客户端私钥与证书相关文件复制到服务器相关的目录">将客户端私钥与证书相关文件复制到服务器相关的目录</a></li>
+                <li>
+                    <a href="#%e5%87%86%e5%a4%87-openvpn-%e6%9c%8d%e5%8a%a1%e5%99%a8%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="准备 OpenVPN 服务器配置文件">准备 OpenVPN 服务器配置文件</a><ul>
+                        
+                <li>
+                    <a href="#%e4%bf%ae%e6%94%b9%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ab%af%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="修改服务器端配置文件">修改服务器端配置文件</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%90%af%e5%8a%a8-openvpn-%e6%9c%8d%e5%8a%a1" aria-label="启动 OpenVPN 服务">启动 OpenVPN 服务</a></li>
+                <li>
+                    <a href="#%e5%87%86%e5%a4%87-openvpn-%e5%ae%a2%e6%88%b7%e7%ab%af%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="准备 OpenVPN 客户端配置文件">准备 OpenVPN 客户端配置文件</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%a2%e6%88%b7%e7%ab%af%e9%bb%98%e8%ae%a4%e8%8c%83%e4%be%8b%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6%e8%af%b4%e6%98%8e" aria-label="客户端默认范例配置文件说明">客户端默认范例配置文件说明</a></li>
+                <li>
+                    <a href="#%e7%94%9f%e6%88%90%e5%ae%a2%e6%88%b7%e7%ab%af%e7%94%a8%e6%88%b7%e7%9a%84%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="生成客户端用户的配置文件">生成客户端用户的配置文件</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%ae%9e%e7%8e%b0-openvpn-%e5%ae%a2%e6%88%b7%e7%ab%af" aria-label="实现 OpenVPN 客户端">实现 OpenVPN 客户端</a><ul>
+                        
+                <li>
+                    <a href="#windows-%e5%ae%a2%e6%88%b7%e7%ab%af%e5%ae%89%e8%a3%85%e7%9c%81%e7%95%a5" aria-label="Windows 客户端安装省略">Windows 客户端安装省略</a></li>
+                <li>
+                    <a href="#windows-%e5%ae%a2%e6%88%b7%e7%ab%af%e9%85%8d%e7%bd%ae%e5%87%86%e5%a4%87" aria-label="Windows 客户端配置准备">Windows 客户端配置准备</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%ae%9e%e7%8e%b0%e8%ae%bf%e9%97%aevpn%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%9a%84%e5%86%85%e7%bd%91%e4%b8%bb%e6%9c%ba" aria-label="实现访问VPN服务器的内网主机">实现访问VPN服务器的内网主机</a></li>
+                <li>
+                    <a href="#%e9%85%8d%e7%bd%ae%e5%ae%9e%e7%8e%b0%e5%86%85%e7%bd%91%e6%9c%8d%e5%8a%a1%e5%99%a8%e5%9b%9e%e5%ba%94%e5%a4%96%e7%bd%91%e7%9a%84%e8%af%b7%e6%b1%82%e7%9a%84%e8%b7%af%e7%94%b1" aria-label="配置实现内网服务器回应外网的请求的路由">配置实现内网服务器回应外网的请求的路由</a></li>
+                <li>
+                    <a href="#%e5%9c%a8openvpn%e6%9c%8d%e5%8a%a1%e5%99%a8%e9%85%8d%e7%bd%ae-iptables-%e8%a7%84%e5%88%99" aria-label="在OpenVPN服务器配置 iptables 规则">在OpenVPN服务器配置 iptables 规则</a></li>
+                <li>
+                    <a href="#%e5%90%8a%e9%94%80%e6%8c%87%e5%ae%9a%e7%9a%84%e7%94%a8%e6%88%b7%e7%9a%84%e8%af%81%e4%b9%a6" aria-label="吊销指定的用户的证书">吊销指定的用户的证书</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="准备部署openvpn环境">准备部署OpenVPN环境<a hidden class="anchor" aria-hidden="true" href="#准备部署openvpn环境">#</a></h1>
+<h2 id="部署环境如下">部署环境如下<a hidden class="anchor" aria-hidden="true" href="#部署环境如下">#</a></h2>
+<p>共四台主机
+1 openvpn server：
+CentOS 7.9
+ens33:192.168.1.110/24 NAT模式,模拟公网IP
+ens36:172.30.0.1/24 仅主机模式,私网IP
+2 内网主机两台
+第一台主机
+ens33172.30.0.100/24 仅主机模式,私网IP，无需网关
+第二台主机
+ens33172.30.0.200/24 仅主机模式,私网IP，无需网关</p>
+<p>3 Windows 客户端
+Windows 10/11</p>
+<h2 id="安装-openvpn">安装 OpenVPN<a hidden class="anchor" aria-hidden="true" href="#安装-openvpn">#</a></h2>
+<h3 id="安装-openvpn-和证书工具">安装 OpenVPN 和证书工具<a hidden class="anchor" aria-hidden="true" href="#安装-openvpn-和证书工具">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#OpenVPN服务器端</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e">#yum -y install openvpn</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#证书管理工具</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e">#yum -y install easy-rsa</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 安装版本</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum list openvpn</span>
+</span></span><span style="display:flex;"><span>Loaded plugins: fastestmirror
+</span></span><span style="display:flex;"><span>Loading mirror speeds from cached hostfile
+</span></span><span style="display:flex;"><span> * base: mirrors.ustc.edu.cn
+</span></span><span style="display:flex;"><span> * epel: ftp.riken.jp
+</span></span><span style="display:flex;"><span> * extras: mirrors.163.com
+</span></span><span style="display:flex;"><span> * updates: mirrors.ustc.edu.cn
+</span></span><span style="display:flex;"><span>Installed Packages
+</span></span><span style="display:flex;"><span>openvpn.x86_64                                                           2.4.12-1.el7                                                            @epel
+</span></span></code></pre></div><h3 id="准备相关配置文件">准备相关配置文件<a hidden class="anchor" aria-hidden="true" href="#准备相关配置文件">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 生成服务器配置文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cp /usr/share/doc/openvpn-2.4.12/sample/sample-config-files/server.conf /etc/openvpn</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 准备证书颁发相关文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cp -r /usr/share/easy-rsa/ /etc/openvpn/easy-rsa-server</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 准备颁发证书相关变量的配置文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cp /usr/share/doc/easy-rsa-3.0.8/vars.example /etc/openvpn/easy-rsa-server/3/vars</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 建议修改给CA和OpenVPN服务器颁发的证书的有效期,可适当加长</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/openvpn/easy-rsa-server/3/vars </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#CA的证书默认有效期为10年,可以适当延长,比如:36500天</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#set_var EASYRSA_CA_EXPIRE 3650</span>
+</span></span><span style="display:flex;"><span>set_var EASYRSA_CA_EXPIRE <span style="color:#ae81ff">36500</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#服务器证书默为为825天,可适当加长,比如:3650天</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#set_var EASYRSA_CERT_EXPIRE 825</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#将上面行修改为下面</span>
+</span></span><span style="display:flex;"><span>set_var EASYRSA_CERT_EXPIRE <span style="color:#ae81ff">3650</span>
+</span></span></code></pre></div><h2 id="准备证书相关文件">准备证书相关文件<a hidden class="anchor" aria-hidden="true" href="#准备证书相关文件">#</a></h2>
+<h3 id="初始化pki和ca颁发机构环境">初始化PKI和CA颁发机构环境<a hidden class="anchor" aria-hidden="true" href="#初始化pki和ca颁发机构环境">#</a></h3>
+<h4 id="初始化pki生成pki相关目录和文件">初始化PKI生成PKI相关目录和文件<a hidden class="anchor" aria-hidden="true" href="#初始化pki生成pki相关目录和文件">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 进入该目录下</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># pwd</span>
+</span></span><span style="display:flex;"><span>/etc/openvpn/easy-rsa-server/3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#初始化数据,在当前目录下生成pki目录及相关文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ./easyrsa init-pki</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>init-pki complete; you may now create a CA or requests.
+</span></span><span style="display:flex;"><span>Your newly created PKI dir is: /etc/openvpn/easy-rsa-server/3/pki
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># tree</span>
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>├── easyrsa
+</span></span><span style="display:flex;"><span>├── openssl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>├── pki  <span style="color:#75715e">#生成一个新目录及相关文件</span>
+</span></span><span style="display:flex;"><span>│   ├── openssl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>│   ├── private
+</span></span><span style="display:flex;"><span>│   ├── reqs
+</span></span><span style="display:flex;"><span>│   └── safessl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>├── vars
+</span></span><span style="display:flex;"><span>└── x509-types
+</span></span><span style="display:flex;"><span>    ├── ca
+</span></span><span style="display:flex;"><span>    ├── client
+</span></span><span style="display:flex;"><span>    ├── code-signing
+</span></span><span style="display:flex;"><span>    ├── COMMON
+</span></span><span style="display:flex;"><span>    ├── email
+</span></span><span style="display:flex;"><span>    ├── kdc
+</span></span><span style="display:flex;"><span>    ├── server
+</span></span><span style="display:flex;"><span>    └── serverClient
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span> directories, <span style="color:#ae81ff">13</span> files
+</span></span></code></pre></div><h3 id="创建-ca-机构环境">创建 CA 机构环境<a hidden class="anchor" aria-hidden="true" href="#创建-ca-机构环境">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 进入该目录下</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># pwd</span>
+</span></span><span style="display:flex;"><span>/etc/openvpn/easy-rsa-server/3
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># tree pki/</span>
+</span></span><span style="display:flex;"><span>pki/
+</span></span><span style="display:flex;"><span>├── openssl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>├── private
+</span></span><span style="display:flex;"><span>├── reqs
+</span></span><span style="display:flex;"><span>└── safessl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> directories, <span style="color:#ae81ff">2</span> files
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ./easyrsa build-ca nopass   # nopass 不需要密码</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars
+</span></span><span style="display:flex;"><span>Using SSL: openssl OpenSSL 1.0.2k-fips  <span style="color:#ae81ff">26</span> Jan <span style="color:#ae81ff">2017</span>
+</span></span><span style="display:flex;"><span>Generating RSA private key, <span style="color:#ae81ff">2048</span> bit long modulus
+</span></span><span style="display:flex;"><span>....+++
+</span></span><span style="display:flex;"><span>......+++
+</span></span><span style="display:flex;"><span>e is <span style="color:#ae81ff">65537</span> <span style="color:#f92672">(</span>0x10001<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>You are about to be asked to enter information that will be incorporated
+</span></span><span style="display:flex;"><span>into your certificate request.
+</span></span><span style="display:flex;"><span>What you are about to enter is what is called a Distinguished Name or a DN.
+</span></span><span style="display:flex;"><span>There are quite a few fields but you can leave some blank
+</span></span><span style="display:flex;"><span>For some fields there will be a default value,
+</span></span><span style="display:flex;"><span>If you enter <span style="color:#e6db74">&#39;.&#39;</span>, the field will be left blank.
+</span></span><span style="display:flex;"><span>-----
+</span></span><span style="display:flex;"><span>Common Name <span style="color:#f92672">(</span>eg: your user, host, or server name<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>Easy-RSA CA<span style="color:#f92672">]</span>: <span style="color:#75715e"># 回车接受默认值</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CA creation complete and you may now import and sign cert requests.
+</span></span><span style="display:flex;"><span>Your new CA certificate file <span style="color:#66d9ef">for</span> publishing is at:
+</span></span><span style="display:flex;"><span>/etc/openvpn/easy-rsa-server/3/pki/ca.crt <span style="color:#75715e">#生成自签名的证书文件</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e">#tree pki</span>
+</span></span><span style="display:flex;"><span>pki
+</span></span><span style="display:flex;"><span>├── ca.crt <span style="color:#75715e">#生成的自签名的证书文件</span>
+</span></span><span style="display:flex;"><span>├── certs_by_serial
+</span></span><span style="display:flex;"><span>├── index.txt
+</span></span><span style="display:flex;"><span>├── index.txt.attr
+</span></span><span style="display:flex;"><span>├── issued
+</span></span><span style="display:flex;"><span>├── openssl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>├── private
+</span></span><span style="display:flex;"><span>│ └── ca.key <span style="color:#75715e">#生成的私钥文件</span>
+</span></span><span style="display:flex;"><span>├── renewed
+</span></span><span style="display:flex;"><span>│ ├── certs_by_serial
+</span></span><span style="display:flex;"><span>│ ├── private_by_serial
+</span></span><span style="display:flex;"><span>│ └── reqs_by_serial
+</span></span><span style="display:flex;"><span>├── reqs
+</span></span><span style="display:flex;"><span>├── revoked
+</span></span><span style="display:flex;"><span>│ ├── certs_by_serial
+</span></span><span style="display:flex;"><span>│ ├── private_by_serial
+</span></span><span style="display:flex;"><span>│ └── reqs_by_serial
+</span></span><span style="display:flex;"><span>├── safessl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>└── serial
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">12</span> directories, <span style="color:#ae81ff">7</span> files
+</span></span></code></pre></div><h3 id="创建服务端证书申请">创建服务端证书申请<a hidden class="anchor" aria-hidden="true" href="#创建服务端证书申请">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 进入该目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># pwd</span>
+</span></span><span style="display:flex;"><span>/etc/openvpn/easy-rsa-server/3
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ./easyrsa gen-req server nopass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars
+</span></span><span style="display:flex;"><span>Using SSL: openssl OpenSSL 1.0.2k-fips  <span style="color:#ae81ff">26</span> Jan <span style="color:#ae81ff">2017</span>
+</span></span><span style="display:flex;"><span>Generating a <span style="color:#ae81ff">2048</span> bit RSA private key
+</span></span><span style="display:flex;"><span>..........................................................................................................................................................+++
+</span></span><span style="display:flex;"><span>......................+++
+</span></span><span style="display:flex;"><span>writing new private key to <span style="color:#e6db74">&#39;/etc/openvpn/easy-rsa-server/3/pki/easy-rsa-1605.nDSXm1/tmp.2RnHiQ&#39;</span>
+</span></span><span style="display:flex;"><span>-----
+</span></span><span style="display:flex;"><span>You are about to be asked to enter information that will be incorporated
+</span></span><span style="display:flex;"><span>into your certificate request.
+</span></span><span style="display:flex;"><span>What you are about to enter is what is called a Distinguished Name or a DN.
+</span></span><span style="display:flex;"><span>There are quite a few fields but you can leave some blank
+</span></span><span style="display:flex;"><span>For some fields there will be a default value,
+</span></span><span style="display:flex;"><span>If you enter <span style="color:#e6db74">&#39;.&#39;</span>, the field will be left blank.
+</span></span><span style="display:flex;"><span>-----
+</span></span><span style="display:flex;"><span>Common Name <span style="color:#f92672">(</span>eg: your user, host, or server name<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>server<span style="color:#f92672">]</span>: <span style="color:#75715e">#接受Common Name的默认</span>
+</span></span><span style="display:flex;"><span>值,直接回车
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Keypair and certificate request completed. Your files are:
+</span></span><span style="display:flex;"><span>req: /etc/openvpn/easy-rsa-server/3/pki/reqs/server.req <span style="color:#75715e">#生成请求文件</span>
+</span></span><span style="display:flex;"><span>key: /etc/openvpn/easy-rsa-server/3/pki/private/server.key <span style="color:#75715e">#生成私钥文件</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e">#tree pki</span>
+</span></span><span style="display:flex;"><span>pki
+</span></span><span style="display:flex;"><span>├── ca.crt
+</span></span><span style="display:flex;"><span>├── certs_by_serial
+</span></span><span style="display:flex;"><span>├── index.txt
+</span></span><span style="display:flex;"><span>├── index.txt.attr
+</span></span><span style="display:flex;"><span>├── issued
+</span></span><span style="display:flex;"><span>├── openssl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>├── private
+</span></span><span style="display:flex;"><span>│ ├── ca.key
+</span></span><span style="display:flex;"><span>│ └── server.key <span style="color:#75715e">#生成私钥文件</span>
+</span></span><span style="display:flex;"><span>├── renewed
+</span></span><span style="display:flex;"><span>│ ├── certs_by_serial
+</span></span><span style="display:flex;"><span>│ ├── private_by_serial
+</span></span><span style="display:flex;"><span>│ └── reqs_by_serial
+</span></span><span style="display:flex;"><span>├── reqs
+</span></span><span style="display:flex;"><span>│ └── server.req <span style="color:#75715e">#生成请求文件</span>
+</span></span><span style="display:flex;"><span>├── revoked
+</span></span><span style="display:flex;"><span>│ ├── certs_by_serial
+</span></span><span style="display:flex;"><span>│ ├── private_by_serial
+</span></span><span style="display:flex;"><span>│ └── reqs_by_serial
+</span></span><span style="display:flex;"><span>├── safessl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>└── serial
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">12</span> directories, <span style="color:#ae81ff">9</span> files
+</span></span></code></pre></div><h3 id="颁发服务端证书">颁发服务端证书<a hidden class="anchor" aria-hidden="true" href="#颁发服务端证书">#</a></h3>
+<h4 id="颁发服务端证书-1">颁发服务端证书<a hidden class="anchor" aria-hidden="true" href="#颁发服务端证书-1">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#将上面server.req的申请,颁发server类型的证书</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e">#cd /etc/openvpn/easy-rsa-server/3</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#第一个server表示证书的类型,第二个server表示请求文件名的前缀</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ./easyrsa sign server server</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars
+</span></span><span style="display:flex;"><span>Using SSL: openssl OpenSSL 1.0.2k-fips  <span style="color:#ae81ff">26</span> Jan <span style="color:#ae81ff">2017</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You are about to sign the following certificate.
+</span></span><span style="display:flex;"><span>Please check over the details shown below <span style="color:#66d9ef">for</span> accuracy. Note that this request
+</span></span><span style="display:flex;"><span>has not been cryptographically verified. Please be sure it came from a trusted
+</span></span><span style="display:flex;"><span>source or that you have verified the request checksum with the sender.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Request subject, to be signed as a server certificate <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">3650</span> days:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>subject<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    commonName                <span style="color:#f92672">=</span> server
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type the word <span style="color:#e6db74">&#39;yes&#39;</span> to <span style="color:#66d9ef">continue</span>, or any other input to abort.
+</span></span><span style="display:flex;"><span>  Confirm request details: yes  <span style="color:#75715e"># 输入yes</span>
+</span></span><span style="display:flex;"><span>Using configuration from /etc/openvpn/easy-rsa-server/3/pki/easy-rsa-1634.ZCYI5M/tmp.2SsU9O
+</span></span><span style="display:flex;"><span>Check that the request matches the signature
+</span></span><span style="display:flex;"><span>Signature ok
+</span></span><span style="display:flex;"><span>The Subject<span style="color:#e6db74">&#39;s Distinguished Name is as follows
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">commonName            :ASN.1 12:&#39;</span>server<span style="color:#960050;background-color:#1e0010">&#39;</span>
+</span></span><span style="display:flex;"><span>Certificate is to be certified <span style="color:#66d9ef">until</span> Mar <span style="color:#ae81ff">15</span> 01:27:03 <span style="color:#ae81ff">2033</span> GMT <span style="color:#f92672">(</span><span style="color:#ae81ff">3650</span> days<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Write out database with <span style="color:#ae81ff">1</span> new entries
+</span></span><span style="display:flex;"><span>Data Base Updated
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Certificate created at: /etc/openvpn/easy-rsa-server/3/pki/issued/server.crt <span style="color:#75715e">#生</span>
+</span></span><span style="display:flex;"><span>成服务器证书文件
+</span></span></code></pre></div><h4 id="验证结果">验证结果<a hidden class="anchor" aria-hidden="true" href="#验证结果">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># tree pki/</span>
+</span></span><span style="display:flex;"><span>pki/
+</span></span><span style="display:flex;"><span>├── ca.crt
+</span></span><span style="display:flex;"><span>├── certs_by_serial
+</span></span><span style="display:flex;"><span>│   └── EAD7A4786FA803EDD9A7166D0EC694C3.pem      <span style="color:#75715e">#生成的服务器证书文件</span>
+</span></span><span style="display:flex;"><span>├── index.txt
+</span></span><span style="display:flex;"><span>├── index.txt.attr
+</span></span><span style="display:flex;"><span>├── index.txt.attr.old
+</span></span><span style="display:flex;"><span>├── index.txt.old
+</span></span><span style="display:flex;"><span>├── issued
+</span></span><span style="display:flex;"><span>│   └── server.crt        <span style="color:#75715e">#生成的服务器证书文件</span>
+</span></span><span style="display:flex;"><span>├── openssl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>├── private
+</span></span><span style="display:flex;"><span>│   ├── ca.key
+</span></span><span style="display:flex;"><span>│   └── server.key
+</span></span><span style="display:flex;"><span>├── renewed
+</span></span><span style="display:flex;"><span>│   ├── certs_by_serial
+</span></span><span style="display:flex;"><span>│   ├── private_by_serial
+</span></span><span style="display:flex;"><span>│   └── reqs_by_serial
+</span></span><span style="display:flex;"><span>├── reqs
+</span></span><span style="display:flex;"><span>│   └── server.req
+</span></span><span style="display:flex;"><span>├── revoked
+</span></span><span style="display:flex;"><span>│   ├── certs_by_serial
+</span></span><span style="display:flex;"><span>│   ├── private_by_serial
+</span></span><span style="display:flex;"><span>│   └── reqs_by_serial
+</span></span><span style="display:flex;"><span>├── safessl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>├── serial
+</span></span><span style="display:flex;"><span>└── serial.old
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">12</span> directories, <span style="color:#ae81ff">14</span> files
+</span></span></code></pre></div><h3 id="创建-diffie-hellman-密钥">创建 Diffie-Hellman 密钥<a hidden class="anchor" aria-hidden="true" href="#创建-diffie-hellman-密钥">#</a></h3>
+<h4 id="创建-diffie-hellman-密钥-1">创建 Diffie-Hellman 密钥<a hidden class="anchor" aria-hidden="true" href="#创建-diffie-hellman-密钥-1">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ./easyrsa gen-dh</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars
+</span></span><span style="display:flex;"><span>Using SSL: openssl OpenSSL 1.0.2k-fips  <span style="color:#ae81ff">26</span> Jan <span style="color:#ae81ff">2017</span>
+</span></span><span style="display:flex;"><span>Generating DH parameters, <span style="color:#ae81ff">2048</span> bit long safe prime, generator <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>This is going to take a long time
+</span></span><span style="display:flex;"><span>...............................................................................................................................................................................+.  <span style="color:#75715e"># 得等一会</span>
+</span></span><span style="display:flex;"><span>DH parameters of size <span style="color:#ae81ff">2048</span> created at /etc/openvpn/easy-rsa-server/3/pki/dh.pem
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#查看生成的文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ll pki/dh.pem </span>
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">424</span> Mar <span style="color:#ae81ff">18</span> 09:34 pki/dh.pem
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><h3 id="准备客户端证书环境">准备客户端证书环境<a hidden class="anchor" aria-hidden="true" href="#准备客户端证书环境">#</a></h3>
+<p>上面服务端证书配置完成，下面是配置客户端证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 /<span style="color:#f92672">]</span><span style="color:#75715e"># cp -a /usr/share/easy-rsa/ /etc/openvpn/easy-rsa-client</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 进入该目录下</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># pwd</span>
+</span></span><span style="display:flex;"><span>/etc/openvpn/easy-rsa-client/3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#生成证书申请所需目录pki和文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ./easyrsa init-pki</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>init-pki complete; you may now create a CA or requests.
+</span></span><span style="display:flex;"><span>Your newly created PKI dir is: /etc/openvpn/easy-rsa-client/3/pki
+</span></span></code></pre></div><h3 id="创建客户端证书申请">创建客户端证书申请<a hidden class="anchor" aria-hidden="true" href="#创建客户端证书申请">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 进入该目录下</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># pwd</span>
+</span></span><span style="display:flex;"><span>/etc/openvpn/easy-rsa-client/3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#生成客户端用户的证书申请,dev用户</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ./easyrsa gen-req dev nopass</span>
+</span></span><span style="display:flex;"><span>Using SSL: openssl OpenSSL 1.0.2k-fips  <span style="color:#ae81ff">26</span> Jan <span style="color:#ae81ff">2017</span>
+</span></span><span style="display:flex;"><span>Generating a <span style="color:#ae81ff">2048</span> bit RSA private key
+</span></span><span style="display:flex;"><span>......................................................+++
+</span></span><span style="display:flex;"><span>.........................................................................................................................................................................................................+++
+</span></span><span style="display:flex;"><span>writing new private key to <span style="color:#e6db74">&#39;/etc/openvpn/easy-rsa-client/3/pki/easy-rsa-1749.UROzYa/tmp.HqONRu&#39;</span>
+</span></span><span style="display:flex;"><span>-----
+</span></span><span style="display:flex;"><span>You are about to be asked to enter information that will be incorporated
+</span></span><span style="display:flex;"><span>into your certificate request.
+</span></span><span style="display:flex;"><span>What you are about to enter is what is called a Distinguished Name or a DN.
+</span></span><span style="display:flex;"><span>There are quite a few fields but you can leave some blank
+</span></span><span style="display:flex;"><span>For some fields there will be a default value,
+</span></span><span style="display:flex;"><span>If you enter <span style="color:#e6db74">&#39;.&#39;</span>, the field will be left blank.
+</span></span><span style="display:flex;"><span>-----
+</span></span><span style="display:flex;"><span>Common Name <span style="color:#f92672">(</span>eg: your user, host, or server name<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>dev<span style="color:#f92672">]</span>: <span style="color:#75715e"># 回车接受默认值</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Keypair and certificate request completed. Your files are:
+</span></span><span style="display:flex;"><span>req: /etc/openvpn/easy-rsa-client/3/pki/reqs/dev.req  <span style="color:#75715e">#私钥文件</span>
+</span></span><span style="display:flex;"><span>key: /etc/openvpn/easy-rsa-client/3/pki/private/dev.key  <span style="color:#75715e">#证书申请文件</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#生成两个新文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># tree</span>
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>├── easyrsa
+</span></span><span style="display:flex;"><span>├── openssl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>├── pki
+</span></span><span style="display:flex;"><span>│   ├── openssl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>│   ├── private
+</span></span><span style="display:flex;"><span>│   │   └── dev.key  <span style="color:#75715e">#私钥文件</span>
+</span></span><span style="display:flex;"><span>│   ├── reqs
+</span></span><span style="display:flex;"><span>│   │   └── dev.req   <span style="color:#75715e">#证书申请文件</span>
+</span></span><span style="display:flex;"><span>│   └── safessl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>└── x509-types
+</span></span><span style="display:flex;"><span>    ├── ca
+</span></span><span style="display:flex;"><span>    ├── client
+</span></span><span style="display:flex;"><span>    ├── code-signing
+</span></span><span style="display:flex;"><span>    ├── COMMON
+</span></span><span style="display:flex;"><span>    ├── email
+</span></span><span style="display:flex;"><span>    ├── kdc
+</span></span><span style="display:flex;"><span>    ├── server
+</span></span><span style="display:flex;"><span>    └── serverClient
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span> directories, <span style="color:#ae81ff">14</span> files
+</span></span></code></pre></div><h3 id="颁发客户端证书">颁发客户端证书<a hidden class="anchor" aria-hidden="true" href="#颁发客户端证书">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 进入该目录下</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># pwd</span>
+</span></span><span style="display:flex;"><span>/etc/openvpn/easy-rsa-server/3
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ./easyrsa import-req /etc/openvpn/easy-rsa-client/3/pki/reqs/dev.req dev</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars
+</span></span><span style="display:flex;"><span>Using SSL: openssl OpenSSL 1.0.2k-fips  <span style="color:#ae81ff">26</span> Jan <span style="color:#ae81ff">2017</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The request has been successfully imported with a short name of: dev
+</span></span><span style="display:flex;"><span>You may now use this name to perform signing operations on this request.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># tree pki/</span>
+</span></span><span style="display:flex;"><span>pki/
+</span></span><span style="display:flex;"><span>├── ca.crt
+</span></span><span style="display:flex;"><span>├── certs_by_serial
+</span></span><span style="display:flex;"><span>│   └── EAD7A4786FA803EDD9A7166D0EC694C3.pem
+</span></span><span style="display:flex;"><span>├── dh.pem
+</span></span><span style="display:flex;"><span>├── index.txt
+</span></span><span style="display:flex;"><span>├── index.txt.attr
+</span></span><span style="display:flex;"><span>├── index.txt.attr.old
+</span></span><span style="display:flex;"><span>├── index.txt.old
+</span></span><span style="display:flex;"><span>├── issued
+</span></span><span style="display:flex;"><span>│   └── server.crt
+</span></span><span style="display:flex;"><span>├── openssl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>├── private
+</span></span><span style="display:flex;"><span>│   ├── ca.key
+</span></span><span style="display:flex;"><span>│   └── server.key
+</span></span><span style="display:flex;"><span>├── renewed
+</span></span><span style="display:flex;"><span>│   ├── certs_by_serial
+</span></span><span style="display:flex;"><span>│   ├── private_by_serial
+</span></span><span style="display:flex;"><span>│   └── reqs_by_serial
+</span></span><span style="display:flex;"><span>├── reqs
+</span></span><span style="display:flex;"><span>│   ├── dev.req			<span style="color:#75715e"># 导入的文件</span>
+</span></span><span style="display:flex;"><span>│   └── server.req
+</span></span><span style="display:flex;"><span>├── revoked
+</span></span><span style="display:flex;"><span>│   ├── certs_by_serial
+</span></span><span style="display:flex;"><span>│   ├── private_by_serial
+</span></span><span style="display:flex;"><span>│   └── reqs_by_serial
+</span></span><span style="display:flex;"><span>├── safessl-easyrsa.cnf
+</span></span><span style="display:flex;"><span>├── serial
+</span></span><span style="display:flex;"><span>└── serial.old
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">12</span> directories, <span style="color:#ae81ff">16</span> files
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#修改给客户端颁发的证书的有效期</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e">##vim vars</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#建议修改给客户端颁发证书的有效期,可适当减少,比如:90天</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#set_var EASYRSA_CERT_EXPIRE 825</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#将上面行修改为下面</span>
+</span></span><span style="display:flex;"><span>set_var EASYRSA_CERT_EXPIRE <span style="color:#ae81ff">90</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#颁发客户端证书</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ./easyrsa sign client dev</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Note: using Easy-RSA configuration from: /etc/openvpn/easy-rsa-server/3.0.8/vars
+</span></span><span style="display:flex;"><span>Using SSL: openssl OpenSSL 1.0.2k-fips  <span style="color:#ae81ff">26</span> Jan <span style="color:#ae81ff">2017</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You are about to sign the following certificate.
+</span></span><span style="display:flex;"><span>Please check over the details shown below <span style="color:#66d9ef">for</span> accuracy. Note that this request
+</span></span><span style="display:flex;"><span>has not been cryptographically verified. Please be sure it came from a trusted
+</span></span><span style="display:flex;"><span>source or that you have verified the request checksum with the sender.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Request subject, to be signed as a client certificate <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">3650</span> days:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>subject<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    commonName                <span style="color:#f92672">=</span> dev
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type the word <span style="color:#e6db74">&#39;yes&#39;</span> to <span style="color:#66d9ef">continue</span>, or any other input to abort.
+</span></span><span style="display:flex;"><span>  Confirm request details: yes   <span style="color:#75715e"># 输入yes</span>
+</span></span><span style="display:flex;"><span>Using configuration from /etc/openvpn/easy-rsa-server/3/pki/easy-rsa-1998.yxi0PJ/tmp.IJUwSd
+</span></span><span style="display:flex;"><span>Check that the request matches the signature
+</span></span><span style="display:flex;"><span>Signature ok
+</span></span><span style="display:flex;"><span>The Subject<span style="color:#e6db74">&#39;s Distinguished Name is as follows
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">commonName            :ASN.1 12:&#39;</span>dev<span style="color:#960050;background-color:#1e0010">&#39;</span>
+</span></span><span style="display:flex;"><span>Certificate is to be certified <span style="color:#66d9ef">until</span> Mar <span style="color:#ae81ff">15</span> 01:51:32 <span style="color:#ae81ff">2033</span> GMT <span style="color:#f92672">(</span><span style="color:#ae81ff">3650</span> days<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Write out database with <span style="color:#ae81ff">1</span> new entries
+</span></span><span style="display:flex;"><span>Data Base Updated
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Certificate created at: /etc/openvpn/easy-rsa-server/3/pki/issued/dev.crt  <span style="color:#75715e">#证书文件</span>
+</span></span></code></pre></div><h3 id="将ca和服务器证书相关文件复制到服务器相应的目录">将CA和服务器证书相关文件复制到服务器相应的目录<a hidden class="anchor" aria-hidden="true" href="#将ca和服务器证书相关文件复制到服务器相应的目录">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir /etc/openvpn/certs</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># cp /etc/openvpn/easy-rsa-server/3/pki/ca.crt /etc/openvpn/certs/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># cp /etc/openvpn/easy-rsa-server/3/pki/issued/server.crt /etc/openvpn/certs/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># cp /etc/openvpn/easy-rsa-server/3/pki/private/server.key</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># cp /etc/openvpn/easy-rsa-server/3/pki/dh.pem /etc/openvpn/certs/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ll /etc/openvpn/certs/</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">1176</span> Mar <span style="color:#ae81ff">18</span> 09:54 ca.crt
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">424</span> Mar <span style="color:#ae81ff">18</span> 09:57 dh.pem
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">4552</span> Mar <span style="color:#ae81ff">18</span> 09:56 server.crt
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">1704</span> Mar <span style="color:#ae81ff">18</span> 09:55 server.key
+</span></span></code></pre></div><h3 id="将客户端私钥与证书相关文件复制到服务器相关的目录">将客户端私钥与证书相关文件复制到服务器相关的目录<a hidden class="anchor" aria-hidden="true" href="#将客户端私钥与证书相关文件复制到服务器相关的目录">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir /etc/openvpn/client/dev</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># cp /etc/openvpn/easy-rsa-server/3/pki/ca.crt /etc/openvpn/easy-rsa-server/3/pki/issued/dev.crt /etc/openvpn/easy-rsa-server/3/pki/reqs/dev.req /etc/openvpn/client/dev/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># ll /etc/openvpn/client/dev/</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">1176</span> Mar <span style="color:#ae81ff">18</span> 10:01 ca.crt
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">4425</span> Mar <span style="color:#ae81ff">18</span> 10:01 dev.crt
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">883</span> Mar <span style="color:#ae81ff">18</span> 10:01 dev.req
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><h3 id="准备-openvpn-服务器配置文件">准备 OpenVPN 服务器配置文件<a hidden class="anchor" aria-hidden="true" href="#准备-openvpn-服务器配置文件">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>;local a.b.c.d <span style="color:#75715e">#本机监听IP,默认为本机所有IP</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#ae81ff">1194</span> <span style="color:#75715e">#端口</span>
+</span></span><span style="display:flex;"><span>;proto tcp <span style="color:#75715e">#协议,生产推荐使用TCP</span>
+</span></span><span style="display:flex;"><span>proto udp <span style="color:#75715e">#默认协议udp</span>
+</span></span><span style="display:flex;"><span>;dev tap <span style="color:#75715e">#创建以太网隧道设备，tap设备实现以太网帧通过Openvpn隧道，可提供非IP协议如</span>
+</span></span><span style="display:flex;"><span>IPX和AppleTalk等的支持，tap等当于一个以太网设备，它操作第二层数据包如以太网数据帧。
+</span></span><span style="display:flex;"><span>dev tun <span style="color:#75715e">#创建IP路由隧道，生产推存使用tun.互联网使用tun,一个tun设备大多时候被用于基</span>
+</span></span><span style="display:flex;"><span>于IP协议的通讯。tun模拟了网络层设备，操作第三层数据包比如IP数据封包。
+</span></span><span style="display:flex;"><span>;dev-node MyTap <span style="color:#75715e">#TAP-Win32的设备驱动。非windows系统不需要</span>
+</span></span><span style="display:flex;"><span>ca ca.crt <span style="color:#75715e">#ca证书文件</span>
+</span></span><span style="display:flex;"><span>cert server.crt <span style="color:#75715e">#服务器证书文件</span>
+</span></span><span style="display:flex;"><span>key server.key <span style="color:#75715e">#服务器私钥文件</span>
+</span></span><span style="display:flex;"><span>dh dh2048.pem <span style="color:#75715e">#dh参数文件</span>
+</span></span><span style="display:flex;"><span>;topology subnet
+</span></span><span style="display:flex;"><span>server 10.8.0.0 255.255.255.0 <span style="color:#75715e">#客户端连接后自动分配的IP网段，默认会给服务器分配此网段的第</span>
+</span></span><span style="display:flex;"><span>一个IP将做为客户端的网关,注意不要和内网网段相同
+</span></span><span style="display:flex;"><span>ifconfig-pool-persist ipp.txt <span style="color:#75715e">#记录客户端和虚拟ip地址分配的文件</span>
+</span></span><span style="display:flex;"><span>;server-bridge 10.8.0.4 255.255.255.0 10.8.0.50 10.8.0.100 <span style="color:#75715e">#配置网桥模式，无需配置,</span>
+</span></span><span style="display:flex;"><span>建议注释
+</span></span><span style="display:flex;"><span>;server-bridge
+</span></span><span style="display:flex;"><span>;push <span style="color:#e6db74">&#34;route 192.168.10.0 255.255.255.0&#34;</span> <span style="color:#75715e">#推送给客户端的到达服务器后面网段的静态路由，</span>
+</span></span><span style="display:flex;"><span>网关是服务器地址10.8.0.1
+</span></span><span style="display:flex;"><span>;push <span style="color:#e6db74">&#34;route 192.168.10.100 255.255.255.255&#34;</span> <span style="color:#75715e">#用255.255.255.255可实现只能访问内网单个</span>
+</span></span><span style="display:flex;"><span>主机的功能,比如:jumpserver
+</span></span><span style="display:flex;"><span>;push <span style="color:#e6db74">&#34;route 192.168.20.0 255.255.255.0&#34;</span> <span style="color:#75715e">#推送路由信息到客户端，以允许客户端能够连接到</span>
+</span></span><span style="display:flex;"><span>服务器背后的其它私有网络
+</span></span><span style="display:flex;"><span>;client-config-dir ccd <span style="color:#75715e">#为特定客户端添加路由信息，此路由是客户端后面的网段而非服务端的网</span>
+</span></span><span style="display:flex;"><span>段，无需设置
+</span></span><span style="display:flex;"><span>;route 192.168.40.128 255.255.255.248
+</span></span><span style="display:flex;"><span>;client-config-dir ccd
+</span></span><span style="display:flex;"><span>;route 10.9.0.0 255.255.255.252
+</span></span><span style="display:flex;"><span>;learn-address ./script <span style="color:#75715e">#指定外部脚本文件，实现创建不同组的iptables规</span>
+</span></span><span style="display:flex;"><span>则，无需配置
+</span></span><span style="display:flex;"><span>;push <span style="color:#e6db74">&#34;redirect-gateway def1 bypass-dhcp&#34;</span> <span style="color:#75715e">#启用此配置后客户端所有流量都将通过VPN服务器进</span>
+</span></span><span style="display:flex;"><span>行转发，因此生产一般无需配置此项
+</span></span><span style="display:flex;"><span>;push <span style="color:#e6db74">&#34;dhcp-option DNS 208.67.222.222&#34;</span> <span style="color:#75715e">#推送DNS服务器地址，无需配置</span>
+</span></span><span style="display:flex;"><span>;push <span style="color:#e6db74">&#34;dhcp-option DNS 208.67.220.220&#34;</span>
+</span></span><span style="display:flex;"><span>;client-to-client <span style="color:#75715e">#允许不同的客户端直接通信,不安全,生产环境一般无</span>
+</span></span><span style="display:flex;"><span>需配置
+</span></span><span style="display:flex;"><span>;duplicate-cn <span style="color:#75715e">#多个用户共用一个证书，一般用于测试环境，生产环境建议一个用户一个证</span>
+</span></span><span style="display:flex;"><span>书,无需开启
+</span></span><span style="display:flex;"><span>keepalive <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">120</span> <span style="color:#75715e">#设置服务端活动的检测的间隔和超时时间，每隔10秒ping一次，120秒没有</span>
+</span></span><span style="display:flex;"><span>回应则认为已经断线
+</span></span><span style="display:flex;"><span>tls-auth ta.key <span style="color:#ae81ff">0</span> <span style="color:#75715e">#访止DoS等攻击的安全增强配置,服务器和每个客户端都需要拥有此密钥文</span>
+</span></span><span style="display:flex;"><span>件。第二个参数在服务器端为0，客户端为1
+</span></span><span style="display:flex;"><span>cipher AES-256-CBC <span style="color:#75715e">#加密算法</span>
+</span></span><span style="display:flex;"><span>;compress lz4-v2 <span style="color:#75715e">#启用Openvpn2.4.X新版压缩算法</span>
+</span></span><span style="display:flex;"><span>;push <span style="color:#e6db74">&#34;compress lz4-v2&#34;</span> <span style="color:#75715e">#推送客户端使用新版压缩算法,和下面的comp-lzo不要同时使用</span>
+</span></span><span style="display:flex;"><span>;comp-lzo <span style="color:#75715e">#旧户端兼容的压缩配置，需要客户端配置开启压缩,openvpn2.4.X等新版可以不</span>
+</span></span><span style="display:flex;"><span>用开启
+</span></span><span style="display:flex;"><span>;max-clients <span style="color:#ae81ff">100</span> <span style="color:#75715e">#最多支持的客户端数量</span>
+</span></span><span style="display:flex;"><span>;user nobody <span style="color:#75715e">#指定openvpn服务的用户</span>
+</span></span><span style="display:flex;"><span>;group nobody <span style="color:#75715e">#指定openvpn服务的组</span>
+</span></span><span style="display:flex;"><span>persist-key <span style="color:#75715e">#重启服务时默认会重新读取key文件，开启此配置后保持使用第一次的key文件,</span>
+</span></span><span style="display:flex;"><span>生产环境无需开启
+</span></span><span style="display:flex;"><span>persist-tun <span style="color:#75715e">#Don’t close and reopen TUN/TAP device or run up/down</span>
+</span></span><span style="display:flex;"><span>scripts across SIGUSR1 or --ping-restart restarts,生产环境建议无需开启
+</span></span><span style="display:flex;"><span>status openvpn-status.log <span style="color:#75715e">#服务器状态记录文件，每分钟记录一次相关信息</span>
+</span></span><span style="display:flex;"><span>;log openvpn.log <span style="color:#75715e">#第一种日志记录方式,并指定日志路径，log会在openvpn启动的时候清</span>
+</span></span><span style="display:flex;"><span>空日志文件,不建议使用
+</span></span><span style="display:flex;"><span>;log-append openvpn.log <span style="color:#75715e">#第二种日志记录方式,并指定日志路径，重启openvpn后在之前的日志后</span>
+</span></span><span style="display:flex;"><span>面追加新的日志,生产环境建议使用
+</span></span><span style="display:flex;"><span>verb <span style="color:#ae81ff">3</span> <span style="color:#75715e">#设置日志级别，0-9，级别越高记录的内容越详细,0 表示静默运行，只记</span>
+</span></span><span style="display:flex;"><span>录致命错误,4 表示合理的常规用法,5 和 <span style="color:#ae81ff">6</span> 可以帮助调试连接错误。9 表示极度冗余，输出非常详细的日志
+</span></span><span style="display:flex;"><span>信息
+</span></span><span style="display:flex;"><span>;mute <span style="color:#ae81ff">20</span> <span style="color:#75715e">#对相同类别的信息只记录前20条到日志文件中</span>
+</span></span><span style="display:flex;"><span>explicit-exit-notify <span style="color:#ae81ff">1</span> <span style="color:#75715e">#当服务端重启后通知客户端自动重新连接服务器，此项配置仅能用于udp模</span>
+</span></span><span style="display:flex;"><span>式，tcp模式无需配置即能实现重新连接功能,且开启此项后tcp配置后将导致openvpn服务无法启动,所以
+</span></span><span style="display:flex;"><span>tcp时必须不能开启此项
+</span></span><span style="display:flex;"><span>script-security <span style="color:#ae81ff">3</span> <span style="color:#75715e"># 允许使用自定义脚本</span>
+</span></span><span style="display:flex;"><span>auth-user-pass-verify /etc/openvpn/checkpsw.sh via-env <span style="color:#75715e">#指定自定义脚本路径</span>
+</span></span><span style="display:flex;"><span>username-as-common-name <span style="color:#75715e">#开启用户密码验证</span>
+</span></span><span style="display:flex;"><span>client-cert-not-required <span style="color:#75715e">#只支持用户和密码方式验证,不支持证书,无此配置表示需要证书和用户密</span>
+</span></span><span style="display:flex;"><span>码多种验证
+</span></span></code></pre></div><h4 id="修改服务器端配置文件">修改服务器端配置文件<a hidden class="anchor" aria-hidden="true" href="#修改服务器端配置文件">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 openvpn<span style="color:#f92672">]</span><span style="color:#75715e"># grep &#39;^[a-Z].*&#39; /etc/openvpn/server.conf</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#ae81ff">1194</span>
+</span></span><span style="display:flex;"><span>proto tcp
+</span></span><span style="display:flex;"><span>dev tun
+</span></span><span style="display:flex;"><span>ca /etc/openvpn/certs/ca.crt
+</span></span><span style="display:flex;"><span>cert /etc/openvpn/certs/server.crt
+</span></span><span style="display:flex;"><span>key /etc/openvpn/certs/server.key  <span style="color:#75715e"># This file should be kept secret</span>
+</span></span><span style="display:flex;"><span>dh /etc/openvpn/certs/dh.pem
+</span></span><span style="display:flex;"><span>server 10.8.0.0 255.255.255.0
+</span></span><span style="display:flex;"><span>ifconfig-pool-persist ipp.txt
+</span></span><span style="display:flex;"><span>push <span style="color:#e6db74">&#34;route 172.30.0.0 255.255.255.0&#34;</span>
+</span></span><span style="display:flex;"><span>keepalive <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">120</span>
+</span></span><span style="display:flex;"><span>tls-auth ta.key <span style="color:#ae81ff">0</span> <span style="color:#75715e"># This file is secret</span>
+</span></span><span style="display:flex;"><span>cipher AES-256-CBC
+</span></span><span style="display:flex;"><span>compress lz4-v2
+</span></span><span style="display:flex;"><span>push <span style="color:#e6db74">&#34;compress lz4-v2&#34;</span>
+</span></span><span style="display:flex;"><span>max-clients <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>user openvpn
+</span></span><span style="display:flex;"><span>group openvpn
+</span></span><span style="display:flex;"><span>persist-key
+</span></span><span style="display:flex;"><span>persist-tun
+</span></span><span style="display:flex;"><span>status /var/log/openvpn/openvpn-status.log
+</span></span><span style="display:flex;"><span>log-append  /var/log/openvpn/openvpn.log
+</span></span><span style="display:flex;"><span>verb <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>mute <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>explicit-exit-notify <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 openvpn<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#准备目志相关目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 openvpn<span style="color:#f92672">]</span><span style="color:#75715e"># getent passwd openvpn</span>
+</span></span><span style="display:flex;"><span>openvpn❌998:996:OpenVPN:/etc/openvpn:/sbin/nologin
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 openvpn<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir /var/log/openvpn</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 openvpn<span style="color:#f92672">]</span><span style="color:#75715e"># chown openvpn.openvpn /var/log/openvpn</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 openvpn<span style="color:#f92672">]</span><span style="color:#75715e"># ll -d /var/log/openvpn</span>
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">2</span> openvpn openvpn <span style="color:#ae81ff">6</span> Mar <span style="color:#ae81ff">18</span> 10:16 /var/log/openvpn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 openvpn<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><h2 id="启动-openvpn-服务">启动 OpenVPN 服务<a hidden class="anchor" aria-hidden="true" href="#启动-openvpn-服务">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 server<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl enable --now openvpn@server</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 启动报如下错误请在终端执行该命令</span>
+</span></span><span style="display:flex;"><span>openvpn --genkey --secret /etc/openvpn/ta.key
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Sat Mar <span style="color:#ae81ff">18</span> 11:05:32 <span style="color:#ae81ff">2023</span> WARNING: cannot stat file <span style="color:#e6db74">&#39;ta.key&#39;</span>: No such file or directory <span style="color:#f92672">(</span>errno<span style="color:#f92672">=</span>2<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Options error: --tls-auth fails with <span style="color:#e6db74">&#39;ta.key&#39;</span>: No such file or directory <span style="color:#f92672">(</span>errno<span style="color:#f92672">=</span>2<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Options error: Please correct these errors.
+</span></span><span style="display:flex;"><span>Use --help <span style="color:#66d9ef">for</span> more information.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看状态</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 server<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl status openvpn@server</span>
+</span></span><span style="display:flex;"><span>● openvpn@server.service - OpenVPN Robust And Highly Flexible Tunneling Application On server
+</span></span><span style="display:flex;"><span>   Loaded: loaded <span style="color:#f92672">(</span>/usr/lib/systemd/system/openvpn@.service; enabled; vendor preset: disabled<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Sat 2023-03-18 11:23:23 CST; 1min 59s ago
+</span></span><span style="display:flex;"><span> Main PID: <span style="color:#ae81ff">2769</span> <span style="color:#f92672">(</span>openvpn<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   Status: <span style="color:#e6db74">&#34;Initialization Sequence Completed&#34;</span>
+</span></span><span style="display:flex;"><span>   CGroup: /system.slice/system-openvpn.slice/openvpn@server.service
+</span></span><span style="display:flex;"><span>           └─2769 /usr/sbin/openvpn --cd /etc/openvpn/ --config server.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mar <span style="color:#ae81ff">18</span> 11:23:23 openvpn-centos7 systemd<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: Starting OpenVPN Robust And Highly Flexible Tunneling Application On server...
+</span></span><span style="display:flex;"><span>Mar <span style="color:#ae81ff">18</span> 11:23:23 openvpn-centos7 systemd<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: Started OpenVPN Robust And Highly Flexible Tunneling Application On server
+</span></span></code></pre></div><h2 id="准备-openvpn-客户端配置文件">准备 OpenVPN 客户端配置文件<a hidden class="anchor" aria-hidden="true" href="#准备-openvpn-客户端配置文件">#</a></h2>
+<h3 id="客户端默认范例配置文件说明">客户端默认范例配置文件说明<a hidden class="anchor" aria-hidden="true" href="#客户端默认范例配置文件说明">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 server<span style="color:#f92672">]</span><span style="color:#75715e">#grep &#39;^[[:alpha:]].*&#39; /usr/share/doc/openvpn/sample/sample-</span>
+</span></span><span style="display:flex;"><span>config-files/client.conf
+</span></span><span style="display:flex;"><span>client <span style="color:#75715e">#指明客户端</span>
+</span></span><span style="display:flex;"><span>dev tun <span style="color:#75715e">#指定和服务端一致的接口类型</span>
+</span></span><span style="display:flex;"><span>proto udp <span style="color:#75715e">#指定和服务端一致的协议类型</span>
+</span></span><span style="display:flex;"><span>remote my-server-1 <span style="color:#ae81ff">1194</span> <span style="color:#75715e">#服务器端的ip或FQDN及端口</span>
+</span></span><span style="display:flex;"><span>resolv-retry infinite <span style="color:#75715e">#指定服务器端FQDN而非IP时，当客户端重新连接后会重新解FQDN对应的IP</span>
+</span></span><span style="display:flex;"><span>nobind <span style="color:#75715e">#客户端不绑定监听端口，随机打开端口连接到服务端的端口</span>
+</span></span><span style="display:flex;"><span>persist-key
+</span></span><span style="display:flex;"><span>persist-tun
+</span></span><span style="display:flex;"><span>ca ca.crt
+</span></span><span style="display:flex;"><span>cert client.crt
+</span></span><span style="display:flex;"><span>key client.key
+</span></span><span style="display:flex;"><span>remote-cert-tls server <span style="color:#75715e">#使用服务器证书校验方式</span>
+</span></span><span style="display:flex;"><span>tls-auth ta.key <span style="color:#ae81ff">1</span> <span style="color:#75715e">#安全加强</span>
+</span></span><span style="display:flex;"><span>cipher AES-256-CBC
+</span></span><span style="display:flex;"><span>verb <span style="color:#ae81ff">3</span>
+</span></span></code></pre></div><h3 id="生成客户端用户的配置文件">生成客户端用户的配置文件<a hidden class="anchor" aria-hidden="true" href="#生成客户端用户的配置文件">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#生成客户端文件,文件后缀必须为.ovpn</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 server<span style="color:#f92672">]</span><span style="color:#75715e">#grep &#39;^[[:alpha:]].*&#39; /usr/share/doc/openvpn/sample/sample-</span>
+</span></span><span style="display:flex;"><span>config-files/client.conf &gt; /etc/openvpn/client/wangxiaochun/client.ovpn
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#修改配置文件,内容如下</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 server<span style="color:#f92672">]</span><span style="color:#75715e">#vim /etc/openvpn/client/wangxiaochun/client.ovpn</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 server<span style="color:#f92672">]</span><span style="color:#75715e">#cat /etc/openvpn/client/wangxiaochun/client.ovpn</span>
+</span></span><span style="display:flex;"><span>client
+</span></span><span style="display:flex;"><span>dev tun
+</span></span><span style="display:flex;"><span>proto tcp
+</span></span><span style="display:flex;"><span>remote 192.1681.110 <span style="color:#ae81ff">1194</span> <span style="color:#75715e">#生产中为OpenVPN公网IP或者FQDN</span>
+</span></span><span style="display:flex;"><span>resolv-retry infinite
+</span></span><span style="display:flex;"><span>nobind
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#persist-key</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#persist-tun</span>
+</span></span><span style="display:flex;"><span>ca ca.crt
+</span></span><span style="display:flex;"><span>cert dev.crt
+</span></span><span style="display:flex;"><span>key dev.key
+</span></span><span style="display:flex;"><span>remote-cert-tls server
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#tls-auth ta.key 1</span>
+</span></span><span style="display:flex;"><span>cipher AES-256-CBC
+</span></span><span style="display:flex;"><span>verb <span style="color:#ae81ff">3</span> <span style="color:#75715e">#此值不能随意指定,否则无法通信</span>
+</span></span><span style="display:flex;"><span>compress lz4-v2 <span style="color:#75715e">#此项在OpenVPN2.4.X版本使用,需要和服务器端保持一致,如不指定,默认使用</span>
+</span></span><span style="display:flex;"><span>comp-lz压缩
+</span></span></code></pre></div><h2 id="实现-openvpn-客户端">实现 OpenVPN 客户端<a hidden class="anchor" aria-hidden="true" href="#实现-openvpn-客户端">#</a></h2>
+<h3 id="windows-客户端安装省略">Windows 客户端安装省略<a hidden class="anchor" aria-hidden="true" href="#windows-客户端安装省略">#</a></h3>
+<h3 id="windows-客户端配置准备">Windows 客户端配置准备<a hidden class="anchor" aria-hidden="true" href="#windows-客户端配置准备">#</a></h3>
+<p>保存证书到openvpn 客户端安装目录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#在服务器打包证书并下载发送给windows客户端</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 dev<span style="color:#f92672">]</span><span style="color:#75715e"># pwd</span>
+</span></span><span style="display:flex;"><span>/etc/openvpn/client/dev
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 dev<span style="color:#f92672">]</span><span style="color:#75715e"># ll</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">1176</span> Mar <span style="color:#ae81ff">18</span> 10:01 ca.crt
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">4425</span> Mar <span style="color:#ae81ff">18</span> 10:01 dev.crt
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">235</span> Mar <span style="color:#ae81ff">18</span> 11:35 dev.ovpn
+</span></span><span style="display:flex;"><span>-rw------- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">883</span> Mar <span style="color:#ae81ff">18</span> 10:01 dev.req
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 dev<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 放置到windows客户端默认安装目录下 C:\Program Files\OpenVPN\config 目录</span>
+</span></span></code></pre></div><h2 id="实现访问vpn服务器的内网主机">实现访问VPN服务器的内网主机<a hidden class="anchor" aria-hidden="true" href="#实现访问vpn服务器的内网主机">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#在服务器开启ip_forward转发功能</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 dev<span style="color:#f92672">]</span><span style="color:#75715e">#echo net.ipv4.ip_forward = 1 &gt;&gt; /etc/sysctl.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 dev<span style="color:#f92672">]</span><span style="color:#75715e">#sysctl -p</span>
+</span></span><span style="display:flex;"><span>net.ipv4.ip_forward <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><h2 id="配置实现内网服务器回应外网的请求的路由">配置实现内网服务器回应外网的请求的路由<a hidden class="anchor" aria-hidden="true" href="#配置实现内网服务器回应外网的请求的路由">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#阿里云服务器不支持修改路由</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@web1 ~<span style="color:#f92672">]</span><span style="color:#75715e">#route add -net 10.8.0.0/24 gw 172.30.0.1</span>
+</span></span></code></pre></div><h2 id="在openvpn服务器配置-iptables-规则">在OpenVPN服务器配置 iptables 规则<a hidden class="anchor" aria-hidden="true" href="#在openvpn服务器配置-iptables-规则">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#添加SNAT规则</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#方法1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e">#echo &#39;iptables -t nat -A POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j MASQUERADE&#39; &gt;&gt; /etc/rc.d/rc.local</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#方法2</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e">#echo &#39;iptables -t nat -A POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to-source 172.30.0.1&#39; &gt;&gt; /etc/rc.d/rc.local</span>
+</span></span></code></pre></div><h2 id="吊销指定的用户的证书">吊销指定的用户的证书<a hidden class="anchor" aria-hidden="true" href="#吊销指定的用户的证书">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /etc/openvpn/easy-rsa-server/3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@openvpn-centos7 3<span style="color:#f92672">]</span><span style="color:#75715e">#./easyrsa revoke dev</span>
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/zookeeper%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Zookeeper离线安装脚本</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Docker镜像加速</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

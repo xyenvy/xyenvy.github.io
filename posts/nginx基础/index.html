@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Nginx基础 | Hopeful</title>
+<meta name="keywords" content="Nginx">
+<meta name="description" content="Nginx是免费的、开源的、高性能的HTTP和反向代理服务器、邮件代理服务器、以及TCP/UDP代理服务器">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="Nginx基础" />
+<meta property="og:description" content="Nginx是免费的、开源的、高性能的HTTP和反向代理服务器、邮件代理服务器、以及TCP/UDP代理服务器" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/26.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-01T12:08:32+00:00" />
+<meta property="article:modified_time" content="2023-01-01T12:08:32+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/26.jpg" />
+<meta name="twitter:title" content="Nginx基础"/>
+<meta name="twitter:description" content="Nginx是免费的、开源的、高性能的HTTP和反向代理服务器、邮件代理服务器、以及TCP/UDP代理服务器"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Nginx基础",
+      "item": "https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Nginx基础",
+  "name": "Nginx基础",
+  "description": "Nginx是免费的、开源的、高性能的HTTP和反向代理服务器、邮件代理服务器、以及TCP/UDP代理服务器",
+  "keywords": [
+    "Nginx"
+  ],
+  "articleBody": "Nginx安装 Nginx版本和安装方式 Nginx版本\nMainline version 主要开发版本,一般为奇数版本号,比如1.19 Stable version 当前最新稳定版,一般为偶数版本,如:1.20 Legacy versions 旧的稳定版,一般为偶数版本,如:1.18 Nginx安装可以使用yum或源码安装，但是推荐使用源码编译安装\nyum的版本比较旧 编译安装可以更方便自定义相关路径 使用源码编译可以自定义相关功能，更方便业务的上的使用 基于yum安装Nginx 查看系统和EPEL的nginx版本\n# centos和rocky系统 [root@centos8 ~]# yum list nginx Repository extras is listed more than once in the configuration Last metadata expiration check: 0:28:13 ago on Wed 04 Jan 2023 11:51:31 AM CST. Available Packages nginx.x86_64 1:1.14.1-9.module_el8.0.0+184+e34fea82 AppStream nginx.x86_64 1:1.14.1-9.module_el8.0.0+184+e34fea82 appstream [root@centos8 ~]# [root@centos8 ~]# dnf list nginx Repository extras is listed more than once in the configuration Last metadata expiration check: 0:28:55 ago on Wed 04 Jan 2023 11:51:31 AM CST. Available Packages nginx.x86_64 1:1.14.1-9.module_el8.0.0+184+e34fea82 AppStream nginx.x86_64 1:1.14.1-9.module_el8.0.0+184+e34fea82 appstream [root@centos8 ~]# # ubuntu系统 root@ubuntu2004:~# apt list nginx Listing... Done nginx/focal-updates,focal-security 1.18.0-0ubuntu1.4 all N: There is 1 additional version. Please use the '-a' switch to see it root@ubuntu2004:~# centos、rocky系统yum安装\nyum install nginx # centos、rocky系统安装nginx后未启动，使用如下命令启动 systemctl start nginx ubuntu系统安装\napt update;apt install nginx 官方包源安装Nginx 系统和EPEL源的中 nignx版本较旧,可以安装官方源的最新版本 官方包链接:\nhttp://nginx.org/en/linux_packages.html 官方 yum 源链接:\nhttp://nginx.org/en/linux_packages.html #RHEL-CentOS 通过官方 yum 源安装nginx\n[root@centos8 ~]# vim /etc/yum.repos.d/nginx.repo [nginx-stable] name=nginx stable repo baseurl=http://nginx.org/packages/centos/$releasever/$basearch/ gpgcheck=1 enabled=1 gpgkey=https://nginx.org/keys/nginx_signing.key module_hotfixes=true [root@centos8 ~]# yum clean all 42 files removed [root@centos8 ~]# yum makecache # 查看所有的版本 [root@centos8]# yum list nginx --showduplicates nginx stable repo 462 B/s | 47 kB 01:44 Available Packages nginx.x86_64 1.16.0-1.el8.ngx nginx-stable nginx.x86_64 1:1.14.1-9.module+el8.4.0+542+81547229 appstream nginx.x86_64 1:1.16.1-1.el8.ngx nginx-stable nginx.x86_64 1:1.18.0-1.el8.ngx nginx-stable nginx.x86_64 1:1.18.0-2.el8.ngx nginx-stable nginx.x86_64 1:1.20.0-1.el8.ngx nginx-stable nginx.x86_64 1:1.20.1-1.el8.ngx nginx-stable nginx.x86_64 1:1.20.2-1.el8.ngx nginx-stable nginx.x86_64 1:1.22.0-1.el8.ngx nginx-stable nginx.x86_64 1:1.22.1-1.el8.ngx nginx-stable #安装指定版本 [root@centos8 ~]#yum -y install nginx-1.18.0 检查安装 rpm -ql nginx 查看帮助 [root@centos8 ~]# nginx -h ···· ···· ···· Options: -?,-h : this help -v : show version and exit -V : show version and configure options then exit #显示版本和编译参数 -t : test configuration and exit #测试配置文件是否异常 -T : test configuration, dump it and exit #测试并打印 -q : suppress non-error messages during configuration testing #静默模式 -s signal : send signal to a master process: stop, quit, reopen, reload #发送信号,reload信号 会生成新的worker,但master不会重新生成 -p prefix : set prefix path (default: /etc/nginx/)#指定Nginx 目录 -c filename : set configuration file (default: /etc/nginx/nginx.conf)#配置文件路径 -g directives : set global directives out of configuration file#设置全局指令,注意和配置文件不要同时配置,否则冲突 验证配置文件 [root@centos8 ~]# nginx -t nginx: the configuration file /etc/nginx/nginx.conf syntax is ok nginx: configuration file /etc/nginx/nginx.conf test is successful [root@centos8 ~]# 启动文件 [root@centos8 ~]# cat /lib/systemd/system/nginx.service [Unit] Description=The nginx HTTP and reverse proxy server After=network.target remote-fs.target nss-lookup.target [Service] Type=forking PIDFile=/run/nginx.pid # Nginx will fail to start if /run/nginx.pid already exists but has the wrong # SELinux context. This might happen when running `nginx -t` from the cmdline. # https://bugzilla.redhat.com/show_bug.cgi?id=1268621 ExecStartPre=/usr/bin/rm -f /run/nginx.pid ExecStartPre=/usr/sbin/nginx -t ExecStart=/usr/sbin/nginx ExecReload=/bin/kill -s HUP $MAINPID KillSignal=SIGQUIT TimeoutStopSec=5 KillMode=mixed PrivateTmp=true [Install] WantedBy=multi-user.target [root@centos8 ~]# 启动Nginx systemctl enable --now nginx Nginx编译安装 官方源码包下载地址：\nhttps://nginx.org/en/download.html 范例：编译安装\n系统centos8.5\nNginx版本：1.18.0\n安装扩展依赖\n[root@centos8 ~]# yum -y install gcc pcre-devel openssl-devel zlib-devel 创建用户和组 groupadd nginx useradd -s /sbin/nologin -g nginx nginx 下载安装包并解压 [root@centos8 ~]# cd /usr/local/src/ [root@centos8 ~]# wget https://nginx.org/download/nginx-1.18.0.tar.gz [root@centos8 src]# tar xf nginx-1.18.0.tar.gz [root@centos8 src]# cd nginx-1.18.0 安装 [root@centos8 nginx-1.18.0]# ./configure --prefix=/usr/local/src/nginx/ \\ # 安装位置 --user=nginx \\ # 运行的用户 --group=nginx \\ --with-http_ssl_module \\ --with-http_v2_module \\ --with-http_realip_module \\ --with-http_stub_status_module \\ --with-http_gzip_static_module \\ --with-pcre \\ --with-stream \\ --with-stream_ssl_module [root@centos8 nginx-1.18.0]#make \u0026\u0026 make install 修改权限 [root@centos8 /]# chown -R nginx.nginx /usr/local/src/nginx/ nginx安装完成后有四个主要的目录 [root@centos8 /]# ll /usr/local/src/nginx/ total 4 drwxr-xr-x. 2 nginx nginx 4096 Jan 4 15:17 conf drwxr-xr-x. 2 nginx nginx 40 Jan 4 15:17 html drwxr-xr-x. 2 nginx nginx 6 Jan 4 15:17 logs drwxr-xr-x. 2 nginx nginx 19 Jan 4 15:17 sbin [root@centos8 /]# conf：保存nginx所有的配置文件，其中nginx.conf是nginx服务器的最核心最主要的配置文件，其他 的.conf则是用来配置nginx相关的功能的，例如fastcgi功能使用的是fastcgi.conf和 fastcgi_params两个文件，配置文件一般都有一个样板配置文件，是以.default为后缀，使用时可将其复 制并将default后缀去掉即可。 html目录中保存了nginx服务器的web文件，但是可以更改为其他目录保存web文件,另外还有一个50x的web 文件是默认的错误页面提示页面。 logs：用来保存nginx服务器的访问日志错误日志等日志，logs目录可以放在其他 验证版本及编译参数 [root@centos8 /]# ln -s /usr/local/src/nginx/sbin/nginx /usr/bin/ [root@centos8 /]# nginx -V nginx version: nginx/1.18.0 built by gcc 8.5.0 20210514 (Red Hat 8.5.0-4) (GCC) built with OpenSSL 1.1.1k FIPS 25 Mar 2021 TLS SNI support enabled configure arguments: --prefix=/usr/local/src/nginx --user=nginx --group=nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre --with-stream --with-stream_ssl_module [root@centos8 /]# 创建Nginx启动文件 #复制同一版本的nginx的yum安装生成的service文件 [root@centos8 ~]# vim /lib/systemd/system/nginx.service [Unit] Description=nginx - high performance web server Documentation=http://nginx.org/en/docs/ After=network.target [Service] Type=forking PIDFile=/usr/local/src/nginx/logs/nginx.pid ExecStartPre=/usr/local/src//nginx/sbin/nginx -t -c /usr/local/src/nginx/conf/nginx.conf ExecStart=/usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf ExecReload=/bin/kill -s HUP $MAINPID ExecStop=/bin/kill -s QUIT $MAINPID PrivateTmp=true [Install] WantedBy=multi-user.target 验证启动文件 [root@centos8 ~]#systemctl daemon-reload [root@centos8 ~]#systemctl enable --now nginx Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /usr/lib/systemd/system/nginx.service. [root@centos8 ~]# Nginx命令和信号 nginx 命令支持向其发送信号,实现不同功能 nginx 格式\nnginx [-?hvVtTq] [-s signal] [-c filename] [-p prefix] [-g directives] 选项说明\n帮助: -? -h 使用指定的配置文件: -c 指定配置指令:-g 指定运行目录:-p 测试配置文件是否有语法错误:-t -T 打印nginx的版本信息、编译信息等:-v -V 发送信号: -s 示例: nginx -s reload 信号说明\n立刻停止服务:stop,相当于信号SIGTERM,SIGINT 优雅的停止服务:quit,相当于信号SIGQUIT 平滑重启，重新加载配置文件: reload,相当于信号SIGHUP 重新开始记录日志文件:reopen,相当于信号SIGUSR1,在切割日志时用途较大 平滑升级可执行程序:发送信号SIGUSR2,在升级版本时使用 优雅的停止工作进程:发送信号SIGWINCH,在升级版本时使用 ",
+  "wordCount" : "1930",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/26.jpg","datePublished": "2023-01-01T12:08:32Z",
+  "dateModified": "2023-01-01T12:08:32Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                Nginx基础
+            </h1>
+            <div class="post-description">
+                Nginx是免费的、开源的、高性能的HTTP和反向代理服务器、邮件代理服务器、以及TCP/UDP代理服务器
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023-01-01
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>1930字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>4分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/nginx/" style="color: var(--secondary)!important;">Nginx</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/26.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#nginx%e5%ae%89%e8%a3%85" aria-label="Nginx安装">Nginx安装</a><ul>
+                        
+                <li>
+                    <a href="#nginx%e7%89%88%e6%9c%ac%e5%92%8c%e5%ae%89%e8%a3%85%e6%96%b9%e5%bc%8f" aria-label="Nginx版本和安装方式">Nginx版本和安装方式</a></li>
+                <li>
+                    <a href="#%e5%9f%ba%e4%ba%8eyum%e5%ae%89%e8%a3%85nginx" aria-label="基于yum安装Nginx">基于yum安装Nginx</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%98%e6%96%b9%e5%8c%85%e6%ba%90%e5%ae%89%e8%a3%85nginx" aria-label="官方包源安装Nginx">官方包源安装Nginx</a></li>
+                <li>
+                    <a href="#%e6%a3%80%e6%9f%a5%e5%ae%89%e8%a3%85" aria-label="检查安装">检查安装</a></li>
+                <li>
+                    <a href="#%e6%9f%a5%e7%9c%8b%e5%b8%ae%e5%8a%a9" aria-label="查看帮助">查看帮助</a></li>
+                <li>
+                    <a href="#%e9%aa%8c%e8%af%81%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="验证配置文件">验证配置文件</a></li>
+                <li>
+                    <a href="#%e5%90%af%e5%8a%a8%e6%96%87%e4%bb%b6" aria-label="启动文件">启动文件</a></li>
+                <li>
+                    <a href="#%e5%90%af%e5%8a%a8nginx" aria-label="启动Nginx">启动Nginx</a></li></ul>
+                </li>
+                <li>
+                    <a href="#nginx%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85" aria-label="Nginx编译安装">Nginx编译安装</a></li>
+                <li>
+                    <a href="#nginx%e5%91%bd%e4%bb%a4%e5%92%8c%e4%bf%a1%e5%8f%b7" aria-label="Nginx命令和信号">Nginx命令和信号</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="nginx安装">Nginx安装<a hidden class="anchor" aria-hidden="true" href="#nginx安装">#</a></h1>
+<h2 id="nginx版本和安装方式">Nginx版本和安装方式<a hidden class="anchor" aria-hidden="true" href="#nginx版本和安装方式">#</a></h2>
+<p>Nginx版本</p>
+<ul>
+<li>Mainline version 主要开发版本,一般为奇数版本号,比如1.19</li>
+<li>Stable version 当前最新稳定版,一般为偶数版本,如:1.20</li>
+<li>Legacy versions 旧的稳定版,一般为偶数版本,如:1.18</li>
+</ul>
+<p>Nginx安装可以使用yum或源码安装，但是推荐使用源码编译安装</p>
+<ul>
+<li>yum的版本比较旧</li>
+<li>编译安装可以更方便自定义相关路径</li>
+<li>使用源码编译可以自定义相关功能，更方便业务的上的使用</li>
+</ul>
+<h2 id="基于yum安装nginx">基于yum安装Nginx<a hidden class="anchor" aria-hidden="true" href="#基于yum安装nginx">#</a></h2>
+<p>查看系统和EPEL的nginx版本</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># centos和rocky系统</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum list nginx</span>
+</span></span><span style="display:flex;"><span>Repository extras is listed more than once in the configuration
+</span></span><span style="display:flex;"><span>Last metadata expiration check: 0:28:13 ago on Wed <span style="color:#ae81ff">04</span> Jan <span style="color:#ae81ff">2023</span> 11:51:31 AM CST.
+</span></span><span style="display:flex;"><span>Available Packages
+</span></span><span style="display:flex;"><span>nginx.x86_64                                            1:1.14.1-9.module_el8.0.0+184+e34fea82                                             AppStream
+</span></span><span style="display:flex;"><span>nginx.x86_64                                            1:1.14.1-9.module_el8.0.0+184+e34fea82                                             appstream
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># dnf list nginx</span>
+</span></span><span style="display:flex;"><span>Repository extras is listed more than once in the configuration
+</span></span><span style="display:flex;"><span>Last metadata expiration check: 0:28:55 ago on Wed <span style="color:#ae81ff">04</span> Jan <span style="color:#ae81ff">2023</span> 11:51:31 AM CST.
+</span></span><span style="display:flex;"><span>Available Packages
+</span></span><span style="display:flex;"><span>nginx.x86_64                                            1:1.14.1-9.module_el8.0.0+184+e34fea82                                             AppStream
+</span></span><span style="display:flex;"><span>nginx.x86_64                                            1:1.14.1-9.module_el8.0.0+184+e34fea82                                             appstream
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ubuntu系统</span>
+</span></span><span style="display:flex;"><span>root@ubuntu2004:~# apt list nginx
+</span></span><span style="display:flex;"><span>Listing... Done
+</span></span><span style="display:flex;"><span>nginx/focal-updates,focal-security 1.18.0-0ubuntu1.4 all
+</span></span><span style="display:flex;"><span>N: There is <span style="color:#ae81ff">1</span> additional version. Please use the <span style="color:#e6db74">&#39;-a&#39;</span> switch to see it
+</span></span><span style="display:flex;"><span>root@ubuntu2004:~# 
+</span></span></code></pre></div><p>centos、rocky系统yum安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>yum install nginx
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># centos、rocky系统安装nginx后未启动，使用如下命令启动</span>
+</span></span><span style="display:flex;"><span>systemctl start nginx
+</span></span></code></pre></div><p>ubuntu系统安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>apt update;apt install nginx
+</span></span></code></pre></div><h3 id="官方包源安装nginx">官方包源安装Nginx<a hidden class="anchor" aria-hidden="true" href="#官方包源安装nginx">#</a></h3>
+<p>系统和EPEL源的中 nignx版本较旧,可以安装官方源的最新版本
+官方包链接:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>http://nginx.org/en/linux_packages.html
+</span></span></code></pre></div><p>官方 yum 源链接:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>http://nginx.org/en/linux_packages.html  #RHEL-CentOS
+</span></span></code></pre></div><p>通过官方 yum 源安装nginx</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/yum.repos.d/nginx.repo</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>nginx-stable<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>nginx stable repo
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>http://nginx.org/packages/centos/$releasever/$basearch/
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>enabled<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>gpgkey<span style="color:#f92672">=</span>https://nginx.org/keys/nginx_signing.key
+</span></span><span style="display:flex;"><span>module_hotfixes<span style="color:#f92672">=</span>true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum clean all</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">42</span> files removed
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum makecache</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看所有的版本</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8<span style="color:#f92672">]</span><span style="color:#75715e"># yum list nginx --showduplicates</span>
+</span></span><span style="display:flex;"><span>nginx stable repo                                                                                       <span style="color:#ae81ff">462</span>  B/s |  <span style="color:#ae81ff">47</span> kB     01:44    
+</span></span><span style="display:flex;"><span>Available Packages
+</span></span><span style="display:flex;"><span>nginx.x86_64                                     1.16.0-1.el8.ngx                                                           nginx-stable
+</span></span><span style="display:flex;"><span>nginx.x86_64                                     1:1.14.1-9.module+el8.4.0+542+81547229                                     appstream   
+</span></span><span style="display:flex;"><span>nginx.x86_64                                     1:1.16.1-1.el8.ngx                                                         nginx-stable
+</span></span><span style="display:flex;"><span>nginx.x86_64                                     1:1.18.0-1.el8.ngx                                                         nginx-stable
+</span></span><span style="display:flex;"><span>nginx.x86_64                                     1:1.18.0-2.el8.ngx                                                         nginx-stable
+</span></span><span style="display:flex;"><span>nginx.x86_64                                     1:1.20.0-1.el8.ngx                                                         nginx-stable
+</span></span><span style="display:flex;"><span>nginx.x86_64                                     1:1.20.1-1.el8.ngx                                                         nginx-stable
+</span></span><span style="display:flex;"><span>nginx.x86_64                                     1:1.20.2-1.el8.ngx                                                         nginx-stable
+</span></span><span style="display:flex;"><span>nginx.x86_64                                     1:1.22.0-1.el8.ngx                                                         nginx-stable
+</span></span><span style="display:flex;"><span>nginx.x86_64                                     1:1.22.1-1.el8.ngx                                                         nginx-stable 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#安装指定版本</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#yum -y install nginx-1.18.0</span>
+</span></span></code></pre></div><h3 id="检查安装">检查安装<a hidden class="anchor" aria-hidden="true" href="#检查安装">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>rpm -ql nginx
+</span></span></code></pre></div><h3 id="查看帮助">查看帮助<a hidden class="anchor" aria-hidden="true" href="#查看帮助">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># nginx -h</span>
+</span></span><span style="display:flex;"><span>····
+</span></span><span style="display:flex;"><span>····
+</span></span><span style="display:flex;"><span>····
+</span></span><span style="display:flex;"><span>Options:
+</span></span><span style="display:flex;"><span>-?,-h : this help
+</span></span><span style="display:flex;"><span>-v : show version and exit
+</span></span><span style="display:flex;"><span>-V : show version and configure options <span style="color:#66d9ef">then</span> exit <span style="color:#75715e">#显示版本和编译参数</span>
+</span></span><span style="display:flex;"><span>-t : test configuration and exit <span style="color:#75715e">#测试配置文件是否异常</span>
+</span></span><span style="display:flex;"><span>-T : test configuration, dump it and exit <span style="color:#75715e">#测试并打印</span>
+</span></span><span style="display:flex;"><span>-q : suppress non-error messages during configuration testing <span style="color:#75715e">#静默模式</span>
+</span></span><span style="display:flex;"><span>-s signal : send signal to a master process: stop, quit, reopen, reload <span style="color:#75715e">#发送信号,reload信号 会生成新的worker,但master不会重新生成</span>
+</span></span><span style="display:flex;"><span>-p prefix : set prefix path <span style="color:#f92672">(</span>default: /etc/nginx/<span style="color:#f92672">)</span><span style="color:#75715e">#指定Nginx 目录</span>
+</span></span><span style="display:flex;"><span>-c filename : set configuration file <span style="color:#f92672">(</span>default: /etc/nginx/nginx.conf<span style="color:#f92672">)</span><span style="color:#75715e">#配置文件路径</span>
+</span></span><span style="display:flex;"><span>-g directives : set global directives out of configuration file#设置全局指令,注意和配置文件不要同时配置,否则冲突
+</span></span></code></pre></div><h3 id="验证配置文件">验证配置文件<a hidden class="anchor" aria-hidden="true" href="#验证配置文件">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># nginx -t</span>
+</span></span><span style="display:flex;"><span>nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+</span></span><span style="display:flex;"><span>nginx: configuration file /etc/nginx/nginx.conf test is successful
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><h3 id="启动文件">启动文件<a hidden class="anchor" aria-hidden="true" href="#启动文件">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat /lib/systemd/system/nginx.service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Description<span style="color:#f92672">=</span>The nginx HTTP and reverse proxy server
+</span></span><span style="display:flex;"><span>After<span style="color:#f92672">=</span>network.target remote-fs.target nss-lookup.target
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Service<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Type<span style="color:#f92672">=</span>forking
+</span></span><span style="display:flex;"><span>PIDFile<span style="color:#f92672">=</span>/run/nginx.pid
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Nginx will fail to start if /run/nginx.pid already exists but has the wrong</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SELinux context. This might happen when running `nginx -t` from the cmdline.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://bugzilla.redhat.com/show_bug.cgi?id=1268621</span>
+</span></span><span style="display:flex;"><span>ExecStartPre<span style="color:#f92672">=</span>/usr/bin/rm -f /run/nginx.pid
+</span></span><span style="display:flex;"><span>ExecStartPre<span style="color:#f92672">=</span>/usr/sbin/nginx -t
+</span></span><span style="display:flex;"><span>ExecStart<span style="color:#f92672">=</span>/usr/sbin/nginx
+</span></span><span style="display:flex;"><span>ExecReload<span style="color:#f92672">=</span>/bin/kill -s HUP $MAINPID
+</span></span><span style="display:flex;"><span>KillSignal<span style="color:#f92672">=</span>SIGQUIT
+</span></span><span style="display:flex;"><span>TimeoutStopSec<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>KillMode<span style="color:#f92672">=</span>mixed
+</span></span><span style="display:flex;"><span>PrivateTmp<span style="color:#f92672">=</span>true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Install<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>WantedBy<span style="color:#f92672">=</span>multi-user.target
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><h3 id="启动nginx">启动Nginx<a hidden class="anchor" aria-hidden="true" href="#启动nginx">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>systemctl enable --now nginx
+</span></span></code></pre></div><h2 id="nginx编译安装">Nginx编译安装<a hidden class="anchor" aria-hidden="true" href="#nginx编译安装">#</a></h2>
+<p>官方源码包下载地址：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>https://nginx.org/en/download.html
+</span></span></code></pre></div><p>范例：编译安装</p>
+<ul>
+<li>
+<p>系统centos8.5</p>
+</li>
+<li>
+<p>Nginx版本：1.18.0</p>
+</li>
+<li>
+<p>安装扩展依赖</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum -y install gcc pcre-devel openssl-devel zlib-devel</span>
+</span></span></code></pre></div><ul>
+<li>创建用户和组</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>groupadd nginx
+</span></span><span style="display:flex;"><span>useradd -s /sbin/nologin -g nginx nginx
+</span></span></code></pre></div><ul>
+<li>下载安装包并解压</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /usr/local/src/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># wget https://nginx.org/download/nginx-1.18.0.tar.gz</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 src<span style="color:#f92672">]</span><span style="color:#75715e"># tar xf nginx-1.18.0.tar.gz </span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 src<span style="color:#f92672">]</span><span style="color:#75715e"># cd nginx-1.18.0</span>
+</span></span></code></pre></div><ul>
+<li>安装</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.18.0<span style="color:#f92672">]</span><span style="color:#75715e"># ./configure --prefix=/usr/local/src/nginx/ \  # 安装位置</span>
+</span></span><span style="display:flex;"><span>--user<span style="color:#f92672">=</span>nginx <span style="color:#ae81ff">\ </span>  <span style="color:#75715e"># 运行的用户</span>
+</span></span><span style="display:flex;"><span>--group<span style="color:#f92672">=</span>nginx <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-http_ssl_module <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-http_v2_module <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-http_realip_module <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-http_stub_status_module <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-http_gzip_static_module <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-pcre <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-stream <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-stream_ssl_module
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.18.0<span style="color:#f92672">]</span><span style="color:#75715e">#make &amp;&amp; make install</span>
+</span></span></code></pre></div><ul>
+<li>修改权限</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># chown -R nginx.nginx /usr/local/src/nginx/</span>
+</span></span></code></pre></div><ul>
+<li>nginx安装完成后有四个主要的目录</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># ll /usr/local/src/nginx/</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>drwxr-xr-x. <span style="color:#ae81ff">2</span> nginx nginx <span style="color:#ae81ff">4096</span> Jan  <span style="color:#ae81ff">4</span> 15:17 conf
+</span></span><span style="display:flex;"><span>drwxr-xr-x. <span style="color:#ae81ff">2</span> nginx nginx   <span style="color:#ae81ff">40</span> Jan  <span style="color:#ae81ff">4</span> 15:17 html
+</span></span><span style="display:flex;"><span>drwxr-xr-x. <span style="color:#ae81ff">2</span> nginx nginx    <span style="color:#ae81ff">6</span> Jan  <span style="color:#ae81ff">4</span> 15:17 logs
+</span></span><span style="display:flex;"><span>drwxr-xr-x. <span style="color:#ae81ff">2</span> nginx nginx   <span style="color:#ae81ff">19</span> Jan  <span style="color:#ae81ff">4</span> 15:17 sbin
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>conf：保存nginx所有的配置文件，其中nginx.conf是nginx服务器的最核心最主要的配置文件，其他
+</span></span><span style="display:flex;"><span>的.conf则是用来配置nginx相关的功能的，例如fastcgi功能使用的是fastcgi.conf和
+</span></span><span style="display:flex;"><span>fastcgi_params两个文件，配置文件一般都有一个样板配置文件，是以.default为后缀，使用时可将其复
+</span></span><span style="display:flex;"><span>制并将default后缀去掉即可。
+</span></span><span style="display:flex;"><span>html目录中保存了nginx服务器的web文件，但是可以更改为其他目录保存web文件,另外还有一个50x的web
+</span></span><span style="display:flex;"><span>文件是默认的错误页面提示页面。
+</span></span><span style="display:flex;"><span>logs：用来保存nginx服务器的访问日志错误日志等日志，logs目录可以放在其他
+</span></span></code></pre></div><ul>
+<li>验证版本及编译参数</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># ln -s /usr/local/src/nginx/sbin/nginx /usr/bin/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># nginx -V</span>
+</span></span><span style="display:flex;"><span>nginx version: nginx/1.18.0
+</span></span><span style="display:flex;"><span>built by gcc 8.5.0 <span style="color:#ae81ff">20210514</span> <span style="color:#f92672">(</span>Red Hat 8.5.0-4<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>GCC<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>built with OpenSSL 1.1.1k  FIPS <span style="color:#ae81ff">25</span> Mar <span style="color:#ae81ff">2021</span>
+</span></span><span style="display:flex;"><span>TLS SNI support enabled
+</span></span><span style="display:flex;"><span>configure arguments: --prefix<span style="color:#f92672">=</span>/usr/local/src/nginx --user<span style="color:#f92672">=</span>nginx --group<span style="color:#f92672">=</span>nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre --with-stream --with-stream_ssl_module
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><ul>
+<li>创建Nginx启动文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#复制同一版本的nginx的yum安装生成的service文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /lib/systemd/system/nginx.service </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Description<span style="color:#f92672">=</span>nginx - high performance web server 
+</span></span><span style="display:flex;"><span>Documentation<span style="color:#f92672">=</span>http://nginx.org/en/docs/
+</span></span><span style="display:flex;"><span>After<span style="color:#f92672">=</span>network.target
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Service<span style="color:#f92672">]</span> 
+</span></span><span style="display:flex;"><span>Type<span style="color:#f92672">=</span>forking
+</span></span><span style="display:flex;"><span>PIDFile<span style="color:#f92672">=</span>/usr/local/src/nginx/logs/nginx.pid
+</span></span><span style="display:flex;"><span>ExecStartPre<span style="color:#f92672">=</span>/usr/local/src//nginx/sbin/nginx -t -c /usr/local/src/nginx/conf/nginx.conf
+</span></span><span style="display:flex;"><span>ExecStart<span style="color:#f92672">=</span>/usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf
+</span></span><span style="display:flex;"><span>ExecReload<span style="color:#f92672">=</span>/bin/kill -s HUP $MAINPID 
+</span></span><span style="display:flex;"><span>ExecStop<span style="color:#f92672">=</span>/bin/kill -s QUIT $MAINPID
+</span></span><span style="display:flex;"><span>PrivateTmp<span style="color:#f92672">=</span>true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Install<span style="color:#f92672">]</span> 
+</span></span><span style="display:flex;"><span>WantedBy<span style="color:#f92672">=</span>multi-user.target
+</span></span></code></pre></div><ul>
+<li>验证启动文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#systemctl daemon-reload</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#systemctl enable --now nginx</span>
+</span></span><span style="display:flex;"><span>Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /usr/lib/systemd/system/nginx.service.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><h2 id="nginx命令和信号">Nginx命令和信号<a hidden class="anchor" aria-hidden="true" href="#nginx命令和信号">#</a></h2>
+<p>nginx 命令支持向其发送信号,实现不同功能
+nginx 格式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>nginx [-?hvVtTq] [-s signal] [-c filename] [-p prefix] [-g directives]
+</span></span></code></pre></div><p>选项说明</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>帮助: -? -h
+</span></span><span style="display:flex;"><span>使用指定的配置文件: -c
+</span></span><span style="display:flex;"><span>指定配置指令:-g
+</span></span><span style="display:flex;"><span>指定运行目录:-p
+</span></span><span style="display:flex;"><span>测试配置文件是否有语法错误:-t -T
+</span></span><span style="display:flex;"><span>打印nginx的版本信息、编译信息等:-v -V
+</span></span><span style="display:flex;"><span>发送信号: -s 示例: nginx -s reload
+</span></span></code></pre></div><p>信号说明</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>立刻停止服务:stop,相当于信号SIGTERM,SIGINT 
+</span></span><span style="display:flex;"><span>优雅的停止服务:quit,相当于信号SIGQUIT       
+</span></span><span style="display:flex;"><span>平滑重启，重新加载配置文件: reload,相当于信号SIGHUP    
+</span></span><span style="display:flex;"><span>重新开始记录日志文件:reopen,相当于信号SIGUSR1,在切割日志时用途较大
+</span></span><span style="display:flex;"><span>平滑升级可执行程序:发送信号SIGUSR2,在升级版本时使用
+</span></span><span style="display:flex;"><span>优雅的停止工作进程:发送信号SIGWINCH,在升级版本时使用
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>在线一键安装Nginx脚本</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Redis一键安装脚本</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

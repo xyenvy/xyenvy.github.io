@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>MySQL | Hopeful</title>
+<meta name="keywords" content="MySQL">
+<meta name="description" content="MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件之一">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/mysql/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="MySQL" />
+<meta property="og:description" content="MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件之一" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/mysql/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-28T22:42:41+00:00" />
+<meta property="article:modified_time" content="2022-09-28T22:42:41+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" />
+<meta name="twitter:title" content="MySQL"/>
+<meta name="twitter:description" content="MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件之一"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "MySQL",
+      "item": "https://xyenvy.github.io/posts/mysql/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "MySQL",
+  "name": "MySQL",
+  "description": "MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件之一",
+  "keywords": [
+    "MySQL"
+  ],
+  "articleBody": "MySQL的特性 MySQL安装 安装方式介绍 程序包管理器管理的程序包 源代码编译安装 二进制格式的程序包：展开至特定路径，并经过简单配置后即可使用\nrpm安装 CentOS 安装光盘 项目官方：https://downloads.mariadb.org/mariadb/repositories/ 国内镜像：https://mirrors.tuna.tsinghua.edu.cn/mariadb/yum/ https://mirrors.tuna.tsinghua.edu.cn/mysql/yum/\n范例1：CentOS 7 利用yum源安装MySQL8.0\nMySQL官网\n官网下载rpm包 利用rz命令将rpm包上传到主机 扩展：\nrz命令yum安装:yum install lrzsz 安装rpm包 root@centos7[~]-\u003eyum install mysql80-community-release-el7-7.noarch.rpm 安装MySQL root@centos7[~]-\u003eyum install -y mysql-community-server 范例2：CentOS 7 利用yum源安装MySQL5.7\n[root@centos7 ~]#tee /etc/yum.repos.d/mysql.repo \u003c",
+  "wordCount" : "5488",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/2.jpg","datePublished": "2022-09-28T22:42:41Z",
+  "dateModified": "2022-09-28T22:42:41Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/mysql/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                MySQL
+            </h1>
+            <div class="post-description">
+                MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件之一
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-09-28
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>5488字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>11分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/mysql/" style="color: var(--secondary)!important;">MySQL</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/2.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#mysql%e7%9a%84%e7%89%b9%e6%80%a7" aria-label="MySQL的特性">MySQL的特性</a></li>
+                <li>
+                    <a href="#mysql%e5%ae%89%e8%a3%85" aria-label="MySQL安装">MySQL安装</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85%e6%96%b9%e5%bc%8f%e4%bb%8b%e7%bb%8d" aria-label="安装方式介绍">安装方式介绍</a><ul>
+                        
+                <li>
+                    <a href="#rpm%e5%ae%89%e8%a3%85" aria-label="rpm安装">rpm安装</a></li>
+                <li>
+                    <a href="#%e4%ba%8c%e8%bf%9b%e5%88%b6%e5%ae%89%e8%a3%85" aria-label="二进制安装">二进制安装</a></li>
+                <li>
+                    <a href="#%e6%ba%90%e7%a0%81%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85" aria-label="源码编译安装">源码编译安装</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#mysql%e5%a4%9a%e5%ae%9e%e4%be%8b" aria-label="MySQL多实例">MySQL多实例</a></li>
+                <li>
+                    <a href="#sql%e8%af%ad%e8%a8%80" aria-label="SQL语言">SQL语言</a><ul>
+                        
+                <li>
+                    <a href="#sql%e8%af%ad%e8%a8%80%e7%9a%84%e5%85%b4%e8%b5%b7%e4%b8%8e%e8%af%ad%e6%b3%95%e6%a0%87%e5%87%86" aria-label="SQL语言的兴起与语法标准">SQL语言的兴起与语法标准</a><ul>
+                        
+                <li>
+                    <a href="#sql%e8%af%ad%e5%8f%a5%e5%88%86%e7%b1%bb" aria-label="SQL语句分类">SQL语句分类</a></li>
+                <li>
+                    <a href="#%e5%ad%97%e7%ac%a6%e9%9b%86%e5%92%8c%e6%8e%92%e5%ba%8f" aria-label="字符集和排序">字符集和排序</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86" aria-label="权限管理">权限管理</a></li>
+                <li>
+                    <a href="#myisam-%e5%ad%98%e5%82%a8%e5%bc%95%e6%93%8e" aria-label="MyISAM 存储引擎">MyISAM 存储引擎</a><ul>
+                        
+                <li>
+                    <a href="#myisam-%e5%bc%95%e6%93%8e%e7%89%b9%e7%82%b9" aria-label="MyISAM 引擎特点">MyISAM 引擎特点</a></li>
+                <li>
+                    <a href="#myisam-%e5%ad%98%e5%82%a8%e5%bc%95%e6%93%8e%e9%80%82%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="MyISAM 存储引擎适用场景">MyISAM 存储引擎适用场景</a></li>
+                <li>
+                    <a href="#myisam-%e5%bc%95%e6%93%8e%e6%96%87%e4%bb%b6" aria-label="MyISAM 引擎文件">MyISAM 引擎文件</a></li></ul>
+                </li>
+                <li>
+                    <a href="#innodb-%e5%bc%95%e6%93%8e" aria-label="InnoDB 引擎">InnoDB 引擎</a><ul>
+                        
+                <li>
+                    <a href="#innodb%e5%bc%95%e6%93%8e%e7%89%b9%e7%82%b9" aria-label="InnoDB引擎特点">InnoDB引擎特点</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%ae%a1%e7%90%86%e5%ad%98%e5%82%a8%e5%bc%95%e6%93%8e" aria-label="管理存储引擎">管理存储引擎</a></li>
+                <li>
+                    <a href="#%e5%ae%9e%e6%88%98%e6%a1%88%e4%be%8b%e6%95%b0%e6%8d%ae%e5%ba%93%e5%86%b7%e5%a4%87%e4%bb%bd%e5%92%8c%e7%83%ad%e5%a4%87%e4%bb%bd" aria-label="实战案例：数据库冷备份和热备份">实战案例：数据库冷备份和热备份</a></li>
+                <li>
+                    <a href="#mysqldump%e5%a4%87%e4%bb%bd%e5%b7%a5%e5%85%b7" aria-label="mysqldump备份工具">mysqldump备份工具</a></li>
+                <li>
+                    <a href="#%e7%94%9f%e4%ba%a7%e7%8e%af%e5%a2%83%e5%ae%9e%e6%88%98%e5%a4%87%e4%bb%bd%e7%ad%96%e7%95%a5" aria-label="生产环境实战备份策略">生产环境实战备份策略</a></li>
+                <li>
+                    <a href="#mysqldump-%e5%a4%87%e4%bb%bd%e8%bf%98%e5%8e%9f%e5%ae%9e%e6%88%98%e6%a1%88%e4%be%8b" aria-label="mysqldump 备份还原实战案例">mysqldump 备份还原实战案例</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%9e%e6%88%98%e6%a1%88%e4%be%8b%e7%89%b9%e5%ae%9a%e6%95%b0%e6%8d%ae%e5%ba%93%e7%9a%84%e5%a4%87%e4%bb%bd%e8%84%9a%e6%9c%ac" aria-label="实战案例：特定数据库的备份脚本">实战案例：特定数据库的备份脚本</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%ae%9e%e6%88%98%e6%a1%88%e4%be%8b%e5%88%86%e5%ba%93%e5%a4%87%e4%bb%bd%e7%9a%84%e5%ae%9e%e6%88%98%e8%84%9a%e6%9c%ac" aria-label="实战案例：分库备份的实战脚本">实战案例：分库备份的实战脚本</a></li>
+                <li>
+                    <a href="#%e5%ae%9e%e6%88%98%e6%a1%88%e4%be%8b%e5%ae%8c%e5%85%a8%e5%a4%87%e4%bb%bd%e5%92%8c%e8%bf%98%e5%8e%9f" aria-label="实战案例：完全备份和还原">实战案例：完全备份和还原</a></li>
+                <li>
+                    <a href="#%e5%ae%9e%e6%88%98%e6%a1%88%e4%be%8b%e6%81%a2%e5%a4%8d%e8%af%af%e5%88%a0%e9%99%a4%e7%9a%84%e8%a1%a8" aria-label="实战案例：恢复误删除的表">实战案例：恢复误删除的表</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="mysql的特性">MySQL的特性<a hidden class="anchor" aria-hidden="true" href="#mysql的特性">#</a></h1>
+<p><img loading="lazy" src="/posts.images/image.assets/1668695639684.png" alt="1668695639684"  />
+</p>
+<h1 id="mysql安装">MySQL安装<a hidden class="anchor" aria-hidden="true" href="#mysql安装">#</a></h1>
+<h2 id="安装方式介绍">安装方式介绍<a hidden class="anchor" aria-hidden="true" href="#安装方式介绍">#</a></h2>
+<p>程序包管理器管理的程序包
+源代码编译安装
+二进制格式的程序包：展开至特定路径，并经过简单配置后即可使用</p>
+<h3 id="rpm安装">rpm安装<a hidden class="anchor" aria-hidden="true" href="#rpm安装">#</a></h3>
+<p>CentOS 安装光盘
+项目官方：https://downloads.mariadb.org/mariadb/repositories/
+国内镜像：https://mirrors.tuna.tsinghua.edu.cn/mariadb/yum/
+<a href="https://mirrors.tuna.tsinghua.edu.cn/mysql/yum/">https://mirrors.tuna.tsinghua.edu.cn/mysql/yum/</a></p>
+<p><strong>范例1：CentOS 7 利用yum源安装MySQL8.0</strong></p>
+<p><a href="https://dev.mysql.com/downloads/repo/yum/">MySQL官网</a></p>
+<ul>
+<li>官网下载rpm包</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1664415600826.png" alt="1664415600826"  />
+</p>
+<ul>
+<li>利用rz命令将rpm包上传到主机</li>
+</ul>
+<p><strong>扩展：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>rz命令yum安装:yum install lrzsz
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1664415914209.png" alt="1664415914209"  />
+</p>
+<ul>
+<li>安装rpm包</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>root@centos7[~]-&gt;yum install mysql80-community-release-el7-7.noarch.rpm
+</span></span></code></pre></div><ul>
+<li>安装MySQL</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>root@centos7[~]-&gt;yum install -y mysql-community-server
+</span></span></code></pre></div><p><strong>范例2：CentOS 7 利用yum源安装MySQL5.7</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@centos7 ~]#tee /etc/yum.repos.d/mysql.repo &lt;&lt;EOF
+</span></span><span style="display:flex;"><span>[mysql]
+</span></span><span style="display:flex;"><span>name=mysql5.7
+</span></span><span style="display:flex;"><span>baseurl=https://mirrors.tuna.tsinghua.edu.cn/mysql/yum/mysql-5.7-community-el7-
+</span></span><span style="display:flex;"><span>x86_64/
+</span></span><span style="display:flex;"><span>gpgcheck=0
+</span></span><span style="display:flex;"><span>EOF
+</span></span><span style="display:flex;"><span>[root@centos7 ~]#yum -y install mysql-community-server
+</span></span><span style="display:flex;"><span>[root@centos7 ~]#systemctl enable --now mysqld
+</span></span></code></pre></div><h3 id="二进制安装">二进制安装<a hidden class="anchor" aria-hidden="true" href="#二进制安装">#</a></h3>
+<p><strong>环境</strong></p>
+<p>系统：rocky8.5</p>
+<p>MySQL版本：mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz</p>
+<p><strong>步骤</strong></p>
+<ul>
+<li>安装相关包</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>yum -y install libaio numactl-libs
+</span></span></code></pre></div><ul>
+<li>准备用户</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>groupadd mysql
+</span></span><span style="display:flex;"><span>useradd -r -g mysql -s /bin/false mysql
+</span></span></code></pre></div><ul>
+<li>下载二进制程序包</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span># -P下载到指定目录
+</span></span><span style="display:flex;"><span>wget https://cdn.mysql.com/archives/mysql-8.0/mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz -P /usr/local/  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> ln -s mysql-8.0.28-linux-glibc2.12-x86_64 mysql
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> chown -R root.root /usr/local/mysql/
+</span></span></code></pre></div><ul>
+<li>准备环境变量</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>echo &#39;PATH=/usr/local/mysql/bin:$PATH&#39; &gt; /etc/profile.d/mysql.sh
+</span></span><span style="display:flex;"><span>. /etc/profile.d/mysql.sh
+</span></span></code></pre></div><ul>
+<li>准备配置文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>vim /etc/my.cnf
+</span></span><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>datadir=/data/mysql
+</span></span><span style="display:flex;"><span>skip_name_resolve=1
+</span></span><span style="display:flex;"><span>socket=/data/mysql/mysql.sock
+</span></span><span style="display:flex;"><span>log-error=/data/mysql/mysql.log
+</span></span><span style="display:flex;"><span>pid-file=/data/mysql/mysql.pid
+</span></span><span style="display:flex;"><span>[client]
+</span></span><span style="display:flex;"><span>socket=/data/mysql/mysql.sock
+</span></span></code></pre></div><ul>
+<li>初始化数据库文件并提取root密码</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>mkdir -pv /data/mysql
+</span></span><span style="display:flex;"><span>grep password /data/mysql/mysql.log
+</span></span></code></pre></div><p>生成随机密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>mysqld --initialize --user=mysql --datadir=/data/mysql
+</span></span></code></pre></div><p>生成空密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>mysqld --initialize-insecure --user=mysql --datadir=/data/mysql
+</span></span></code></pre></div><ul>
+<li>准备服务脚本和启动</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@rocky local]# cp /usr/local/mysql/support-files/mysql.server  /etc/init.d/mysqld
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chkconfig --add mysqld
+</span></span><span style="display:flex;"><span># 启动服务
+</span></span><span style="display:flex;"><span>service mysqld start
+</span></span></code></pre></div><ul>
+<li>修改口令</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span># 修改随机密码为指定密码
+</span></span><span style="display:flex;"><span>mysqladmin -uroot -p&#39;9ATjCOB(jIef&#39; password 123456
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#修改前面生成的空密码为指定密码
+</span></span><span style="display:flex;"><span>mysqladmin -uroot password 123456
+</span></span></code></pre></div><ul>
+<li>测试登录</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>mysql -uroot -p&#39;123456&#39;
+</span></span></code></pre></div><p>注意：登录mysql报如下信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>mysql: error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
+</span></span></code></pre></div><p>解决方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>ln -s /usr/lib64/libtinfo.so.6.1 /usr/lib64/libtinfo.so.5
+</span></span></code></pre></div><p>登录成功：</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1664459241867.png" alt="1664459241867"  />
+</p>
+<h3 id="源码编译安装">源码编译安装<a hidden class="anchor" aria-hidden="true" href="#源码编译安装">#</a></h3>
+<h1 id="mysql多实例">MySQL多实例<a hidden class="anchor" aria-hidden="true" href="#mysql多实例">#</a></h1>
+<h1 id="sql语言">SQL语言<a hidden class="anchor" aria-hidden="true" href="#sql语言">#</a></h1>
+<h2 id="sql语言的兴起与语法标准">SQL语言的兴起与语法标准<a hidden class="anchor" aria-hidden="true" href="#sql语言的兴起与语法标准">#</a></h2>
+<h3 id="sql语句分类">SQL语句分类<a hidden class="anchor" aria-hidden="true" href="#sql语句分类">#</a></h3>
+<ul>
+<li>DDL: Data Defination Language 数据定义语言
+CREATE，DROP，ALTER</li>
+<li>DML: Data Manipulation Language 数据操纵语言
+INSERT，DELETE，UPDATE
+软件开发：CRUD</li>
+<li>DQL：Data Query Language 数据查询语言
+SELECT</li>
+<li>DCL：Data Control Language 数据控制语言
+GRANT，REVOKE</li>
+<li>TCL：Transaction Control Language 事务控制语言
+COMMIT，ROLLBACK，SAVEPOINT</li>
+</ul>
+<h3 id="字符集和排序">字符集和排序<a hidden class="anchor" aria-hidden="true" href="#字符集和排序">#</a></h3>
+<ul>
+<li>查看所有支持的字符集</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>show character set;
+</span></span><span style="display:flex;"><span>show charset;
+</span></span></code></pre></div><ul>
+<li>查看支持的所有排序</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>show collation;
+</span></span><span style="display:flex;"><span>#注意
+</span></span><span style="display:flex;"><span>utf8_general_ci不区分大小写
+</span></span><span style="display:flex;"><span>utf8_bin 区分大小写
+</span></span></code></pre></div><ul>
+<li>查看当前使用的排序规则</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mysql&gt; show variables like &#39;collation%&#39;;
+</span></span><span style="display:flex;"><span>+----------------------+-------------------+
+</span></span><span style="display:flex;"><span>| Variable_name        | Value             |
+</span></span><span style="display:flex;"><span>+----------------------+-------------------+
+</span></span><span style="display:flex;"><span>| collation_connection | utf8_general_ci   |
+</span></span><span style="display:flex;"><span>| collation_database   | latin1_swedish_ci |
+</span></span><span style="display:flex;"><span>| collation_server     | latin1_swedish_ci |
+</span></span><span style="display:flex;"><span>+----------------------+-------------------+
+</span></span><span style="display:flex;"><span>3 rows in set (0.01 sec)
+</span></span></code></pre></div><ul>
+<li>设置服务器端默认字符集</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>vim /etc/my.cnf
+</span></span><span style="display:flex;"><span>#针对mysql客户端
+</span></span><span style="display:flex;"><span>[mysql]
+</span></span><span style="display:flex;"><span>default-character-set=utf8mb4
+</span></span><span style="display:flex;"><span>#针对所有MySQL客户端
+</span></span><span style="display:flex;"><span>[client]
+</span></span><span style="display:flex;"><span>default-character-set=utf8mb4
+</span></span></code></pre></div><ul>
+<li>查看当前字符集的使用情况</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mysql&gt; show variables like &#39;character%&#39;;
+</span></span><span style="display:flex;"><span>+--------------------------+----------------------------------------------------------------+
+</span></span><span style="display:flex;"><span>| Variable_name            | Value                                                          |
+</span></span><span style="display:flex;"><span>+--------------------------+----------------------------------------------------------------+
+</span></span><span style="display:flex;"><span>| character_set_client     | utf8mb4                                                        |
+</span></span><span style="display:flex;"><span>| character_set_connection | utf8mb4                                                        |
+</span></span><span style="display:flex;"><span>| character_set_database   | latin1                                                         |
+</span></span><span style="display:flex;"><span>| character_set_filesystem | binary                                                         |
+</span></span><span style="display:flex;"><span>| character_set_results    | utf8mb4                                                        |
+</span></span><span style="display:flex;"><span>| character_set_server     | latin1                                                         |
+</span></span><span style="display:flex;"><span>| character_set_system     | utf8                                                           |
+</span></span><span style="display:flex;"><span>| character_sets_dir       | /usr/local/mysql-5.7.39-linux-glibc2.12-x86_64/share/charsets/ |
+</span></span><span style="display:flex;"><span>+--------------------------+----------------------------------------------------------------+
+</span></span><span style="display:flex;"><span>8 rows in set (0.00 sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; 
+</span></span></code></pre></div><p><strong>面试题: VARCHAR(50) 能存放几个 UTF8 编码的汉字？</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>存放的汉字个数与版本相关。
+</span></span><span style="display:flex;"><span>mysql 4.0以下版本，varchar(50) 指的是 50 字节，如果存放 UTF8 格式编码的汉字时（每个汉字3字
+</span></span><span style="display:flex;"><span>节），只能存放16 个。
+</span></span><span style="display:flex;"><span>mysql 5.0以上版本，varchar(50) 指的是 50 字符，无论存放的是数字、字母还是 UTF8 编码的汉字，
+</span></span><span style="display:flex;"><span>都可以存放 50 个。
+</span></span></code></pre></div><p>#　ＭySQL用户管理</p>
+<ul>
+<li>相关数据库和表</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>元数据数据库：mysql
+</span></span><span style="display:flex;"><span>系统授权表：db, host, user,columns_priv, tables_priv, procs_priv, proxies_priv
+</span></span></code></pre></div><ul>
+<li>用户账号</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&#39;USERNAME&#39;@&#39;HOST&#39;
+</span></span><span style="display:flex;"><span>@&#39;HOST&#39;: 主机名： user1@&#39;web1.magedu.org&#39;
+</span></span><span style="display:flex;"><span>IP地址或Network
+</span></span><span style="display:flex;"><span>通配符： % _
+</span></span><span style="display:flex;"><span>示例：wang@&#39;172.16.%.%&#39;
+</span></span><span style="display:flex;"><span>user2@&#39;192.168.1.%&#39;
+</span></span><span style="display:flex;"><span>mage@&#39;10.0.0.0/255.255.0.0&#39;
+</span></span></code></pre></div><ul>
+<li>创建用户：create user</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>CREATE USER &#39;USERNAME&#39;@&#39;HOST&#39; [IDENTIFIED BY &#39;password&#39;]；
+</span></span><span style="display:flex;"><span>#示例:
+</span></span><span style="display:flex;"><span>create user test@&#39;10.0.0.0/255.255.255.0&#39; identified by &#39;123456&#39;;
+</span></span><span style="display:flex;"><span>create user test2@&#39;10.0.0.%&#39; identified by 123456
+</span></span></code></pre></div><p>新建用户的默认权限：USAGE</p>
+<ul>
+<li>用户重命名：RENAME USER</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>RENAME USER old_user_name TO new_user_name;
+</span></span></code></pre></div><ul>
+<li>删除用户</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>DROP USER &#39;USERNAME&#39;@&#39;HOST&#39;
+</span></span></code></pre></div><p><strong>删除空用户</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>DROP USER &#39;&#39;@&#39;localhost&#39;;
+</span></span></code></pre></div><p><strong>修改密码</strong></p>
+<ul>
+<li>注意</li>
+</ul>
+<p>新版mysql中用户密码可以保存在mysql.user表的authentication_string字段中
+如果mysql.user表的authentication_string和password字段都保存密码，authentication_string
+优先生效</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#方法1,用户可以也可通过此方式修改自已的密码
+</span></span><span style="display:flex;"><span>SET PASSWORD FOR &#39;user&#39;@&#39;host&#39; = PASSWORD(&#39;password&#39;); #MySQL8.0 版本不支持此方法,
+</span></span><span style="display:flex;"><span>因为password函数被取消
+</span></span><span style="display:flex;"><span>set password for root@&#39;localhost&#39;=&#39;123456&#39; ; #MySQL8.0版本支持此方法,此方式直接将密码
+</span></span><span style="display:flex;"><span>123456加密后存放在mysql.user表的authentication_string字段
+</span></span><span style="display:flex;"><span>#方法2
+</span></span><span style="display:flex;"><span>ALTER USER test@&#39;%&#39; IDENTIFIED BY &#39;centos&#39;; #通用改密码方法, 用户可以也可通过此方式修
+</span></span><span style="display:flex;"><span>改自已的密码,MySQL8 版本修改密码
+</span></span><span style="display:flex;"><span>#方法3 此方式MySQL8.0不支持,因为password函数被取消
+</span></span><span style="display:flex;"><span>UPDATE mysql.user SET password=PASSWORD(&#39;password&#39;) WHERE clause;
+</span></span><span style="display:flex;"><span>#mariadb 10.3
+</span></span><span style="display:flex;"><span>update mysql.user set authentication_string=password(&#39;ubuntu&#39;) where
+</span></span><span style="display:flex;"><span>user=&#39;mage&#39;;
+</span></span><span style="display:flex;"><span>#此方法需要执行下面指令才能生效：
+</span></span><span style="display:flex;"><span>FLUSH PRIVILEGES;
+</span></span></code></pre></div><p><strong>忘记管理员密码解决方法</strong></p>
+<ol>
+<li>启动mysqld进程时，为其使用如下选项：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>--skip-grant-tables
+</span></span><span style="display:flex;"><span>--skip-networking
+</span></span></code></pre></div><ol start="2">
+<li>使用UPDATE命令修改管理员密码</li>
+<li>关闭mysqld进程，移除上述两个选项，重启mysqld</li>
+</ol>
+<p>范例:Mariadb 和MySQL5.6版之前破解root密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos8 ~]#vim /etc/my.cnf
+</span></span><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>skip-grant-tables
+</span></span><span style="display:flex;"><span>skip-networking
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#systemctl restart mysqld|mariadb
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#mysql
+</span></span><span style="display:flex;"><span>#方法1
+</span></span><span style="display:flex;"><span>#mariadb 旧版和MySQL5.6版之前
+</span></span><span style="display:flex;"><span>MariaDB [(none)]&gt; update mysql.user set password=password(&#39;ubuntu&#39;) where
+</span></span><span style="display:flex;"><span>user=&#39;root&#39;;
+</span></span><span style="display:flex;"><span>#mariadb 新版
+</span></span><span style="display:flex;"><span>MariaDB [(none)]&gt; update mysql.user set authentication_string=password(&#39;ubuntu&#39;)
+</span></span><span style="display:flex;"><span>where user=&#39;root&#39;;
+</span></span><span style="display:flex;"><span>#方法2
+</span></span><span style="display:flex;"><span>MariaDB [(none)]&gt; flush privileges;
+</span></span><span style="display:flex;"><span>MariaDB [(none)]&gt; alter user root@&#39;localhost&#39; identified by &#39;ubuntu&#39;;
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#vim /etc/my.cnf
+</span></span><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>#skip-grant-tables
+</span></span><span style="display:flex;"><span>#skip-networking
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#systemctl restart mysqld|mariadb
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#mysql -uroot -pubuntu
+</span></span></code></pre></div><p>范例: MySQL5.7和8.0 破解root密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos8 ~]#vim /etc/my.cnf
+</span></span><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>skip-grant-tables
+</span></span><span style="display:flex;"><span>skip-networking #MySQL8.0不需要
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#systemctl restart mysqld
+</span></span><span style="display:flex;"><span>#方法1
+</span></span><span style="display:flex;"><span>mysql&gt; update mysql.user set authentication_string=&#39;&#39; where user=&#39;root&#39; and
+</span></span><span style="display:flex;"><span>host=&#39;localhost&#39;;
+</span></span><span style="display:flex;"><span>#方法2
+</span></span><span style="display:flex;"><span>mysql&gt; flush privileges;
+</span></span><span style="display:flex;"><span>#再执行下面任意一个命令
+</span></span><span style="display:flex;"><span>mysql&gt; alter user root@&#39;localhost&#39; identified by &#39;ubuntu&#39;;
+</span></span><span style="display:flex;"><span>mysql&gt; set password for root@&#39;localhost&#39;=&#39;ubuntu&#39;;
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#vim /etc/my.cnf
+</span></span><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>#skip-grant-tables
+</span></span><span style="display:flex;"><span>#skip-networking
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#systemctl restart mysqld
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#mysql -uroot -pubuntu
+</span></span></code></pre></div><p>范例: 删库跑路之清空root密码方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#此方法适用于包安装方式的MySQL或Mariadb
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#systemctl stop mysqld
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#rm -rf /var/lib/mysql/*
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#systemctl start mysqld
+</span></span></code></pre></div><h1 id="权限管理">权限管理<a hidden class="anchor" aria-hidden="true" href="#权限管理">#</a></h1>
+<p><strong>权限类别：</strong></p>
+<ul>
+<li>
+<p>管理类</p>
+</li>
+<li>
+<p>程序类</p>
+</li>
+<li>
+<p>数据库级别</p>
+</li>
+<li>
+<p>表级别</p>
+</li>
+<li>
+<p>字段级别</p>
+</li>
+</ul>
+<p><strong>管理类：</strong></p>
+<ul>
+<li>CREATE USER</li>
+<li>FILE</li>
+<li>SUPER</li>
+<li>SHOW DATABASES</li>
+<li>RELOAD</li>
+<li>SHUTDOWN</li>
+<li>REPLICATION SLAVE</li>
+<li>REPLICATION CLIENT</li>
+<li>LOCK TABLES</li>
+<li>PROCESS</li>
+<li>CREATE TEMPORARY TABLES</li>
+</ul>
+<p><strong>程序类：针对 FUNCTION、PROCEDURE、TRIGGER</strong></p>
+<ul>
+<li>CREATE</li>
+<li>ALTER</li>
+<li>DROP</li>
+<li>EXCUTE<br>
+<strong>库和表级别：针对 DATABASE、TABLE</strong></li>
+<li>ALTER</li>
+<li>CREATE</li>
+<li>CREATE VIEW</li>
+<li>DROP INDEX</li>
+<li>SHOW VIEW</li>
+<li>WITH GRANT OPTION：能将自己获得的权限转赠给其他用户
+<strong>数据操作</strong></li>
+<li>SELECT
+-INSERT</li>
+<li>DELETE</li>
+<li>UPDATE
+<strong>字段级别</strong></li>
+<li>SELECT(col1,col2,&hellip;)</li>
+<li>UPDATE(col1,col2,&hellip;)</li>
+<li>INSERT(col1,col2,&hellip;)
+<strong>所有权限</strong></li>
+<li>ALL PRIVILEGES 或 ALL</li>
+</ul>
+<p><strong>授权</strong></p>
+<ul>
+<li>授权：GRANT</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>GRANT SELECT (col1), INSERT (col1,col2) ON mydb.mytbl TO &#39;someuser&#39;@&#39;somehost&#39;;
+</span></span><span style="display:flex;"><span>GRANT ALL ON wordpress.* TO wordpress@&#39;10.0.0.%&#39; ;
+</span></span><span style="display:flex;"><span>GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;10.0.0.%&#39; WITH GRANT OPTION;
+</span></span><span style="display:flex;"><span>#创建用户和授权同时执行的方式在MySQL8.0取消了
+</span></span><span style="display:flex;"><span>GRANT ALL ON wordpress.* TO wordpress@&#39;192.168.8.%&#39; IDENTIFIED BY &#39;magedu&#39;;
+</span></span><span style="display:flex;"><span>GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;192.168.8.%&#39; IDENTIFIED BY &#39;magedu&#39;
+</span></span><span style="display:flex;"><span>WITH GRANT OPTION;
+</span></span></code></pre></div><p><strong>取消授权</strong></p>
+<ul>
+<li>取消授权：REVOKE</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>REVOKE DELETE ON *.* FROM &#39;testuser&#39;@&#39;172.16.0.%&#39;;
+</span></span></code></pre></div><p><strong>查看指定用户获得的授权</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Help SHOW GRANTS
+</span></span><span style="display:flex;"><span>SHOW GRANTS FOR &#39;user&#39;@&#39;host&#39;;
+</span></span><span style="display:flex;"><span>SHOW GRANTS FOR CURRENT_USER[()];
+</span></span></code></pre></div><p><strong>注意：</strong>
+MariaDB服务进程启动时会读取mysql库中所有授权表至内存
+(1) GRANT或REVOKE等执行权限操作会保存于系统表中，MariaDB的服务进程通常会自动重读授权表，
+使之生效
+(2) 对于不能够或不能及时重读授权表的命令，可手动让MariaDB的服务进程重读授权表：
+mysql&gt; FLUSH PRIVILEGES;</p>
+<h1 id="myisam-存储引擎">MyISAM 存储引擎<a hidden class="anchor" aria-hidden="true" href="#myisam-存储引擎">#</a></h1>
+<h2 id="myisam-引擎特点">MyISAM 引擎特点<a hidden class="anchor" aria-hidden="true" href="#myisam-引擎特点">#</a></h2>
+<ul>
+<li>不支持事务</li>
+<li>表级锁定</li>
+<li>读写相互阻塞，写入不能读，读时不能写</li>
+<li>只缓存索引</li>
+<li>不支持外键约束</li>
+<li>不支持聚簇索引</li>
+<li>读取数据较快，占用资源较少</li>
+<li>不支持MVCC（多版本并发控制机制）高并发</li>
+<li>崩溃恢复性较差</li>
+<li>MySQL5.5.5 前默认的数据库引擎</li>
+</ul>
+<h2 id="myisam-存储引擎适用场景">MyISAM 存储引擎适用场景<a hidden class="anchor" aria-hidden="true" href="#myisam-存储引擎适用场景">#</a></h2>
+<ul>
+<li>只读（或者写较少）</li>
+<li>表较小（可以接受长时间进行修复操作）</li>
+</ul>
+<h2 id="myisam-引擎文件">MyISAM 引擎文件<a hidden class="anchor" aria-hidden="true" href="#myisam-引擎文件">#</a></h2>
+<ul>
+<li>tbl_name.frm 表格式定义</li>
+<li>tbl_name.MYD 数据文件</li>
+<li>tbl_name.MYI 索引文件</li>
+</ul>
+<h1 id="innodb-引擎">InnoDB 引擎<a hidden class="anchor" aria-hidden="true" href="#innodb-引擎">#</a></h1>
+<h2 id="innodb引擎特点">InnoDB引擎特点<a hidden class="anchor" aria-hidden="true" href="#innodb引擎特点">#</a></h2>
+<ul>
+<li>行级锁</li>
+<li>支持事务，适合处理大量短期事务</li>
+<li>读写阻塞与事务隔离级别相关</li>
+<li>可缓存数据和索引</li>
+<li>支持聚簇索引</li>
+<li>崩溃恢复性更好</li>
+<li>支持MVCC高并发</li>
+<li>从MySQL5.5后支持全文索引</li>
+<li>从MySQL5.5.5开始为默认的数据库引擎</li>
+</ul>
+<h1 id="管理存储引擎">管理存储引擎<a hidden class="anchor" aria-hidden="true" href="#管理存储引擎">#</a></h1>
+<p>查看mysql支持的存储引擎</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>show engines;
+</span></span></code></pre></div><p>查看当前默认的存储引擎</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>show variables like &#39;%storage_engine%&#39;;
+</span></span></code></pre></div><p>设置默认的存储引擎</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>vim /etc/my.cnf
+</span></span><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>default_storage_engine= InnoDB
+</span></span></code></pre></div><p>查看库中所有表使用的存储引擎</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>show table status from db_name;
+</span></span></code></pre></div><p>查看库中指定表的存储引擎</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>show table status like &#39;tb_name&#39;;
+</span></span><span style="display:flex;"><span>show create table tb_name;
+</span></span></code></pre></div><p>设置表的存储引擎：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>CREATE TABLE tb_name(... ) ENGINE=InnoDB;
+</span></span><span style="display:flex;"><span>ALTER TABLE tb_name ENGINE=InnoDB;
+</span></span></code></pre></div><h1 id="实战案例数据库冷备份和热备份">实战案例：数据库冷备份和热备份<a hidden class="anchor" aria-hidden="true" href="#实战案例数据库冷备份和热备份">#</a></h1>
+<p>MySQL8.0</p>
+<p>冷备份：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>备份过程
+</span></span><span style="display:flex;"><span># 停止数据库
+</span></span><span style="display:flex;"><span>systemctl stop mysql
+</span></span><span style="display:flex;"><span># rsync可以保留文件属性
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#rsync -a /var/lib/mysql 10.0.0.28:/data/
+</span></span><span style="display:flex;"><span>#如果配置及二进制文件相关有特殊设置也需要备份
+</span></span><span style="display:flex;"><span>#还原
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#yum -y install mysql-server
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#cp -a /data/mysql/* /var/lib/mysql/
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#systemctl start mysqld
+</span></span></code></pre></div><h1 id="mysqldump备份工具">mysqldump备份工具<a hidden class="anchor" aria-hidden="true" href="#mysqldump备份工具">#</a></h1>
+<p>mysqldump 说明
+逻辑备份工具：
+mysqldump, mydumper, phpMyAdmin
+Schema和数据存储在一起、巨大的SQL语句、单个巨大的备份文件
+mysqldump是MySQL的客户端命令，通过mysql协议连接至mysql服务器进行备份
+命令格式:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mysqldump [OPTIONS] database [tables] #支持指定数据库和指定多表的备份，但数据库本身定义
+</span></span><span style="display:flex;"><span>不备份
+</span></span><span style="display:flex;"><span>mysqldump [OPTIONS] -B DB1 [DB2 DB3...] #支持指定数据库备份，包含数据库本身定义也会备份
+</span></span><span style="display:flex;"><span>mysqldump [OPTIONS] -A [OPTIONS] #备份所有数据库，包含数据库本身定义也会备份
+</span></span></code></pre></div><p>mysqldump参考：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>https://dev.mysql.com/doc/refman/5.7/en/mysqldump.html
+</span></span></code></pre></div><p>mysqldump 常见通用选项：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-u, --user=name User for login if not current user
+</span></span><span style="display:flex;"><span>-p, --password[=name] Password to use when connecting to server
+</span></span><span style="display:flex;"><span>-A, --all-databases #备份所有数据库，含create database
+</span></span><span style="display:flex;"><span>-B, --databases db_name… #指定备份的数据库，包括create database语句
+</span></span><span style="display:flex;"><span>-E, --events：#备份相关的所有event scheduler
+</span></span><span style="display:flex;"><span>-R, --routines：#备份所有存储过程和自定义函数
+</span></span><span style="display:flex;"><span>--triggers：#备份表相关触发器，默认启用,用--skip-triggers，不备份触发器
+</span></span><span style="display:flex;"><span>--default-character-set=utf8 #指定字符集
+</span></span><span style="display:flex;"><span>--master-data[=#]：#注意：MySQL8.0.26版以后，此选项变为--source-data
+</span></span><span style="display:flex;"><span>#此选项须启用二进制日志
+</span></span><span style="display:flex;"><span>#1：所备份的数据之前加一条记录为CHANGE MASTER TO语句，非注释，不指定#，默认为1，适合于主从复
+</span></span><span style="display:flex;"><span>制多机使用
+</span></span><span style="display:flex;"><span>#2：记录为被注释的#CHANGE MASTER TO语句，适合于单机使用,适用于备份还原
+</span></span><span style="display:flex;"><span>#此选项会自动关闭--lock-tables功能，自动打开-x | --lock-all-tables功能（除非开启--
+</span></span><span style="display:flex;"><span>single-transaction）
+</span></span><span style="display:flex;"><span>-F, --flush-logs #备份前滚动日志，锁定表完成后，执行flush logs命令,生成新的二进制日志文件，
+</span></span><span style="display:flex;"><span>配合-A 或 -B 选项时，会导致刷新多次数据库。建议在同一时刻执行转储和日志刷新，可通过和--single-
+</span></span><span style="display:flex;"><span>transaction或-x，--master-data 一起使用实现，此时只刷新一次二进制日志
+</span></span><span style="display:flex;"><span>--compact #去掉注释，适合调试，节约备份占用的空间,生产不使用
+</span></span><span style="display:flex;"><span>-d, --no-data #只备份表结构,不备份数据,即只备份create table
+</span></span><span style="display:flex;"><span>-t, --no-create-info #只备份数据,不备份表结构,即不备份create table
+</span></span><span style="display:flex;"><span>-n,--no-create-db #不备份create database，可被-A或-B覆盖
+</span></span><span style="display:flex;"><span>--flush-privileges #备份mysql或相关时需要使用
+</span></span><span style="display:flex;"><span>-f, --force #忽略SQL错误，继续执行
+</span></span><span style="display:flex;"><span>--hex-blob #使用十六进制符号转储二进制列，当有包括BINARY,VARBINARY,BLOB，
+</span></span><span style="display:flex;"><span>BIT的数据类型的列时使用，避免乱码
+</span></span><span style="display:flex;"><span>-q, --quick #不缓存查询，直接输出，加快备份速度
+</span></span></code></pre></div><p>mysqldump的MyISAM存储引擎相关的备份选项：
+MyISAM不支持事务，只能支持温备；不支持热备，所以必须先锁定要备份的库，而后启动备份操作</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-x,--lock-all-tables #加全局读锁，锁定所有库的所有表，同时加--single-transaction或--
+</span></span><span style="display:flex;"><span>lock-tables选项会关闭此选项功能，注意：数据量大时，可能会导致长时间无法并发访问数据库
+</span></span><span style="display:flex;"><span>-l,--lock-tables #对于需要备份的每个数据库，在启动备份之前分别锁定其所有表，默认为on,--
+</span></span><span style="display:flex;"><span>skip-lock-tables选项可禁用,对备份MyISAM的多个库,可能会造成数据不一致
+</span></span><span style="display:flex;"><span>#注：以上选项对InnoDB表一样生效，实现温备，但不推荐使用
+</span></span></code></pre></div><p>mysqldump的InnoDB存储引擎相关的备份选项：
+InnoDB 存储引擎支持事务,可以利用事务的相应的隔离级别,实现热备，也可以实现温备但不建议用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>--single-transaction
+</span></span><span style="display:flex;"><span>#此选项Innodb中推荐使用，不适用MyISAM，此选项会开始备份前，先执行START TRANSACTION指令开启
+</span></span><span style="display:flex;"><span>事务
+</span></span><span style="display:flex;"><span>#此选项通过在单个事务中转储所有表来创建一致的快照。 仅适用于存储在支持多版本控制的存储引擎中的表
+</span></span><span style="display:flex;"><span>（目前只有InnoDB可以）; 转储不保证与其他存储引擎保持一致。 在进行单事务转储时，要确保有效的转储
+</span></span><span style="display:flex;"><span>文件（正确的表内容和二进制日志位置），没有其他连接应该使用以下语句：ALTER TABLE，DROP TABLE，
+</span></span><span style="display:flex;"><span>RENAME TABLE，TRUNCATE TABLE,此选项和--lock-tables（此选项隐含提交挂起的事务）选项是相互
+</span></span><span style="display:flex;"><span>排斥,备份大型表时，建议将--single-transaction选项和--quick结合一起使用
+</span></span></code></pre></div><h1 id="生产环境实战备份策略">生产环境实战备份策略<a hidden class="anchor" aria-hidden="true" href="#生产环境实战备份策略">#</a></h1>
+<p>InnoDB建议备份策略</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mysqldump -uroot -p -A -F -E -R --triggers --single-transaction --master-data=1
+</span></span><span style="display:flex;"><span>--flush-privileges --default-character-set=utf8 --hex-blob
+</span></span><span style="display:flex;"><span>&gt;${BACKUP}/fullbak_${BACKUP_TIME}.sql
+</span></span></code></pre></div><p>MyISAM建议备份策略</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mysqldump -uroot -p -A -F -E -R -x --master-data=1 --flush-privileges --
+</span></span><span style="display:flex;"><span>triggers --default-character-set=utf8 --hex-blob
+</span></span><span style="display:flex;"><span>&gt;${BACKUP}/fullbak_${BACKUP_TIME}.sql
+</span></span></code></pre></div><h1 id="mysqldump-备份还原实战案例">mysqldump 备份还原实战案例<a hidden class="anchor" aria-hidden="true" href="#mysqldump-备份还原实战案例">#</a></h1>
+<h2 id="实战案例特定数据库的备份脚本">实战案例：特定数据库的备份脚本<a hidden class="anchor" aria-hidden="true" href="#实战案例特定数据库的备份脚本">#</a></h2>
+<p>系统：centos8.5</p>
+<p>mysql:8.0</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>TIME<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>date +%F_%H-%M-%S<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 备份目录</span>
+</span></span><span style="display:flex;"><span>DIR<span style="color:#f92672">=</span>/mysql_backup
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 备份数据库</span>
+</span></span><span style="display:flex;"><span>DB<span style="color:#f92672">=</span>hellodb
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 数据库密码</span>
+</span></span><span style="display:flex;"><span>PASSWD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 判断备份数据库目录是否存在</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> -d $DIR <span style="color:#f92672">]</span> <span style="color:#f92672">||</span> mkdir $DIR
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 备份</span>
+</span></span><span style="display:flex;"><span>mysqldump -uroot -p<span style="color:#e6db74">&#34;</span>$PASSWD<span style="color:#e6db74">&#34;</span> -F -E -R --triggers --single-transaction --master-data<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> --default-character-set<span style="color:#f92672">=</span>utf8mb4 -q -B $DB | gzip &gt; <span style="color:#e6db74">${</span>DIR<span style="color:#e6db74">}</span>/<span style="color:#e6db74">${</span>DB<span style="color:#e6db74">}</span>_<span style="color:#e6db74">${</span>TIME<span style="color:#e6db74">}</span>.sql.gz
+</span></span></code></pre></div><h1 id="实战案例分库备份的实战脚本">实战案例：分库备份的实战脚本<a hidden class="anchor" aria-hidden="true" href="#实战案例分库备份的实战脚本">#</a></h1>
+<ul>
+<li>系统：centos8.5</li>
+<li>MySQL版本：8.0</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>TIME<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>date +%F_%H-%M-%S<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>DIR<span style="color:#f92672">=</span>/backup
+</span></span><span style="display:flex;"><span>PASS<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> -d <span style="color:#e6db74">&#34;</span>$DIR<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">||</span> mkdir $DIR
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> DB in <span style="color:#e6db74">`</span>mysql -uroot -p<span style="color:#e6db74">&#34;</span>$PASS<span style="color:#e6db74">&#34;</span> -e <span style="color:#e6db74">&#39;show databases&#39;</span> | grep -Ev <span style="color:#e6db74">&#34;^Database|.*schema</span>$<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">`</span>;<span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    mysqldump -uroot -p<span style="color:#e6db74">&#34;</span>$PASS<span style="color:#e6db74">&#34;</span> -F --single-transaction --master-data<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> --default-character-set<span style="color:#f92672">=</span>utf8mb4 -q -B $DB | gzip &gt; <span style="color:#e6db74">${</span>DIR<span style="color:#e6db74">}</span>/<span style="color:#e6db74">${</span>DB<span style="color:#e6db74">}</span>_<span style="color:#e6db74">${</span>TIME<span style="color:#e6db74">}</span>.sql.gz
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><h1 id="实战案例完全备份和还原">实战案例：完全备份和还原<a hidden class="anchor" aria-hidden="true" href="#实战案例完全备份和还原">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#开启二进制日志
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#vim /etc/my.cnf.d/mariadb-server.cnf
+</span></span><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>log-bin
+</span></span><span style="display:flex;"><span>#备份
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#mysqldump -uroot -pmagedu -A -F --single-transaction --master-
+</span></span><span style="display:flex;"><span>data=2 |gzip &gt; /backup/all-`date +%F`.sql.gz
+</span></span><span style="display:flex;"><span>#还原
+</span></span><span style="display:flex;"><span>[root@centos8 backup]#dnf install mariadb-server
+</span></span><span style="display:flex;"><span>[root@centos8 backup]#gzip -d all-2019-11-27.sql.gz
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#mysql
+</span></span><span style="display:flex;"><span>MariaDB [(none)]&gt; set sql_log_bin=off;
+</span></span><span style="display:flex;"><span>MariaDB [(none)]&gt; source /backup/all-2019-11-27.sql
+</span></span><span style="display:flex;"><span>MariaDB [(none)]&gt; set sql_log_bin=on;
+</span></span></code></pre></div><h1 id="实战案例恢复误删除的表">实战案例：恢复误删除的表<a hidden class="anchor" aria-hidden="true" href="#实战案例恢复误删除的表">#</a></h1>
+<p>案例说明：每天2：30做完全备份，早上10：00误删除了表students，10：10才发现故障，现需要将数
+据库还原到10：10的状态，且恢复被删除的students表</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#75715e">#查看数据库是否开启二进制
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> <span style="color:#f92672">@@</span>log_bin;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+-----------+</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> <span style="color:#f92672">@@</span>log_bin <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+-----------+</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span>         <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+-----------+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> row <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">set</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">01</span> sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> <span style="color:#f92672">@@</span>sql_log_bin;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+---------------+</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> <span style="color:#f92672">@@</span>sql_log_bin <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+---------------+</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span>             <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+---------------+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> row <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">set</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">01</span> sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># log_bin、sql_log_bin的值为1说明已经开启二进制日志
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看当前二进制文件在什么位置
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">show</span> master logs;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+------------------+-----------+-----------+</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> Log_name         <span style="color:#f92672">|</span> File_size <span style="color:#f92672">|</span> Encrypted <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+------------------+-----------+-----------+</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> mysql<span style="color:#f92672">-</span>bin.<span style="color:#ae81ff">000001</span> <span style="color:#f92672">|</span>       <span style="color:#ae81ff">204</span> <span style="color:#f92672">|</span> No        <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">|</span> mysql<span style="color:#f92672">-</span>bin.<span style="color:#ae81ff">000002</span> <span style="color:#f92672">|</span>       <span style="color:#ae81ff">157</span> <span style="color:#f92672">|</span> No        <span style="color:#f92672">|</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+------------------+-----------+-----------+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> rows <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">set</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">01</span> sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 备份的时候开启刷新二进制日志，会生成新的二进制的日志
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#完全备份
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[root<span style="color:#f92672">@</span>centos7 <span style="color:#f92672">~</span>]<span style="color:#75715e"># mysqldump -uroot -p123456 -A -F --single-transaction --master-data=2 | gzip &gt; /backup/all_`date +%F`.sql.gz
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 完全备份后进行数据更新
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">insert</span> <span style="color:#a6e22e">students</span> (name,age,gender) <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;jack&#39;</span>,<span style="color:#ae81ff">22</span>,<span style="color:#e6db74">&#39;M&#39;</span>);
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">1</span> row <span style="color:#a6e22e">affected</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">01</span> sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">insert</span> <span style="color:#a6e22e">students</span> (name,age,gender) <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;rose&#39;</span>,<span style="color:#ae81ff">20</span>,<span style="color:#e6db74">&#39;f&#39;</span>);
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">1</span> row <span style="color:#a6e22e">affected</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">01</span> sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 误删除学生表
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> students;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows <span style="color:#a6e22e">affected</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">07</span> sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 后续其他表继续更新
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">insert</span> <span style="color:#a6e22e">teachers</span> (name,age,gender)<span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;wang&#39;</span>,<span style="color:#ae81ff">30</span>,<span style="color:#e6db74">&#39;M&#39;</span>);
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">1</span> row <span style="color:#a6e22e">affected</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">01</span> sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">insert</span> <span style="color:#a6e22e">teachers</span> (name,age,gender)<span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;mage&#39;</span>,<span style="color:#ae81ff">28</span>,<span style="color:#e6db74">&#39;M&#39;</span>);
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">1</span> row <span style="color:#a6e22e">affected</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">05</span> sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 停止数据库访问
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 备份从完全备份后的二进制日志
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[root<span style="color:#f92672">@</span>centos7 <span style="color:#f92672">~</span>]<span style="color:#75715e"># mysqlbinlog --start-position=157 /data/mysql/mysql-bin.000003 &gt; /backup/inc.sql
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 找到误删除的语句，从备份中删除此语句
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#DROP TABLE `students` /* generated by server */
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#利用完全备份和修改过的二进制日志进行还原
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[root<span style="color:#f92672">@</span>centos8 <span style="color:#f92672">~</span>]<span style="color:#75715e">#mysql -uroot -p
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">set</span> sql_log_bin<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> source <span style="color:#f92672">/</span>backup<span style="color:#f92672">/</span>allbackup_2019<span style="color:#f92672">-</span><span style="color:#ae81ff">11</span><span style="color:#f92672">-</span><span style="color:#ae81ff">27</span>_10:<span style="color:#ae81ff">20</span>:<span style="color:#ae81ff">08</span>.<span style="color:#66d9ef">sql</span>;
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> source <span style="color:#f92672">/</span>backup<span style="color:#f92672">/</span>inc.<span style="color:#66d9ef">sql</span>
+</span></span><span style="display:flex;"><span>mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">set</span> sql_log_bin<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/mysqlinstallscript/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>MySQL一键安装脚本</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/firewall/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>防火墙</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

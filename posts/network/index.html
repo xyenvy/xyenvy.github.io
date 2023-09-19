@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>计算机网络 | Hopeful</title>
+<meta name="keywords" content="Linux, 网络, 计算机, ubuntu, centos">
+<meta name="description" content="计算机网络是一组计算机或网络设备通过有形的线缆或者无形的媒介如无线，按照一定的规则，进行通信的集合。">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/network/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="计算机网络" />
+<meta property="og:description" content="计算机网络是一组计算机或网络设备通过有形的线缆或者无形的媒介如无线，按照一定的规则，进行通信的集合。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/network/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/13.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-21T21:33:05+00:00" />
+<meta property="article:modified_time" content="2022-08-21T21:33:05+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/13.jpg" />
+<meta name="twitter:title" content="计算机网络"/>
+<meta name="twitter:description" content="计算机网络是一组计算机或网络设备通过有形的线缆或者无形的媒介如无线，按照一定的规则，进行通信的集合。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "计算机网络",
+      "item": "https://xyenvy.github.io/posts/network/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "计算机网络",
+  "name": "计算机网络",
+  "description": "计算机网络是一组计算机或网络设备通过有形的线缆或者无形的媒介如无线，按照一定的规则，进行通信的集合。",
+  "keywords": [
+    "Linux", "网络", "计算机", "ubuntu", "centos"
+  ],
+  "articleBody": "1、网络配置 基本网络配置 将Linux主机接入到网络，需要配置网络相关设置 一般包括如下内容：\n主机名 IP/netmask 路由：默认网关 DNS服务器 主DNS服务器 次DNS服务器 第三个DNS服务器 1.1 修改主机名称 CentOs6 及之前的版本 # 修改 /etc/sysconfig/network文件HOSTNAME的值 [root@centos6 sysconfig]# cat /etc/sysconfig/network NETWORKING=yes HOSTNAME=centos6 [root@centos6 sysconfig]# # 修改hostname的值为centos6.mg.du [root@centos6 sysconfig]# vi /etc/sysconfig/network # 修改后不会马上生效,需要使用hostname命令重写一下 [root@centos6 sysconfig]# hostname centos6.mg.du # 重启一下看主机名称是否修改成功 [root@centos6 sysconfig]# reboot # hostname命令查看主机名称 [root@centos6 ~]# hostname centos6.mg.du [root@centos6 ~]# CentOs7 及之后的版本 # centos7 之后的版本主机名称文件 /etc/hostname [root@centos7 ~]# cat /etc/hostname centos7 [root@centos7 ~]# # centos7 之后的版本直接使用命令修改主机名称 [root@centos7 ~]# hostnamectl set-hostname centos7.mg [root@centos7 ~]# hostname centos7.mg [root@centos7 ~]# ubuntu修改主机名称 # 查看主机名称配置文件 root@ubuntu200404-1:~# cat /etc/hostname ubuntu200404-1 root@ubuntu200404-1:~# # 修改主机名称可以直接修改/etc/hostname文件，也可以直接使用命令修改 hostnamectl set-hostname 主机名 1.2 网卡名称 1.2.1 centos 6之前版本的网卡名称 接口命名方式：CentOS 6\n以太网： eth[0,1,2,···] ppp: ppp[0,1,2,···] 网络接口识别并命名相关的udev配置文件 /etc/udev/rules.d/70-persistent-net.rules 查看网卡 dmesg |grep –i eth ethtool -i eth0 卸载网卡驱动 modprobe -r e1000 rmmod e1000 装载网卡驱动 modprobe e1000 范例：临时修改网卡名称 [root@centos6 ~]#ip link set eth0 down [root@centos6 ~]#ip link set eth0 name abc [root@centos6 ~]#ip link set abc up 1.2.2 Centos7 版本之后的网卡配置 参考文档\nhttps://access.redhat.com/documentation/en- us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/consisten t-network-interface-device-naming_configuring-and-managing-networking CentOS 6之前，网络接口使用连续号码命名：eth0、eth1等,当增加或删除网卡时，名称可能会发生变化 CentOS 7 以上版使用基于硬件，设备拓扑和设置类型命名,可以保持网卡名称的稳定 CentOS 8 中已弃用network.service，采用NetworkManager（NM）为网卡启用命令。CentOS 8 仍可以安装network.service作为网卡服务，只是默认没有安装，具体方法为： dnf install network-scripts ，不过官方已明确在下一个大版本中，将彻底放弃network.service，不建议继续使用network.service管理网络。\nsystemd对网络设备的命名方式\n如果Firmware或BIOS为主板上集成的设备提供的索引信息可用，且可预测则根据此索引进行命 名，如：eno1\n如果Firmware或BIOS为PCI-E扩展槽所提供的索引信息可用，且可预测，则根据此索引进行命名， 如：ens1\n如果硬件接口的物理位置信息可用，则根据此信息命名，如：enp2s0\n如果用户显式启动，也可根据MAC地址进行命名，如：enx2387a1dc56\n上述均不可用时，则使用传统命名机制\n基于BIOS支持启用biosdevname软件\n内置网卡：em1,em2 pci卡：pYpX Y：slot ,X:port 网卡组成格式\nen: Ethernet 有线局域网 wl: wlan 无线局域网 ww: wwan无线广域网 o: 集成设备的设备索引号 s: 扩展槽的索引号 x: 基于MAC地址的命名 ps: enp2s1 使用传统方式命名\n（1）编辑/etc/default/grub配置文件\ncentos7 GRUB_CMDLINE_LINUX=\"net.ifnames=0 biosdevname=0\" ubuntu (2) 为grub2生成其配置文件\ncentos7 [root@centos7 ~]# grub2-mkconfig -o /boot/grub2/grub.cfg ubuntu grub-mkconfig -o /boot/grub/grub.cfg (3) 重启\nreboot 自定义网卡名称\n[root@centos8 ~]# vi /etc/default/grub GRUB_CMDLINE_LINUX=\"net.ifnames.prefix=yuankun\" [root@centos8 ~]# grub2-mkconfig -o /boot/grub2/grub.cfg [root@centos8 ~]# reboot 1.3 网络配置文件 网络基本配置文件\nIP、MASK、GW、DNS相关的配置文件：\n/etc/sysconfig/network-scripts/ifcfg-IFACE 配置参考文件\n/usr/share/doc/initcripts-*/sysconfig.txt 常用配置\n设置 说明 TYPE 接口类型；常见有的Ethernet, Bridge NAME 此配置文件应用到的设备 DEVICE 设备名 HWADDR 对应的设备的MAC地址 UUID 设备的唯一标识 BOOTPROTO 激活此设备时使用的地址配置协议，常用的dhcp，static, none, bootp IPADDR 指明IP地址 NETMASK 子网掩码,如:255.255.255.0 PREFIX 网络ID的位数, 如:24 GATEWAY 默认网关 DNS1 第一个DNS服务器地址 DNS2 第二个DNS服务器地址 DOMAIN 主机不完整时，自动搜索的域名后缀 ONBOOT 在系统引导时是否激活此设备 USERCTL 普通用户是否可控制此设备 PEERDNS 如果BOOTPROTO的值为“dhcp”，YES将允许dhcp server分配的dns服务器信息直接覆盖至/etc/resolv.conf文件，NO不允许修改resolv.conf NM_CONTROLLED NM是NetworkManager的简写，此网卡是否接受NM控制 范例\n修改/etc/sysconfig/network-scripts/ifcfg-IFACE 必须以ifcfg-开头，为了规范一般后面跟网卡名 配置文件写入内容 # 动态获取ip地址 DEVICE=eth0 NAME=eth0 BOOTPROTO=dhcp # 静态获取IP地址 DEVICE=eth0 NAME=eth0 BOOTPROTO=static IPADDR=192.168.179.129 PREFIX=24 GATEWAY=192.168.179.1 DNS1=192.168.179.1 DNS2=180.76.76.76 centos8还需要执行以下两条命令才会生效\nCentOS8和rocky nmcli connnection reload nmcli connnettion up eth0 扩展：CentOS网卡配置文件生效方法\nCentOS6 service network restart CentOS7 systemctl restart network # 通用方法 重启 reboot 1.4 ifconfig命令 来自于net-tools包，建议使用 ip 代替\n#清除eth0上面的IP地址 [root@centos8 ~]#ifconfig eth0 0.0.0.0 #启用和禁用网卡 [root@centos8 ~]#ifconfig eth0 down [root@centos8 ~]#ifconfig eth0 up #对一个网卡设置多个IP地址 [root@centos8 ~]#ifconfig eth0:1 172.16.0.8/24 1.5 route命令 路由表管理命令 路由表主要构成:\nDestination: 目标网络ID,表示可以到达的目标网络ID,0.0.0.0/0 表示所有未知网络,又称为默认路由, 优先级最低 Genmask:目标网络对应的netmask Iface: 到达对应网络,应该从当前主机哪个网卡发送出来 Gateway: 到达非直连的网络,将数据发送到临近(下一个)路由器的临近本主机的接口的IP地址,如果 是直连网络,gateway是0.0.0.0 Metric: 开销cost,值越小,路由记录的优先级最高 查看路由表：\n[root@rocky ~]# route -n Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.179.1 0.0.0.0 UG 100 0 0 eth0 192.168.179.0 0.0.0.0 255.255.255.0 U 100 0 0 eth0 添加路由：route add\nroute add [-net|-host|default] target [netmask Nm] [gw GW] [[dev] If] 删除路由route del\nroute del [-net|-host] target [gw Gw] [netmask Nm] [[dev] If] 1.6 ubuntu网络配置 1.6.1 修改主机名 方法一 修改配置文件\n# /etc/hostname 方法二 hostnamectl set-hostname 主机名 1.6.2 网卡名称 默认ubuntu的网卡名称和 CentOS 7 类似，如：ens33，ens38等 修改网卡名称为传统命名方式：\n# 修改配置文件 /etc/default/grub GRUB_CMDLINE_LINUX=\"net.ifnames=0\" 生成新的grub.cfg文件\ngrub-mkconfig -o /boot/grub/grub.cfg #或者 update-grub grep net.ifnames /boot/grub/grub.cfg # 重启生效 reboot 1.6.3 ubuntu网卡配置 配置自动获取IP 网卡配置文件采用YAML格式,必须以 /etc/netplan/XXX.yaml 文件命名方式存放 可以每个网卡对应一个单独的配置文件,也可以将所有网卡都放在一个配置文件里\n范例\nroot@ubuntu200404-1:~# cat /etc/netplan/eth0.yaml # This is the network config written by 'subiquity' network: ethernets: eth0: dhcp4: true version: 2 # 修改网卡配置文件后需要执行命令生效 netplan apply 配置静态IP root@ubuntu200404-1:/etc/netplan# cat eth1.yaml # This is the network config written by 'subiquity' network: ethernets: eth1: addresses: - 192.168.179.139/24 gateway4: 192.168.179.2 nameservers: search: [] # DNS addresses: [180.76.76.76] version: 2 # 修改网卡配置文件后需要执行命令生效 netplan apply 查看ip和网关\n# 查看IP root@ubuntu200404-1:/etc/netplan# ip address 1: lo: mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 inet 127.0.0.1/8 scope host lo valid_lft forever preferred_lft forever inet6 ::1/128 scope host valid_lft forever preferred_lft forever 2: eth0: mtu 1500 qdisc fq_codel state UP group default qlen 1000 link/ether 00:0c:29:79:b0:80 brd ff:ff:ff:ff:ff:ff inet 192.168.179.138/24 brd 192.168.179.255 scope global dynamic eth0 valid_lft 1698sec preferred_lft 1698sec inet6 fe80::20c:29ff:fe79:b080/64 scope link valid_lft forever preferred_lft forever 3: eth1: mtu 1500 qdisc fq_codel state UP group default qlen 1000 link/ether 00:0c:29:79:b0:8a brd ff:ff:ff:ff:ff:ff inet 192.168.179.139/24 brd 192.168.179.255 scope global eth1 valid_lft forever preferred_lft forever inet6 fe80::20c:29ff:fe79:b08a/64 scope link valid_lft forever preferred_lft forever root@ubuntu200404-1:/etc/netplan# # 查看网关 root@ubuntu200404-1:/etc/netplan# route -n Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.179.2 0.0.0.0 UG 100 0 0 eth0 192.168.179.0 0.0.0.0 255.255.255.0 U 0 0 0 eth1 192.168.179.0 0.0.0.0 255.255.255.0 U 0 0 0 eth0 192.168.179.2 0.0.0.0 255.255.255.255 UH 100 0 0 eth0 root@ubuntu200404-1:/etc/netplan# 查看DNS\nroot@ubuntu2004:~# resolvectl status #Ubuntu 20.04新命令 root@ubuntu1804:~# systemd-resolve --status ",
+  "wordCount" : "2647",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/13.jpg","datePublished": "2022-08-21T21:33:05Z",
+  "dateModified": "2022-08-21T21:33:05Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/network/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                计算机网络
+            </h1>
+            <div class="post-description">
+                计算机网络是一组计算机或网络设备通过有形的线缆或者无形的媒介如无线，按照一定的规则，进行通信的集合。
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-08-21
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2647字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>6分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/13.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#1%e7%bd%91%e7%bb%9c%e9%85%8d%e7%bd%ae" aria-label="1、网络配置">1、网络配置</a></li>
+                <li>
+                    <a href="#%e5%9f%ba%e6%9c%ac%e7%bd%91%e7%bb%9c%e9%85%8d%e7%bd%ae" aria-label="基本网络配置"><strong>基本网络配置</strong></a></li>
+                <li>
+                    <a href="#11-%e4%bf%ae%e6%94%b9%e4%b8%bb%e6%9c%ba%e5%90%8d%e7%a7%b0" aria-label="1.1 修改主机名称">1.1 修改主机名称</a></li>
+                <li>
+                    <a href="#12-%e7%bd%91%e5%8d%a1%e5%90%8d%e7%a7%b0" aria-label="1.2 网卡名称">1.2 网卡名称</a><ul>
+                        
+                <li>
+                    <a href="#121-centos-6%e4%b9%8b%e5%89%8d%e7%89%88%e6%9c%ac%e7%9a%84%e7%bd%91%e5%8d%a1%e5%90%8d%e7%a7%b0" aria-label="1.2.1 centos 6之前版本的网卡名称">1.2.1 centos 6之前版本的网卡名称</a></li>
+                <li>
+                    <a href="#122-centos7-%e7%89%88%e6%9c%ac%e4%b9%8b%e5%90%8e%e7%9a%84%e7%bd%91%e5%8d%a1%e9%85%8d%e7%bd%ae" aria-label="1.2.2 Centos7 版本之后的网卡配置">1.2.2 Centos7 版本之后的网卡配置</a></li></ul>
+                </li>
+                <li>
+                    <a href="#13-%e7%bd%91%e7%bb%9c%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="1.3 网络配置文件">1.3 网络配置文件</a></li>
+                <li>
+                    <a href="#14-ifconfig%e5%91%bd%e4%bb%a4" aria-label="1.4 ifconfig命令">1.4 ifconfig命令</a></li>
+                <li>
+                    <a href="#15-route%e5%91%bd%e4%bb%a4" aria-label="1.5 route命令">1.5 route命令</a></li>
+                <li>
+                    <a href="#16-ubuntu%e7%bd%91%e7%bb%9c%e9%85%8d%e7%bd%ae" aria-label="1.6 ubuntu网络配置">1.6 ubuntu网络配置</a><ul>
+                        
+                <li>
+                    <a href="#161-%e4%bf%ae%e6%94%b9%e4%b8%bb%e6%9c%ba%e5%90%8d" aria-label="1.6.1 修改主机名">1.6.1 修改主机名</a></li>
+                <li>
+                    <a href="#162-%e7%bd%91%e5%8d%a1%e5%90%8d%e7%a7%b0" aria-label="1.6.2 网卡名称">1.6.2 网卡名称</a></li>
+                <li>
+                    <a href="#163-ubuntu%e7%bd%91%e5%8d%a1%e9%85%8d%e7%bd%ae" aria-label="1.6.3 ubuntu网卡配置">1.6.3 ubuntu网卡配置</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="1网络配置">1、网络配置<a hidden class="anchor" aria-hidden="true" href="#1网络配置">#</a></h2>
+<h2 id="基本网络配置"><strong>基本网络配置</strong><a hidden class="anchor" aria-hidden="true" href="#基本网络配置">#</a></h2>
+<p>将Linux主机接入到网络，需要配置网络相关设置
+一般包括如下内容：</p>
+<ul>
+<li>主机名</li>
+<li>IP/netmask</li>
+<li>路由：默认网关
+<ul>
+<li>DNS服务器</li>
+<li>主DNS服务器</li>
+<li>次DNS服务器</li>
+<li>第三个DNS服务器</li>
+</ul>
+</li>
+</ul>
+<h2 id="11-修改主机名称">1.1 修改主机名称<a hidden class="anchor" aria-hidden="true" href="#11-修改主机名称">#</a></h2>
+<ul>
+<li>CentOs6 及之前的版本</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 修改 /etc/sysconfig/network文件HOSTNAME的值</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos6 sysconfig<span style="color:#f92672">]</span><span style="color:#75715e"># cat /etc/sysconfig/network</span>
+</span></span><span style="display:flex;"><span>NETWORKING<span style="color:#f92672">=</span>yes
+</span></span><span style="display:flex;"><span>HOSTNAME<span style="color:#f92672">=</span>centos6
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos6 sysconfig<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 修改hostname的值为centos6.mg.du</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos6 sysconfig<span style="color:#f92672">]</span><span style="color:#75715e"># vi /etc/sysconfig/network</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 修改后不会马上生效,需要使用hostname命令重写一下</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos6 sysconfig<span style="color:#f92672">]</span><span style="color:#75715e"># hostname centos6.mg.du</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 重启一下看主机名称是否修改成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos6 sysconfig<span style="color:#f92672">]</span><span style="color:#75715e"># reboot</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># hostname命令查看主机名称</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos6 ~<span style="color:#f92672">]</span><span style="color:#75715e"># hostname</span>
+</span></span><span style="display:flex;"><span>centos6.mg.du
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos6 ~<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span></code></pre></div><ul>
+<li>CentOs7 及之后的版本</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># centos7 之后的版本主机名称文件  /etc/hostname</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat /etc/hostname </span>
+</span></span><span style="display:flex;"><span>centos7
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># centos7 之后的版本直接使用命令修改主机名称</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># hostnamectl set-hostname centos7.mg</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># hostname</span>
+</span></span><span style="display:flex;"><span>centos7.mg
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><ul>
+<li>ubuntu修改主机名称</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 查看主机名称配置文件</span>
+</span></span><span style="display:flex;"><span>root@ubuntu200404-1:~# cat /etc/hostname 
+</span></span><span style="display:flex;"><span>ubuntu200404-1
+</span></span><span style="display:flex;"><span>root@ubuntu200404-1:~# 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 修改主机名称可以直接修改/etc/hostname文件，也可以直接使用命令修改</span>
+</span></span><span style="display:flex;"><span>hostnamectl set-hostname 主机名
+</span></span></code></pre></div><h2 id="12-网卡名称">1.2 网卡名称<a hidden class="anchor" aria-hidden="true" href="#12-网卡名称">#</a></h2>
+<h3 id="121-centos-6之前版本的网卡名称">1.2.1 centos 6之前版本的网卡名称<a hidden class="anchor" aria-hidden="true" href="#121-centos-6之前版本的网卡名称">#</a></h3>
+<p>接口命名方式：CentOS 6</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>以太网： eth[0,1,2,···]
+</span></span><span style="display:flex;"><span>ppp: ppp[0,1,2,···]
+</span></span></code></pre></div><ul>
+<li>网络接口识别并命名相关的udev配置文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>/etc/udev/rules.d/70-persistent-net.rules
+</span></span></code></pre></div><ul>
+<li>查看网卡</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>dmesg |grep –i eth
+</span></span><span style="display:flex;"><span>ethtool -i eth0
+</span></span></code></pre></div><ul>
+<li>卸载网卡驱动</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>modprobe -r e1000
+</span></span><span style="display:flex;"><span>rmmod e1000
+</span></span></code></pre></div><ul>
+<li>装载网卡驱动</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>modprobe e1000
+</span></span></code></pre></div><ul>
+<li>范例：临时修改网卡名称</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>[root@centos6 ~]#ip link set eth0 down
+</span></span><span style="display:flex;"><span>[root@centos6 ~]#ip link set eth0 name abc
+</span></span><span style="display:flex;"><span>[root@centos6 ~]#ip link set abc up
+</span></span></code></pre></div><h3 id="122-centos7-版本之后的网卡配置">1.2.2 Centos7 版本之后的网卡配置<a hidden class="anchor" aria-hidden="true" href="#122-centos7-版本之后的网卡配置">#</a></h3>
+<p><strong>参考文档</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>https://access.redhat.com/documentation/en-
+</span></span><span style="display:flex;"><span>us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/consisten
+</span></span><span style="display:flex;"><span>t-network-interface-device-naming_configuring-and-managing-networking
+</span></span></code></pre></div><p>CentOS 6之前，网络接口使用连续号码命名：eth0、eth1等,当增加或删除网卡时，名称可能会发生变化
+CentOS 7 以上版使用基于硬件，设备拓扑和设置类型命名,可以保持网卡名称的稳定
+CentOS 8 中已弃用network.service，采用NetworkManager（NM）为网卡启用命令。CentOS 8 仍可以安装network.service作为网卡服务，只是默认没有安装，具体方法为： dnf install network-scripts ，不过官方已明确在下一个大版本中，将彻底放弃network.service，不建议继续使用network.service管理网络。</p>
+<p><strong>systemd对网络设备的命名方式</strong></p>
+<ol>
+<li>
+<p>如果Firmware或BIOS为主板上集成的设备提供的索引信息可用，且可预测则根据此索引进行命
+名，如：eno1</p>
+</li>
+<li>
+<p>如果Firmware或BIOS为PCI-E扩展槽所提供的索引信息可用，且可预测，则根据此索引进行命名，
+如：ens1</p>
+</li>
+<li>
+<p>如果硬件接口的物理位置信息可用，则根据此信息命名，如：enp2s0</p>
+</li>
+<li>
+<p>如果用户显式启动，也可根据MAC地址进行命名，如：enx2387a1dc56</p>
+</li>
+<li>
+<p>上述均不可用时，则使用传统命名机制</p>
+</li>
+</ol>
+<p><strong>基于BIOS支持启用biosdevname软件</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>内置网卡：em1,em2
+</span></span><span style="display:flex;"><span>pci卡：pYpX Y：slot ,X:port
+</span></span></code></pre></div><p><strong>网卡组成格式</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>en: Ethernet 有线局域网
+</span></span><span style="display:flex;"><span>wl: wlan 无线局域网
+</span></span><span style="display:flex;"><span>ww: wwan无线广域网
+</span></span><span style="display:flex;"><span>o&lt;index&gt;: 集成设备的设备索引号
+</span></span><span style="display:flex;"><span>s&lt;slot&gt;: 扩展槽的索引号
+</span></span><span style="display:flex;"><span>x&lt;MAC&gt;: 基于MAC地址的命名
+</span></span><span style="display:flex;"><span>p&lt;bus&gt;s&lt;slot&gt;: enp2s1
+</span></span></code></pre></div><p><strong>使用传统方式命名</strong></p>
+<p>（1）编辑/etc/default/grub配置文件</p>
+<ul>
+<li>centos7</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>GRUB_CMDLINE_LINUX<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;net.ifnames=0 biosdevname=0&#34;</span>
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1661261214996.png" alt="1661261214996"  />
+</p>
+<ul>
+<li>ubuntu</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1661261773303.png" alt="1661261773303"  />
+</p>
+<p>(2) 为grub2生成其配置文件</p>
+<ul>
+<li>centos7</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># grub2-mkconfig -o /boot/grub2/grub.cfg</span>
+</span></span></code></pre></div><ul>
+<li>ubuntu</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>grub-mkconfig -o /boot/grub/grub.cfg
+</span></span></code></pre></div><p>(3) 重启</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>reboot
+</span></span></code></pre></div><p><strong>自定义网卡名称</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># vi /etc/default/grub</span>
+</span></span><span style="display:flex;"><span>GRUB_CMDLINE_LINUX<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;net.ifnames.prefix=yuankun&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># grub2-mkconfig -o /boot/grub2/grub.cfg</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># reboot</span>
+</span></span></code></pre></div><h2 id="13-网络配置文件">1.3 网络配置文件<a hidden class="anchor" aria-hidden="true" href="#13-网络配置文件">#</a></h2>
+<p><strong>网络基本配置文件</strong></p>
+<p>IP、MASK、GW、DNS相关的配置文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>/etc/sysconfig/network-scripts/ifcfg-IFACE
+</span></span></code></pre></div><p><strong>配置参考文件</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>/usr/share/doc/initcripts-*/sysconfig.txt
+</span></span></code></pre></div><p><strong>常用配置</strong></p>
+<table>
+<thead>
+<tr>
+<th>设置</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TYPE</td>
+<td>接口类型；常见有的Ethernet, Bridge</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>此配置文件应用到的设备</td>
+</tr>
+<tr>
+<td>DEVICE</td>
+<td>设备名</td>
+</tr>
+<tr>
+<td>HWADDR</td>
+<td>对应的设备的MAC地址</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>设备的唯一标识</td>
+</tr>
+<tr>
+<td>BOOTPROTO</td>
+<td>激活此设备时使用的地址配置协议，常用的dhcp，static, none, bootp</td>
+</tr>
+<tr>
+<td>IPADDR</td>
+<td>指明IP地址</td>
+</tr>
+<tr>
+<td>NETMASK</td>
+<td>子网掩码,如:255.255.255.0</td>
+</tr>
+<tr>
+<td>PREFIX</td>
+<td>网络ID的位数, 如:24</td>
+</tr>
+<tr>
+<td>GATEWAY</td>
+<td>默认网关</td>
+</tr>
+<tr>
+<td>DNS1</td>
+<td>第一个DNS服务器地址</td>
+</tr>
+<tr>
+<td>DNS2</td>
+<td>第二个DNS服务器地址</td>
+</tr>
+<tr>
+<td>DOMAIN</td>
+<td>主机不完整时，自动搜索的域名后缀</td>
+</tr>
+<tr>
+<td>ONBOOT</td>
+<td>在系统引导时是否激活此设备</td>
+</tr>
+<tr>
+<td>USERCTL</td>
+<td>普通用户是否可控制此设备</td>
+</tr>
+<tr>
+<td>PEERDNS</td>
+<td>如果BOOTPROTO的值为“dhcp”，YES将允许dhcp server分配的dns服务<br/>器信息直接覆盖至/etc/resolv.conf文件，NO不允许修改resolv.conf</td>
+</tr>
+<tr>
+<td>NM_CONTROLLED</td>
+<td>NM是NetworkManager的简写，此网卡是否接受NM控制</td>
+</tr>
+</tbody>
+</table>
+<p><strong>范例</strong></p>
+<ul>
+<li>修改/etc/sysconfig/network-scripts/ifcfg-IFACE</li>
+<li>必须以ifcfg-开头，为了规范一般后面跟网卡名</li>
+<li>配置文件写入内容</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span># 动态获取ip地址
+</span></span><span style="display:flex;"><span>DEVICE=eth0
+</span></span><span style="display:flex;"><span>NAME=eth0
+</span></span><span style="display:flex;"><span>BOOTPROTO=dhcp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 静态获取IP地址
+</span></span><span style="display:flex;"><span>DEVICE=eth0
+</span></span><span style="display:flex;"><span>NAME=eth0
+</span></span><span style="display:flex;"><span>BOOTPROTO=static
+</span></span><span style="display:flex;"><span>IPADDR=192.168.179.129
+</span></span><span style="display:flex;"><span>PREFIX=24
+</span></span><span style="display:flex;"><span>GATEWAY=192.168.179.1
+</span></span><span style="display:flex;"><span>DNS1=192.168.179.1
+</span></span><span style="display:flex;"><span>DNS2=180.76.76.76
+</span></span></code></pre></div><p>centos8还需要执行以下两条命令才会生效</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>CentOS8和rocky
+</span></span><span style="display:flex;"><span>nmcli connnection reload
+</span></span><span style="display:flex;"><span>nmcli connnettion up eth0
+</span></span></code></pre></div><p><strong>扩展：CentOS网卡配置文件生效方法</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>CentOS6
+</span></span><span style="display:flex;"><span>service network restart
+</span></span><span style="display:flex;"><span>CentOS7
+</span></span><span style="display:flex;"><span>systemctl restart network
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 通用方法 重启</span>
+</span></span><span style="display:flex;"><span>reboot
+</span></span></code></pre></div><h2 id="14-ifconfig命令">1.4 ifconfig命令<a hidden class="anchor" aria-hidden="true" href="#14-ifconfig命令">#</a></h2>
+<p>来自于net-tools包，建议使用 ip 代替</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#清除eth0上面的IP地址
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#ifconfig eth0 0.0.0.0
+</span></span><span style="display:flex;"><span>#启用和禁用网卡
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#ifconfig eth0 down
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#ifconfig eth0 up
+</span></span><span style="display:flex;"><span>#对一个网卡设置多个IP地址
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#ifconfig eth0:1 172.16.0.8/24
+</span></span></code></pre></div><h2 id="15-route命令">1.5 route命令<a hidden class="anchor" aria-hidden="true" href="#15-route命令">#</a></h2>
+<p>路由表管理命令
+路由表主要构成:</p>
+<ul>
+<li>Destination: 目标网络ID,表示可以到达的目标网络ID,0.0.0.0/0 表示所有未知网络,又称为默认路由,
+优先级最低</li>
+<li>Genmask:目标网络对应的netmask</li>
+<li>Iface: 到达对应网络,应该从当前主机哪个网卡发送出来</li>
+<li>Gateway: 到达非直连的网络,将数据发送到临近(下一个)路由器的临近本主机的接口的IP地址,如果
+是直连网络,gateway是0.0.0.0</li>
+<li>Metric: 开销cost,值越小,路由记录的优先级最高</li>
+</ul>
+<p><strong>查看路由表：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@rocky ~<span style="color:#f92672">]</span><span style="color:#75715e"># route -n</span>
+</span></span><span style="display:flex;"><span>Kernel IP routing table
+</span></span><span style="display:flex;"><span>Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+</span></span><span style="display:flex;"><span>0.0.0.0         192.168.179.1   0.0.0.0         UG    <span style="color:#ae81ff">100</span>    <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">0</span> eth0
+</span></span><span style="display:flex;"><span>192.168.179.0   0.0.0.0         255.255.255.0   U     <span style="color:#ae81ff">100</span>    <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">0</span> eth0
+</span></span></code></pre></div><p><strong>添加路由：route add</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>route add <span style="color:#f92672">[</span>-net|-host|default<span style="color:#f92672">]</span> target <span style="color:#f92672">[</span>netmask Nm<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>gw GW<span style="color:#f92672">]</span> <span style="color:#f92672">[[</span>dev<span style="color:#f92672">]</span> If<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p><strong>删除路由route del</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>route del <span style="color:#f92672">[</span>-net|-host<span style="color:#f92672">]</span> target <span style="color:#f92672">[</span>gw Gw<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>netmask Nm<span style="color:#f92672">]</span> <span style="color:#f92672">[[</span>dev<span style="color:#f92672">]</span> If<span style="color:#f92672">]</span>
+</span></span></code></pre></div><h2 id="16-ubuntu网络配置">1.6 ubuntu网络配置<a hidden class="anchor" aria-hidden="true" href="#16-ubuntu网络配置">#</a></h2>
+<h3 id="161-修改主机名">1.6.1 修改主机名<a hidden class="anchor" aria-hidden="true" href="#161-修改主机名">#</a></h3>
+<ul>
+<li>方法一</li>
+</ul>
+<p>修改配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># /etc/hostname
+</span></span></code></pre></div><ul>
+<li>方法二</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>hostnamectl set-hostname 主机名
+</span></span></code></pre></div><h3 id="162-网卡名称">1.6.2 网卡名称<a hidden class="anchor" aria-hidden="true" href="#162-网卡名称">#</a></h3>
+<p>默认ubuntu的网卡名称和 CentOS 7 类似，如：ens33，ens38等
+修改网卡名称为传统命名方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 修改配置文件    /etc/default/grub
+</span></span><span style="display:flex;"><span>GRUB_CMDLINE_LINUX=&#34;net.ifnames=0&#34;
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1661777360041.png" alt="1661777360041"  />
+</p>
+<p><strong>生成新的grub.cfg文件</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>grub-mkconfig -o /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#或者</span>
+</span></span><span style="display:flex;"><span>update-grub
+</span></span><span style="display:flex;"><span>grep net.ifnames /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 重启生效</span>
+</span></span><span style="display:flex;"><span>reboot
+</span></span></code></pre></div><h3 id="163-ubuntu网卡配置">1.6.3 ubuntu网卡配置<a hidden class="anchor" aria-hidden="true" href="#163-ubuntu网卡配置">#</a></h3>
+<ul>
+<li>配置自动获取IP</li>
+</ul>
+<p>网卡配置文件采用YAML格式,必须以 /etc/netplan/XXX.yaml 文件命名方式存放
+可以每个网卡对应一个单独的配置文件,也可以将所有网卡都放在一个配置文件里</p>
+<p><strong>范例</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>root@ubuntu200404-1:~# cat /etc/netplan/eth0.yaml 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is the network config written by &#39;subiquity&#39;</span>
+</span></span><span style="display:flex;"><span>network:
+</span></span><span style="display:flex;"><span>  ethernets:
+</span></span><span style="display:flex;"><span>    eth0:
+</span></span><span style="display:flex;"><span>      dhcp4: true
+</span></span><span style="display:flex;"><span>  version: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span> <span style="color:#75715e"># 修改网卡配置文件后需要执行命令生效</span>
+</span></span><span style="display:flex;"><span> netplan apply
+</span></span></code></pre></div><ul>
+<li>配置静态IP</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>root@ubuntu200404-1:/etc/netplan# cat eth1.yaml 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is the network config written by &#39;subiquity&#39;</span>
+</span></span><span style="display:flex;"><span>network:
+</span></span><span style="display:flex;"><span>  ethernets:
+</span></span><span style="display:flex;"><span>    eth1:
+</span></span><span style="display:flex;"><span>      addresses:
+</span></span><span style="display:flex;"><span>      - 192.168.179.139/24
+</span></span><span style="display:flex;"><span>      gateway4: 192.168.179.2
+</span></span><span style="display:flex;"><span>      nameservers:
+</span></span><span style="display:flex;"><span>        search: <span style="color:#f92672">[]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># DNS</span>
+</span></span><span style="display:flex;"><span>        addresses: <span style="color:#f92672">[</span>180.76.76.76<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  version: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 修改网卡配置文件后需要执行命令生效</span>
+</span></span><span style="display:flex;"><span> netplan apply
+</span></span></code></pre></div><p>查看ip和网关</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 查看IP</span>
+</span></span><span style="display:flex;"><span>root@ubuntu200404-1:/etc/netplan# ip address
+</span></span><span style="display:flex;"><span>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span style="display:flex;"><span>    inet 127.0.0.1/8 scope host lo
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 ::1/128 scope host 
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc fq_codel state UP group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 00:0c:29:79:b0:80 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>    inet 192.168.179.138/24 brd 192.168.179.255 scope global dynamic eth0
+</span></span><span style="display:flex;"><span>       valid_lft 1698sec preferred_lft 1698sec
+</span></span><span style="display:flex;"><span>    inet6 fe80::20c:29ff:fe79:b080/64 scope link 
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc fq_codel state UP group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 00:0c:29:79:b0:8a brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>    inet 192.168.179.139/24 brd 192.168.179.255 scope global eth1
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 fe80::20c:29ff:fe79:b08a/64 scope link 
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>root@ubuntu200404-1:/etc/netplan# 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看网关</span>
+</span></span><span style="display:flex;"><span>root@ubuntu200404-1:/etc/netplan# route -n
+</span></span><span style="display:flex;"><span>Kernel IP routing table
+</span></span><span style="display:flex;"><span>Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+</span></span><span style="display:flex;"><span>0.0.0.0         192.168.179.2   0.0.0.0         UG    <span style="color:#ae81ff">100</span>    <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">0</span> eth0
+</span></span><span style="display:flex;"><span>192.168.179.0   0.0.0.0         255.255.255.0   U     <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">0</span> eth1
+</span></span><span style="display:flex;"><span>192.168.179.0   0.0.0.0         255.255.255.0   U     <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">0</span> eth0
+</span></span><span style="display:flex;"><span>192.168.179.2   0.0.0.0         255.255.255.255 UH    <span style="color:#ae81ff">100</span>    <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">0</span> eth0
+</span></span><span style="display:flex;"><span>root@ubuntu200404-1:/etc/netplan# 
+</span></span></code></pre></div><p>查看DNS</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>root@ubuntu2004:~# resolvectl status <span style="color:#75715e">#Ubuntu 20.04新命令</span>
+</span></span><span style="display:flex;"><span>root@ubuntu1804:~# systemd-resolve --status
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>进程和线程相关概念</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>软件管理</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

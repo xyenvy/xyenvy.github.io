@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>docker-compose部署MySQL | Hopeful</title>
+<meta name="keywords" content="Docker">
+<meta name="description" content="docker-compose部署MySql">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="docker-compose部署MySQL" />
+<meta property="og:description" content="docker-compose部署MySql" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-06T14:00:26+00:00" />
+<meta property="article:modified_time" content="2023-01-06T14:00:26+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" />
+<meta name="twitter:title" content="docker-compose部署MySQL"/>
+<meta name="twitter:description" content="docker-compose部署MySql"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "docker-compose部署MySQL",
+      "item": "https://xyenvy.github.io/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "docker-compose部署MySQL",
+  "name": "docker-compose部署MySQL",
+  "description": "docker-compose部署MySql",
+  "keywords": [
+    "Docker"
+  ],
+  "articleBody": "CentOS Docker 安装 Docker 支持以下的 64 位 CentOS 版本：\nCentOS 7 CentOS 8 更高版本… 官方安装脚本自动安装 安装命令如下：\ncurl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun 也可以使用国内 daocloud 一键安装命令：\ncurl -sSL https://get.daocloud.io/docker | sh 安装docker-compose Compose 简介 Compose 是用于定义和运行多容器 Docker 应用程序的工具。通过 Compose，您可以使用 YML 文件来配置应用程序需要的所有服务。然后，使用一个命令，就可以从 YML 文件配置中创建并启动所有服务。 Compose 安装 Linux 上我们可以从 Github 上下载它的二进制包来使用，最新发行的版本地址：https://github.com/docker/compose/releases。\n运行以下命令以下载 Docker Compose 的当前稳定版本：\ncurl -L \"https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose 要安装其他版本的 Compose，请替换 v2.2.2。\nDocker Compose 存放在 GitHub，不太稳定。\n你可以也通过执行下面的命令，高速安装 Docker Compose。\ncurl -L https://get.daocloud.io/docker/compose/releases/download/v2.4.1/docker-compose-`uname -s`-`uname -m` \u003e /usr/local/bin/docker-compose 将可执行权限应用于二进制文件：\nchmod +x /usr/local/bin/docker-compose 创建软链：\nln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 测试是否安装成功：\n[root@centos7 ~]# docker-compose version Docker Compose version v2.4.1 docker-compose一键部署mysql 创建安装目录,根据实际情况修改 mkdr mysql cd mysql mkdir -p data/db mkdir etc 编写docker-compose.yml cd mysql vim docker-compose.yml docker-compose.yml内容如下\nversion: '3.1' services: mysql: image: mysql:5.7 #mysql版本 container_name: ${MYSQL_NAME} volumes: - ./data/db:/var/lib/mysql - ./etc/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf restart: always ports: - ${MYSQL_PORT}:3306 environment: MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWD} #访问密码 secure_file_priv: 创建MySQL配置文件 cd mysql/etc vim my.cnf my.cnf文件内容如下\n[mysqld] character-set-server=utf8 log-bin=mysql-bin server-id=1 pid-file = /var/run/mysqld/mysqld.pid socket = /var/run/mysqld/mysqld.sock datadir = /var/lib/mysql sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION symbolic-links=0 secure_file_priv = wait_timeout=120 interactive_timeout=120 default-time_zone = '+8:00' skip-external-locking skip-name-resolve open_files_limit = 10240 max_connections = 1000 max_connect_errors = 6000 table_open_cache = 800 max_allowed_packet = 40m sort_buffer_size = 2M join_buffer_size = 1M thread_cache_size = 32 query_cache_size = 64M transaction_isolation = READ-COMMITTED tmp_table_size = 128M max_heap_table_size = 128M log-bin = mysql-bin sync-binlog = 1 binlog_format = ROW binlog_cache_size = 1M key_buffer_size = 128M read_buffer_size = 2M read_rnd_buffer_size = 4M bulk_insert_buffer_size = 64M lower_case_table_names = 1 explicit_defaults_for_timestamp=true skip_name_resolve = ON event_scheduler = ON log_bin_trust_function_creators = 1 innodb_buffer_pool_size = 512M innodb_flush_log_at_trx_commit = 1 innodb_file_per_table = 1 innodb_log_buffer_size = 4M innodb_log_file_size = 256M innodb_max_dirty_pages_pct = 90 innodb_read_io_threads = 4 innodb_write_io_threads = 4 编写重启脚本 cd mysql vim restart.sh restart.sh文件内容\n#!/bin/bash docker-compose stop docker-compose rm -f docker-compose up -d 编写.env文件 vim .env # 容器名称 MYSQL_NAME=docker-mysql # 启用端口 MYSQL_PORT=3306 # root密码 MYSQL_ROOT_PASSWD=123456 验证 # 执行启动脚本 bash restart.sh # 查看运行的容器 docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 36d09017f331 mysql:5.7 \"docker-entrypoint.s…\" 2 minutes ago Up 2 minutes 0.0.0.0:3306-\u003e3306/tcp, :::3306-\u003e3306/tcp, 33060/tcp docker-mysql ",
+  "wordCount" : "815",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/2.jpg","datePublished": "2023-01-06T14:00:26Z",
+  "dateModified": "2023-01-06T14:00:26Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                docker-compose部署MySQL
+            </h1>
+            <div class="post-description">
+                docker-compose部署MySql
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023-01-06
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>815字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>2分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/docker/" style="color: var(--secondary)!important;">Docker</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/2.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#centos-docker-%e5%ae%89%e8%a3%85" aria-label="CentOS Docker 安装">CentOS Docker 安装</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%98%e6%96%b9%e5%ae%89%e8%a3%85%e8%84%9a%e6%9c%ac%e8%87%aa%e5%8a%a8%e5%ae%89%e8%a3%85" aria-label="官方安装脚本自动安装">官方安装脚本自动安装</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85docker-compose" aria-label="安装docker-compose">安装docker-compose</a></li>
+                <li>
+                    <a href="#docker-compose%e4%b8%80%e9%94%ae%e9%83%a8%e7%bd%b2mysql" aria-label="docker-compose一键部署mysql">docker-compose一键部署mysql</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="centos-docker-安装">CentOS Docker 安装<a hidden class="anchor" aria-hidden="true" href="#centos-docker-安装">#</a></h1>
+<p>Docker 支持以下的 64 位 CentOS 版本：</p>
+<ul>
+<li>CentOS 7</li>
+<li>CentOS 8</li>
+<li>更高版本&hellip;</li>
+</ul>
+<h2 id="官方安装脚本自动安装">官方安装脚本自动安装<a hidden class="anchor" aria-hidden="true" href="#官方安装脚本自动安装">#</a></h2>
+<p>安装命令如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+</span></span></code></pre></div><p>也可以使用国内 daocloud 一键安装命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl -sSL https://get.daocloud.io/docker | sh
+</span></span></code></pre></div><h1 id="安装docker-compose">安装docker-compose<a hidden class="anchor" aria-hidden="true" href="#安装docker-compose">#</a></h1>
+<p>Compose 简介
+Compose 是用于定义和运行多容器 Docker 应用程序的工具。通过 Compose，您可以使用 YML 文件来配置应用程序需要的所有服务。然后，使用一个命令，就可以从 YML 文件配置中创建并启动所有服务。
+Compose 安装
+Linux 上我们可以从 Github 上下载它的二进制包来使用，最新发行的版本地址：https://github.com/docker/compose/releases。</p>
+<p>运行以下命令以下载 Docker Compose 的当前稳定版本：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl -L <span style="color:#e6db74">&#34;https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-</span><span style="color:#66d9ef">$(</span>uname -s<span style="color:#66d9ef">)</span><span style="color:#e6db74">-</span><span style="color:#66d9ef">$(</span>uname -m<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> -o /usr/local/bin/docker-compose
+</span></span></code></pre></div><p>要安装其他版本的 Compose，请替换 v2.2.2。</p>
+<p>Docker Compose 存放在 GitHub，不太稳定。</p>
+<p>你可以也通过执行下面的命令，高速安装 Docker Compose。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl -L https://get.daocloud.io/docker/compose/releases/download/v2.4.1/docker-compose-<span style="color:#e6db74">`</span>uname -s<span style="color:#e6db74">`</span>-<span style="color:#e6db74">`</span>uname -m<span style="color:#e6db74">`</span> &gt; /usr/local/bin/docker-compose
+</span></span></code></pre></div><p>将可执行权限应用于二进制文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>chmod +x /usr/local/bin/docker-compose
+</span></span></code></pre></div><p>创建软链：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+</span></span></code></pre></div><p>测试是否安装成功：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># docker-compose version</span>
+</span></span><span style="display:flex;"><span>Docker Compose version v2.4.1
+</span></span></code></pre></div><h1 id="docker-compose一键部署mysql">docker-compose一键部署mysql<a hidden class="anchor" aria-hidden="true" href="#docker-compose一键部署mysql">#</a></h1>
+<ul>
+<li>创建安装目录,根据实际情况修改</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdr mysql
+</span></span><span style="display:flex;"><span>cd mysql
+</span></span><span style="display:flex;"><span>mkdir -p data/db
+</span></span><span style="display:flex;"><span>mkdir etc
+</span></span></code></pre></div><ul>
+<li>编写docker-compose.yml</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd mysql
+</span></span><span style="display:flex;"><span>vim docker-compose.yml
+</span></span></code></pre></div><p>docker-compose.yml内容如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>version: &#39;3.1&#39;
+</span></span><span style="display:flex;"><span>services:
+</span></span><span style="display:flex;"><span>  mysql:
+</span></span><span style="display:flex;"><span>    image: mysql:5.7 #mysql版本
+</span></span><span style="display:flex;"><span>    container_name: ${MYSQL_NAME}
+</span></span><span style="display:flex;"><span>    volumes:
+</span></span><span style="display:flex;"><span>      - ./data/db:/var/lib/mysql
+</span></span><span style="display:flex;"><span>      - ./etc/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+</span></span><span style="display:flex;"><span>    restart: always
+</span></span><span style="display:flex;"><span>    ports:
+</span></span><span style="display:flex;"><span>      - ${MYSQL_PORT}:3306
+</span></span><span style="display:flex;"><span>    environment:
+</span></span><span style="display:flex;"><span>      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWD} #访问密码
+</span></span><span style="display:flex;"><span>      secure_file_priv:
+</span></span></code></pre></div><ul>
+<li>创建MySQL配置文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd mysql/etc
+</span></span><span style="display:flex;"><span>vim my.cnf
+</span></span></code></pre></div><p>my.cnf文件内容如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>character-set-server=utf8
+</span></span><span style="display:flex;"><span>log-bin=mysql-bin
+</span></span><span style="display:flex;"><span>server-id=1
+</span></span><span style="display:flex;"><span>pid-file        = /var/run/mysqld/mysqld.pid
+</span></span><span style="display:flex;"><span>socket          = /var/run/mysqld/mysqld.sock
+</span></span><span style="display:flex;"><span>datadir         = /var/lib/mysql
+</span></span><span style="display:flex;"><span>sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+</span></span><span style="display:flex;"><span>symbolic-links=0
+</span></span><span style="display:flex;"><span>secure_file_priv =
+</span></span><span style="display:flex;"><span>wait_timeout=120
+</span></span><span style="display:flex;"><span>interactive_timeout=120
+</span></span><span style="display:flex;"><span>default-time_zone = &#39;+8:00&#39;
+</span></span><span style="display:flex;"><span>skip-external-locking
+</span></span><span style="display:flex;"><span>skip-name-resolve
+</span></span><span style="display:flex;"><span>open_files_limit = 10240
+</span></span><span style="display:flex;"><span>max_connections = 1000
+</span></span><span style="display:flex;"><span>max_connect_errors = 6000
+</span></span><span style="display:flex;"><span>table_open_cache = 800
+</span></span><span style="display:flex;"><span>max_allowed_packet = 40m
+</span></span><span style="display:flex;"><span>sort_buffer_size = 2M
+</span></span><span style="display:flex;"><span>join_buffer_size = 1M
+</span></span><span style="display:flex;"><span>thread_cache_size = 32
+</span></span><span style="display:flex;"><span>query_cache_size = 64M
+</span></span><span style="display:flex;"><span>transaction_isolation = READ-COMMITTED
+</span></span><span style="display:flex;"><span>tmp_table_size = 128M
+</span></span><span style="display:flex;"><span>max_heap_table_size = 128M
+</span></span><span style="display:flex;"><span>log-bin = mysql-bin
+</span></span><span style="display:flex;"><span>sync-binlog = 1
+</span></span><span style="display:flex;"><span>binlog_format = ROW
+</span></span><span style="display:flex;"><span>binlog_cache_size = 1M
+</span></span><span style="display:flex;"><span>key_buffer_size = 128M
+</span></span><span style="display:flex;"><span>read_buffer_size = 2M
+</span></span><span style="display:flex;"><span>read_rnd_buffer_size = 4M
+</span></span><span style="display:flex;"><span>bulk_insert_buffer_size = 64M
+</span></span><span style="display:flex;"><span>lower_case_table_names = 1
+</span></span><span style="display:flex;"><span>explicit_defaults_for_timestamp=true
+</span></span><span style="display:flex;"><span>skip_name_resolve = ON
+</span></span><span style="display:flex;"><span>event_scheduler = ON
+</span></span><span style="display:flex;"><span>log_bin_trust_function_creators = 1
+</span></span><span style="display:flex;"><span>innodb_buffer_pool_size = 512M
+</span></span><span style="display:flex;"><span>innodb_flush_log_at_trx_commit = 1
+</span></span><span style="display:flex;"><span>innodb_file_per_table = 1
+</span></span><span style="display:flex;"><span>innodb_log_buffer_size = 4M
+</span></span><span style="display:flex;"><span>innodb_log_file_size = 256M
+</span></span><span style="display:flex;"><span>innodb_max_dirty_pages_pct = 90
+</span></span><span style="display:flex;"><span>innodb_read_io_threads = 4
+</span></span><span style="display:flex;"><span>innodb_write_io_threads = 4
+</span></span></code></pre></div><ul>
+<li>编写重启脚本</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd mysql
+</span></span><span style="display:flex;"><span>vim restart.sh
+</span></span></code></pre></div><p>restart.sh文件内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>docker-compose stop
+</span></span><span style="display:flex;"><span>docker-compose rm -f
+</span></span><span style="display:flex;"><span>docker-compose up -d
+</span></span></code></pre></div><ul>
+<li>编写.env文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vim .env
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 容器名称</span>
+</span></span><span style="display:flex;"><span>MYSQL_NAME<span style="color:#f92672">=</span>docker-mysql
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 启用端口</span>
+</span></span><span style="display:flex;"><span>MYSQL_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">3306</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># root密码</span>
+</span></span><span style="display:flex;"><span>MYSQL_ROOT_PASSWD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span>
+</span></span></code></pre></div><ul>
+<li>验证</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 执行启动脚本</span>
+</span></span><span style="display:flex;"><span>bash restart.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看运行的容器</span>
+</span></span><span style="display:flex;"><span>docker ps
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS         PORTS                                                  NAMES
+</span></span><span style="display:flex;"><span>36d09017f331   mysql:5.7                <span style="color:#e6db74">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#ae81ff">2</span> minutes ago   Up <span style="color:#ae81ff">2</span> minutes   0.0.0.0:3306-&gt;3306/tcp, :::3306-&gt;3306/tcp, 33060/tcp   docker-mysql
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Nginx平滑升级</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>在线一键安装Nginx脚本</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

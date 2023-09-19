@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>日志服务管理 | Hopeful</title>
+<meta name="keywords" content="Linux, 日志, log, 日志服务管理">
+<meta name="description" content="在现实生活中，记录日志非常重要">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="日志服务管理" />
+<meta property="og:description" content="在现实生活中，记录日志非常重要" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/26.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-03T10:55:19+00:00" />
+<meta property="article:modified_time" content="2022-12-03T10:55:19+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/26.jpg" />
+<meta name="twitter:title" content="日志服务管理"/>
+<meta name="twitter:description" content="在现实生活中，记录日志非常重要"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "日志服务管理",
+      "item": "https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "日志服务管理",
+  "name": "日志服务管理",
+  "description": "在现实生活中，记录日志非常重要",
+  "keywords": [
+    "Linux", "日志", "log", "日志服务管理"
+  ],
+  "articleBody": "系统日志管理 系统日志介绍 在现实生活中，记录日志非常重要﹐比如:银行转账时会有转账记录﹔飞机飞行过程中的黑盒子（飞行数据记录器）记录着飞机的飞行过程. 那么将系统和应用发生的事件记录至日志中，也很意义,常可以助于排错和分析使用\n日志记录的内容包括：\n历史事件：时间，地点，人物，事件 日志级别：事件的关键性程度，Loglevel sysklogd 系统日志服务 CentOS 5 之前版本采用的日志管理系统服务 klogd: linux kernel 记录内核日志 syslogd: system application 记录应用日志 事件记录格式： 日期时间 主机 进程[pid]: 事件内容 C/S架构：通过TCP或UDP协议的服务完成日志记录传送，将分布在不同主机的日志实现集中管理\nrsyslog 系统日志服务 rsyslog是CentOS 6 以后版本的系统管理服务.它提供了高性能，出色的安全性和模块化设计。 尽管rsyslog最初是常规的syslogd，但已发展成为一种瑞士军刀式的记录工具，能够接受来自各种来源的输入，并将其转换，然后输出到不同的目的地。当应用有限的处理时，RSYSLOG每秒可以将超过一百万的消息传递到本地目的地。 即使在远程的目的地和更精细的处理中，性能通常也被认为是“惊人的”。\n官网网站\nhttps://www.rsyslog.com/ rsyslog 特性\n多线程 UDP, TCP, SSL, TLS, RELP MySQL, PGSQL, Oracle实现日志存储 强大的过滤器，可实现过滤记录日志信息中任意部分 自定义输出格式 适用于企业级中继链 rsyslog 管理 系统日志术语 facility：设施，从功能或程序上对日志进行归类\n#内置分类 auth, authpriv, cron, daemon,ftp,kern, lpr, mail, news, security(auth), user, uucp, syslog #自定义的分类 local0-local7 Priority 优先级别，从低到高排序\ndebug,info, notice, warn(warning), err(error), crit(critical), alert, emerg(panic) 参看帮助： man 3 syslog，man logger\n[root@centos8 ~]#yum -y install man-pages [root@centos8 ~]#man 3 syslog rsyslog 相关文件 程序包：rsyslog 主程序：/usr/sbin/rsyslogd CentOS 6：/etc/rc.d/init.d/rsyslog {start|stop|restart|status} CentOS 7,8：/usr/lib/systemd/system/rsyslog.service 配置文件：/etc/rsyslog.conf，/etc/rsyslog.d/.conf 库文件： /lib64/rsyslog/.so rsyslog配置文件 /etc/rsyslog.conf 配置文件格式：由三部分组成\nMODULES：相关模块配置 GLOBAL DIRECTIVES：全局配置 RULES：日志记录相关的规则配置 RULES配置格式：\nfacility.priority; facility.priority… target facility格式：\n* #所有的facility facility1,facility2,facility3,... #指定的facility列表 priority格式：\n*: 所有级别 none：没有级别，即不记录 PRIORITY：指定级别（含）以上的所有级别 =PRIORITY：仅记录指定级别的日志信息 target格式：\n文件路径：通常在/var/log/，文件路径前的-表示异步写入 用户：将日志事件通知给指定的用户，* 表示登录的所有用户 日志服务器：@host，把日志送往至指定的远程UDP日志服务器 @@host 将日志发送到远程TCP日志服务器 管道： | COMMAND，转发给其它命令处理 通常的日志文件的格式：\n日志文件有很多，如： /var/log/messages,cron,secure等，基本格式都是类似的。格式如下\n事件产生的日期时间 主机 进程(pid)：事件内容 范例：日志文件格式\n[root@centos7 ~]# tail -f /var/log/messages Dec 3 16:58:40 centos7 dbus[653]: [system] Activating via systemd: service name='org.freedesktop.nm_dispatcher' unit='dbus-org.freedesktop.nm-dispatcher.service' Dec 3 16:58:40 centos7 systemd: Starting Network Manager Script Dispatcher Service... Dec 3 16:58:40 centos7 dhclient[51210]: bound to 192.168.179.170 -- renewal in 745 seconds. Dec 3 16:58:40 centos7 dbus[653]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher' Dec 3 16:58:40 centos7 systemd: Started Network Manager Script Dispatcher Service. Dec 3 16:58:40 centos7 nm-dispatcher: req:1 'dhcp4-change' [ens33]: new request (2 scripts) Dec 3 16:58:40 centos7 nm-dispatcher: req:1 'dhcp4-change' [ens33]: start running ordered scripts... Dec 3 17:01:01 centos7 systemd: Started Session 95 of user root. Dec 3 17:11:05 centos7 dhclient[51210]: DHCPREQUEST on ens33 to 192.168.179.254 port 67 (xid=0x1f435c38) Dec 3 17:11:11 centos7 dhclient[51210]: DHCPREQUEST on ens33 to 192.168.179.254 port 67 (xid=0x1f435c38) Dec 3 17:11:26 centos7 dhclient[51210]: DHCPREQUEST on ens33 to 192.168.179.254 port 67 (xid=0x1f435c38) [root@centos7 ~]# tail -f /var/log/secure Nov 29 22:58:18 centos7 sshd[49904]: pam_unix(sshd:session): session closed for user root Nov 30 19:58:03 centos7 sshd[50030]: Accepted password for root from 192.168.179.1 port 51814 ssh2 Nov 30 19:58:03 centos7 sshd[50030]: pam_unix(sshd:session): session opened for user root by (uid=0) Nov 30 21:15:17 centos7 sshd[48764]: pam_unix(sshd:session): session closed for user root Dec 2 21:22:51 centos7 sshd[51123]: Accepted password for root from 192.168.179.1 port 53924 ssh2 Dec 2 21:22:51 centos7 sshd[51123]: pam_unix(sshd:session): session opened for user root by (uid=0) Dec 3 09:08:03 centos7 sshd[50030]: pam_unix(sshd:session): session closed for user root Dec 3 09:53:40 centos7 sshd[51295]: Accepted password for root from 192.168.179.1 port 56421 ssh2 Dec 3 09:53:40 centos7 sshd[51295]: pam_unix(sshd:session): session opened for user root by (uid=0) Dec 3 11:14:12 centos7 sshd[51123]: pam_unix(sshd:session): session closed for user root 范例：将ssh服务的日志记录至自定义的local的日志设备 修改sshd服务的配置 [root@centos7 ~]# vim /etc/ssh/sshd_config # 配置文件修改内容如下所示 SyslogFacility local2 # 重新加载sshd服务配置文件 [root@centos7 ~]# service sshd reload 修改rsyslog配置 [root@centos7 ~]# vim /etc/rsyslog.conf # 加入如下内容 local2.* /var/log/sshd.log # 重启服务 [root@centos7 ~]# systemctl restart rsyslog 测试验证 # ssh 登入该服务器 # 查看日志文件内容 tail -f /var/log/sshd.log [root@centos7 ~]# tail -f /var/log/sshd.log Dec 3 20:06:35 centos7 sshd[49356]: Server listening on 0.0.0.0 port 22. Dec 3 20:06:35 centos7 sshd[49356]: Server listening on :: port 22. Dec 3 20:07:06 centos7 sshd[52189]: Accepted publickey for root from 192.168.179.171 port 33434 ssh2: RSA SHA256:HohSbRRS/oP0nLbEZTqgSJ6WQ5Mjp3f9DxM+spRO+SI 日志中可以看到192.168.179.171的IP地址通过root用户ssh登入该设备\n启用网络日志服务 启用网络日志服务功能，可以将多个远程主机的日志，发送到集中的日志服务器，方便统一管理。\n范例：CentOS 7 和6 启用网络日志功能\n日志服务器：centos7.9，主机名称：centos7,ip:192.168.179.157 客户端1：centos7.9，主机名称：centos7-master,ip:192.168.179.170 客户端2：centos7.9，主机名称：centos7-slave,ip:192.168.179.171 修改日志服务器配置文件 # 192.168.179.157上操作 [root@centos7 ~]# vim /etc/rsyslog.conf 重启日志服务器rsyslog服务 [root@centos7 ~]# systemctl restart rsyslog 修改客户端配置文件 # 修改192.168.179.170配置文件 [root@centos7-master ~]# vim /etc/rsyslog.conf # 修改内容如下 *.info;mail.none;authpriv.none;cron.none /var/log/messages *.info;mail.none;authpriv.none;cron.none @@192.168.179.157:514 #TCP *.info;mail.none;authpriv.none;cron.none @192.168.179.157:514 #udp # 重启服务 systemctl restart rsyslog # 192.168.179.171客户端使用上面方法操作修改配置文件 测试验证 # 在日志服务器上查看日志 [root@centos7 ~]# tail -f /var/log/messages 可以看到主机名称centos7-master、centos7-slave上的日志说明实验成功\n范例：CentOS 8 启用网络日志功能\n## MODULES #### ...省略... # Provides UDP syslog reception # for parameters see http://www.rsyslog.com/doc/imudp.html module(load=\"imudp\") # needs to be done just once input(type=\"imudp\" port=\"514\") # Provides TCP syslog reception # for parameters see http://www.rsyslog.com/doc/imtcp.html module(load=\"imtcp\") # needs to be done just once input(type=\"imtcp\" port=\"514\") 常见日志文件 /var/log/secure：系统安全日志，文本格式，应周期性分析 /var/log/btmp：当前系统上，用户的失败尝试登录相关的日志信息，二进制格式，lastb命令进行查看 /var/log/wtmp：当前系统上，用户正常登录系统的相关日志信息，二进制格式，last命令可以查看 /var/log/lastlog:每一个用户最近一次的登录信息，二进制格式，lastlog命令可以查看 /var/log/dmesg：CentOS7 之前版本系统引导过程中的日志信息，文本格式，开机后的硬件变化 将不再记录，也可以通过专用命令dmesg查看，可持续记录硬件变化的情况 /var/log/boot.log 系统服务启动的相关信息，文本格式 /var/log/messages ：系统中大部分的信息 /var/log/anaconda : anaconda的日志 实战案例：利用 MySQL 存储日志信息 目标 利用rsyslog日志服务，将收集的日志记录于MySQL中\n环境准备 两台主机 一台：rsyslog日志服务器，IP：192.168.179.157 一台：mariadb数据库服务器，IP：192.168.179.178 实现步骤 # 在rsyslog服务器上安装连接mysql模块相关的程序包 [root@centos7 ~]# yum install rsyslog-mysql [root@centos7 ~]# rpm -ql rsyslog-mysql /usr/lib64/rsyslog/ommysql.so /usr/share/doc/rsyslog-8.24.0/mysql-createDB.sql [root@centos7 ~]# #将sql脚本复制到数据库服务器上 [root@centos7 ~]# scp /usr/share/doc/rsyslog-8.24.0/mysql-createDB.sql 192.168.179.148:/root/ # 在192.168.179.148上安装mysql yum install mysql-server -y # #在mysql数据库服务器上创建相关数据库和表，并授权rsyslog能连接至当前服务器 root@ubuntu1804:~# mysql mysql\u003e source /root/mysql-createDB.sql; Query OK, 1 row affected (0.00 sec) mysql\u003e create user 'rsyslog'@'192.168.179.%' identified by '123456'; Query OK, 0 rows affected (0.04 sec) mysql\u003e grant all on Syslog.* to 'rsyslog'@'192.168.179.%'; Query OK, 0 rows affected (0.00 sec) mysql\u003e flush privileges; Query OK, 0 rows affected (0.00 sec) mysql\u003e # 配置日志服务器将日志发送至指定数据库 vim /etc/rsyslog.conf ####MODULES#### #在 MODULES 语言下面，如果是 CentOS 8 加下面行 module(load=\"ommysql\") #在 MODULES 语言下面，如果是 CentOS 7，6 加下面行 $ModLoad ommysql #在RULES语句块加下面行的格式 #facility.priority :ommysql:DBHOST,DBNAME,DBUSER, PASSWORD *.info :ommysql:192.168.179.148,Syslog,rsyslog,123456 # 重启服务 测试 # 在日志服务器上生成日志 logger 'this is test log' #在数据库上查询到上面的测试日志 mysql\u003e select count(*) from SystemEvents; +----------+ | count(*) | +----------+ | 66 | +----------+ 1 row in set (0.00 sec) mysql\u003e logrotate 日志转储 logrotate 介绍 logrotate 程序是一个日志文件管理工具。用来把旧的日志文件删除，并创建新的日志文件，称为日志转 储或滚动。可以根据日志文件的大小，也可以根据其天数来转储，这个过程一般通过 cron 程序来执行\nlogrotate 配置 软件包：logrotate 相关文件\n计划任务：/etc/cron.daily/logrotate\n程序文件：/usr/sbin/logrotate\n配置文件： /etc/logrotate.conf\n日志文件：/var/lib/logrotate/logrotate.status\n配置文件主要参数如下：\n范例：对指定日志手动执行日志转储\n# 生成测试日志 [root@centos7-master ~]# dd if=/dev/zero of=/var/log/test1.log bs=2M count=1 1+0 records in 1+0 records out 2097152 bytes (2.1 MB) copied, 0.0017554 s, 1.2 GB/s [root@centos7-master ~]# [root@centos7-master ~]# dd if=/dev/zero of=/var/log/test2.log bs=2M count=1 1+0 records in 1+0 records out 2097152 bytes (2.1 MB) copied, 0.00240458 s, 872 MB/s [root@centos7-master ~]# #针对不同的日志创建转储配置文件 [root@centos7-master ~]# vim /etc/logrotate.d/test1 /var/log/test1.log { daily rotate 5 compress delaycompress missingok size 1M notifempty create 640 bin nobody postrotate echo `date +%F_%T` \u003e\u003e /data/test1.log endscript } [root@centos7-master ~]# vim /etc/logrotate.d/test2 /var/log/test2.log { daily rotate 5 compress delaycompress missingok size 1M notifempty create 644 root root postrotate echo `date +%F_%T` \u003e\u003e /data/test2.log endscript } #针对一个测试日志，手动执行日志转储 [root@centos7-master ~]# logrotate /etc/logrotate.d/test1 [root@centos7-master ~]# ll /var/log/test* -rw-r----- 1 bin nobody 0 Dec 4 11:12 /var/log/test1.log -rw-r--r-- 1 root root 2097152 Dec 4 11:07 /var/log/test1.log.1 -rw-r--r-- 1 root root 2097152 Dec 4 11:07 /var/log/test2.log [root@centos7-master ~]# [root@centos7-master ~]# ll /data/ total 1800 -rw-r--r-- 1 root root 915255 Nov 27 17:22 1127.sql -rw-r--r-- 1 root root 914921 Nov 25 10:23 all.sql drwxr-xr-x 3 root root 18 Nov 29 22:45 mastermha drwxr-x--- 11 mysql mysql 4096 Dec 3 20:30 mysql -rw-r--r-- 1 root root 20 Dec 4 11:12 test1.log [root@centos7-master ~]# #对所有日志进行手动转储 [root@centos7-master ~]# logrotate /etc/logrotate.conf ",
+  "wordCount" : "3523",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/26.jpg","datePublished": "2022-12-03T10:55:19Z",
+  "dateModified": "2022-12-03T10:55:19Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                日志服务管理
+            </h1>
+            <div class="post-description">
+                在现实生活中，记录日志非常重要
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-12-03
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>3523字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>8分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/26.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e7%b3%bb%e7%bb%9f%e6%97%a5%e5%bf%97%e7%ae%a1%e7%90%86" aria-label="系统日志管理">系统日志管理</a></li>
+                <li>
+                    <a href="#%e7%b3%bb%e7%bb%9f%e6%97%a5%e5%bf%97%e4%bb%8b%e7%bb%8d" aria-label="系统日志介绍">系统日志介绍</a><ul>
+                        
+                <li>
+                    <a href="#sysklogd-%e7%b3%bb%e7%bb%9f%e6%97%a5%e5%bf%97%e6%9c%8d%e5%8a%a1" aria-label="sysklogd 系统日志服务">sysklogd 系统日志服务</a></li>
+                <li>
+                    <a href="#rsyslog-%e7%b3%bb%e7%bb%9f%e6%97%a5%e5%bf%97%e6%9c%8d%e5%8a%a1" aria-label="rsyslog 系统日志服务">rsyslog 系统日志服务</a></li></ul>
+                </li>
+                <li>
+                    <a href="#rsyslog-%e7%ae%a1%e7%90%86" aria-label="rsyslog 管理">rsyslog 管理</a><ul>
+                        
+                <li>
+                    <a href="#%e7%b3%bb%e7%bb%9f%e6%97%a5%e5%bf%97%e6%9c%af%e8%af%ad" aria-label="系统日志术语">系统日志术语</a></li>
+                <li>
+                    <a href="#rsyslog-%e7%9b%b8%e5%85%b3%e6%96%87%e4%bb%b6" aria-label="rsyslog 相关文件">rsyslog 相关文件</a></li>
+                <li>
+                    <a href="#rsyslog%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="rsyslog配置文件">rsyslog配置文件</a></li>
+                <li>
+                    <a href="#%e8%8c%83%e4%be%8b%e5%b0%86ssh%e6%9c%8d%e5%8a%a1%e7%9a%84%e6%97%a5%e5%bf%97%e8%ae%b0%e5%bd%95%e8%87%b3%e8%87%aa%e5%ae%9a%e4%b9%89%e7%9a%84local%e7%9a%84%e6%97%a5%e5%bf%97%e8%ae%be%e5%a4%87" aria-label="范例：将ssh服务的日志记录至自定义的local的日志设备">范例：将ssh服务的日志记录至自定义的local的日志设备</a></li>
+                <li>
+                    <a href="#%e5%90%af%e7%94%a8%e7%bd%91%e7%bb%9c%e6%97%a5%e5%bf%97%e6%9c%8d%e5%8a%a1" aria-label="启用网络日志服务">启用网络日志服务</a></li>
+                <li>
+                    <a href="#%e5%b8%b8%e8%a7%81%e6%97%a5%e5%bf%97%e6%96%87%e4%bb%b6" aria-label="常见日志文件">常见日志文件</a></li>
+                <li>
+                    <a href="#%e5%ae%9e%e6%88%98%e6%a1%88%e4%be%8b%e5%88%a9%e7%94%a8-mysql-%e5%ad%98%e5%82%a8%e6%97%a5%e5%bf%97%e4%bf%a1%e6%81%af" aria-label="实战案例：利用 MySQL 存储日志信息">实战案例：利用 MySQL 存储日志信息</a><ul>
+                        
+                <li>
+                    <a href="#%e7%9b%ae%e6%a0%87" aria-label="目标">目标</a></li>
+                <li>
+                    <a href="#%e7%8e%af%e5%a2%83%e5%87%86%e5%a4%87" aria-label="环境准备">环境准备</a></li>
+                <li>
+                    <a href="#%e5%ae%9e%e7%8e%b0%e6%ad%a5%e9%aa%a4" aria-label="实现步骤">实现步骤</a></li>
+                <li>
+                    <a href="#%e6%b5%8b%e8%af%95" aria-label="测试">测试</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#logrotate-%e6%97%a5%e5%bf%97%e8%bd%ac%e5%82%a8" aria-label="logrotate 日志转储">logrotate 日志转储</a><ul>
+                        
+                <li>
+                    <a href="#logrotate-%e4%bb%8b%e7%bb%8d" aria-label="logrotate 介绍">logrotate 介绍</a></li>
+                <li>
+                    <a href="#logrotate-%e9%85%8d%e7%bd%ae" aria-label="logrotate 配置">logrotate 配置</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="系统日志管理">系统日志管理<a hidden class="anchor" aria-hidden="true" href="#系统日志管理">#</a></h2>
+<h2 id="系统日志介绍">系统日志介绍<a hidden class="anchor" aria-hidden="true" href="#系统日志介绍">#</a></h2>
+<p>在现实生活中，记录日志非常重要﹐比如:银行转账时会有转账记录﹔飞机飞行过程中的黑盒子（飞行数据记录器）记录着飞机的飞行过程. 那么将系统和应用发生的事件记录至日志中，也很意义,常可以助于排错和分析使用</p>
+<p>日志记录的内容包括：</p>
+<ul>
+<li>历史事件：时间，地点，人物，事件</li>
+<li>日志级别：事件的关键性程度，Loglevel</li>
+</ul>
+<h3 id="sysklogd-系统日志服务">sysklogd 系统日志服务<a hidden class="anchor" aria-hidden="true" href="#sysklogd-系统日志服务">#</a></h3>
+<p>CentOS 5 之前版本采用的日志管理系统服务
+klogd: linux kernel 记录内核日志
+syslogd: system application 记录应用日志
+事件记录格式：
+日期时间 主机 进程[pid]: 事件内容
+C/S架构：通过TCP或UDP协议的服务完成日志记录传送，将分布在不同主机的日志实现集中管理</p>
+<h3 id="rsyslog-系统日志服务">rsyslog 系统日志服务<a hidden class="anchor" aria-hidden="true" href="#rsyslog-系统日志服务">#</a></h3>
+<p>rsyslog是CentOS 6 以后版本的系统管理服务.它提供了高性能，出色的安全性和模块化设计。 尽管rsyslog最初是常规的syslogd，但已发展成为一种瑞士军刀式的记录工具，能够接受来自各种来源的输入，并将其转换，然后输出到不同的目的地。当应用有限的处理时，RSYSLOG每秒可以将超过一百万的消息传递到本地目的地。 即使在远程的目的地和更精细的处理中，性能通常也被认为是“惊人的”。</p>
+<p>官网网站</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>https://www.rsyslog.com/
+</span></span></code></pre></div><p>rsyslog 特性</p>
+<ul>
+<li>多线程</li>
+<li>UDP, TCP, SSL, TLS, RELP</li>
+<li>MySQL, PGSQL, Oracle实现日志存储</li>
+<li>强大的过滤器，可实现过滤记录日志信息中任意部分</li>
+<li>自定义输出格式</li>
+<li>适用于企业级中继链</li>
+</ul>
+<h2 id="rsyslog-管理">rsyslog 管理<a hidden class="anchor" aria-hidden="true" href="#rsyslog-管理">#</a></h2>
+<h3 id="系统日志术语">系统日志术语<a hidden class="anchor" aria-hidden="true" href="#系统日志术语">#</a></h3>
+<p>facility：设施，从功能或程序上对日志进行归类</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>#内置分类
+</span></span><span style="display:flex;"><span>auth, authpriv, cron, daemon,ftp,kern, lpr, mail, news, security(auth),
+</span></span><span style="display:flex;"><span>user, uucp, syslog
+</span></span><span style="display:flex;"><span>#自定义的分类
+</span></span><span style="display:flex;"><span>local0-local7
+</span></span></code></pre></div><p>Priority 优先级别，从低到高排序</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>debug,info, notice, warn(warning), err(error), crit(critical), alert,
+</span></span><span style="display:flex;"><span>emerg(panic)
+</span></span></code></pre></div><p>参看帮助： man 3 syslog，man logger</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos8 ~]#yum -y install man-pages
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#man 3 syslog
+</span></span></code></pre></div><h3 id="rsyslog-相关文件">rsyslog 相关文件<a hidden class="anchor" aria-hidden="true" href="#rsyslog-相关文件">#</a></h3>
+<ul>
+<li>程序包：rsyslog</li>
+<li>主程序：/usr/sbin/rsyslogd</li>
+<li>CentOS 6：/etc/rc.d/init.d/rsyslog {start|stop|restart|status}</li>
+<li>CentOS 7,8：/usr/lib/systemd/system/rsyslog.service</li>
+<li>配置文件：/etc/rsyslog.conf，/etc/rsyslog.d/<em>.conf</em></li>
+<li><em>库文件： /lib64/rsyslog/</em>.so</li>
+</ul>
+<h3 id="rsyslog配置文件">rsyslog配置文件<a hidden class="anchor" aria-hidden="true" href="#rsyslog配置文件">#</a></h3>
+<p>/etc/rsyslog.conf 配置文件格式：由三部分组成</p>
+<ul>
+<li>MODULES：相关模块配置</li>
+<li>GLOBAL DIRECTIVES：全局配置</li>
+<li>RULES：日志记录相关的规则配置</li>
+</ul>
+<p>RULES配置格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>facility.priority; facility.priority… target
+</span></span></code></pre></div><p>facility格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>* #所有的facility
+</span></span><span style="display:flex;"><span>facility1,facility2,facility3,... #指定的facility列表
+</span></span></code></pre></div><p>priority格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>*: 所有级别
+</span></span><span style="display:flex;"><span>none：没有级别，即不记录
+</span></span><span style="display:flex;"><span>PRIORITY：指定级别（含）以上的所有级别
+</span></span><span style="display:flex;"><span>=PRIORITY：仅记录指定级别的日志信息
+</span></span></code></pre></div><p>target格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>文件路径：通常在/var/log/，文件路径前的-表示异步写入
+</span></span><span style="display:flex;"><span>用户：将日志事件通知给指定的用户，* 表示登录的所有用户
+</span></span><span style="display:flex;"><span>日志服务器：@host，把日志送往至指定的远程UDP日志服务器 @@host 将日志发送到远程TCP日志服务器
+</span></span><span style="display:flex;"><span>管道： | COMMAND，转发给其它命令处理
+</span></span></code></pre></div><p><strong>通常的日志文件的格式：</strong></p>
+<p>日志文件有很多，如： /var/log/messages,cron,secure等，基本格式都是类似的。格式如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>事件产生的日期时间 主机 进程(pid)：事件内容
+</span></span></code></pre></div><p>范例：日志文件格式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7 ~]# tail -f /var/log/messages
+</span></span><span style="display:flex;"><span>Dec  3 16:58:40 centos7 dbus[653]: [system] Activating via systemd: service name=&#39;org.freedesktop.nm_dispatcher&#39; unit=&#39;dbus-org.freedesktop.nm-dispatcher.service&#39;
+</span></span><span style="display:flex;"><span>Dec  3 16:58:40 centos7 systemd: Starting Network Manager Script Dispatcher Service...
+</span></span><span style="display:flex;"><span>Dec  3 16:58:40 centos7 dhclient[51210]: bound to 192.168.179.170 -- renewal in 745 seconds.
+</span></span><span style="display:flex;"><span>Dec  3 16:58:40 centos7 dbus[653]: [system] Successfully activated service &#39;org.freedesktop.nm_dispatcher&#39;
+</span></span><span style="display:flex;"><span>Dec  3 16:58:40 centos7 systemd: Started Network Manager Script Dispatcher Service.
+</span></span><span style="display:flex;"><span>Dec  3 16:58:40 centos7 nm-dispatcher: req:1 &#39;dhcp4-change&#39; [ens33]: new request (2 scripts)
+</span></span><span style="display:flex;"><span>Dec  3 16:58:40 centos7 nm-dispatcher: req:1 &#39;dhcp4-change&#39; [ens33]: start running ordered scripts...
+</span></span><span style="display:flex;"><span>Dec  3 17:01:01 centos7 systemd: Started Session 95 of user root.
+</span></span><span style="display:flex;"><span>Dec  3 17:11:05 centos7 dhclient[51210]: DHCPREQUEST on ens33 to 192.168.179.254 port 67 (xid=0x1f435c38)
+</span></span><span style="display:flex;"><span>Dec  3 17:11:11 centos7 dhclient[51210]: DHCPREQUEST on ens33 to 192.168.179.254 port 67 (xid=0x1f435c38)
+</span></span><span style="display:flex;"><span>Dec  3 17:11:26 centos7 dhclient[51210]: DHCPREQUEST on ens33 to 192.168.179.254 port 67 (xid=0x1f435c38)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7 ~]# tail -f /var/log/secure
+</span></span><span style="display:flex;"><span>Nov 29 22:58:18 centos7 sshd[49904]: pam_unix(sshd:session): session closed for user root
+</span></span><span style="display:flex;"><span>Nov 30 19:58:03 centos7 sshd[50030]: Accepted password for root from 192.168.179.1 port 51814 ssh2
+</span></span><span style="display:flex;"><span>Nov 30 19:58:03 centos7 sshd[50030]: pam_unix(sshd:session): session opened for user root by (uid=0)
+</span></span><span style="display:flex;"><span>Nov 30 21:15:17 centos7 sshd[48764]: pam_unix(sshd:session): session closed for user root
+</span></span><span style="display:flex;"><span>Dec  2 21:22:51 centos7 sshd[51123]: Accepted password for root from 192.168.179.1 port 53924 ssh2
+</span></span><span style="display:flex;"><span>Dec  2 21:22:51 centos7 sshd[51123]: pam_unix(sshd:session): session opened for user root by (uid=0)
+</span></span><span style="display:flex;"><span>Dec  3 09:08:03 centos7 sshd[50030]: pam_unix(sshd:session): session closed for user root
+</span></span><span style="display:flex;"><span>Dec  3 09:53:40 centos7 sshd[51295]: Accepted password for root from 192.168.179.1 port 56421 ssh2
+</span></span><span style="display:flex;"><span>Dec  3 09:53:40 centos7 sshd[51295]: pam_unix(sshd:session): session opened for user root by (uid=0)
+</span></span><span style="display:flex;"><span>Dec  3 11:14:12 centos7 sshd[51123]: pam_unix(sshd:session): session closed for user root
+</span></span></code></pre></div><h3 id="范例将ssh服务的日志记录至自定义的local的日志设备">范例：将ssh服务的日志记录至自定义的local的日志设备<a hidden class="anchor" aria-hidden="true" href="#范例将ssh服务的日志记录至自定义的local的日志设备">#</a></h3>
+<ul>
+<li>修改sshd服务的配置</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7 ~]# vim /etc/ssh/sshd_config 
+</span></span><span style="display:flex;"><span># 配置文件修改内容如下所示
+</span></span><span style="display:flex;"><span>SyslogFacility local2
+</span></span><span style="display:flex;"><span># 重新加载sshd服务配置文件
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# service sshd reload
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1670069148343.png" alt="1670069148343"  />
+</p>
+<ul>
+<li>修改rsyslog配置</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7 ~]# vim /etc/rsyslog.conf 
+</span></span><span style="display:flex;"><span># 加入如下内容
+</span></span><span style="display:flex;"><span>local2.*                                                /var/log/sshd.log
+</span></span><span style="display:flex;"><span># 重启服务
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# systemctl restart rsyslog
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1670068722502.png" alt="1670068722502"  />
+</p>
+<ul>
+<li>测试验证</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># ssh 登入该服务器
+</span></span><span style="display:flex;"><span># 查看日志文件内容
+</span></span><span style="display:flex;"><span>tail -f /var/log/sshd.log
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-verilog" data-lang="verilog"><span style="display:flex;"><span>[root@centos7 <span style="color:#f92672">~</span>]# tail <span style="color:#f92672">-</span>f <span style="color:#f92672">/</span><span style="color:#66d9ef">var</span><span style="color:#f92672">/</span>log<span style="color:#f92672">/</span>sshd.log 
+</span></span><span style="display:flex;"><span>Dec  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">20</span><span style="color:#f92672">:</span><span style="color:#ae81ff">06</span><span style="color:#f92672">:</span><span style="color:#ae81ff">35</span> centos7 sshd[<span style="color:#ae81ff">49356</span>]<span style="color:#f92672">:</span> Server listening on <span style="color:#ae81ff">0.0.0.0</span> port <span style="color:#ae81ff">22.</span>
+</span></span><span style="display:flex;"><span>Dec  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">20</span><span style="color:#f92672">:</span><span style="color:#ae81ff">06</span><span style="color:#f92672">:</span><span style="color:#ae81ff">35</span> centos7 sshd[<span style="color:#ae81ff">49356</span>]<span style="color:#f92672">:</span> Server listening on <span style="color:#f92672">::</span> port <span style="color:#ae81ff">22.</span>
+</span></span><span style="display:flex;"><span>Dec  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">20</span><span style="color:#f92672">:</span><span style="color:#ae81ff">07</span><span style="color:#f92672">:</span><span style="color:#ae81ff">06</span> centos7 sshd[<span style="color:#ae81ff">52189</span>]<span style="color:#f92672">:</span> Accepted publickey <span style="color:#66d9ef">for</span> root from <span style="color:#ae81ff">192.168.179.171</span> port <span style="color:#ae81ff">33434</span> ssh2: RSA SHA256:HohSbRRS<span style="color:#f92672">/</span>oP0nLbEZTqgSJ6WQ5Mjp3f9DxM<span style="color:#f92672">+</span>spRO<span style="color:#f92672">+</span>SI
+</span></span></code></pre></div><p>日志中可以看到192.168.179.171的IP地址通过root用户ssh登入该设备</p>
+<h3 id="启用网络日志服务">启用网络日志服务<a hidden class="anchor" aria-hidden="true" href="#启用网络日志服务">#</a></h3>
+<p>启用网络日志服务功能，可以将多个远程主机的日志，发送到集中的日志服务器，方便统一管理。</p>
+<p>范例：CentOS 7 和6 启用网络日志功能</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>日志服务器：centos7.9，主机名称：centos7,ip:192.168.179.157
+</span></span><span style="display:flex;"><span>客户端1：centos7.9，主机名称：centos7-master,ip:192.168.179.170
+</span></span><span style="display:flex;"><span>客户端2：centos7.9，主机名称：centos7-slave,ip:192.168.179.171  
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1670070091109.png" alt="1670070091109"  />
+</p>
+<ul>
+<li>修改日志服务器配置文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 192.168.179.157上操作</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/rsyslog.conf</span>
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1670070275185.png" alt="1670070275185"  />
+</p>
+<ul>
+<li>重启日志服务器rsyslog服务</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl restart rsyslog</span>
+</span></span></code></pre></div><ul>
+<li>修改客户端配置文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 修改192.168.179.170配置文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7-master ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /etc/rsyslog.conf </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 修改内容如下</span>
+</span></span><span style="display:flex;"><span>*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+</span></span><span style="display:flex;"><span>*.info;mail.none;authpriv.none;cron.none                @@192.168.179.157:514 <span style="color:#75715e">#TCP</span>
+</span></span><span style="display:flex;"><span>*.info;mail.none;authpriv.none;cron.none                @192.168.179.157:514 <span style="color:#75715e">#udp</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 重启服务</span>
+</span></span><span style="display:flex;"><span>systemctl restart rsyslog
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 192.168.179.171客户端使用上面方法操作修改配置文件</span>
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1670070969222.png" alt="1670070969222"  />
+</p>
+<ul>
+<li>测试验证</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 在日志服务器上查看日志</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># tail -f /var/log/messages</span>
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1670071324130.png" alt="1670071324130"  />
+</p>
+<p>可以看到主机名称centos7-master、centos7-slave上的日志说明实验成功</p>
+<p>范例：CentOS 8 启用网络日志功能</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>## MODULES ####
+</span></span><span style="display:flex;"><span>...省略...
+</span></span><span style="display:flex;"><span># Provides UDP syslog reception
+</span></span><span style="display:flex;"><span># for parameters see http://www.rsyslog.com/doc/imudp.html
+</span></span><span style="display:flex;"><span>module(load=&#34;imudp&#34;) # needs to be done just once
+</span></span><span style="display:flex;"><span>input(type=&#34;imudp&#34; port=&#34;514&#34;)
+</span></span><span style="display:flex;"><span># Provides TCP syslog reception
+</span></span><span style="display:flex;"><span># for parameters see http://www.rsyslog.com/doc/imtcp.html
+</span></span><span style="display:flex;"><span>module(load=&#34;imtcp&#34;) # needs to be done just once
+</span></span><span style="display:flex;"><span>input(type=&#34;imtcp&#34; port=&#34;514&#34;)
+</span></span></code></pre></div><h3 id="常见日志文件">常见日志文件<a hidden class="anchor" aria-hidden="true" href="#常见日志文件">#</a></h3>
+<ul>
+<li>/var/log/secure：系统安全日志，文本格式，应周期性分析</li>
+<li>/var/log/btmp：当前系统上，用户的失败尝试登录相关的日志信息，二进制格式，lastb命令进行查看</li>
+<li>/var/log/wtmp：当前系统上，用户正常登录系统的相关日志信息，二进制格式，last命令可以查看</li>
+<li>/var/log/lastlog:每一个用户最近一次的登录信息，二进制格式，lastlog命令可以查看</li>
+<li>/var/log/dmesg：CentOS7 之前版本系统引导过程中的日志信息，文本格式，开机后的硬件变化</li>
+<li>将不再记录，也可以通过专用命令dmesg查看，可持续记录硬件变化的情况</li>
+<li>/var/log/boot.log 系统服务启动的相关信息，文本格式</li>
+<li>/var/log/messages ：系统中大部分的信息</li>
+<li>/var/log/anaconda : anaconda的日志</li>
+</ul>
+<h3 id="实战案例利用-mysql-存储日志信息">实战案例：利用 MySQL 存储日志信息<a hidden class="anchor" aria-hidden="true" href="#实战案例利用-mysql-存储日志信息">#</a></h3>
+<p><img loading="lazy" src="/posts.images/image.assets/1670074533744.png" alt="1670074533744"  />
+</p>
+<h4 id="目标">目标<a hidden class="anchor" aria-hidden="true" href="#目标">#</a></h4>
+<p>利用rsyslog日志服务，将收集的日志记录于MySQL中</p>
+<h4 id="环境准备">环境准备<a hidden class="anchor" aria-hidden="true" href="#环境准备">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>两台主机
+</span></span><span style="display:flex;"><span>一台：rsyslog日志服务器，IP：192.168.179.157
+</span></span><span style="display:flex;"><span>一台：mariadb数据库服务器，IP：192.168.179.178
+</span></span></code></pre></div><h4 id="实现步骤">实现步骤<a hidden class="anchor" aria-hidden="true" href="#实现步骤">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># 在rsyslog服务器上安装连接mysql模块相关的程序包
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# yum install rsyslog-mysql
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# rpm -ql rsyslog-mysql
+</span></span><span style="display:flex;"><span>/usr/lib64/rsyslog/ommysql.so
+</span></span><span style="display:flex;"><span>/usr/share/doc/rsyslog-8.24.0/mysql-createDB.sql
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#将sql脚本复制到数据库服务器上
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# scp /usr/share/doc/rsyslog-8.24.0/mysql-createDB.sql 192.168.179.148:/root/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 在192.168.179.148上安装mysql
+</span></span><span style="display:flex;"><span>yum install mysql-server -y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># #在mysql数据库服务器上创建相关数据库和表，并授权rsyslog能连接至当前服务器
+</span></span><span style="display:flex;"><span>root@ubuntu1804:~# mysql
+</span></span><span style="display:flex;"><span>mysql&gt; source /root/mysql-createDB.sql;
+</span></span><span style="display:flex;"><span>Query OK, 1 row affected (0.00 sec)
+</span></span><span style="display:flex;"><span>mysql&gt; create user &#39;rsyslog&#39;@&#39;192.168.179.%&#39; identified by &#39;123456&#39;;
+</span></span><span style="display:flex;"><span>Query OK, 0 rows affected (0.04 sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; grant all on Syslog.* to &#39;rsyslog&#39;@&#39;192.168.179.%&#39;;
+</span></span><span style="display:flex;"><span>Query OK, 0 rows affected (0.00 sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; flush privileges;
+</span></span><span style="display:flex;"><span>Query OK, 0 rows affected (0.00 sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 配置日志服务器将日志发送至指定数据库
+</span></span><span style="display:flex;"><span>vim /etc/rsyslog.conf
+</span></span><span style="display:flex;"><span>####MODULES####
+</span></span><span style="display:flex;"><span>#在 MODULES 语言下面，如果是 CentOS 8 加下面行
+</span></span><span style="display:flex;"><span>module(load=&#34;ommysql&#34;)
+</span></span><span style="display:flex;"><span>#在 MODULES 语言下面，如果是 CentOS 7，6 加下面行
+</span></span><span style="display:flex;"><span>$ModLoad ommysql
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#在RULES语句块加下面行的格式
+</span></span><span style="display:flex;"><span>#facility.priority :ommysql:DBHOST,DBNAME,DBUSER, PASSWORD
+</span></span><span style="display:flex;"><span>*.info :ommysql:192.168.179.148,Syslog,rsyslog,123456
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 重启服务
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1670075626142.png" alt="1670075626142"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670075765663.png" alt="1670075765663"  />
+</p>
+<h4 id="测试">测试<a hidden class="anchor" aria-hidden="true" href="#测试">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># 在日志服务器上生成日志
+</span></span><span style="display:flex;"><span>logger &#39;this is test log&#39;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#在数据库上查询到上面的测试日志
+</span></span><span style="display:flex;"><span>mysql&gt; select count(*) from SystemEvents;
+</span></span><span style="display:flex;"><span>+----------+
+</span></span><span style="display:flex;"><span>| count(*) |
+</span></span><span style="display:flex;"><span>+----------+
+</span></span><span style="display:flex;"><span>|       66 |
+</span></span><span style="display:flex;"><span>+----------+
+</span></span><span style="display:flex;"><span>1 row in set (0.00 sec)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; 
+</span></span></code></pre></div><h2 id="logrotate-日志转储">logrotate 日志转储<a hidden class="anchor" aria-hidden="true" href="#logrotate-日志转储">#</a></h2>
+<h3 id="logrotate-介绍">logrotate 介绍<a hidden class="anchor" aria-hidden="true" href="#logrotate-介绍">#</a></h3>
+<p>logrotate 程序是一个日志文件管理工具。用来把旧的日志文件删除，并创建新的日志文件，称为日志转
+储或滚动。可以根据日志文件的大小，也可以根据其天数来转储，这个过程一般通过 cron 程序来执行</p>
+<h3 id="logrotate-配置">logrotate 配置<a hidden class="anchor" aria-hidden="true" href="#logrotate-配置">#</a></h3>
+<p>软件包：logrotate
+相关文件</p>
+<ul>
+<li>
+<p>计划任务：/etc/cron.daily/logrotate</p>
+</li>
+<li>
+<p>程序文件：/usr/sbin/logrotate</p>
+</li>
+<li>
+<p>配置文件： /etc/logrotate.conf</p>
+</li>
+<li>
+<p>日志文件：/var/lib/logrotate/logrotate.status</p>
+</li>
+</ul>
+<p>配置文件主要参数如下：</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670121049880.png" alt="1670121049880"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670121071202.png" alt="1670121071202"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670121091758.png" alt="1670121091758"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670121108631.png" alt="1670121108631"  />
+</p>
+<p>范例：对指定日志手动执行日志转储</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># 生成测试日志
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# dd if=/dev/zero of=/var/log/test1.log bs=2M count=1
+</span></span><span style="display:flex;"><span>1+0 records in
+</span></span><span style="display:flex;"><span>1+0 records out
+</span></span><span style="display:flex;"><span>2097152 bytes (2.1 MB) copied, 0.0017554 s, 1.2 GB/s
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# dd if=/dev/zero of=/var/log/test2.log bs=2M count=1
+</span></span><span style="display:flex;"><span>1+0 records in
+</span></span><span style="display:flex;"><span>1+0 records out
+</span></span><span style="display:flex;"><span>2097152 bytes (2.1 MB) copied, 0.00240458 s, 872 MB/s
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#针对不同的日志创建转储配置文件
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# vim /etc/logrotate.d/test1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/var/log/test1.log {
+</span></span><span style="display:flex;"><span>        daily
+</span></span><span style="display:flex;"><span>        rotate 5
+</span></span><span style="display:flex;"><span>        compress
+</span></span><span style="display:flex;"><span>        delaycompress
+</span></span><span style="display:flex;"><span>        missingok
+</span></span><span style="display:flex;"><span>        size 1M
+</span></span><span style="display:flex;"><span>        notifempty
+</span></span><span style="display:flex;"><span>        create 640 bin nobody
+</span></span><span style="display:flex;"><span>        postrotate
+</span></span><span style="display:flex;"><span>        echo `date +%F_%T` &gt;&gt; /data/test1.log
+</span></span><span style="display:flex;"><span>        endscript
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# vim /etc/logrotate.d/test2
+</span></span><span style="display:flex;"><span>/var/log/test2.log {
+</span></span><span style="display:flex;"><span>        daily
+</span></span><span style="display:flex;"><span>        rotate 5
+</span></span><span style="display:flex;"><span>        compress
+</span></span><span style="display:flex;"><span>        delaycompress
+</span></span><span style="display:flex;"><span>        missingok
+</span></span><span style="display:flex;"><span>        size 1M
+</span></span><span style="display:flex;"><span>        notifempty
+</span></span><span style="display:flex;"><span>        create 644 root root
+</span></span><span style="display:flex;"><span>        postrotate
+</span></span><span style="display:flex;"><span>        echo `date +%F_%T` &gt;&gt; /data/test2.log
+</span></span><span style="display:flex;"><span>        endscript
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#针对一个测试日志，手动执行日志转储
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# logrotate /etc/logrotate.d/test1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# ll /var/log/test*
+</span></span><span style="display:flex;"><span>-rw-r----- 1 bin  nobody       0 Dec  4 11:12 /var/log/test1.log
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root   2097152 Dec  4 11:07 /var/log/test1.log.1
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root   2097152 Dec  4 11:07 /var/log/test2.log
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# 
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# ll /data/
+</span></span><span style="display:flex;"><span>total 1800
+</span></span><span style="display:flex;"><span>-rw-r--r--  1 root  root  915255 Nov 27 17:22 1127.sql
+</span></span><span style="display:flex;"><span>-rw-r--r--  1 root  root  914921 Nov 25 10:23 all.sql
+</span></span><span style="display:flex;"><span>drwxr-xr-x  3 root  root      18 Nov 29 22:45 mastermha
+</span></span><span style="display:flex;"><span>drwxr-x--- 11 mysql mysql   4096 Dec  3 20:30 mysql
+</span></span><span style="display:flex;"><span>-rw-r--r--  1 root  root      20 Dec  4 11:12 test1.log
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# 
+</span></span><span style="display:flex;"><span>#对所有日志进行手动转储
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# logrotate /etc/logrotate.conf
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>网络文件共享服务</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/mysql%E9%9B%86%E7%BE%A4/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>MySQL集群</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

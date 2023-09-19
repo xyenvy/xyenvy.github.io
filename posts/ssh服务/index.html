@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>ssh服务 | Hopeful</title>
+<meta name="keywords" content="Linux, ssh">
+<meta name="description" content="ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="ssh服务" />
+<meta property="og:description" content="ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-12T22:01:08+00:00" />
+<meta property="article:modified_time" content="2022-09-12T22:01:08+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" />
+<meta name="twitter:title" content="ssh服务"/>
+<meta name="twitter:description" content="ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "ssh服务",
+      "item": "https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ssh服务",
+  "name": "ssh服务",
+  "description": "ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议",
+  "keywords": [
+    "Linux", "ssh"
+  ],
+  "articleBody": "ssh: secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议\nssh服务介绍 ssh: secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议 具体的软件实现：\nOpenSSH：ssh协议的开源实现，CentOS 默认安装 dropbear：另一个ssh协议的开源项目的实现 SSH 协议版本\nv1：基于CRC-32做MAC，不安全；man-in-middle v2：双方主机协议选择安全的MAC方式，基于DH算法做密钥交换，基于RSA或DSA实现身份认证 openssh 服务 OpenSSH是SSH （Secure SHell） 协议的免费开源实现，一般在各种Linux版本中会默认安装，基于C/S结构 Openssh软件相关包：\nopenssh openssh-clients openssh-server 客户端 ssh命令 ssh命令是ssh客户端，允许实现对远程系统经验证地加密安全访问\n当用户远程连接ssh服务器时，会复制ssh服务器/etc/ssh/ssh_host*key.pub文件中的公钥到客户机的~/.ssh/know_hosts中。下次连接时，会自动匹配相对应的私钥，不能匹配，将拒绝连接 **ssh客户端配置文件： /etc/ssh/ssh_config ** **主要配置: **\n#StrictHostKeyChecking ask #首次登录不显示检查提示 StrictHostKeyChecking no # IdentityFile ~/.ssh/id_rsa # IdentityFile ~/.ssh/id_dsa # IdentityFile ~/.ssh/id_ecdsa # IdentityFile ~/.ssh/id_ed25519 # Port 22 范例：禁止首次连接的询问过程\n[root@centos7 ~]#sed -i.bak '/StrictHostKeyChecking/s/.*/StrictHostKeyChecking no/' /etc/ssh/ssh_config 格式\nssh [user@]host [COMMAND] ssh [-l user] host [COMMAND] 常用选项\n-p port #远程服务器监听的端口 -b #指定连接的源IP -v #调试模式 -C #压缩方式 -X #支持x11转发 -t #强制伪tty分配，如：ssh -t remoteserver1 ssh -t remoteserver2 ssh remoteserver3 -o option 如：-o StrictHostKeyChecking=no -i #指定私钥文件路径，实现基于key验证，默认使用文件： ~/.ssh/id_dsa, ~/.ssh/id_ecdsa, ~/.ssh/id_ed25519，~/.ssh/id_rsa等 在远程主机执行本地脚本\n[root@rocky ~]# cat test.sh #!/bin/bash hostname -I [root@rocky ~]# ssh root@192.168.179.145 /bin/bash ",
+  "wordCount" : "2454",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/2.jpg","datePublished": "2022-09-12T22:01:08Z",
+  "dateModified": "2022-09-12T22:01:08Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                ssh服务
+            </h1>
+            <div class="post-description">
+                ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-09-12
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2454字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>5分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/2.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#ssh%e6%9c%8d%e5%8a%a1%e4%bb%8b%e7%bb%8d" aria-label="ssh服务介绍">ssh服务介绍</a></li>
+                <li>
+                    <a href="#openssh-%e6%9c%8d%e5%8a%a1" aria-label="openssh 服务">openssh 服务</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%a2%e6%88%b7%e7%ab%af-ssh%e5%91%bd%e4%bb%a4" aria-label="客户端 ssh命令">客户端 ssh命令</a></li>
+                <li>
+                    <a href="#%e5%85%b6%e4%bb%96ssh%e5%ae%a2%e6%88%b7%e7%ab%af%e5%b7%a5%e5%85%b7" aria-label="其他ssh客户端工具">其他ssh客户端工具</a><ul>
+                        
+                <li>
+                    <a href="#scp%e5%91%bd%e4%bb%a4" aria-label="scp命令">scp命令</a></li>
+                <li>
+                    <a href="#%e8%87%aa%e5%8a%a8%e7%99%bb%e5%bd%95-ssh%e5%b7%a5%e5%85%b7-sshpass" aria-label="自动登录 ssh工具 sshpass">自动登录 ssh工具 sshpass</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%ae%9e%e7%8e%b0%e5%9f%ba%e4%ba%8e%e5%af%86%e9%92%a5%e7%99%bb%e5%bd%95%e6%96%b9%e5%bc%8f%e9%aa%8c%e8%af%81" aria-label="实现基于密钥登录方式验证">实现基于密钥登录方式验证</a></li>
+                <li>
+                    <a href="#ssh%e6%9c%8d%e5%8a%a1%e9%85%8d%e7%bd%ae" aria-label="ssh服务配置">ssh服务配置</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><p class="note note-success">ssh: secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议</p>
+<h1 id="ssh服务介绍">ssh服务介绍<a hidden class="anchor" aria-hidden="true" href="#ssh服务介绍">#</a></h1>
+<p>ssh: secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议
+<strong>具体的软件实现：</strong></p>
+<ul>
+<li>OpenSSH：ssh协议的开源实现，CentOS 默认安装</li>
+<li>dropbear：另一个ssh协议的开源项目的实现</li>
+</ul>
+<p><strong>SSH 协议版本</strong></p>
+<ul>
+<li>v1：基于CRC-32做MAC，不安全；man-in-middle</li>
+<li>v2：双方主机协议选择安全的MAC方式，基于DH算法做密钥交换，基于RSA或DSA实现身份认证</li>
+</ul>
+<h1 id="openssh-服务">openssh 服务<a hidden class="anchor" aria-hidden="true" href="#openssh-服务">#</a></h1>
+<p>OpenSSH是SSH （Secure SHell） 协议的免费开源实现，一般在各种Linux版本中会默认安装，基于C/S结构
+<strong>Openssh软件相关包：</strong></p>
+<ul>
+<li>openssh</li>
+<li>openssh-clients</li>
+<li>openssh-server</li>
+</ul>
+<h2 id="客户端-ssh命令">客户端 ssh命令<a hidden class="anchor" aria-hidden="true" href="#客户端-ssh命令">#</a></h2>
+<p>ssh命令是ssh客户端，允许实现对远程系统经验证地加密安全访问<br>
+当用户远程连接ssh服务器时，会复制ssh服务器/etc/ssh/ssh_host*key.pub文件中的公钥到客户机的~/.ssh/know_hosts中。下次连接时，会自动匹配相对应的私钥，不能匹配，将拒绝连接
+**ssh客户端配置文件： /etc/ssh/ssh_config **
+**主要配置:  **</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>#StrictHostKeyChecking ask
+</span></span><span style="display:flex;"><span>#首次登录不显示检查提示
+</span></span><span style="display:flex;"><span>StrictHostKeyChecking no
+</span></span><span style="display:flex;"><span># IdentityFile ~/.ssh/id_rsa
+</span></span><span style="display:flex;"><span># IdentityFile ~/.ssh/id_dsa
+</span></span><span style="display:flex;"><span># IdentityFile ~/.ssh/id_ecdsa
+</span></span><span style="display:flex;"><span># IdentityFile ~/.ssh/id_ed25519
+</span></span><span style="display:flex;"><span># Port 22
+</span></span></code></pre></div><p><strong>范例：禁止首次连接的询问过程</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@centos7 ~]#sed -i.bak &#39;/StrictHostKeyChecking/s/.*/StrictHostKeyChecking
+</span></span><span style="display:flex;"><span>no/&#39; /etc/ssh/ssh_config
+</span></span></code></pre></div><p><strong>格式</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>ssh [user@]host [COMMAND]
+</span></span><span style="display:flex;"><span>ssh [-l user] host [COMMAND]
+</span></span></code></pre></div><p><strong>常用选项</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>-p port #远程服务器监听的端口
+</span></span><span style="display:flex;"><span>-b #指定连接的源IP
+</span></span><span style="display:flex;"><span>-v #调试模式
+</span></span><span style="display:flex;"><span>-C #压缩方式
+</span></span><span style="display:flex;"><span>-X #支持x11转发
+</span></span><span style="display:flex;"><span>-t #强制伪tty分配，如：ssh -t remoteserver1 ssh -t remoteserver2 ssh
+</span></span><span style="display:flex;"><span>remoteserver3
+</span></span><span style="display:flex;"><span>-o option 如：-o StrictHostKeyChecking=no
+</span></span><span style="display:flex;"><span>-i &lt;file&gt; #指定私钥文件路径，实现基于key验证，默认使用文件： ~/.ssh/id_dsa,
+</span></span><span style="display:flex;"><span>~/.ssh/id_ecdsa, ~/.ssh/id_ed25519，~/.ssh/id_rsa等
+</span></span></code></pre></div><p><strong>在远程主机执行本地脚本</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@rocky ~]# cat test.sh 
+</span></span><span style="display:flex;"><span>#!/bin/bash
+</span></span><span style="display:flex;"><span>hostname -I
+</span></span><span style="display:flex;"><span>[root@rocky ~]# ssh root@192.168.179.145 /bin/bash &lt;test.sh 
+</span></span><span style="display:flex;"><span>root@192.168.179.145&#39;s password: 
+</span></span><span style="display:flex;"><span>192.168.179.145 
+</span></span><span style="display:flex;"><span>[root@rocky ~]# 
+</span></span></code></pre></div><h2 id="其他ssh客户端工具">其他ssh客户端工具<a hidden class="anchor" aria-hidden="true" href="#其他ssh客户端工具">#</a></h2>
+<h3 id="scp命令">scp命令<a hidden class="anchor" aria-hidden="true" href="#scp命令">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>scp [options] SRC... DEST/
+</span></span></code></pre></div><p><strong>方式：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>scp [options] [user@]host:/sourcefile /destpath
+</span></span><span style="display:flex;"><span>scp [options] /sourcefile [user@]host:/destpath
+</span></span><span style="display:flex;"><span>scp [options] [user@]host1:/sourcetpath [user@]host2:/destpath
+</span></span></code></pre></div><p><strong>常用选项</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>-C 压缩数据流
+</span></span><span style="display:flex;"><span>-r 递归复制
+</span></span><span style="display:flex;"><span>-p 保持原文件的属性信息
+</span></span><span style="display:flex;"><span>-q 静默模式
+</span></span><span style="display:flex;"><span>-P PORT 指明remote host的监听的端口
+</span></span></code></pre></div><p><strong>范例:从远程机器复制文件到本地目录</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>scp root@10.10.10.10:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/ 
+</span></span></code></pre></div><p><strong>范例： 上传本地文件到远程机器指定目录</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>scp /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest
+</span></span></code></pre></div><p class="note note-success"> 注:复制目录加上选项-r</p>
+###  rsync命令
+<p>rsync工具可以基于ssh和rsync协议实现高效率的远程系统之间复制文件，使用安全的shell连接做为传输方式，比scp更快，基于增量数据同步，即只复制两方不同的文件，此工具来自于rsync包
+<strong>注意：通信两端主机都需要安装 rsync 软件</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>rsync -av /etc server1:/tmp/ #复制目录和目录下文件
+</span></span><span style="display:flex;"><span>rsync -av /etc/ server1:/tmp/ #只复制目录下文件
+</span></span></code></pre></div><p>** 常用选型**</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>-n 模拟复制过程
+</span></span><span style="display:flex;"><span>-v 显示详细过程
+</span></span><span style="display:flex;"><span>-r 递归复制目录树
+</span></span><span style="display:flex;"><span>-p 保留权限
+</span></span><span style="display:flex;"><span>-t 保留修改时间戳
+</span></span><span style="display:flex;"><span>-g 保留组信息
+</span></span><span style="display:flex;"><span>-o 保留所有者信息
+</span></span><span style="display:flex;"><span>-l 将软链接文件本身进行复制（默认）
+</span></span><span style="display:flex;"><span>-L 将软链接文件指向的文件复制
+</span></span><span style="display:flex;"><span>-u 如果接收者的文件比发送者的文件较新，将忽略同步
+</span></span><span style="display:flex;"><span>-z 压缩，节约网络带宽
+</span></span><span style="display:flex;"><span>-a 存档，相当于-rlptgoD，但不保留ACL（-A）和SELinux属性（-X）
+</span></span><span style="display:flex;"><span>--delete 源数据删除，目标数据也自动同步删除
+</span></span><span style="display:flex;"><span>--progress 显示进度
+</span></span><span style="display:flex;"><span>--bwlimit=5120 #限速以KB为单位,5120表示5MB
+</span></span></code></pre></div><p><strong>范例:复制文件到远程主机目录下</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>rsync ./test.sh root@192.168.179.145:/root
+</span></span></code></pre></div><h3 id="自动登录-ssh工具-sshpass">自动登录 ssh工具 sshpass<a hidden class="anchor" aria-hidden="true" href="#自动登录-ssh工具-sshpass">#</a></h3>
+<p>由EPEL源提供，ssh登陆不能在命令行中指定密码。sshpass的出现，解决了这一问题。sshpass用于非
+交互SSH的密码验证，一般用在sh脚本中，无须再次输入密码（本机known_hosts文件中有的主机才能
+生效）。它允许你用 -p 参数指定明文密码，然后直接登录远程服务器，它支持密码从命令行、文件、环
+境变量中读取。
+<strong>格式：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>sshpass [option] command parameters
+</span></span></code></pre></div><p><strong>常用选项</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>-p password #后跟密码它允许你用 -p 参数指定明文密码，然后直接登录远程服务器
+</span></span><span style="display:flex;"><span>-f filename #后跟保存密码的文件名，密码是文件内容的第一行
+</span></span><span style="display:flex;"><span>-e #将环境变量SSHPASS作为密码
+</span></span></code></pre></div><p><strong>范例:登录远程主机执行指定命令</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span># 检测sshpass是否安装
+</span></span><span style="display:flex;"><span>[root@rocky ~]# rpm -q sshpass
+</span></span><span style="display:flex;"><span>package sshpass is not installed
+</span></span><span style="display:flex;"><span># 安装sshpass
+</span></span><span style="display:flex;"><span>[root@rocky ~]# yum install sshpass
+</span></span><span style="display:flex;"><span># 登录远程主机，首次登录不显示检查提示，执行hostname -I命令
+</span></span><span style="display:flex;"><span>[root@rocky ~]# sshpass -p 123456 ssh -o StrictHostKeyChecking=no root@192.168.179.145 hostname -I
+</span></span><span style="display:flex;"><span>192.168.179.145 
+</span></span><span style="display:flex;"><span>[root@rocky ~]# 
+</span></span></code></pre></div><h2 id="实现基于密钥登录方式验证">实现基于密钥登录方式验证<a hidden class="anchor" aria-hidden="true" href="#实现基于密钥登录方式验证">#</a></h2>
+<p><strong>在客户端生成密钥对</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>ssh-keygen -t rsa [-P &#39;password&#39;] [-f “~/.ssh/id_rsa&#34;]
+</span></span></code></pre></div><p><strong>把公钥文件传输至远程服务器对应用户的家目录</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>ssh-copy-id [-i [identity_file]] [user@]host
+</span></span></code></pre></div><p><strong>重设私钥口令：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>ssh-keygen -p
+</span></span></code></pre></div><p>在SecureCRT或Xshell实现基于key验证
+在SecureCRT工具—&gt;创建公钥—&gt;生成Identity.pub文件
+转化为openssh兼容格式（适合SecureCRT，Xshell不需要转化格式），并复制到需登录主机上相应文
+件authorized_keys中,注意权限必须为600，在需登录的ssh主机上执行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>ssh-keygen -i -f Identity.pub &gt;&gt; .ssh/authorized_keys
+</span></span></code></pre></div><p><strong>范例：实现基于 key 验证</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@centos8 ~]#ssh-keygen
+</span></span><span style="display:flex;"><span>Generating public/private rsa key pair.
+</span></span><span style="display:flex;"><span>Enter file in which to save the key (/root/.ssh/id_rsa): #回车，接受默认值
+</span></span><span style="display:flex;"><span>Enter passphrase (empty for no passphrase): #回车，接受默认值，空密码
+</span></span><span style="display:flex;"><span>Enter same passphrase again: #回车，接受默认值
+</span></span><span style="display:flex;"><span>Your identification has been saved in /root/.ssh/id_rsa.
+</span></span><span style="display:flex;"><span>Your public key has been saved in /root/.ssh/id_rsa.pub.
+</span></span><span style="display:flex;"><span>The key fingerprint is:
+</span></span><span style="display:flex;"><span>SHA256:vpPtmqRv1llmoSvqT2Lx5C0LPGTE0pvdAqhDqlR5jLY root@centos8.wangxiaochun.com
+</span></span><span style="display:flex;"><span>The key&#39;s randomart image is:
+</span></span><span style="display:flex;"><span>+---[RSA 3072]----+
+</span></span><span style="display:flex;"><span>| |
+</span></span><span style="display:flex;"><span>| ++ |
+</span></span><span style="display:flex;"><span>| .=oo= |
+</span></span><span style="display:flex;"><span>| oo.oo = . . |
+</span></span><span style="display:flex;"><span>|..oE * S .. . |
+</span></span><span style="display:flex;"><span>|o . + * o. + |
+</span></span><span style="display:flex;"><span>|. * B+.* |
+</span></span><span style="display:flex;"><span>| . B*== |
+</span></span><span style="display:flex;"><span>| .+*B=. |
+</span></span><span style="display:flex;"><span>+----[SHA256]-----+
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#ll .ssh/
+</span></span><span style="display:flex;"><span>total 8
+</span></span><span style="display:flex;"><span>-rw------- 1 root root 2622 May 22 09:51 id_rsa
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root 583 May 22 09:51 id_rsa.pub
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 将本主机的公钥复制到远程主机的authorized_keys中
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#ssh-copy-id root@10.0.0.7
+</span></span><span style="display:flex;"><span>/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed:
+</span></span><span style="display:flex;"><span>&#34;/root/.ssh/id_rsa.pub&#34;
+</span></span><span style="display:flex;"><span>The authenticity of host &#39;10.0.0.7 (10.0.0.7)&#39; can&#39;t be established.
+</span></span><span style="display:flex;"><span>ECDSA key fingerprint is SHA256:s//WMgPVXmOjqfOg3f3X0nmaPZF+Fj5vPdWCnAzDcpU.
+</span></span><span style="display:flex;"><span>Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+</span></span><span style="display:flex;"><span>/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter
+</span></span><span style="display:flex;"><span>out any that are already installed
+</span></span><span style="display:flex;"><span>/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are
+</span></span><span style="display:flex;"><span>prompted now it is to install the new keys
+</span></span><span style="display:flex;"><span>root@10.0.0.7&#39;s password: #输入远程用户的密码
+</span></span><span style="display:flex;"><span>Number of key(s) added: 1
+</span></span><span style="display:flex;"><span>Now try logging into the machine, with: &#34;ssh &#39;10.0.0.7&#39;&#34;
+</span></span><span style="display:flex;"><span>and check to make sure that only the key(s) you wanted were added.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#对私钥加密
+</span></span><span style="display:flex;"><span>[root@centos8 ~]#ssh-keygen -p
+</span></span></code></pre></div><h2 id="ssh服务配置">ssh服务配置<a hidden class="anchor" aria-hidden="true" href="#ssh服务配置">#</a></h2>
+<p><strong>服务器端：sshd
+服务器端的配置文件: /etc/ssh/sshd_config
+服务器端的配置文件帮助：man 5 sshd_config
+常用参数：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>Port 22 #生产建议修改
+</span></span><span style="display:flex;"><span>ListenAddress ip
+</span></span><span style="display:flex;"><span>LoginGraceTime 2m
+</span></span><span style="display:flex;"><span>PermitRootLogin yes #默认ubuntu不允许root远程ssh登录
+</span></span><span style="display:flex;"><span>StrictModes yes #检查.ssh/文件的所有者，权限等
+</span></span><span style="display:flex;"><span>MaxAuthTries 6 #pecifies the maximum number of authentication
+</span></span><span style="display:flex;"><span>attempts permitted per connection. Once the number of failures reaches half this
+</span></span><span style="display:flex;"><span>value, additional failures are logged. The default is 6.
+</span></span><span style="display:flex;"><span>MaxSessions 10 #同一个连接最大会话
+</span></span><span style="display:flex;"><span>PubkeyAuthentication yes #基于key验证
+</span></span><span style="display:flex;"><span>PermitEmptyPasswords no #空密码连接
+</span></span><span style="display:flex;"><span>PasswordAuthentication yes #基于用户名和密码连接
+</span></span><span style="display:flex;"><span>GatewayPorts no
+</span></span><span style="display:flex;"><span>ClientAliveInterval 10 #单位:秒
+</span></span><span style="display:flex;"><span>ClientAliveCountMax 3 #默认3
+</span></span><span style="display:flex;"><span>UseDNS yes #提高速度可改为no
+</span></span><span style="display:flex;"><span>GSSAPIAuthentication yes #提高速度可改为no
+</span></span><span style="display:flex;"><span>MaxStartups #未认证连接最大值，默认值10
+</span></span><span style="display:flex;"><span>Banner /path/file
+</span></span><span style="display:flex;"><span>#以下可以限制可登录用户的办法：
+</span></span><span style="display:flex;"><span>AllowUsers user1 user2 user3
+</span></span><span style="display:flex;"><span>DenyUsers user1 user2 user3
+</span></span><span style="display:flex;"><span>AllowGroups g1 g2
+</span></span><span style="display:flex;"><span>DenyGroups g1 g2
+</span></span></code></pre></div><p><strong>范例：设置 ssh 空闲60s 自动注销</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>Vim /etc/ssh/sshd_config
+</span></span><span style="display:flex;"><span>ClientAliveInterval 60
+</span></span><span style="display:flex;"><span>ClientAliveCountMax 0
+</span></span><span style="display:flex;"><span>Service sshd restart
+</span></span><span style="display:flex;"><span>#注意：新开一个连接才有效
+</span></span></code></pre></div><p><strong>范例：解决ssh登录缓慢的问题</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>vim /etc/ssh/sshd_config
+</span></span><span style="display:flex;"><span>UseDNS no
+</span></span><span style="display:flex;"><span>GSSAPIAuthentication no
+</span></span><span style="display:flex;"><span>systemctl restart sshd
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>批量修改主机密码为随机字符</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Rocky上实现私有CA和证书申请</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

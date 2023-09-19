@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Linux on Hopeful</title>
+    <link>https://xyenvy.github.io/tags/linux/</link>
+    <description>Recent content in Linux on Hopeful</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 17 Dec 2022 09:28:09 +0000</lastBuildDate><atom:link href="https://xyenvy.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Centos系统yum源配置</title>
+      <link>https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sat, 17 Dec 2022 09:28:09 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/</guid>
+      <description>yum 的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题</description>
+    </item>
+    
+    <item>
+      <title>网络文件共享服务</title>
+      <link>https://xyenvy.github.io/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/</link>
+      <pubDate>Sun, 04 Dec 2022 12:03:44 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/</guid>
+      <description>Network File System 网络文件系统，基于内核的文件系统。Sun 公司开发，通过使用 NFS，用户和程序可以像访问本地文件一样访问远端系统上的文件</description>
+    </item>
+    
+    <item>
+      <title>日志服务管理</title>
+      <link>https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Sat, 03 Dec 2022 10:55:19 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/</guid>
+      <description>在现实生活中，记录日志非常重要</description>
+    </item>
+    
+    <item>
+      <title>http</title>
+      <link>https://xyenvy.github.io/posts/http/</link>
+      <pubDate>Sat, 15 Oct 2022 14:10:20 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/http/</guid>
+      <description>首先你听的最多的应该就是 HTTP 是一种 超文本传输协议(Hypertext Transfer Protocol)，这你一定能说出来，但是这样还不够，假如你是大厂面试官，这不可能是他想要的最终结果，我们在面试的时候往往把自己知道的尽可能多的说出来，才有和面试官谈价钱的资本。那么什么是超文本传输协议？</description>
+    </item>
+    
+    <item>
+      <title>防火墙</title>
+      <link>https://xyenvy.github.io/posts/firewall/</link>
+      <pubDate>Sun, 25 Sep 2022 21:28:11 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/firewall/</guid>
+      <description>firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术</description>
+    </item>
+    
+    <item>
+      <title>DNS服务</title>
+      <link>https://xyenvy.github.io/posts/dns/</link>
+      <pubDate>Thu, 22 Sep 2022 22:01:44 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/dns/</guid>
+      <description>DNS一般指域名系统。 域名系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访问互联网。DNS使用UDP端口53</description>
+    </item>
+    
+    <item>
+      <title>时间同步服务</title>
+      <link>https://xyenvy.github.io/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/</link>
+      <pubDate>Sat, 17 Sep 2022 18:32:45 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/</guid>
+      <description>多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一</description>
+    </item>
+    
+    <item>
+      <title>批量修改主机密码为随机字符</title>
+      <link>https://xyenvy.github.io/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/</link>
+      <pubDate>Mon, 12 Sep 2022 23:35:13 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/</guid>
+      <description>centos、ubuntu批量修改多台主机的root密码为随机密码</description>
+    </item>
+    
+    <item>
+      <title>ssh服务</title>
+      <link>https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/</link>
+      <pubDate>Mon, 12 Sep 2022 22:01:08 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/</guid>
+      <description>ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议</description>
+    </item>
+    
+    <item>
+      <title>Rocky上实现私有CA和证书申请</title>
+      <link>https://xyenvy.github.io/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/</link>
+      <pubDate>Sun, 11 Sep 2022 21:56:35 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/</guid>
+      <description>OpenSSL计划在1998年开始，其目标是发明一套自由的加密工具，在互联网上使用。OpenSSL以Eric Young以及Tim Hudson两人开发的SSLeay为基础，随着两人前往RSA公司任职，SSLeay在1998年12月停止开发。因此在1998年12月，社群另外分支出OpenSSL，继续开发下去</description>
+    </item>
+    
+    <item>
+      <title>Linux定时执行任务</title>
+      <link>https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
+      <pubDate>Mon, 05 Sep 2022 23:48:34 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
+      <description>定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。</description>
+    </item>
+    
+    <item>
+      <title>进程和线程相关概念</title>
+      <link>https://xyenvy.github.io/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</link>
+      <pubDate>Sun, 04 Sep 2022 14:18:58 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</guid>
+      <description>Process运行中的程序的一个副本，是被载入内存的一个指令集合，是资源分配的单位</description>
+    </item>
+    
+    <item>
+      <title>计算机网络</title>
+      <link>https://xyenvy.github.io/posts/network/</link>
+      <pubDate>Sun, 21 Aug 2022 21:33:05 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/network/</guid>
+      <description>计算机网络是一组计算机或网络设备通过有形的线缆或者无形的媒介如无线，按照一定的规则，进行通信的集合。</description>
+    </item>
+    
+    <item>
+      <title>软件管理</title>
+      <link>https://xyenvy.github.io/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Mon, 08 Aug 2022 21:05:59 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/</guid>
+      <description>Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。</description>
+    </item>
+    
+    <item>
+      <title>磁盘存储和文件系统管理</title>
+      <link>https://xyenvy.github.io/posts/disk/</link>
+      <pubDate>Sun, 07 Aug 2022 08:40:59 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/disk/</guid>
+      <description>磁盘是计算机主要的存储介质，可以存储大量的二进制数据，并且断电后也能保持数据不丢失，使用磁盘存储数据的时候我们可以将磁盘划分成我们所需要的格式来进行使用</description>
+    </item>
+    
+    <item>
+      <title>shell编程</title>
+      <link>https://xyenvy.github.io/posts/shell%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Wed, 03 Aug 2022 22:23:02 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/shell%E7%BC%96%E7%A8%8B/</guid>
+      <description>shell 是操作系统的最外层。shell 合并编程语言以控制进程和文件，以及启动和控制其它程序。shell 通过提示您输入，向操作系统解释该输入，然后处理来自操作系统的任何结果输出来管理您与操作系统之间的交互。</description>
+    </item>
+    
+    <item>
+      <title>文件查找和打包压缩</title>
+      <link>https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/</link>
+      <pubDate>Mon, 01 Aug 2022 21:31:38 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/</guid>
+      <description>Linux find 命令用来在指定目录下查找文件。任何位于参数之前的字符串都将被视为欲查找的目录名;tar命令是Unix/Linux系统中备份文件的可靠方法，几乎可以工作于任何环境中，它的使用权限是所有用户，建议针对目录。</description>
+    </item>
+    
+    <item>
+      <title>文本处理工具和正则表达式</title>
+      <link>https://xyenvy.github.io/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <pubDate>Tue, 26 Jul 2022 20:09:30 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description>本文将介绍Linux下使用Shell处理文本时最常用的工具并结合正则表达式处理文本。</description>
+    </item>
+    
+    <item>
+      <title>权限管理及文本编辑工具</title>
+      <link>https://xyenvy.github.io/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Mon, 25 Jul 2022 20:34:34 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/</guid>
+      <description>Linux中的三剑客是指三个经典的文本处理工具，它们分别是grep、sed和awk。这些工具经常用于处理文本文件，搜索、替换和提取数据等任务</description>
+    </item>
+    
+    <item>
+      <title>文件管理</title>
+      <link>https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Sat, 23 Jul 2022 16:37:00 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/</guid>
+      <description>Linux中的所有数据都被保存在文件中，所有的文件被分配到不同的目录。目录是一种类似于树的结构，称为文件系统;当你使用Linux时，大部分时间都会和文件打交道，通过本节可以了解基本的文件操作，如创建文件、删除文件、复制文件、重命名文件以及为文件创建链接等。</description>
+    </item>
+    
+    <item>
+      <title>linux基础和常用命令</title>
+      <link>https://xyenvy.github.io/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Mon, 18 Jul 2022 21:12:03 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <description>Linux 是一套免费使用、开源的类 Unix 操作系统。 Linux 存在着许多不同的发行版本，但它们都使用了 Linux 内核 。</description>
+    </item>
+    
+    <item>
+      <title>git-ssh</title>
+      <link>https://xyenvy.github.io/posts/git-ssh/</link>
+      <pubDate>Wed, 13 Jul 2022 20:52:38 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/git-ssh/</guid>
+      <description>Git生成密钥(ssh)</description>
+    </item>
+    
+  </channel>
+</rss>

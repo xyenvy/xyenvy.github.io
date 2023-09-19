@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>防火墙 | Hopeful</title>
+<meta name="keywords" content="Linux, 防火墙, firewall">
+<meta name="description" content="firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/firewall/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="防火墙" />
+<meta property="og:description" content="firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/firewall/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/22.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-25T21:28:11+00:00" />
+<meta property="article:modified_time" content="2022-09-25T21:28:11+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/22.jpg" />
+<meta name="twitter:title" content="防火墙"/>
+<meta name="twitter:description" content="firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "防火墙",
+      "item": "https://xyenvy.github.io/posts/firewall/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "防火墙",
+  "name": "防火墙",
+  "description": "firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术",
+  "keywords": [
+    "Linux", "防火墙", "firewall"
+  ],
+  "articleBody": "防火墙基本认识 Netfilter Linux防火墙是由Netfilter组件提供的，Netfilter工作在内核空间，集成在linux内核中。 Netfilter 是Linux 2.4.x之后新一代的Linux防火墙机制，是linux内核的一个子系统。Netfilter采用模块 化设计，具有良好的可扩充性，提供扩展各种网络服务的结构化底层框架。Netfilter与IP协议栈是无缝 契合，并允许对数据报进行过滤、地址转换、处理等操作。\nNetfilter官网文档\n[root@centos7 ~]# grep -m 10 NETFILTER /boot/config-3.10.0-1160.el7.x86_64 CONFIG_NETFILTER=y # CONFIG_NETFILTER_DEBUG is not set CONFIG_NETFILTER_ADVANCED=y CONFIG_BRIDGE_NETFILTER=m CONFIG_NETFILTER_NETLINK=m CONFIG_NETFILTER_NETLINK_ACCT=m CONFIG_NETFILTER_NETLINK_QUEUE=m CONFIG_NETFILTER_NETLINK_LOG=m CONFIG_NETFILTER_NETLINK_QUEUE_CT=y CONFIG_NETFILTER_SYNPROXY=m [root@centos7 ~]# 防火墙工具介绍 iptables 由软件包iptables提供的命令行工具，工作在用户空间，用来编写规则，写好的规则被送往netfilter，告 诉内核如何去处理信息包。\n查看iptables信息 [root@centos7 ~]# rpm -qi iptables Name : iptables Version : 1.4.21 Release : 35.el7 Architecture: x86_64 Install Date: Sat 17 Sep 2022 10:31:09 AM CST Group : System Environment/Base Size : 1556976 License : GPLv2 Signature : RSA/SHA256, Thu 15 Oct 2020 02:51:02 AM CST, Key ID 24c6a8a7f4a80eb5 Source RPM : iptables-1.4.21-35.el7.src.rpm Build Date : Fri 02 Oct 2020 12:52:54 AM CST Build Host : x86-01.bsys.centos.org Relocations : (not relocatable) Packager : CentOS BuildSystem Vendor : CentOS URL : http://www.netfilter.org/ Summary : Tools for managing Linux kernel packet filtering capabilities Description : The iptables utility controls the network packet filtering code in the Linux kernel. If you need to set up firewalls and/or IP masquerading, you should install this package. [root@centos7 ~]# 范例：安装iptables的server包\n# 安装dnf [root@centos7 ~]# yum install dnf # 安装iptables-services [root@centos7 ~]# dnf -y install iptables-services # 查看iptables-services文件列表 [root@centos7 ~]# rpm -ql iptables-services /etc/sysconfig/ip6tables /etc/sysconfig/iptables /usr/lib/systemd/system/ip6tables.service /usr/lib/systemd/system/iptables.service /usr/libexec/initscripts/legacy-actions/ip6tables /usr/libexec/initscripts/legacy-actions/ip6tables/panic /usr/libexec/initscripts/legacy-actions/ip6tables/save /usr/libexec/initscripts/legacy-actions/iptables /usr/libexec/initscripts/legacy-actions/iptables/panic /usr/libexec/initscripts/legacy-actions/iptables/save /usr/libexec/iptables /usr/libexec/iptables/ip6tables.init /usr/libexec/iptables/iptables.init [root@centos7 ~]# firewalld 从CentOS 7 版开始引入了新的前端管理工具 软件包：\nfirewalld firewalld-config 管理工具：\nfirewall-cmd 命令行工具 firewall-config 图形工作 nftables 它重用了netfilter框架的许多部分，例如连接跟踪和NAT功能。它还保留了命名法和基本iptables设计的几个部分，例如表，链和规则。就像iptables一样，表充当链的容器，并且链包含单独的规则，这些规则可以执行操作，例如丢弃数据包，移至下一个规则或跳至新链。 从用户的角度来看，nftables添加了一个名为nft的新工具，该工具替代了iptables，arptables和 ebtables中的所有其他工具。从体系结构的角度来看，它还替换了内核中处理数据包过滤规则集运行时评估的那些部分。\n查看软件信息 [root@centos7 ~]# rpm -qi nftables Name : nftables Epoch : 1 Version : 0.8 Release : 14.el7 Architecture: x86_64 Install Date: Wed 28 Sep 2022 11:36:55 AM CST Group : Unspecified Size : 500068 License : GPLv2 Signature : RSA/SHA256, Fri 23 Aug 2019 05:36:19 AM CST, Key ID 24c6a8a7f4a80eb5 Source RPM : nftables-0.8-14.el7.src.rpm Build Date : Fri 09 Aug 2019 09:13:15 AM CST Build Host : x86-01.bsys.centos.org Relocations : (not relocatable) Packager : CentOS BuildSystem Vendor : CentOS URL : http://netfilter.org/projects/nftables/ Summary : Netfilter Tables userspace utillites Description : Netfilter Tables userspace utilities. [root@centos7 ~]# 范例：centos8支持三种防火墙服务\n[root@rocky ~]# systemctl status iptables.service ● iptables.service - IPv4 firewall with iptables Loaded: loaded (/usr/lib/systemd/system/iptables.service; disabled; vendor preset: disabled) Active: inactive (dead) [root@rocky ~]# systemctl status firewalld.service ● firewalld.service - firewalld - dynamic firewall daemon Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled) Active: inactive (dead) Docs: man:firewalld(1) [root@rocky ~]# systemctl status nftables.service ● nftables.service - Netfilter Tables Loaded: loaded (/usr/lib/systemd/system/nftables.service; disabled; vendor preset: disabled) Active: inactive (dead) Docs: man:nft(8) [root@rocky ~]# netfilter中五个勾子函数和报文流向 Netfilter在内核中选取五个位置放了五个hook(勾子) function(INPUT、OUTPUT、FORWARD、 PREROUTING、POSTROUTING)，而这五个hook function向用户开放，用户可以通过一个命令工具 （iptables）向其写入规则。\n由信息过滤表（table）组成，包含控制IP包处理的规则集（rules），规则被分组放在链（chain）上。\n提示：从 Linux kernel 4.2 版以后，Netfilter 在prerouting 前加了一个 ingress 勾子函数。可以使用这 个新的入口挂钩来过滤来自第2层的流量，这个新挂钩比预路由要早，基本上是 tc 命令（流量控制工 具）的替代品。 三种报文流向\n流入本机：PREROUTING –\u003e INPUT–\u003e用户空间进程 流出本机：用户空间进程 –\u003eOUTPUT–\u003e POSTROUTING 转发：PREROUTING –\u003e FORWARD –\u003e POSTROUTING iptables组成 iptables由五个表table和五个链chain以及一些规则组成\n链 chain：\n内置链：每个内置链对应于一个钩子函数 自定义链：用于对内置链进行扩展或补充，可实现更灵活的规则组织管理机制；只有Hook钩子调 用自定义链时，才生效 五个内置链chain:\nINPUT,OUTPUT,FORWARD,PREROUTING,POSTROUTING 五个表：filter、nat、mangle、raw、security\nfilter：过滤规则表，根据预定义的规则过滤符合条件的数据包,默认表 nat：network address translation 地址转换规则表 mangle：修改数据标记位规则表 raw：关闭启用的连接跟踪机制，加快封包穿越防火墙速度 security：用于强制访问控制（MAC）网络规则，由Linux安全模块（如SELinux）实现 优先级由高到低的顺序为： 优先级由高到低的顺序为\nsecurity --\u003eraw--\u003emangle--\u003enat--\u003efilter 表和链对应关系\n数据包过滤匹配流程\n内核中数据包的传输过程\n当一个数据包进入网卡时，数据包首先进入PREROUTING链，内核根据数据包目的IP判断是否需要 转送出去 如果数据包是进入本机的，数据包就会沿着图向下移动，到达INPUT链。数据包到达INPUT链后， 任何进程都会收到它。本机上运行的程序可以发送数据包，这些数据包经过OUTPUT链，然后到达 POSTROUTING链输出 如果数据包是要转发出去的，且内核允许转发，数据包就会向右移动，经过FORWARD链，然后到 达POSTROUTING链输出 范例\n[root@rocky ~]# iptables -vnL -t filter Chain INPUT (policy ACCEPT 0 packets, 0 bytes) pkts bytes target prot opt in out source destination 168 10248 ACCEPT all -- * * 0.0.0.0/0 0.0.0.0/0 state RELATED,ESTABLISHED 0 0 ACCEPT icmp -- * * 0.0.0.0/0 0.0.0.0/0 0 0 ACCEPT all -- lo * 0.0.0.0/0 0.0.0.0/0 0 0 ACCEPT tcp -- * * 0.0.0.0/0 0.0.0.0/0 state NEW tcp dpt:22 0 0 REJECT all -- * * 0.0.0.0/0 0.0.0.0/0 reject-with icmp-host-prohibited Chain FORWARD (policy ACCEPT 0 packets, 0 bytes) pkts bytes target prot opt in out source destination 0 0 REJECT all -- * * 0.0.0.0/0 0.0.0.0/0 reject-with icmp-host-prohibited Chain OUTPUT (policy ACCEPT 101 packets, 11034 bytes) pkts bytes target prot opt in out source destination [root@rocky ~]# CentOS 6 nat表不支持INPUT链\niptables iptables规则说明 iptables规则组成 规则rule：根据规则的匹配条件尝试匹配报文，对匹配成功的报文根据规则定义的处理动作作出处理， 规则在链接上的次序即为其检查时的生效次序 匹配条件：默认为与条件，同时满足 基本匹配：IP，端口，TCP的Flags（SYN,ACK等） 扩展匹配：通过复杂高级功能匹配 处理动作：称为target，跳转目标\n内建处理动作：ACCEPT,DROP,REJECT,SNAT,DNAT,MASQUERADE,MARK,LOG… 自定义处理动作：自定义chain，利用分类管理复杂情形 规则要添加在链上，才生效；添加在自定义链上不会自动生效 白名单:只有指定的特定主机可以访问,其它全拒绝 黑名单:只有指定的特定主机拒绝访问,其它全允许,默认方式\niptables规则添加时考量点 要实现哪种功能：判断添加在哪张表上 报文流经的路径：判断添加在哪个链上 报文的流向：判断源和目的 匹配规则：业务需要 iptables用法说明 帮助：man 8 iptables 格式：\niptables [-t table] {-A|-C|-D} chain rule-specification 范例：filter表中INPUT规则\niptables命令格式详解\niptables [-t table] SUBCOMMAND chain [-m matchname [per-match-options]] -j targetname [per-target-options] 1、-t table：指定表 raw, mangle, nat, [filter]默认 2、SUBCOMMAND：子命令 链管理类：\n-N：new, 自定义一条新的规则链 -E：重命名自定义链；引用计数不为0的自定义链不能够被重命名，也不能被删除 -X：delete，删除自定义的空的规则链 -P：Policy，设置默认策略；对filter表中的链而言，其默认策略有：ACCEPT：接受, DROP：丢弃 范例\n# 定义新的规则链 [root@rocky ~]# iptables -N web_chain ",
+  "wordCount" : "2815",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/22.jpg","datePublished": "2022-09-25T21:28:11Z",
+  "dateModified": "2022-09-25T21:28:11Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/firewall/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                防火墙
+            </h1>
+            <div class="post-description">
+                firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-09-25
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2815字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>6分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/22.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e9%98%b2%e7%81%ab%e5%a2%99%e5%9f%ba%e6%9c%ac%e8%ae%a4%e8%af%86" aria-label="防火墙基本认识">防火墙基本认识</a><ul>
+                        
+                <li>
+                    <a href="#netfilter" aria-label="Netfilter">Netfilter</a></li>
+                <li>
+                    <a href="#%e9%98%b2%e7%81%ab%e5%a2%99%e5%b7%a5%e5%85%b7%e4%bb%8b%e7%bb%8d" aria-label="防火墙工具介绍">防火墙工具介绍</a><ul>
+                        
+                <li>
+                    <a href="#iptables" aria-label="iptables">iptables</a></li>
+                <li>
+                    <a href="#firewalld" aria-label="firewalld">firewalld</a></li>
+                <li>
+                    <a href="#nftables" aria-label="nftables">nftables</a></li></ul>
+                </li>
+                <li>
+                    <a href="#netfilter%e4%b8%ad%e4%ba%94%e4%b8%aa%e5%8b%be%e5%ad%90%e5%87%bd%e6%95%b0%e5%92%8c%e6%8a%a5%e6%96%87%e6%b5%81%e5%90%91" aria-label="netfilter中五个勾子函数和报文流向">netfilter中五个勾子函数和报文流向</a></li>
+                <li>
+                    <a href="#iptables%e7%bb%84%e6%88%90" aria-label="iptables组成">iptables组成</a></li></ul>
+                </li>
+                <li>
+                    <a href="#iptables-1" aria-label="iptables">iptables</a><ul>
+                        
+                <li>
+                    <a href="#iptables%e8%a7%84%e5%88%99%e8%af%b4%e6%98%8e" aria-label="iptables规则说明">iptables规则说明</a><ul>
+                        
+                <li>
+                    <a href="#iptables%e8%a7%84%e5%88%99%e7%bb%84%e6%88%90" aria-label="iptables规则组成">iptables规则组成</a></li>
+                <li>
+                    <a href="#iptables%e8%a7%84%e5%88%99%e6%b7%bb%e5%8a%a0%e6%97%b6%e8%80%83%e9%87%8f%e7%82%b9" aria-label="iptables规则添加时考量点">iptables规则添加时考量点</a></li></ul>
+                </li>
+                <li>
+                    <a href="#iptables%e7%94%a8%e6%b3%95%e8%af%b4%e6%98%8e" aria-label="iptables用法说明">iptables用法说明</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="防火墙基本认识">防火墙基本认识<a hidden class="anchor" aria-hidden="true" href="#防火墙基本认识">#</a></h1>
+<h2 id="netfilter">Netfilter<a hidden class="anchor" aria-hidden="true" href="#netfilter">#</a></h2>
+<p><img loading="lazy" src="/posts.images/image.assets/1664334608880.png" alt="1664334608880"  />
+</p>
+<p>Linux防火墙是由Netfilter组件提供的，Netfilter工作在内核空间，集成在linux内核中。
+Netfilter 是Linux 2.4.x之后新一代的Linux防火墙机制，是linux内核的一个子系统。Netfilter采用模块
+化设计，具有良好的可扩充性，提供扩展各种网络服务的结构化底层框架。Netfilter与IP协议栈是无缝
+契合，并允许对数据报进行过滤、地址转换、处理等操作。</p>
+<p><a href="https://netfilter.org/documentation/">Netfilter官网文档</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@centos7 ~]# grep -m 10 NETFILTER /boot/config-3.10.0-1160.el7.x86_64 
+</span></span><span style="display:flex;"><span>CONFIG_NETFILTER=y
+</span></span><span style="display:flex;"><span># CONFIG_NETFILTER_DEBUG is not set
+</span></span><span style="display:flex;"><span>CONFIG_NETFILTER_ADVANCED=y
+</span></span><span style="display:flex;"><span>CONFIG_BRIDGE_NETFILTER=m
+</span></span><span style="display:flex;"><span>CONFIG_NETFILTER_NETLINK=m
+</span></span><span style="display:flex;"><span>CONFIG_NETFILTER_NETLINK_ACCT=m
+</span></span><span style="display:flex;"><span>CONFIG_NETFILTER_NETLINK_QUEUE=m
+</span></span><span style="display:flex;"><span>CONFIG_NETFILTER_NETLINK_LOG=m
+</span></span><span style="display:flex;"><span>CONFIG_NETFILTER_NETLINK_QUEUE_CT=y
+</span></span><span style="display:flex;"><span>CONFIG_NETFILTER_SYNPROXY=m
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# 
+</span></span></code></pre></div><h2 id="防火墙工具介绍">防火墙工具介绍<a hidden class="anchor" aria-hidden="true" href="#防火墙工具介绍">#</a></h2>
+<h3 id="iptables">iptables<a hidden class="anchor" aria-hidden="true" href="#iptables">#</a></h3>
+<p>由软件包iptables提供的命令行工具，工作在用户空间，用来编写规则，写好的规则被送往netfilter，告
+诉内核如何去处理信息包。</p>
+<ul>
+<li>查看iptables信息</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@centos7 ~]# rpm -qi iptables
+</span></span><span style="display:flex;"><span>Name        : iptables
+</span></span><span style="display:flex;"><span>Version     : 1.4.21
+</span></span><span style="display:flex;"><span>Release     : 35.el7
+</span></span><span style="display:flex;"><span>Architecture: x86_64
+</span></span><span style="display:flex;"><span>Install Date: Sat 17 Sep 2022 10:31:09 AM CST
+</span></span><span style="display:flex;"><span>Group       : System Environment/Base
+</span></span><span style="display:flex;"><span>Size        : 1556976
+</span></span><span style="display:flex;"><span>License     : GPLv2
+</span></span><span style="display:flex;"><span>Signature   : RSA/SHA256, Thu 15 Oct 2020 02:51:02 AM CST, Key ID 24c6a8a7f4a80eb5
+</span></span><span style="display:flex;"><span>Source RPM  : iptables-1.4.21-35.el7.src.rpm
+</span></span><span style="display:flex;"><span>Build Date  : Fri 02 Oct 2020 12:52:54 AM CST
+</span></span><span style="display:flex;"><span>Build Host  : x86-01.bsys.centos.org
+</span></span><span style="display:flex;"><span>Relocations : (not relocatable)
+</span></span><span style="display:flex;"><span>Packager    : CentOS BuildSystem &lt;http://bugs.centos.org&gt;
+</span></span><span style="display:flex;"><span>Vendor      : CentOS
+</span></span><span style="display:flex;"><span>URL         : http://www.netfilter.org/
+</span></span><span style="display:flex;"><span>Summary     : Tools for managing Linux kernel packet filtering capabilities
+</span></span><span style="display:flex;"><span>Description :
+</span></span><span style="display:flex;"><span>The iptables utility controls the network packet filtering code in the
+</span></span><span style="display:flex;"><span>Linux kernel. If you need to set up firewalls and/or IP masquerading,
+</span></span><span style="display:flex;"><span>you should install this package.
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# 
+</span></span></code></pre></div><p><strong>范例：安装iptables的server包</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span># 安装dnf
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# yum install dnf
+</span></span><span style="display:flex;"><span># 安装iptables-services
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# dnf -y install iptables-services
+</span></span><span style="display:flex;"><span># 查看iptables-services文件列表
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# rpm -ql iptables-services
+</span></span><span style="display:flex;"><span>/etc/sysconfig/ip6tables
+</span></span><span style="display:flex;"><span>/etc/sysconfig/iptables
+</span></span><span style="display:flex;"><span>/usr/lib/systemd/system/ip6tables.service
+</span></span><span style="display:flex;"><span>/usr/lib/systemd/system/iptables.service
+</span></span><span style="display:flex;"><span>/usr/libexec/initscripts/legacy-actions/ip6tables
+</span></span><span style="display:flex;"><span>/usr/libexec/initscripts/legacy-actions/ip6tables/panic
+</span></span><span style="display:flex;"><span>/usr/libexec/initscripts/legacy-actions/ip6tables/save
+</span></span><span style="display:flex;"><span>/usr/libexec/initscripts/legacy-actions/iptables
+</span></span><span style="display:flex;"><span>/usr/libexec/initscripts/legacy-actions/iptables/panic
+</span></span><span style="display:flex;"><span>/usr/libexec/initscripts/legacy-actions/iptables/save
+</span></span><span style="display:flex;"><span>/usr/libexec/iptables
+</span></span><span style="display:flex;"><span>/usr/libexec/iptables/ip6tables.init
+</span></span><span style="display:flex;"><span>/usr/libexec/iptables/iptables.init
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# 
+</span></span></code></pre></div><h3 id="firewalld">firewalld<a hidden class="anchor" aria-hidden="true" href="#firewalld">#</a></h3>
+<p>从CentOS 7 版开始引入了新的前端管理工具
+软件包：</p>
+<ul>
+<li>firewalld</li>
+<li>firewalld-config</li>
+</ul>
+<p>管理工具：</p>
+<ul>
+<li>firewall-cmd 命令行工具</li>
+<li>firewall-config 图形工作</li>
+</ul>
+<h3 id="nftables">nftables<a hidden class="anchor" aria-hidden="true" href="#nftables">#</a></h3>
+<p>它重用了netfilter框架的许多部分，例如连接跟踪和NAT功能。它还保留了命名法和基本iptables设计的几个部分，例如表，链和规则。就像iptables一样，表充当链的容器，并且链包含单独的规则，这些规则可以执行操作，例如丢弃数据包，移至下一个规则或跳至新链。
+从用户的角度来看，nftables添加了一个名为nft的新工具，该工具替代了iptables，arptables和
+ebtables中的所有其他工具。从体系结构的角度来看，它还替换了内核中处理数据包过滤规则集运行时评估的那些部分。</p>
+<ul>
+<li>查看软件信息</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@centos7 ~]# rpm -qi nftables
+</span></span><span style="display:flex;"><span>Name        : nftables
+</span></span><span style="display:flex;"><span>Epoch       : 1
+</span></span><span style="display:flex;"><span>Version     : 0.8
+</span></span><span style="display:flex;"><span>Release     : 14.el7
+</span></span><span style="display:flex;"><span>Architecture: x86_64
+</span></span><span style="display:flex;"><span>Install Date: Wed 28 Sep 2022 11:36:55 AM CST
+</span></span><span style="display:flex;"><span>Group       : Unspecified
+</span></span><span style="display:flex;"><span>Size        : 500068
+</span></span><span style="display:flex;"><span>License     : GPLv2
+</span></span><span style="display:flex;"><span>Signature   : RSA/SHA256, Fri 23 Aug 2019 05:36:19 AM CST, Key ID 24c6a8a7f4a80eb5
+</span></span><span style="display:flex;"><span>Source RPM  : nftables-0.8-14.el7.src.rpm
+</span></span><span style="display:flex;"><span>Build Date  : Fri 09 Aug 2019 09:13:15 AM CST
+</span></span><span style="display:flex;"><span>Build Host  : x86-01.bsys.centos.org
+</span></span><span style="display:flex;"><span>Relocations : (not relocatable)
+</span></span><span style="display:flex;"><span>Packager    : CentOS BuildSystem &lt;http://bugs.centos.org&gt;
+</span></span><span style="display:flex;"><span>Vendor      : CentOS
+</span></span><span style="display:flex;"><span>URL         : http://netfilter.org/projects/nftables/
+</span></span><span style="display:flex;"><span>Summary     : Netfilter Tables userspace utillites
+</span></span><span style="display:flex;"><span>Description :
+</span></span><span style="display:flex;"><span>Netfilter Tables userspace utilities.
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# 
+</span></span></code></pre></div><p><strong>范例：centos8支持三种防火墙服务</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@rocky ~]# systemctl status iptables.service
+</span></span><span style="display:flex;"><span>● iptables.service - IPv4 firewall with iptables
+</span></span><span style="display:flex;"><span>   Loaded: loaded (/usr/lib/systemd/system/iptables.service; disabled; vendor preset: disabled)
+</span></span><span style="display:flex;"><span>   Active: inactive (dead)
+</span></span><span style="display:flex;"><span>[root@rocky ~]# systemctl status firewalld.service
+</span></span><span style="display:flex;"><span>● firewalld.service - firewalld - dynamic firewall daemon
+</span></span><span style="display:flex;"><span>   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)
+</span></span><span style="display:flex;"><span>   Active: inactive (dead)
+</span></span><span style="display:flex;"><span>     Docs: man:firewalld(1)
+</span></span><span style="display:flex;"><span>[root@rocky ~]# systemctl status nftables.service
+</span></span><span style="display:flex;"><span>● nftables.service - Netfilter Tables
+</span></span><span style="display:flex;"><span>   Loaded: loaded (/usr/lib/systemd/system/nftables.service; disabled; vendor preset: disabled)
+</span></span><span style="display:flex;"><span>   Active: inactive (dead)
+</span></span><span style="display:flex;"><span>     Docs: man:nft(8)
+</span></span><span style="display:flex;"><span>[root@rocky ~]# 
+</span></span></code></pre></div><h2 id="netfilter中五个勾子函数和报文流向">netfilter中五个勾子函数和报文流向<a hidden class="anchor" aria-hidden="true" href="#netfilter中五个勾子函数和报文流向">#</a></h2>
+<p>Netfilter在内核中选取五个位置放了五个hook(勾子) function(INPUT、OUTPUT、FORWARD、
+PREROUTING、POSTROUTING)，而这五个hook function向用户开放，用户可以通过一个命令工具
+（iptables）向其写入规则。</p>
+<p>由信息过滤表（table）组成，包含控制IP包处理的规则集（rules），规则被分组放在链（chain）上。</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1664336861788.png" alt="1664336861788"  />
+</p>
+<p>提示：从 Linux kernel 4.2 版以后，Netfilter 在prerouting 前加了一个 ingress 勾子函数。可以使用这
+个新的入口挂钩来过滤来自第2层的流量，这个新挂钩比预路由要早，基本上是 tc 命令（流量控制工
+具）的替代品。
+<strong>三种报文流向</strong></p>
+<ul>
+<li>流入本机：PREROUTING &ndash;&gt; INPUT&ndash;&gt;用户空间进程</li>
+<li>流出本机：用户空间进程 &ndash;&gt;OUTPUT&ndash;&gt; POSTROUTING</li>
+<li>转发：PREROUTING &ndash;&gt; FORWARD &ndash;&gt; POSTROUTING</li>
+</ul>
+<h2 id="iptables组成">iptables组成<a hidden class="anchor" aria-hidden="true" href="#iptables组成">#</a></h2>
+<p>iptables由五个表table和五个链chain以及一些规则组成</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1664337377531.png" alt="1664337377531"  />
+</p>
+<p><strong>链 chain：</strong></p>
+<ul>
+<li>内置链：每个内置链对应于一个钩子函数</li>
+<li>自定义链：用于对内置链进行扩展或补充，可实现更灵活的规则组织管理机制；只有Hook钩子调
+用自定义链时，才生效</li>
+</ul>
+<p><strong>五个内置链chain:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>INPUT,OUTPUT,FORWARD,PREROUTING,POSTROUTING
+</span></span></code></pre></div><p><strong>五个表：filter、nat、mangle、raw、security</strong></p>
+<ul>
+<li>filter：过滤规则表，根据预定义的规则过滤符合条件的数据包,默认表</li>
+<li>nat：network address translation 地址转换规则表</li>
+<li>mangle：修改数据标记位规则表</li>
+<li>raw：关闭启用的连接跟踪机制，加快封包穿越防火墙速度</li>
+<li>security：用于强制访问控制（MAC）网络规则，由Linux安全模块（如SELinux）实现
+优先级由高到低的顺序为：</li>
+</ul>
+<p><strong>优先级由高到低的顺序为</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>security --&gt;raw--&gt;mangle--&gt;nat--&gt;filter
+</span></span></code></pre></div><p><strong>表和链对应关系</strong></p>
+<p><img loading="lazy" src="/posts.images/image.assets/1664338350371.png" alt="1664338350371"  />
+</p>
+<p><strong>数据包过滤匹配流程</strong></p>
+<p><img loading="lazy" src="/posts.images/image.assets/1664338392568.png" alt="1664338392568"  />
+</p>
+<p><strong>内核中数据包的传输过程</strong></p>
+<ul>
+<li>当一个数据包进入网卡时，数据包首先进入PREROUTING链，内核根据数据包目的IP判断是否需要
+转送出去</li>
+<li>如果数据包是进入本机的，数据包就会沿着图向下移动，到达INPUT链。数据包到达INPUT链后，
+任何进程都会收到它。本机上运行的程序可以发送数据包，这些数据包经过OUTPUT链，然后到达
+POSTROUTING链输出</li>
+<li>如果数据包是要转发出去的，且内核允许转发，数据包就会向右移动，经过FORWARD链，然后到
+达POSTROUTING链输出</li>
+</ul>
+<p><strong>范例</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@rocky ~]# iptables -vnL -t filter 
+</span></span><span style="display:flex;"><span>Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+</span></span><span style="display:flex;"><span> pkts bytes target     prot opt in     out     source               destination         
+</span></span><span style="display:flex;"><span>  168 10248 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            state RELATED,ESTABLISHED
+</span></span><span style="display:flex;"><span>    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0           
+</span></span><span style="display:flex;"><span>    0     0 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+</span></span><span style="display:flex;"><span>    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            state NEW tcp dpt:22
+</span></span><span style="display:flex;"><span>    0     0 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+</span></span><span style="display:flex;"><span> pkts bytes target     prot opt in     out     source               destination         
+</span></span><span style="display:flex;"><span>    0     0 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Chain OUTPUT (policy ACCEPT 101 packets, 11034 bytes)
+</span></span><span style="display:flex;"><span> pkts bytes target     prot opt in     out     source               destination         
+</span></span><span style="display:flex;"><span>[root@rocky ~]# 
+</span></span></code></pre></div><p><strong>CentOS 6 nat表不支持INPUT链</strong></p>
+<h1 id="iptables-1">iptables<a hidden class="anchor" aria-hidden="true" href="#iptables-1">#</a></h1>
+<h2 id="iptables规则说明">iptables规则说明<a hidden class="anchor" aria-hidden="true" href="#iptables规则说明">#</a></h2>
+<h3 id="iptables规则组成">iptables规则组成<a hidden class="anchor" aria-hidden="true" href="#iptables规则组成">#</a></h3>
+<p>规则rule：根据规则的匹配条件尝试匹配报文，对匹配成功的报文根据规则定义的处理动作作出处理，
+规则在链接上的次序即为其检查时的生效次序
+匹配条件：默认为与条件，同时满足
+基本匹配：IP，端口，TCP的Flags（SYN,ACK等）
+扩展匹配：通过复杂高级功能匹配
+处理动作：称为target，跳转目标</p>
+<ul>
+<li>内建处理动作：ACCEPT,DROP,REJECT,SNAT,DNAT,MASQUERADE,MARK,LOG&hellip;</li>
+<li>自定义处理动作：自定义chain，利用分类管理复杂情形</li>
+</ul>
+<p>规则要添加在链上，才生效；添加在自定义链上不会自动生效
+白名单:只有指定的特定主机可以访问,其它全拒绝
+黑名单:只有指定的特定主机拒绝访问,其它全允许,默认方式</p>
+<h3 id="iptables规则添加时考量点">iptables规则添加时考量点<a hidden class="anchor" aria-hidden="true" href="#iptables规则添加时考量点">#</a></h3>
+<ul>
+<li>要实现哪种功能：判断添加在哪张表上</li>
+<li>报文流经的路径：判断添加在哪个链上</li>
+<li>报文的流向：判断源和目的</li>
+<li>匹配规则：业务需要</li>
+</ul>
+<h2 id="iptables用法说明">iptables用法说明<a hidden class="anchor" aria-hidden="true" href="#iptables用法说明">#</a></h2>
+<p>帮助：man 8 iptables
+格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>iptables [-t table] {-A|-C|-D} chain rule-specification
+</span></span></code></pre></div><p><strong>范例：filter表中INPUT规则</strong></p>
+<p><img loading="lazy" src="/posts.images/image.assets/1664348845247.png" alt="1664348845247"  />
+</p>
+<p><strong>iptables命令格式详解</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>iptables [-t table] SUBCOMMAND chain [-m matchname [per-match-options]]
+</span></span><span style="display:flex;"><span>-j targetname [per-target-options]
+</span></span></code></pre></div><p>1、-t table：指定表
+raw, mangle, nat, [filter]默认
+2、SUBCOMMAND：子命令
+链管理类：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>-N：new, 自定义一条新的规则链
+</span></span><span style="display:flex;"><span>-E：重命名自定义链；引用计数不为0的自定义链不能够被重命名，也不能被删除
+</span></span><span style="display:flex;"><span>-X：delete，删除自定义的空的规则链
+</span></span><span style="display:flex;"><span>-P：Policy，设置默认策略；对filter表中的链而言，其默认策略有：ACCEPT：接受, DROP：丢弃
+</span></span></code></pre></div><p><strong>范例</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span># 定义新的规则链
+</span></span><span style="display:flex;"><span>[root@rocky ~]# iptables -N web_chain
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/mysql/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>MySQL</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/dns/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>DNS服务</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

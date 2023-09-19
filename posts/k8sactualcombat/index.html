@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>kubernetes实战 | Hopeful</title>
+<meta name="keywords" content="kubernetes">
+<meta name="description" content="此教程基于kubernetes v1.23.17实践案例">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/k8sactualcombat/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="kubernetes实战" />
+<meta property="og:description" content="此教程基于kubernetes v1.23.17实践案例" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/k8sactualcombat/" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-06-23T13:24:16+08:00" />
+<meta property="article:modified_time" content="2023-06-23T13:24:16+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" />
+<meta name="twitter:title" content="kubernetes实战"/>
+<meta name="twitter:description" content="此教程基于kubernetes v1.23.17实践案例"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "kubernetes实战",
+      "item": "https://xyenvy.github.io/posts/k8sactualcombat/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "kubernetes实战",
+  "name": "kubernetes实战",
+  "description": "此教程基于kubernetes v1.23.17实践案例",
+  "keywords": [
+    "kubernetes"
+  ],
+  "articleBody": "POD 运行POD # 命令格式： kubectl run (pod控制器名称) [参数] # --image 指定Pod的镜像 # --port 指定端口 # --namespace 指定namespace kubectl run nginx --image=nginx:latest --port=80 --namespace dev 查看POD信息 # 查看Pod基本信息 [root@master ~]# kubectl get pods -n dev NAME READY STATUS RESTARTS AGE nginx 1/1 Running 0 43s # 查看Pod的详细信息 [root@master ~]# kubectl describe pod nginx -n dev 删除POD kubectl delete pod nginx -n dev 配置操作 创建一个pod-nginx.yaml，内容如下：\napiVersion: v1 kind: Pod metadata: name: nginx namespace: dev spec: containers: - image: nginx:latest name: pod ports: - name: nginx-port containerPort: 80 protocol: TCP ConfigMap 创建ConfigMap对象的方法有两种\n命令式命令\n1.字面量：kubectl create configmap NAME --from-literal=key1=value1 2.从文件加载：kubectl create configmap NAME --from-file=[key=]/PATH/TO/FILE 3.从目录加载： kubectl create configmap NAME --from-file=[key=]/PATH/TO/DIR/ 配置文件\n1.命令式：kubectl create -f 2.声明式：kubectl apply -f 提示：基于文件内容生成时，可以使用命令式命令以dry-run模式生成并保存\n查看帮助\nkubectl create configmap -h 案例1：\nkubectl create configmap my-cm --from-literal='test.html'='this is nignx' --dry-run=client -o yaml \u003e my-cm.yaml 文件内容\napiVersion: v1 data: test.html: this is nignx kind: ConfigMap metadata: creationTimestamp: null name: my-cm 案例2：\nkubectl create cm my-cm2 --from-file=./map.txt --dry-run=client -o yaml \u003emy-cm2.yaml 文件内容\napiVersion: v1 data: map.txt: | configmap kind: ConfigMap metadata: creationTimestamp: null name: my-cm2 引用ConfigMap对象 ConfigMap资源对象中以key-value保存的数据，在Pod中引用的方式通常有两种\n环境变量 1.引用ConfigMap对象上特定的key，以valueFrom赋值给Pod上指定的环境变量 2.在Pod上使用envFrom一次性导入ConfigMap对象上的所有key-value，key（也可以统一附加特定前缀）即为环境变量名，value自动成为相应的变量值 configMap卷 1.在Pod上将ConfigMap对象引用为存储卷，而后整体由容器mount至某个目录下;key转为文件名，value即为相应的文件内容 2.在Pod上定义configMap卷时，仅引用其中的部分key，而后由容器mount至目录下 3.在容器上仅mount configMap卷上指定的key 在Pod上配置使用ConfigMap示例 1.通过存储卷引用\napiVersion: apps/v1 kind: Deployment metadata: labels: app: my-dep name: my-dep spec: replicas: 1 selector: matchLabels: app: my-dep template: metadata: labels: app: my-dep spec: containers: - image: nginx:latest name: nginx ports: - containerPort: 80 volumeMounts: - name: my-cm-configmap # 卷名称 mountPath: /usr/share/nginx/html/ # 容器内挂载路径 readOnly: true # 只读 否 volumes: - name: my-cm-configmap # 卷名称 configMap: name: my-cm # configmap名称 optional: false 2.通过环境变量引用\napiVersion: apps/v1 kind: Deployment metadata: labels: app: my-dep name: my-dep spec: replicas: 1 selector: matchLabels: app: my-dep template: metadata: labels: app: my-dep spec: containers: - image: nginx:latest name: nginx ports: - containerPort: 80 env: - name: PORT valueFrom: configMapKeyRef: name: my-cm key: 'test.html' optional: false Secret secret资源 1.Secret主要用于存储密钥、OAuth令牌和 SSH 密钥等敏感信息，这些敏感信息采用base64编码保存，略好于明文存储\n2.Secret根据其用途等，还有类型上的区分\n创建Secret资源 支持类似于ConfigMap的创建方式，但Secret有类型子命令，而且不同类型在data或stringData字段中支持嵌套使用的key亦会有所有同\n命令式命令\n#generic 1.kubectl create secret generic NAME [--type=string] [--from-file=[key=]source] [--from-literal=key1=value1] 2.除了后面docker-registry和tls命令之外的其它类型，都可以使用该命令中的--type选项进行定义，但有些类型有key的特定要求 #tls 1.kubectl create secret tls NAME --cert=path/to/cert/file --key=path/to/key/file 2.通常，其保存cert文件内容的key为tls.crt，而保存private key的key为tls.key #docker-registry 1.kubectl create secret docker-registry NAME --docker-username=user --docker-password=password --docker-email=email [--docker-server=string] [--from-file=[key=]source] 2.通常，从已有的json格式的文件加载生成的就是dockerconfigjson类型，命令行直接量生成的也是该类型 资源示例 命令式 kubectl create secret generic mysql-root-auth --from-literal=username=root --from-literal=passwd=123456 --dry-run=client -o yaml kubectl create secret tls my-tls --cert=./itshare.crt --key=./itshare.key --dry-run=client -o yaml 配置文件 apiVersion: v1 data: passwd: MTIzNDU2 username: cm9vdA== kind: Secret metadata: name: mysql-root-auth apiVersion: v1 data: tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURFVENDQWZrQ0ZEVjRpUFhjNlNIelR4a2NzdEwzTFUxRFRzTmNNQTBHQ1NxR1NJYjNEUUVCQ3dVQU1FVXgKQ3pBSkJnTlZCQVlUQWtGVk1STXdFUVlEVlFRSURBcFRiMjFsTFZOMFlYUmxNU0V3SHdZRFZRUUtEQmhKYm5SbApjbTVsZENCWGFXUm5hWFJ6SUZCMGVTQk1kR1F3SGhjTk1qTXdOakl6TVRZeU1qQTJXaGNOTWpRd05qSXlNVFl5Ck1qQTJXakJGTVFzd0NRWURWUVFHRXdKQlZURVRNQkVHQTFVRUNBd0tVMjl0WlMxVGRHRjBaVEVoTUI4R0ExVUUKQ2d3WVNXNTBaWEp1WlhRZ1YybGtaMmwwY3lCUWRIa2dUSFJrTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQwpBUThBTUlJQkNnS0NBUUVBelFPZEZodlNlejJVNEZVK3lIaU1qT3BCWHhVd0RiV1NScW5GaUFMenc3OFk0bmx1Cmw3MFFzeGlTNEdndFJKK1JwZlRuSEF5RTVmNUxnS2lCc0U1WS9IdlQ5NDZSWEZZYVEyOTBNYTNSbFY3b3V3ODMKUmVTZmg0ZWI2cmlKVW00eVBYaUxUZHRmNXF2K2FuZGtFdVZ1VlFaMUpOVUxoRFF0dzRFQ1J4eURvc0s1R1VHVApmYVpGczByVUdMQTV1Ui8zVHM2b1hxWnowUkZYVC9lU29JbEFnMVplckpHd0FlNTNhWllvdm9ERi9Ja2lubldOCjB3Y2dQSWl4R1RtdU9iQ0NPS3k1bk8xMnJ5NGtFa3djRWRkSkQ2S3JKYkdYNkg3VWNXV3VvQkxUUDhoVEgxTjEKNUtIVmtJZ0U2a3h4RHpVeUtNb3FhekZ3M0MrVUp5U0pEZHVnb3dJREFRQUJNQTBHQ1NxR1NJYjNEUUVCQ3dVQQpBNElCQVFBcE40OHlWTml3RnR4TEZ5V3ZVTmdQRWZLc0c1M3M2bGR4RjRLNk84Wm44ODAzR2tUR0o3MnkrSFVICjJTZkpPV3hyRnVzdysrZ2ZONjBPV0FZbnF5RzkvREttczJsUTFabmw1QU8wUWpxM0NqZkl2ODV4Q2VuQWVsdngKYktrZjFPR1lSNTBHZFl4TGYwMEFaVzhBSFBvOFkvRDBEL2phVXN1OEhsVnFhSWF6SmpTSldpZkFWcFh0cXpaeQp2ZDVWTWRST3diNWdhWWZhRjJVWDZLSlFpemF1K2hzV2ZWOGkzRnNMY2w1YWJmYnkyNUROTlUwVHZYU3V3ckVwCnZBSDNMU2hJeGtRQzU0REc3TDM0WFJ6Q1hkN3U4QkR3U1JaczQzSkxwQ1JKR1RGc0hvNnFPaFdEVFBSa0xDcTUKbGt4bG5FbUNTMFdPWHhRVGRGYUdpN0ZIMVBSLwotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg== tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2Z0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktnd2dnU2tBZ0VBQW9JQkFRRE5BNTBXRzlKN1BaVGcKVlQ3SWVJeU02a0ZmRlRBTnRaSkdxY1dJQXZQRHZ4amllVzZYdlJDekdKTGdhQzFFbjVHbDlPY2NESVRsL2t1QQpxSUd3VGxqOGU5UDNqcEZjVmhwRGIzUXhyZEdWWHVpN0R6ZEY1SitIaDV2cXVJbFNiakk5ZUl0TjIxL21xLzVxCmQyUVM1VzVWQm5VazFRdUVOQzNEZ1FKSEhJT2l3cmtaUVpOOXBrV3pTdFFZc0RtNUgvZE96cWhlcG5QUkVWZFAKOTVLZ2lVQ0RWbDZza2JBQjduZHBsaWkrZ01YOGlTS2VkWTNUQnlBOGlMRVpPYTQ1c0lJNHJMbWM3WGF2TGlRUwpUQndSMTBrUG9xc2xzWmZvZnRSeFphNmdFdE0veUZNZlUzWGtvZFdRaUFUcVRIRVBOVElveWlwck1YRGNMNVFuCkpJa04yNkNqQWdNQkFBRUNnZ0VCQU1kdUpIbEZSMU1yYkk5dFhVMldOdU05WGFvbzZqM3J5d2VDVHUwb01nalEKOUZ3YTFFSTNZTzlYa0VsTURmMGJYSXViMk5Xb04vK2poNzc0TEhCZFJxTVZzZlMzY3gvbmdsVG5McGpGQllQUQpkNFRBSUh5VkVicTlhQ2JFckpETE1ZUXFweGh0dHJTbHl5KzJSRnM5WkQ3QnNXTEsvQkQyMFMzRmFYblRleG52Cm94Tk42ZFhNMHhZU09MZ2pWNGdEd1VJUUlvNW02TmFadkVHbkNxck9hbDdad0FodmVFeFVpbUU3WUFldVF6dnMKYjE3NWZPOTdLT1hjblAyQm0zUm5SenYwNlNSVmJSdURTdlovamtGUTVJUG9uMUZ6TlJBWm5nYVZ6UldkTUVYbQoySnZPUmptQ3BCbTNvNVpjbUFIaitIQWoxa3l3Qy9SMkhyTU1FeG82Y1lFQ2dZRUE5L2VjZGJKem4zd0pZK0dBCnQ0WS9wRFhnUitpQkNwQnVYTkxubU5VZDJycnJJTXNYWnoyMGlUeVAxL0gwRWl2Q3pLSm9nYnljK2lXUFE2LzIKRVFrcXVIaXoyOGVpaU1DYmUyQVdYUUpTQnpoSy9YM0hWc2V5ckRsRnJyTmZ4SzVxYzVhTUZRbzNGM2tRMVRVUgpyZDczSFkrcWZWMHRHVVhYVlZRd0JkZ2Q3ZmtDZ1lFQTA2ZksrSE0vRS9FQ201TDdKYUoycVgwbmFVMDJzbmxqCjZCbUhDenNVY3EwQUMvdVFrMkJkTFJXbHBlSnU2VXRFU0dIWm1hZ0Fua3VpNTVxdFhTeG1VdGdjOURnTWtleHoKZU9OQkFNQnUrTFRpYVRqeWE0VG5GYjh4YmJaZUtRN2hiYzJQMDdMMjhZRmxxRDg4VDV4VFRpNUs2L3dJclNZWAo2MlJmRytlSEduc0NnWUVBd0JzWUh1TDZ5c01ZcjBYa0o4cWRBWVl2MU9YZkd5VWNLMVBGMDFUQWhWV3NsY0poCnhqMDY0ZHVHZ1VGVTJzTUdidTBmMCtzaEhuYjh6KzdCeng3djl1eWtReEFkN3A1eGxwcXhtS3NVaTcxajg1Ri8KWHM3bHNLSEtSM2QyS1hVS3liUUhvTUZDUHpBdkIwN08vSW94bnJoUDJFSFlqNnpaRDZWaWN4U2swMWtDZ1lBTgo4czNtaDduTmQ2R2pYUkZlRHBIaFk1VVlWSFZaVjdTazFDSFpOS0NKV2l0Wm5zK05WdGx0SWpNVGRwTzJualkyCnl2UUxNMDR2SUc3dzhubWdYVSswLy9jUWhTMFc1TTFMVnphdWRRQWJOZGlCOUxYTkxpb0lmZHdsRGRLd3hBRkoKT2pYVFRzVUZiM0Npb09BNW91UytqMEJ5d3Q1VGd1SXFxaWUyY0JDd1J3S0JnRTM3dWpSN0JHYVI2ZU4xLzh4QwpHUlZ3K2MrSU9yV044YmhONHBGYjNHYU1ELytiaUZmK1BVaXZNMzZzUDAzNnphSno1QnF6NXJILzhKSjZwUmthClUzYzlwKzg2Rk5PU2YrU09KaVhHdko5dkc2Wk5kKzBsUkJXTHRkUUVhZE0va29Sd0c2c3d1bWsyRUROWE9Jd1cKZHV4bFZtdUpENEdhNDU2WDFTejRTMGFiCi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K kind: Secret metadata: creationTimestamp: null name: my-tls type: kubernetes.io/tls 引用Secret对象 Secret资源在Pod中引用的方式同样有两种\n环境变量 1.引用Secret对象上特定的key，以valueFrom赋值给Pod上指定的环境变量 2.在Pod上使用envFrom一次性导入Secret对象上的所有key-value，key（也可以统一附加特定前缀）即为环境变量名，value自动成为相应的变量值 secret卷 1.在Pod上将Secret对象引用为存储卷，而后整体由容器mount至某个目录下key转为文件名，value即为相应的文件内容 2.在Pod上定义Secret卷时，仅引用其中的部分key，而后由容器mount至目录下 3.在容器上仅mount Secret卷上指定的key 注意：容器很可能会将环境变量打印到日志中，因而不建议以环境变量方式引用Secret中的数据\n在Pod上引用Secret的示例 在Pod上引用Secret资源 apiVersion: apps/v1 kind: Deployment metadata: labels: app: my-dep name: my-dep spec: replicas: 1 selector: matchLabels: app: my-dep template: metadata: labels: app: my-dep spec: containers: - image: nginx:latest name: nginx ports: - containerPort: 80 volumeMounts: - name: my-secret mountPath: /etc/nginx/certs/ readOnly: true volumes: - name: my-secret secret: secretName: my-tls # secret 名称 ",
+  "wordCount" : "1796",
+  "inLanguage": "en",
+  "image":"https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg","datePublished": "2023-06-23T13:24:16+08:00",
+  "dateModified": "2023-06-23T13:24:16+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/k8sactualcombat/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                kubernetes实战
+            </h1>
+            <div class="post-description">
+                此教程基于kubernetes v1.23.17实践案例
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023-06-23
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>1796字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>4分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/kubernetes/" style="color: var(--secondary)!important;">kubernetes</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#pod" aria-label="POD">POD</a><ul>
+                        
+                <li>
+                    <a href="#%e8%bf%90%e8%a1%8cpod" aria-label="运行POD">运行POD</a></li>
+                <li>
+                    <a href="#%e6%9f%a5%e7%9c%8bpod%e4%bf%a1%e6%81%af" aria-label="查看POD信息">查看POD信息</a></li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4pod" aria-label="删除POD">删除POD</a></li>
+                <li>
+                    <a href="#%e9%85%8d%e7%bd%ae%e6%93%8d%e4%bd%9c" aria-label="配置操作">配置操作</a></li></ul>
+                </li>
+                <li>
+                    <a href="#configmap" aria-label="ConfigMap">ConfigMap</a><ul>
+                        
+                <li>
+                    <a href="#%e5%bc%95%e7%94%a8configmap%e5%af%b9%e8%b1%a1" aria-label="引用ConfigMap对象">引用ConfigMap对象</a></li>
+                <li>
+                    <a href="#%e5%9c%a8pod%e4%b8%8a%e9%85%8d%e7%bd%ae%e4%bd%bf%e7%94%a8configmap%e7%a4%ba%e4%be%8b" aria-label="在Pod上配置使用ConfigMap示例">在Pod上配置使用ConfigMap示例</a></li></ul>
+                </li>
+                <li>
+                    <a href="#secret" aria-label="Secret">Secret</a><ul>
+                        
+                <li>
+                    <a href="#secret%e8%b5%84%e6%ba%90" aria-label="secret资源">secret资源</a></li>
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%basecret%e8%b5%84%e6%ba%90" aria-label="创建Secret资源">创建Secret资源</a></li>
+                <li>
+                    <a href="#%e8%b5%84%e6%ba%90%e7%a4%ba%e4%be%8b" aria-label="资源示例">资源示例</a></li>
+                <li>
+                    <a href="#%e5%bc%95%e7%94%a8secret%e5%af%b9%e8%b1%a1" aria-label="引用Secret对象">引用Secret对象</a></li>
+                <li>
+                    <a href="#%e5%9c%a8pod%e4%b8%8a%e5%bc%95%e7%94%a8secret%e7%9a%84%e7%a4%ba%e4%be%8b" aria-label="在Pod上引用Secret的示例">在Pod上引用Secret的示例</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="pod">POD<a hidden class="anchor" aria-hidden="true" href="#pod">#</a></h2>
+<h3 id="运行pod">运行POD<a hidden class="anchor" aria-hidden="true" href="#运行pod">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 命令格式： kubectl run (pod控制器名称) [参数] </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --image  指定Pod的镜像</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --port   指定端口</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># --namespace  指定namespace</span>
+</span></span><span style="display:flex;"><span>kubectl run nginx --image<span style="color:#f92672">=</span>nginx:latest --port<span style="color:#f92672">=</span><span style="color:#ae81ff">80</span> --namespace dev 
+</span></span></code></pre></div><h3 id="查看pod信息">查看POD信息<a hidden class="anchor" aria-hidden="true" href="#查看pod信息">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 查看Pod基本信息</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pods -n dev</span>
+</span></span><span style="display:flex;"><span>NAME    READY   STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>nginx   1/1     Running   <span style="color:#ae81ff">0</span>          43s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看Pod的详细信息</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl describe pod nginx -n dev</span>
+</span></span></code></pre></div><h3 id="删除pod">删除POD<a hidden class="anchor" aria-hidden="true" href="#删除pod">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl delete pod nginx -n dev
+</span></span></code></pre></div><h3 id="配置操作">配置操作<a hidden class="anchor" aria-hidden="true" href="#配置操作">#</a></h3>
+<p>创建一个pod-nginx.yaml，内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>kind: Pod
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  name: nginx
+</span></span><span style="display:flex;"><span>  namespace: dev
+</span></span><span style="display:flex;"><span>spec:
+</span></span><span style="display:flex;"><span>  containers:
+</span></span><span style="display:flex;"><span>  - image: nginx:latest
+</span></span><span style="display:flex;"><span>    name: pod
+</span></span><span style="display:flex;"><span>    ports:
+</span></span><span style="display:flex;"><span>    - name: nginx-port
+</span></span><span style="display:flex;"><span>      containerPort: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>      protocol: TCP
+</span></span></code></pre></div><h2 id="configmap">ConfigMap<a hidden class="anchor" aria-hidden="true" href="#configmap">#</a></h2>
+<p>创建ConfigMap对象的方法有两种</p>
+<p>命令式命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1.字面量：kubectl create configmap NAME --from-literal<span style="color:#f92672">=</span>key1<span style="color:#f92672">=</span>value1
+</span></span><span style="display:flex;"><span>2.从文件加载：kubectl create configmap NAME --from-file<span style="color:#f92672">=[</span>key<span style="color:#f92672">=]</span>/PATH/TO/FILE
+</span></span><span style="display:flex;"><span>3.从目录加载： kubectl create configmap NAME --from-file<span style="color:#f92672">=[</span>key<span style="color:#f92672">=]</span>/PATH/TO/DIR/
+</span></span></code></pre></div><p>配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1.命令式：kubectl create -f
+</span></span><span style="display:flex;"><span>2.声明式：kubectl apply -f
+</span></span></code></pre></div><p>提示：基于文件内容生成时，可以使用命令式命令以dry-run模式生成并保存</p>
+<p>查看帮助</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl create configmap -h
+</span></span></code></pre></div><p>案例1：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl create configmap my-cm --from-literal<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;test.html&#39;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;this is nignx&#39;</span> --dry-run<span style="color:#f92672">=</span>client -o yaml &gt; my-cm.yaml
+</span></span></code></pre></div><p>文件内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>data:
+</span></span><span style="display:flex;"><span>  test.html: this is nignx
+</span></span><span style="display:flex;"><span>kind: ConfigMap
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  creationTimestamp: null
+</span></span><span style="display:flex;"><span>  name: my-cm
+</span></span></code></pre></div><p>案例2：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl create cm my-cm2 --from-file<span style="color:#f92672">=</span>./map.txt --dry-run<span style="color:#f92672">=</span>client -o yaml &gt;my-cm2.yaml
+</span></span></code></pre></div><p>文件内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>data:
+</span></span><span style="display:flex;"><span>  map.txt: |
+</span></span><span style="display:flex;"><span>    configmap
+</span></span><span style="display:flex;"><span>kind: ConfigMap
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  creationTimestamp: null
+</span></span><span style="display:flex;"><span>  name: my-cm2
+</span></span></code></pre></div><h3 id="引用configmap对象">引用ConfigMap对象<a hidden class="anchor" aria-hidden="true" href="#引用configmap对象">#</a></h3>
+<p>ConfigMap资源对象中以key-value保存的数据，在Pod中引用的方式通常有两种</p>
+<ul>
+<li>环境变量</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1.引用ConfigMap对象上特定的key，以valueFrom赋值给Pod上指定的环境变量
+</span></span><span style="display:flex;"><span>2.在Pod上使用envFrom一次性导入ConfigMap对象上的所有key-value，key（也可以统一附加特定前缀）即为环境变量名，value自动成为相应的变量值
+</span></span></code></pre></div><ul>
+<li>configMap卷</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1.在Pod上将ConfigMap对象引用为存储卷，而后整体由容器mount至某个目录下;key转为文件名，value即为相应的文件内容
+</span></span><span style="display:flex;"><span>2.在Pod上定义configMap卷时，仅引用其中的部分key，而后由容器mount至目录下
+</span></span><span style="display:flex;"><span>3.在容器上仅mount configMap卷上指定的key
+</span></span></code></pre></div><h3 id="在pod上配置使用configmap示例">在Pod上配置使用ConfigMap示例<a hidden class="anchor" aria-hidden="true" href="#在pod上配置使用configmap示例">#</a></h3>
+<p>1.通过存储卷引用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>apiVersion: apps/v1
+</span></span><span style="display:flex;"><span>kind: Deployment
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  labels:
+</span></span><span style="display:flex;"><span>    app: my-dep
+</span></span><span style="display:flex;"><span>  name: my-dep
+</span></span><span style="display:flex;"><span>spec:
+</span></span><span style="display:flex;"><span>  replicas: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  selector:
+</span></span><span style="display:flex;"><span>    matchLabels:
+</span></span><span style="display:flex;"><span>      app: my-dep
+</span></span><span style="display:flex;"><span>  template:
+</span></span><span style="display:flex;"><span>    metadata:
+</span></span><span style="display:flex;"><span>      labels:
+</span></span><span style="display:flex;"><span>        app: my-dep
+</span></span><span style="display:flex;"><span>    spec:
+</span></span><span style="display:flex;"><span>      containers:
+</span></span><span style="display:flex;"><span>      - image: nginx:latest
+</span></span><span style="display:flex;"><span>        name: nginx
+</span></span><span style="display:flex;"><span>        ports:
+</span></span><span style="display:flex;"><span>        - containerPort: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>        volumeMounts:
+</span></span><span style="display:flex;"><span>        - name: my-cm-configmap  <span style="color:#75715e"># 卷名称</span>
+</span></span><span style="display:flex;"><span>          mountPath: /usr/share/nginx/html/  <span style="color:#75715e"># 容器内挂载路径</span>
+</span></span><span style="display:flex;"><span>          readOnly: true  <span style="color:#75715e"># 只读  否</span>
+</span></span><span style="display:flex;"><span>      volumes:
+</span></span><span style="display:flex;"><span>      - name: my-cm-configmap  <span style="color:#75715e"># 卷名称</span>
+</span></span><span style="display:flex;"><span>        configMap:
+</span></span><span style="display:flex;"><span>          name: my-cm <span style="color:#75715e"># configmap名称</span>
+</span></span><span style="display:flex;"><span>          optional: false
+</span></span></code></pre></div><p>2.通过环境变量引用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>apiVersion: apps/v1
+</span></span><span style="display:flex;"><span>kind: Deployment
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  labels:
+</span></span><span style="display:flex;"><span>    app: my-dep
+</span></span><span style="display:flex;"><span>  name: my-dep
+</span></span><span style="display:flex;"><span>spec:
+</span></span><span style="display:flex;"><span>  replicas: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  selector:
+</span></span><span style="display:flex;"><span>    matchLabels:
+</span></span><span style="display:flex;"><span>      app: my-dep
+</span></span><span style="display:flex;"><span>  template:
+</span></span><span style="display:flex;"><span>    metadata:
+</span></span><span style="display:flex;"><span>      labels:
+</span></span><span style="display:flex;"><span>        app: my-dep
+</span></span><span style="display:flex;"><span>    spec:
+</span></span><span style="display:flex;"><span>      containers:
+</span></span><span style="display:flex;"><span>      - image: nginx:latest
+</span></span><span style="display:flex;"><span>        name: nginx
+</span></span><span style="display:flex;"><span>        ports:
+</span></span><span style="display:flex;"><span>        - containerPort: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>        env:
+</span></span><span style="display:flex;"><span>        - name: PORT
+</span></span><span style="display:flex;"><span>          valueFrom:
+</span></span><span style="display:flex;"><span>            configMapKeyRef:
+</span></span><span style="display:flex;"><span>              name: my-cm
+</span></span><span style="display:flex;"><span>              key: <span style="color:#e6db74">&#39;test.html&#39;</span>
+</span></span><span style="display:flex;"><span>              optional: false
+</span></span></code></pre></div><h2 id="secret">Secret<a hidden class="anchor" aria-hidden="true" href="#secret">#</a></h2>
+<h3 id="secret资源">secret资源<a hidden class="anchor" aria-hidden="true" href="#secret资源">#</a></h3>
+<p>1.Secret主要用于存储密钥、OAuth令牌和 SSH 密钥等敏感信息，这些敏感信息采用base64编码保存，略好于明文存储<br>
+2.Secret根据其用途等，还有类型上的区分</p>
+<p><img loading="lazy" src="/posts.images/k8sActualCombat/image-20230623233805770.png" alt="image-20230623233805770"  />
+</p>
+<h3 id="创建secret资源">创建Secret资源<a hidden class="anchor" aria-hidden="true" href="#创建secret资源">#</a></h3>
+<p>支持类似于ConfigMap的创建方式，但Secret有类型子命令，而且不同类型在data或stringData字段中支持嵌套使用的key亦会有所有同</p>
+<p>命令式命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#generic</span>
+</span></span><span style="display:flex;"><span>1.kubectl create secret generic NAME <span style="color:#f92672">[</span>--type<span style="color:#f92672">=</span>string<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--from-file<span style="color:#f92672">=[</span>key<span style="color:#f92672">=]</span>source<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--from-literal<span style="color:#f92672">=</span>key1<span style="color:#f92672">=</span>value1<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>2.除了后面docker-registry和tls命令之外的其它类型，都可以使用该命令中的--type选项进行定义，但有些类型有key的特定要求
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#tls</span>
+</span></span><span style="display:flex;"><span>1.kubectl create secret tls NAME --cert<span style="color:#f92672">=</span>path/to/cert/file --key<span style="color:#f92672">=</span>path/to/key/file
+</span></span><span style="display:flex;"><span>2.通常，其保存cert文件内容的key为tls.crt，而保存private key的key为tls.key
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#docker-registry</span>
+</span></span><span style="display:flex;"><span>1.kubectl create secret docker-registry NAME --docker-username<span style="color:#f92672">=</span>user --docker-password<span style="color:#f92672">=</span>password --docker-email<span style="color:#f92672">=</span>email <span style="color:#f92672">[</span>--docker-server<span style="color:#f92672">=</span>string<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--from-file<span style="color:#f92672">=[</span>key<span style="color:#f92672">=]</span>source<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>2.通常，从已有的json格式的文件加载生成的就是dockerconfigjson类型，命令行直接量生成的也是该类型
+</span></span></code></pre></div><h3 id="资源示例">资源示例<a hidden class="anchor" aria-hidden="true" href="#资源示例">#</a></h3>
+<ul>
+<li>命令式</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl create secret generic mysql-root-auth --from-literal<span style="color:#f92672">=</span>username<span style="color:#f92672">=</span>root --from-literal<span style="color:#f92672">=</span>passwd<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span> --dry-run<span style="color:#f92672">=</span>client -o yaml
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl create secret tls my-tls --cert<span style="color:#f92672">=</span>./itshare.crt --key<span style="color:#f92672">=</span>./itshare.key --dry-run<span style="color:#f92672">=</span>client -o yaml
+</span></span></code></pre></div><ul>
+<li>配置文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>data:
+</span></span><span style="display:flex;"><span>  passwd: MTIzNDU2
+</span></span><span style="display:flex;"><span>  username: cm9vdA<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>kind: Secret
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  name: mysql-root-auth
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>data:
+</span></span><span style="display:flex;"><span>  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURFVENDQWZrQ0ZEVjRpUFhjNlNIelR4a2NzdEwzTFUxRFRzTmNNQTBHQ1NxR1NJYjNEUUVCQ3dVQU1FVXgKQ3pBSkJnTlZCQVlUQWtGVk1STXdFUVlEVlFRSURBcFRiMjFsTFZOMFlYUmxNU0V3SHdZRFZRUUtEQmhKYm5SbApjbTVsZENCWGFXUm5hWFJ6SUZCMGVTQk1kR1F3SGhjTk1qTXdOakl6TVRZeU1qQTJXaGNOTWpRd05qSXlNVFl5Ck1qQTJXakJGTVFzd0NRWURWUVFHRXdKQlZURVRNQkVHQTFVRUNBd0tVMjl0WlMxVGRHRjBaVEVoTUI4R0ExVUUKQ2d3WVNXNTBaWEp1WlhRZ1YybGtaMmwwY3lCUWRIa2dUSFJrTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQwpBUThBTUlJQkNnS0NBUUVBelFPZEZodlNlejJVNEZVK3lIaU1qT3BCWHhVd0RiV1NScW5GaUFMenc3OFk0bmx1Cmw3MFFzeGlTNEdndFJKK1JwZlRuSEF5RTVmNUxnS2lCc0U1WS9IdlQ5NDZSWEZZYVEyOTBNYTNSbFY3b3V3ODMKUmVTZmg0ZWI2cmlKVW00eVBYaUxUZHRmNXF2K2FuZGtFdVZ1VlFaMUpOVUxoRFF0dzRFQ1J4eURvc0s1R1VHVApmYVpGczByVUdMQTV1Ui8zVHM2b1hxWnowUkZYVC9lU29JbEFnMVplckpHd0FlNTNhWllvdm9ERi9Ja2lubldOCjB3Y2dQSWl4R1RtdU9iQ0NPS3k1bk8xMnJ5NGtFa3djRWRkSkQ2S3JKYkdYNkg3VWNXV3VvQkxUUDhoVEgxTjEKNUtIVmtJZ0U2a3h4RHpVeUtNb3FhekZ3M0MrVUp5U0pEZHVnb3dJREFRQUJNQTBHQ1NxR1NJYjNEUUVCQ3dVQQpBNElCQVFBcE40OHlWTml3RnR4TEZ5V3ZVTmdQRWZLc0c1M3M2bGR4RjRLNk84Wm44ODAzR2tUR0o3MnkrSFVICjJTZkpPV3hyRnVzdysrZ2ZONjBPV0FZbnF5RzkvREttczJsUTFabmw1QU8wUWpxM0NqZkl2ODV4Q2VuQWVsdngKYktrZjFPR1lSNTBHZFl4TGYwMEFaVzhBSFBvOFkvRDBEL2phVXN1OEhsVnFhSWF6SmpTSldpZkFWcFh0cXpaeQp2ZDVWTWRST3diNWdhWWZhRjJVWDZLSlFpemF1K2hzV2ZWOGkzRnNMY2w1YWJmYnkyNUROTlUwVHZYU3V3ckVwCnZBSDNMU2hJeGtRQzU0REc3TDM0WFJ6Q1hkN3U4QkR3U1JaczQzSkxwQ1JKR1RGc0hvNnFPaFdEVFBSa0xDcTUKbGt4bG5FbUNTMFdPWHhRVGRGYUdpN0ZIMVBSLwotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>  tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2Z0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktnd2dnU2tBZ0VBQW9JQkFRRE5BNTBXRzlKN1BaVGcKVlQ3SWVJeU02a0ZmRlRBTnRaSkdxY1dJQXZQRHZ4amllVzZYdlJDekdKTGdhQzFFbjVHbDlPY2NESVRsL2t1QQpxSUd3VGxqOGU5UDNqcEZjVmhwRGIzUXhyZEdWWHVpN0R6ZEY1SitIaDV2cXVJbFNiakk5ZUl0TjIxL21xLzVxCmQyUVM1VzVWQm5VazFRdUVOQzNEZ1FKSEhJT2l3cmtaUVpOOXBrV3pTdFFZc0RtNUgvZE96cWhlcG5QUkVWZFAKOTVLZ2lVQ0RWbDZza2JBQjduZHBsaWkrZ01YOGlTS2VkWTNUQnlBOGlMRVpPYTQ1c0lJNHJMbWM3WGF2TGlRUwpUQndSMTBrUG9xc2xzWmZvZnRSeFphNmdFdE0veUZNZlUzWGtvZFdRaUFUcVRIRVBOVElveWlwck1YRGNMNVFuCkpJa04yNkNqQWdNQkFBRUNnZ0VCQU1kdUpIbEZSMU1yYkk5dFhVMldOdU05WGFvbzZqM3J5d2VDVHUwb01nalEKOUZ3YTFFSTNZTzlYa0VsTURmMGJYSXViMk5Xb04vK2poNzc0TEhCZFJxTVZzZlMzY3gvbmdsVG5McGpGQllQUQpkNFRBSUh5VkVicTlhQ2JFckpETE1ZUXFweGh0dHJTbHl5KzJSRnM5WkQ3QnNXTEsvQkQyMFMzRmFYblRleG52Cm94Tk42ZFhNMHhZU09MZ2pWNGdEd1VJUUlvNW02TmFadkVHbkNxck9hbDdad0FodmVFeFVpbUU3WUFldVF6dnMKYjE3NWZPOTdLT1hjblAyQm0zUm5SenYwNlNSVmJSdURTdlovamtGUTVJUG9uMUZ6TlJBWm5nYVZ6UldkTUVYbQoySnZPUmptQ3BCbTNvNVpjbUFIaitIQWoxa3l3Qy9SMkhyTU1FeG82Y1lFQ2dZRUE5L2VjZGJKem4zd0pZK0dBCnQ0WS9wRFhnUitpQkNwQnVYTkxubU5VZDJycnJJTXNYWnoyMGlUeVAxL0gwRWl2Q3pLSm9nYnljK2lXUFE2LzIKRVFrcXVIaXoyOGVpaU1DYmUyQVdYUUpTQnpoSy9YM0hWc2V5ckRsRnJyTmZ4SzVxYzVhTUZRbzNGM2tRMVRVUgpyZDczSFkrcWZWMHRHVVhYVlZRd0JkZ2Q3ZmtDZ1lFQTA2ZksrSE0vRS9FQ201TDdKYUoycVgwbmFVMDJzbmxqCjZCbUhDenNVY3EwQUMvdVFrMkJkTFJXbHBlSnU2VXRFU0dIWm1hZ0Fua3VpNTVxdFhTeG1VdGdjOURnTWtleHoKZU9OQkFNQnUrTFRpYVRqeWE0VG5GYjh4YmJaZUtRN2hiYzJQMDdMMjhZRmxxRDg4VDV4VFRpNUs2L3dJclNZWAo2MlJmRytlSEduc0NnWUVBd0JzWUh1TDZ5c01ZcjBYa0o4cWRBWVl2MU9YZkd5VWNLMVBGMDFUQWhWV3NsY0poCnhqMDY0ZHVHZ1VGVTJzTUdidTBmMCtzaEhuYjh6KzdCeng3djl1eWtReEFkN3A1eGxwcXhtS3NVaTcxajg1Ri8KWHM3bHNLSEtSM2QyS1hVS3liUUhvTUZDUHpBdkIwN08vSW94bnJoUDJFSFlqNnpaRDZWaWN4U2swMWtDZ1lBTgo4czNtaDduTmQ2R2pYUkZlRHBIaFk1VVlWSFZaVjdTazFDSFpOS0NKV2l0Wm5zK05WdGx0SWpNVGRwTzJualkyCnl2UUxNMDR2SUc3dzhubWdYVSswLy9jUWhTMFc1TTFMVnphdWRRQWJOZGlCOUxYTkxpb0lmZHdsRGRLd3hBRkoKT2pYVFRzVUZiM0Npb09BNW91UytqMEJ5d3Q1VGd1SXFxaWUyY0JDd1J3S0JnRTM3dWpSN0JHYVI2ZU4xLzh4QwpHUlZ3K2MrSU9yV044YmhONHBGYjNHYU1ELytiaUZmK1BVaXZNMzZzUDAzNnphSno1QnF6NXJILzhKSjZwUmthClUzYzlwKzg2Rk5PU2YrU09KaVhHdko5dkc2Wk5kKzBsUkJXTHRkUUVhZE0va29Sd0c2c3d1bWsyRUROWE9Jd1cKZHV4bFZtdUpENEdhNDU2WDFTejRTMGFiCi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K
+</span></span><span style="display:flex;"><span>kind: Secret
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  creationTimestamp: null
+</span></span><span style="display:flex;"><span>  name: my-tls
+</span></span><span style="display:flex;"><span>type: kubernetes.io/tls
+</span></span></code></pre></div><h3 id="引用secret对象">引用Secret对象<a hidden class="anchor" aria-hidden="true" href="#引用secret对象">#</a></h3>
+<p>Secret资源在Pod中引用的方式同样有两种</p>
+<ul>
+<li>环境变量</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1.引用Secret对象上特定的key，以valueFrom赋值给Pod上指定的环境变量
+</span></span><span style="display:flex;"><span>2.在Pod上使用envFrom一次性导入Secret对象上的所有key-value，key（也可以统一附加特定前缀）即为环境变量名，value自动成为相应的变量值
+</span></span></code></pre></div><ul>
+<li>secret卷</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1.在Pod上将Secret对象引用为存储卷，而后整体由容器mount至某个目录下key转为文件名，value即为相应的文件内容
+</span></span><span style="display:flex;"><span>2.在Pod上定义Secret卷时，仅引用其中的部分key，而后由容器mount至目录下
+</span></span><span style="display:flex;"><span>3.在容器上仅mount Secret卷上指定的key
+</span></span></code></pre></div><p>注意：容器很可能会将环境变量打印到日志中，因而不建议以环境变量方式引用Secret中的数据</p>
+<h3 id="在pod上引用secret的示例">在Pod上引用Secret的示例<a hidden class="anchor" aria-hidden="true" href="#在pod上引用secret的示例">#</a></h3>
+<ul>
+<li>在Pod上引用Secret资源</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>apiVersion: apps/v1
+</span></span><span style="display:flex;"><span>kind: Deployment
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  labels:
+</span></span><span style="display:flex;"><span>    app: my-dep
+</span></span><span style="display:flex;"><span>  name: my-dep
+</span></span><span style="display:flex;"><span>spec:
+</span></span><span style="display:flex;"><span>  replicas: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  selector:
+</span></span><span style="display:flex;"><span>    matchLabels:
+</span></span><span style="display:flex;"><span>      app: my-dep
+</span></span><span style="display:flex;"><span>  template:
+</span></span><span style="display:flex;"><span>    metadata:
+</span></span><span style="display:flex;"><span>      labels:
+</span></span><span style="display:flex;"><span>        app: my-dep
+</span></span><span style="display:flex;"><span>    spec:
+</span></span><span style="display:flex;"><span>      containers:
+</span></span><span style="display:flex;"><span>      - image: nginx:latest
+</span></span><span style="display:flex;"><span>        name: nginx
+</span></span><span style="display:flex;"><span>        ports:
+</span></span><span style="display:flex;"><span>        - containerPort: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>        volumeMounts:
+</span></span><span style="display:flex;"><span>        - name: my-secret
+</span></span><span style="display:flex;"><span>          mountPath: /etc/nginx/certs/
+</span></span><span style="display:flex;"><span>          readOnly: true
+</span></span><span style="display:flex;"><span>      volumes:
+</span></span><span style="display:flex;"><span>      - name: my-secret
+</span></span><span style="display:flex;"><span>        secret:
+</span></span><span style="display:flex;"><span>          secretName: my-tls  <span style="color:#75715e"># secret 名称</span>
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://xyenvy.github.io/posts/k8srresourceddetails/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>kubernetes常见yaml资源详解</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

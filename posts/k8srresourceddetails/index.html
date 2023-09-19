@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>kubernetes常见yaml资源详解 | Hopeful</title>
+<meta name="keywords" content="kubernetes">
+<meta name="description" content="kubectl提供了各种命令，来管理集群中的pod，但是这些命令都是为了方便运维测试，实际生产部署还得用yaml文件来部署">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/k8srresourceddetails/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="kubernetes常见yaml资源详解" />
+<meta property="og:description" content="kubectl提供了各种命令，来管理集群中的pod，但是这些命令都是为了方便运维测试，实际生产部署还得用yaml文件来部署" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/k8srresourceddetails/" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/pexels-markus-spiske.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-06-16T00:02:11+08:00" />
+<meta property="article:modified_time" content="2023-06-16T00:02:11+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/pexels-markus-spiske.jpg" />
+<meta name="twitter:title" content="kubernetes常见yaml资源详解"/>
+<meta name="twitter:description" content="kubectl提供了各种命令，来管理集群中的pod，但是这些命令都是为了方便运维测试，实际生产部署还得用yaml文件来部署"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "kubernetes常见yaml资源详解",
+      "item": "https://xyenvy.github.io/posts/k8srresourceddetails/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "kubernetes常见yaml资源详解",
+  "name": "kubernetes常见yaml资源详解",
+  "description": "kubectl提供了各种命令，来管理集群中的pod，但是这些命令都是为了方便运维测试，实际生产部署还得用yaml文件来部署",
+  "keywords": [
+    "kubernetes"
+  ],
+  "articleBody": "Pod资源对象yaml详解 apiVersion: apps/v1 #必选，版本号，例如v1 kind: Pod #必选，指定创建资源的角色/类型 metadata: #必选，资源的元数据/属性 name: string #必选，资源的名字，在同一个namespace中必须唯一 namespace: string #必选，Pod所属的命名空间 labels: #自定义标签,使这个标签在service网络中备案，以便被获知 - name: string #自定义标签名字 annotations: #设置自定义注解列表 - name: \"string\" #设置自定义注解名字 spec: #必选，设置该资源的详细定义 containers: #必选，Pod中容器列表 - name: string #必选，容器名称 image: string #必选，容器的镜像名称 imagePullPolicy: [Always | Never | IfNotPresent] #获取镜像的策略 Alawys表示下载镜像 IfnotPresent表示优先使用本地镜像，否则下载镜像，Nerver表示仅使用本地镜像 command: [string] #容器的启动命令列表，如不指定，使用打包时使用的启动命令 args: [string] #容器的启动命令参数列表 workingDir: string #容器的工作目录 volumeMounts: #挂载到容器内部的存储卷配置 - name: string #引用pod定义的共享存储卷的名称，需用volumes[]部分定义的的卷名 mountPath: string #存储卷在容器内mount的绝对路径，应少于512字符 readOnly: boolean #是否为只读模式 ports: #需要暴露的端口库号列表 - name: string #端口号名称 containerPort: int #容器需要监听的端口号 hostPort: int #容器所在主机需要监听的端口号，默认与Container相同 protocol: string #端口协议，支持TCP和UDP，默认TCP env: #容器运行前需设置的环境变量列表 - name: string #环境变量名称 value: string #环境变量的值 resources: #资源限制和请求的设置 limits: #资源限制的设置 cpu: string #Cpu的限制，单位为core数，将用于docker run --cpu-shares参数 memory: string #内存限制，单位可以为Mib/Gib，将用于docker run --memory参数 requests: #资源请求的设置 cpu: string #Cpu请求，容器启动的初始可用数量 memory: string #内存清楚，容器启动的初始可用数量 livenessProbe: #对Pod内个容器健康检查的设置，当探测无响应几次后将自动重启该容器，检查方法有exec、httpGet和tcpSocket，对一个容器只需设置其中一种方法即可 exec: #对Pod容器内检查方式设置为exec方式 command: [string] #exec方式需要制定的命令或脚本 httpGet: #对Pod内个容器健康检查方法设置为HttpGet，需要制定Path、port path: string port: number host: string scheme: string HttpHeaders: - name: string value: string tcpSocket: #对Pod内个容器健康检查方式设置为tcpSocket方式 port: number initialDelaySeconds: 0 #容器启动完成后首次探测的时间，单位为秒 timeoutSeconds: 0 #对容器健康检查探测等待响应的超时时间，单位秒，默认1秒 periodSeconds: 0 #对容器监控检查的定期探测时间设置，单位秒，默认10秒一次 successThreshold: 0 failureThreshold: 0 securityContext: privileged:false restartPolicy: [Always | Never | OnFailure]#Pod的重启策略，Always表示一旦不管以何种方式终止运行，kubelet都将重启，OnFailure表示只有Pod以非0退出码退出才重启，Nerver表示不再重启该Pod nodeSelector: obeject #设置NodeSelector表示将该Pod调度到包含这个label的node上，以key：value的格式指定 imagePullSecrets: #Pull镜像时使用的secret名称，以key：secretkey格式指定 - name: string hostNetwork: false #是否使用主机网络模式，默认为false，如果设置为true，表示使用宿主机网络 volumes: #在该pod上定义共享存储卷列表 - name: string #共享存储卷名称 （volumes类型有很多种） emptyDir: {} #类型为emtyDir的存储卷，与Pod同生命周期的一个临时目录。为空值 hostPath: string #类型为hostPath的存储卷，表示挂载Pod所在宿主机的目录 path: /root/data #Pod所在宿主机的目录，将被用于同期中mount的目录 secret: #类型为secret的存储卷，挂载集群与定义的secre对象到容器内部 scretname: string items: - key: string path: string configMap: #类型为configMap的存储卷，挂载预定义的configMap对象到容器内部 name: string items: - key: string path: string点 Deployment资源对象yaml详解 apiVersion: apps/v1 kind: Deployment metadata: #元数据 annotations: #注释信息 deployment.kubernetes.io/revision: '1' k8s.kuboard.cn/ingress: 'false' k8s.kuboard.cn/service: NodePort k8s.kuboard.cn/workload: nextcloud labels: #标签信息 k8s.kuboard.cn/layer: '' k8s.kuboard.cn/name: nextcloud name: nextcloud #名称 namespace: nextcloud #命名空间 spec: #定义容器模板，该模板可以包含多个容器 replicas: 3 #副本数量 selector: #标签选择器 matchLabels: k8s.kuboard.cn/layer: '' k8s.kuboard.cn/name: nextcloud strategy: #滚动升级策略 type: RollingUpdate #类型 rollingUpdate: #由于replicas为3,则整个升级,pod个数在2-4个之间 maxSurge: 25% #滚动升级时会先启动25%pod maxUnavailable: 25% #滚动升级时允许的最大Unavailable的pod个数 template: #镜像模板 metadata: #元数据 labels: #标签 k8s.kuboard.cn/layer: '' k8s.kuboard.cn/name: nextcloud spec: #定义容器模板，该模板可以包含多个容器 containers: #容器信息 - name: nextcloud #容器名称 image: '172.16.20.100/library/nextcloud:yan' #镜像名称 imagePullPolicy: Always #镜像下载策略 ports: - name: http containerPort: 80 protocol: TCP env: resources: #CPU内存限制 limits: #限制cpu内存 cpu: 200m memory: 200m requests: #请求cpu内存 cpu: 100m memory: 100m securityContext: #-------------------------#安全设定 privileged: true #-----------------------#开启享有特权 volumeMounts: #----------------------------#挂载volumes中定义的磁盘 - name: html #---------------------------#挂载容器1 mountPath: /var/www/html - name: session #------------------------#挂载容器1 mountPath: /var/lib/php/session volumes: #在该pod上定义共享存储卷列表 - name: html #-------------------------------#共享存储卷名称 （volumes类型有很多种） persistentVolumeClaim: #-------------------#volumes类型为pvc claimName: html #-----------------------#关联pvc名称 - name: session persistentVolumeClaim: claimName: session restartPolicy: Always #------------------------#Pod的重启策略 #Always表示一旦不管以何种方式终止运行，kubelet都将重启， #OnFailure表示只有Pod以非0退出码退出才重启， #Nerver表示不再重启该Pod schedulerName: default-scheduler #指定pod调度到节点 Service资源对象yaml详解 apiVersion: v1 kind: Service metadata: #---------------------------------#元数据 annotations: #-----------------------------#注释信息 k8s.kuboard.cn/workload: nextcloud labels: #----------------------------------#标签信息 k8s.kuboard.cn/layer: '' k8s.kuboard.cn/name: nextcloud name: nextcloud #--------------------------#名称 namespace: nextcloud #---------------------#命名空间 spec: #--------------------------------------#定义Service模板 clusterIP: 10.0.181.206 #------------------#指定svcip地址 不指定则随机 #NodePort类型：集群外网络 type: NodePort #---------------------------#类型为NodePort ports: - name: mnwwwp nodePort: 30001 #----------------------#当type = NodePort时，指定映射到物理机的端口号 port: 80 #-----------------------------#服务监听的端口号 protocol: TCP #------------------------#端口协议，支持TCP和UDP，默认TCP targetPort: 80 #-----------------------#需要转发到后端Pod的端口号 #ClusterIP类型：集群内网络 # type: ClusterIP # - name: mnwwwp # port: 80 # protocol: TCP # targetPort: 80 # - name: j5smwx # port: 22 # protocol: TCP # targetPort: 22 selector: #-------------------------------#label selector配置，将选择具有label标签的Pod作为管理 k8s.kuboard.cn/layer: '' k8s.kuboard.cn/name: nextcloud sessionAffinity: None #--------------------#是否支持session ",
+  "wordCount" : "2944",
+  "inLanguage": "en",
+  "image":"https://xyenvy.github.io/posts.images/banner/pexels-markus-spiske.jpg","datePublished": "2023-06-16T00:02:11+08:00",
+  "dateModified": "2023-06-16T00:02:11+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/k8srresourceddetails/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                kubernetes常见yaml资源详解
+            </h1>
+            <div class="post-description">
+                kubectl提供了各种命令，来管理集群中的pod，但是这些命令都是为了方便运维测试，实际生产部署还得用yaml文件来部署
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023-06-16
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2944字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>6分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/kubernetes/" style="color: var(--secondary)!important;">kubernetes</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/pexels-markus-spiske.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#pod%e8%b5%84%e6%ba%90%e5%af%b9%e8%b1%a1yaml%e8%af%a6%e8%a7%a3" aria-label="Pod资源对象yaml详解">Pod资源对象yaml详解</a></li>
+                <li>
+                    <a href="#deployment%e8%b5%84%e6%ba%90%e5%af%b9%e8%b1%a1yaml%e8%af%a6%e8%a7%a3" aria-label="Deployment资源对象yaml详解"><strong>Deployment资源对象yaml详解</strong></a></li>
+                <li>
+                    <a href="#service%e8%b5%84%e6%ba%90%e5%af%b9%e8%b1%a1yaml%e8%af%a6%e8%a7%a3" aria-label="Service资源对象yaml详解"><strong>Service资源对象yaml详解</strong></a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="pod资源对象yaml详解">Pod资源对象yaml详解<a hidden class="anchor" aria-hidden="true" href="#pod资源对象yaml详解">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1    </span> <span style="color:#75715e">#必选，版本号，例如v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod      </span> <span style="color:#75715e">#必选，指定创建资源的角色/类型  </span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:        <span style="color:#75715e">#必选，资源的元数据/属性 </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string      </span> <span style="color:#75715e">#必选，资源的名字，在同一个namespace中必须唯一  </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">string    </span> <span style="color:#75715e">#必选，Pod所属的命名空间</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:      <span style="color:#75715e">#自定义标签,使这个标签在service网络中备案，以便被获知</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string  </span> <span style="color:#75715e">#自定义标签名字</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">annotations</span>:       <span style="color:#75715e">#设置自定义注解列表  </span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;string&#34;</span>  <span style="color:#75715e">#设置自定义注解名字  </span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:         <span style="color:#75715e">#必选，设置该资源的详细定义</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:    <span style="color:#75715e">#必选，Pod中容器列表</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string    </span> <span style="color:#75715e">#必选，容器名称</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">string   </span> <span style="color:#75715e">#必选，容器的镜像名称</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">imagePullPolicy</span>: [<span style="color:#ae81ff">Always | Never | IfNotPresent]</span> <span style="color:#75715e">#获取镜像的策略 Alawys表示下载镜像 IfnotPresent表示优先使用本地镜像，否则下载镜像，Nerver表示仅使用本地镜像</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">command</span>: [<span style="color:#ae81ff">string]   </span> <span style="color:#75715e">#容器的启动命令列表，如不指定，使用打包时使用的启动命令</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">args</span>: [<span style="color:#ae81ff">string]    </span> <span style="color:#75715e">#容器的启动命令参数列表</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">workingDir</span>: <span style="color:#ae81ff">string  </span> <span style="color:#75715e">#容器的工作目录</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumeMounts</span>:        <span style="color:#75715e">#挂载到容器内部的存储卷配置</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string    </span> <span style="color:#75715e">#引用pod定义的共享存储卷的名称，需用volumes[]部分定义的的卷名</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">string   </span> <span style="color:#75715e">#存储卷在容器内mount的绝对路径，应少于512字符</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">readOnly</span>: <span style="color:#ae81ff">boolean   </span> <span style="color:#75715e">#是否为只读模式</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:       <span style="color:#75715e">#需要暴露的端口库号列表</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string    </span> <span style="color:#75715e">#端口号名称</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">int </span> <span style="color:#75715e">#容器需要监听的端口号</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">hostPort</span>: <span style="color:#ae81ff">int   </span> <span style="color:#75715e">#容器所在主机需要监听的端口号，默认与Container相同</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">string    </span> <span style="color:#75715e">#端口协议，支持TCP和UDP，默认TCP</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">env</span>:       <span style="color:#75715e">#容器运行前需设置的环境变量列表</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string    </span> <span style="color:#75715e">#环境变量名称</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">value</span>: <span style="color:#ae81ff">string   </span> <span style="color:#75715e">#环境变量的值</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">resources</span>:       <span style="color:#75715e">#资源限制和请求的设置</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">limits</span>:      <span style="color:#75715e">#资源限制的设置</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">cpu</span>: <span style="color:#ae81ff">string   </span> <span style="color:#75715e">#Cpu的限制，单位为core数，将用于docker run --cpu-shares参数</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">memory</span>: <span style="color:#ae81ff">string  </span> <span style="color:#75715e">#内存限制，单位可以为Mib/Gib，将用于docker run --memory参数</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">requests</span>:         <span style="color:#75715e">#资源请求的设置</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">cpu</span>: <span style="color:#ae81ff">string   </span> <span style="color:#75715e">#Cpu请求，容器启动的初始可用数量</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">memory</span>: <span style="color:#ae81ff">string  </span> <span style="color:#75715e">#内存清楚，容器启动的初始可用数量</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">livenessProbe</span>:     <span style="color:#75715e">#对Pod内个容器健康检查的设置，当探测无响应几次后将自动重启该容器，检查方法有exec、httpGet和tcpSocket，对一个容器只需设置其中一种方法即可</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">exec</span>:      <span style="color:#75715e">#对Pod容器内检查方式设置为exec方式</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">command</span>: [<span style="color:#ae81ff">string] </span> <span style="color:#75715e">#exec方式需要制定的命令或脚本</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">httpGet</span>:       <span style="color:#75715e">#对Pod内个容器健康检查方法设置为HttpGet，需要制定Path、port</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">path</span>: <span style="color:#ae81ff">string</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">port</span>: <span style="color:#ae81ff">number</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">host</span>: <span style="color:#ae81ff">string</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">scheme</span>: <span style="color:#ae81ff">string</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">HttpHeaders</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">value</span>: <span style="color:#ae81ff">string</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tcpSocket</span>:     <span style="color:#75715e">#对Pod内个容器健康检查方式设置为tcpSocket方式</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f92672">port</span>: <span style="color:#ae81ff">number</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">initialDelaySeconds</span>: <span style="color:#ae81ff">0</span>   <span style="color:#75715e">#容器启动完成后首次探测的时间，单位为秒</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">timeoutSeconds</span>: <span style="color:#ae81ff">0</span>    <span style="color:#75715e">#对容器健康检查探测等待响应的超时时间，单位秒，默认1秒</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">periodSeconds</span>: <span style="color:#ae81ff">0</span>     <span style="color:#75715e">#对容器监控检查的定期探测时间设置，单位秒，默认10秒一次</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">successThreshold</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">failureThreshold</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">securityContext</span>:
+</span></span><span style="display:flex;"><span>         <span style="color:#ae81ff">privileged:false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restartPolicy</span>: [<span style="color:#ae81ff">Always | Never | OnFailure]#Pod的重启策略，Always表示一旦不管以何种方式终止运行，kubelet都将重启，OnFailure表示只有Pod以非0退出码退出才重启，Nerver表示不再重启该Pod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">nodeSelector</span>: <span style="color:#ae81ff">obeject </span> <span style="color:#75715e">#设置NodeSelector表示将该Pod调度到包含这个label的node上，以key：value的格式指定</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">imagePullSecrets</span>:    <span style="color:#75715e">#Pull镜像时使用的secret名称，以key：secretkey格式指定</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hostNetwork</span>: <span style="color:#66d9ef">false</span>      <span style="color:#75715e">#是否使用主机网络模式，默认为false，如果设置为true，表示使用宿主机网络</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:       <span style="color:#75715e">#在该pod上定义共享存储卷列表</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string    </span> <span style="color:#75715e">#共享存储卷名称 （volumes类型有很多种）</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">emptyDir</span>: {}     <span style="color:#75715e">#类型为emtyDir的存储卷，与Pod同生命周期的一个临时目录。为空值</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">hostPath</span>: <span style="color:#ae81ff">string    </span> <span style="color:#75715e">#类型为hostPath的存储卷，表示挂载Pod所在宿主机的目录</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/root/data    </span> <span style="color:#75715e">#Pod所在宿主机的目录，将被用于同期中mount的目录</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">secret</span>:      <span style="color:#75715e">#类型为secret的存储卷，挂载集群与定义的secre对象到容器内部</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">scretname</span>: <span style="color:#ae81ff">string  </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">items</span>:     
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">key</span>: <span style="color:#ae81ff">string</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#ae81ff">string</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">configMap</span>:     <span style="color:#75715e">#类型为configMap的存储卷，挂载预定义的configMap对象到容器内部</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">string</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">items</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">key</span>: <span style="color:#ae81ff">string</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">path</span>: <span style="color:#ae81ff">string点</span>
+</span></span></code></pre></div><h2 id="deployment资源对象yaml详解"><strong>Deployment资源对象yaml详解</strong><a hidden class="anchor" aria-hidden="true" href="#deployment资源对象yaml详解">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>: <span style="color:#75715e">#元数据</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">annotations</span>: <span style="color:#75715e">#注释信息</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">deployment.kubernetes.io/revision</span>: <span style="color:#e6db74">&#39;1&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s.kuboard.cn/ingress</span>: <span style="color:#e6db74">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s.kuboard.cn/service</span>: <span style="color:#ae81ff">NodePort</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s.kuboard.cn/workload</span>: <span style="color:#ae81ff">nextcloud</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>: <span style="color:#75715e">#标签信息</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s.kuboard.cn/layer</span>: <span style="color:#e6db74">&#39;&#39;</span>            
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s.kuboard.cn/name</span>: <span style="color:#ae81ff">nextcloud</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nextcloud     </span> <span style="color:#75715e">#名称</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">nextcloud      </span> <span style="color:#75715e">#命名空间 </span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:       <span style="color:#75715e">#定义容器模板，该模板可以包含多个容器 </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">3</span>     <span style="color:#75715e">#副本数量</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:  <span style="color:#75715e">#标签选择器</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">k8s.kuboard.cn/layer</span>: <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">k8s.kuboard.cn/name</span>: <span style="color:#ae81ff">nextcloud</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">strategy</span>:   <span style="color:#75715e">#滚动升级策略</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">type</span>: <span style="color:#ae81ff">RollingUpdate     </span> <span style="color:#75715e">#类型</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">rollingUpdate</span>:               <span style="color:#75715e">#由于replicas为3,则整个升级,pod个数在2-4个之间    </span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">maxSurge</span>: <span style="color:#ae81ff">25</span><span style="color:#ae81ff">%              </span> <span style="color:#75715e">#滚动升级时会先启动25%pod  </span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">maxUnavailable</span>: <span style="color:#ae81ff">25</span><span style="color:#ae81ff">%         </span> <span style="color:#75715e">#滚动升级时允许的最大Unavailable的pod个数</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">template</span>:                     <span style="color:#75715e">#镜像模板                   </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">metadata</span>: <span style="color:#75715e">#元数据</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">labels</span>:  <span style="color:#75715e">#标签</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">k8s.kuboard.cn/layer</span>: <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">k8s.kuboard.cn/name</span>: <span style="color:#ae81ff">nextcloud</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">spec</span>:  <span style="color:#75715e">#定义容器模板，该模板可以包含多个容器</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">containers</span>:   <span style="color:#75715e">#容器信息</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nextcloud     </span> <span style="color:#75715e">#容器名称</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#e6db74">&#39;172.16.20.100/library/nextcloud:yan&#39;</span>      <span style="color:#75715e">#镜像名称</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">imagePullPolicy</span>: <span style="color:#ae81ff">Always    </span> <span style="color:#75715e">#镜像下载策略 </span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">http</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">TCP</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">resources</span>:    <span style="color:#75715e">#CPU内存限制</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">limits</span>:     <span style="color:#75715e">#限制cpu内存                      </span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">cpu</span>: <span style="color:#ae81ff">200m</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">memory</span>: <span style="color:#ae81ff">200m</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">requests</span>:    <span style="color:#75715e">#请求cpu内存</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">cpu</span>: <span style="color:#ae81ff">100m</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">memory</span>: <span style="color:#ae81ff">100m</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">securityContext</span>: <span style="color:#75715e">#-------------------------#安全设定</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">privileged</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e">#-----------------------#开启享有特权</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">volumeMounts</span>:   <span style="color:#75715e">#----------------------------#挂载volumes中定义的磁盘</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">html</span> <span style="color:#75715e">#---------------------------#挂载容器1</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/var/www/html </span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">session</span> <span style="color:#75715e">#------------------------#挂载容器1</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/var/lib/php/session       </span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">volumes</span>:  <span style="color:#75715e">#在该pod上定义共享存储卷列表</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">html</span> <span style="color:#75715e">#-------------------------------#共享存储卷名称 （volumes类型有很多种）</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">persistentVolumeClaim</span>: <span style="color:#75715e">#-------------------#volumes类型为pvc</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">claimName</span>: <span style="color:#ae81ff">html </span> <span style="color:#75715e">#-----------------------#关联pvc名称</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">session</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">persistentVolumeClaim</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">claimName</span>: <span style="color:#ae81ff">session        </span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">restartPolicy</span>: <span style="color:#ae81ff">Always</span> <span style="color:#75715e">#------------------------#Pod的重启策略 </span>
+</span></span><span style="display:flex;"><span>                              <span style="color:#75715e">#Always表示一旦不管以何种方式终止运行，kubelet都将重启，</span>
+</span></span><span style="display:flex;"><span>                              <span style="color:#75715e">#OnFailure表示只有Pod以非0退出码退出才重启，</span>
+</span></span><span style="display:flex;"><span>                              <span style="color:#75715e">#Nerver表示不再重启该Pod</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">schedulerName</span>: <span style="color:#ae81ff">default-scheduler </span> <span style="color:#75715e">#指定pod调度到节点</span>
+</span></span></code></pre></div><h2 id="service资源对象yaml详解"><strong>Service资源对象yaml详解</strong><a hidden class="anchor" aria-hidden="true" href="#service资源对象yaml详解">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:  <span style="color:#75715e">#---------------------------------#元数据</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">annotations</span>: <span style="color:#75715e">#-----------------------------#注释信息</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s.kuboard.cn/workload</span>: <span style="color:#ae81ff">nextcloud</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>: <span style="color:#75715e">#----------------------------------#标签信息</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s.kuboard.cn/layer</span>: <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s.kuboard.cn/name</span>: <span style="color:#ae81ff">nextcloud</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nextcloud</span> <span style="color:#75715e">#--------------------------#名称</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">nextcloud</span> <span style="color:#75715e">#---------------------#命名空间</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>: <span style="color:#75715e">#--------------------------------------#定义Service模板</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">clusterIP</span>: <span style="color:#ae81ff">10.0.181.206</span> <span style="color:#75715e">#------------------#指定svcip地址 不指定则随机 </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#NodePort类型：集群外网络</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">NodePort</span> <span style="color:#75715e">#---------------------------#类型为NodePort  </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mnwwwp</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">nodePort</span>: <span style="color:#ae81ff">30001</span> <span style="color:#75715e">#----------------------#当type = NodePort时，指定映射到物理机的端口号</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">port</span>: <span style="color:#ae81ff">80</span> <span style="color:#75715e">#-----------------------------#服务监听的端口号</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">protocol</span>: <span style="color:#ae81ff">TCP</span> <span style="color:#75715e">#------------------------#端口协议，支持TCP和UDP，默认TCP</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">targetPort</span>: <span style="color:#ae81ff">80</span> <span style="color:#75715e">#-----------------------#需要转发到后端Pod的端口号</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#ClusterIP类型：集群内网络</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># type: ClusterIP</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#   - name: mnwwwp</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#     port: 80</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#     protocol: TCP</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#     targetPort: 80</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#   - name: j5smwx</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#     port: 22</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#     protocol: TCP</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#     targetPort: 22</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">selector</span>:  <span style="color:#75715e">#-------------------------------#label selector配置，将选择具有label标签的Pod作为管理 </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s.kuboard.cn/layer</span>: <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">k8s.kuboard.cn/name</span>: <span style="color:#ae81ff">nextcloud</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">sessionAffinity</span>: <span style="color:#ae81ff">None</span> <span style="color:#75715e">#--------------------#是否支持session</span>
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/k8sactualcombat/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>kubernetes实战</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/tabby/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Tabby 一款强大而美观的跨平台终端神器</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://xyenvy.github.io/sitemap.xml

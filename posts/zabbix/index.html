@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Zabbix | Hopeful</title>
+<meta name="keywords" content="Zabbix">
+<meta name="description" content="Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/zabbix/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="Zabbix" />
+<meta property="og:description" content="Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/zabbix/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/19.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-02T15:07:46+00:00" />
+<meta property="article:modified_time" content="2023-03-02T15:07:46+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/19.jpg" />
+<meta name="twitter:title" content="Zabbix"/>
+<meta name="twitter:description" content="Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Zabbix",
+      "item": "https://xyenvy.github.io/posts/zabbix/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Zabbix",
+  "name": "Zabbix",
+  "description": "Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案",
+  "keywords": [
+    "Zabbix"
+  ],
+  "articleBody": "常见监控方案 开源监控软件：cacti、nagios、zabbix、smokeping、open-falcon等\nZabbix使用场景及系统概述 Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案。\nzabbix使用场景 zabbix系统概述 数据采集：\n周期性时序数据\n主机/对象：服务器、路由器、交换机、存储、防火墙、IP、PORT、URL、自定义监控对象... 采集目标：监控项，指标数据（metrics data） 数据存储：\n监控数据存储系统\nSQL: MySQL/MariaDB(Zabbix) NoSQL：Redis(Open-falcon) rrd: Round Robin Database(Cacti) 数据类型：\n历史数据: 每个监控项采集到的每个监控值 趋势数据: 趋势表里主要保留某个监控项一个小时内历史数据的最大值、最小值和平均值以及该监控项一个小时内所采 集到的数据个数。 阈值： 可按照预定义的阈值等级实现分层报警 告警机制： email,短信,微信,语音,故障自治愈\nzabbix 核心任务 数据采集：\n数据采集方式：zabbix-server，zabbix-proxy，zabbix-agent\nAgentless：SNMP,Telnet,ssh, IPMI, JMX, Agent：zabbix agent 数据存储： zabbix database 数据展示： zabbix web\ngraph -\u003e screen -\u003e slideshow(将多个screen以幻灯片的方式进行轮流展示) grafana:\n以zabbix为数据源展示更绚丽的界面 告警通知：\nhost (host groups) \u003c- templates #从模板继承告警配置 host -\u003e items -\u003e triggers -\u003e action (条件-conditions, 操作-operations) #自定义告警配置 规划部署 部署环境 服务器系统：centos7.9，ubuntu20.04 yum安装zabbix 安装说明\n# Install Zabbix repository wget https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm yum install zabbix-release-5.0-1.el7.noarch.rpm yum clean all # 安装Zabbix server，Web前端，agent yum install zabbix-server-mysql zabbix-agent # Install Zabbix frontend # Enable Red Hat Software Collections yum install centos-release-scl # 编辑配置文件 /etc/yum.repos.d/zabbix.repo and enable zabbix-frontend repository. [zabbix-frontend] ... enabled=1 ... # Install Zabbix frontend packages. yum install zabbix-web-mysql-scl zabbix-nginx-conf-scl # 安装数据库 # 在线一键安装脚本地址 https://itshare.work/2022/09/30/MySQLinstallScript/ # 创建初始数据库 # Make sure you have database server up and running. # 在数据库主机上运行以下代码 mysql -uroot -p mysql\u003e create database zabbix character set utf8 collate utf8_bin; Query OK, 1 row affected (0.01 sec) mysql\u003e create user zabbix@localhost identified by '123456'; Query OK, 0 rows affected (0.00 sec) mysql\u003e grant all privileges on zabbix.* to zabbix@localhost; Query OK, 0 rows affected (0.00 sec) mysql\u003e set global log_bin_trust_function_creators = 1; Query OK, 0 rows affected (0.00 sec) mysql\u003e quit; # 导入初始架构和数据，系统将提示您输入新创建的密码。 [root@centos7 ~]# zcat /usr/share/doc/zabbix-server-mysql-5.0.31/create.sql.gz | mysql -uzabbix -p123456 zabbix #Disable log_bin_trust_function_creators option after importing database schema. # mysql -uroot -p password mysql\u003e set global log_bin_trust_function_creators = 0; mysql\u003e quit; #为Zabbix server配置数据库 #编辑配置文件 /etc/zabbix/zabbix_server.conf DBPassword=12456 # 为 Zabbix前端配置PHP # 编辑配置文件 /etc/opt/rh/rh-nginx116/nginx/conf.d/zabbix.conf uncomment and set 'listen' and 'server_name' directives. # listen 80; # server_name example.com; # 编辑配置文件 /etc/opt/rh/rh-php72/php-fpm.d/zabbix.conf add nginx to listen.acl_users directive. listen.acl_users = apache,nginx # Then uncomment and set the right timezone for you.(取消注释，设置时区) php_value[date.timezone] = Asia/Shanghai # 启动Zabbix server和agent进程 # 启动Zabbix server和agent进程，并为它们设置开机自启： # systemctl restart zabbix-server zabbix-agent rh-nginx116-nginx rh-php72-php-fpm # systemctl enable zabbix-server zabbix-agent rh-nginx116-nginx rh-php72-php-fpm 开始使用 http://ip:port apt安装 Zabbix 5.0 LTS for Ubuntu 20.04 (Focal), MySQL, Apache\n# Install and configure Zabbix for your platform # a. Install Zabbix repository wget https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1%2Bfocal_all.deb dpkg -i zabbix-release_5.0-1+focal_all.deb apt update # 安装Zabbix server，Web前端，agent apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent # 安装数据库 apt install mysql-server -y # 创建初始数据库 # Make sure you have database server up and running. # 在数据库主机上运行以下代码。 # mysql -uroot -p password mysql\u003e create database zabbix character set utf8 collate utf8_bin; mysql\u003e create user zabbix@localhost identified by '123456'; mysql\u003e grant all privileges on zabbix.* to zabbix@localhost; mysql\u003e set global log_bin_trust_function_creators = 1; mysql\u003e quit; # 导入初始架构和数据，系统将提示您输入新创建的密码。 zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p123456 zabbix # Disable log_bin_trust_function_creators option after importing database schema. # mysql -uroot -p password mysql\u003e set global log_bin_trust_function_creators = 0; mysql\u003e quit; # 为Zabbix server配置数据库 # 编辑配置文件 /etc/zabbix/zabbix_server.conf DBPassword=123456 # 为Zabbix前端配置PHP # 编辑配置文件 /etc/zabbix/apache.conf uncomment and set the right timezone for you. php_value date.timezone Asia/Shanghai # 动Zabbix server和agent进程 # 启动Zabbix server和agent进程，并为它们设置开机自启： systemctl restart zabbix-server zabbix-agent apache2 systemctl enable zabbix-server zabbix-agent apache2 ",
+  "wordCount" : "1469",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/19.jpg","datePublished": "2023-03-02T15:07:46Z",
+  "dateModified": "2023-03-02T15:07:46Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/zabbix/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                Zabbix
+            </h1>
+            <div class="post-description">
+                Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023-03-02
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>1469字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>3分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/zabbix/" style="color: var(--secondary)!important;">Zabbix</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/19.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%b8%b8%e8%a7%81%e7%9b%91%e6%8e%a7%e6%96%b9%e6%a1%88" aria-label="常见监控方案">常见监控方案</a></li>
+                <li>
+                    <a href="#zabbix%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af%e5%8f%8a%e7%b3%bb%e7%bb%9f%e6%a6%82%e8%bf%b0" aria-label="Zabbix使用场景及系统概述">Zabbix使用场景及系统概述</a></li>
+                <li>
+                    <a href="#zabbix%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="zabbix使用场景">zabbix使用场景</a></li>
+                <li>
+                    <a href="#zabbix%e7%b3%bb%e7%bb%9f%e6%a6%82%e8%bf%b0" aria-label="zabbix系统概述">zabbix系统概述</a></li>
+                <li>
+                    <a href="#zabbix-%e6%a0%b8%e5%bf%83%e4%bb%bb%e5%8a%a1" aria-label="zabbix 核心任务">zabbix 核心任务</a></li>
+                <li>
+                    <a href="#%e8%a7%84%e5%88%92%e9%83%a8%e7%bd%b2" aria-label="规划部署">规划部署</a><ul>
+                        
+                <li>
+                    <a href="#%e9%83%a8%e7%bd%b2%e7%8e%af%e5%a2%83" aria-label="部署环境">部署环境</a></li></ul>
+                </li>
+                <li>
+                    <a href="#yum%e5%ae%89%e8%a3%85zabbix" aria-label="yum安装zabbix">yum安装zabbix</a></li>
+                <li>
+                    <a href="#apt%e5%ae%89%e8%a3%85" aria-label="apt安装">apt安装</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="常见监控方案">常见监控方案<a hidden class="anchor" aria-hidden="true" href="#常见监控方案">#</a></h2>
+<p>开源监控软件：cacti、nagios、zabbix、smokeping、open-falcon等</p>
+<h2 id="zabbix使用场景及系统概述">Zabbix使用场景及系统概述<a hidden class="anchor" aria-hidden="true" href="#zabbix使用场景及系统概述">#</a></h2>
+<p>Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案。</p>
+<h2 id="zabbix使用场景">zabbix使用场景<a hidden class="anchor" aria-hidden="true" href="#zabbix使用场景">#</a></h2>
+<p><img loading="lazy" src="/posts.images/image.assets/1677742555473.png" alt="1677742555473"  />
+</p>
+<h2 id="zabbix系统概述">zabbix系统概述<a hidden class="anchor" aria-hidden="true" href="#zabbix系统概述">#</a></h2>
+<p><img loading="lazy" src="/posts.images/image.assets/1677742581882.png" alt="1677742581882"  />
+</p>
+<p><strong>数据采集：</strong></p>
+<p>周期性时序数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>主机/对象：服务器、路由器、交换机、存储、防火墙、IP、PORT、URL、自定义监控对象...
+</span></span><span style="display:flex;"><span>采集目标：监控项，指标数据（metrics data）
+</span></span></code></pre></div><p><strong>数据存储：</strong></p>
+<p>监控数据存储系统</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>SQL: MySQL/MariaDB<span style="color:#f92672">(</span>Zabbix<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>NoSQL：Redis<span style="color:#f92672">(</span>Open-falcon<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>rrd: Round Robin Database<span style="color:#f92672">(</span>Cacti<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p><strong>数据类型：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>历史数据: 每个监控项采集到的每个监控值
+</span></span><span style="display:flex;"><span>趋势数据: 趋势表里主要保留某个监控项一个小时内历史数据的最大值、最小值和平均值以及该监控项一个小时内所采
+</span></span><span style="display:flex;"><span>集到的数据个数。
+</span></span></code></pre></div><p><strong>阈值：</strong>
+可按照预定义的阈值等级实现分层报警
+<strong>告警机制：</strong>
+email,短信,微信,语音,故障自治愈</p>
+<h2 id="zabbix-核心任务">zabbix 核心任务<a hidden class="anchor" aria-hidden="true" href="#zabbix-核心任务">#</a></h2>
+<p><strong>数据采集：</strong></p>
+<p>数据采集方式：zabbix-server，zabbix-proxy，zabbix-agent</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Agentless：SNMP,Telnet,ssh, IPMI, JMX,
+</span></span><span style="display:flex;"><span>Agent：zabbix agent
+</span></span></code></pre></div><p><strong>数据存储：</strong>
+zabbix database
+<strong>数据展示：</strong>
+zabbix web</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>graph -&gt; screen -&gt; slideshow(将多个screen以幻灯片的方式进行轮流展示)
+</span></span></code></pre></div><p>grafana:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>以zabbix为数据源展示更绚丽的界面
+</span></span></code></pre></div><p><strong>告警通知：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>host <span style="color:#f92672">(</span>host groups<span style="color:#f92672">)</span> &lt;- templates <span style="color:#75715e">#从模板继承告警配置</span>
+</span></span><span style="display:flex;"><span>host -&gt; items -&gt; triggers -&gt; action <span style="color:#f92672">(</span>条件-conditions, 操作-operations<span style="color:#f92672">)</span> <span style="color:#75715e">#自定义告警配置</span>
+</span></span></code></pre></div><h2 id="规划部署">规划部署<a hidden class="anchor" aria-hidden="true" href="#规划部署">#</a></h2>
+<h3 id="部署环境">部署环境<a hidden class="anchor" aria-hidden="true" href="#部署环境">#</a></h3>
+<ul>
+<li>服务器系统：centos7.9，ubuntu20.04</li>
+</ul>
+<h2 id="yum安装zabbix">yum安装zabbix<a hidden class="anchor" aria-hidden="true" href="#yum安装zabbix">#</a></h2>
+<p><a href="https://www.zabbix.com/cn/download?zabbix=5.0&amp;os_distribution=centos&amp;os_version=7&amp;components=server_frontend_agent&amp;db=mysql&amp;ws=nginx">安装说明</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Install Zabbix repository</span>
+</span></span><span style="display:flex;"><span>wget https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>yum install zabbix-release-5.0-1.el7.noarch.rpm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>yum clean all
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 安装Zabbix server，Web前端，agent</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>yum install zabbix-server-mysql zabbix-agent
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install Zabbix frontend</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable Red Hat Software Collections</span>
+</span></span><span style="display:flex;"><span>yum install centos-release-scl
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 编辑配置文件 /etc/yum.repos.d/zabbix.repo and enable zabbix-frontend repository.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>zabbix-frontend<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>enabled<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install Zabbix frontend packages.</span>
+</span></span><span style="display:flex;"><span>yum install zabbix-web-mysql-scl zabbix-nginx-conf-scl
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 安装数据库</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在线一键安装脚本地址</span>
+</span></span><span style="display:flex;"><span>https://itshare.work/2022/09/30/MySQLinstallScript/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 创建初始数据库</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Make sure you have database server up and running.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在数据库主机上运行以下代码</span>
+</span></span><span style="display:flex;"><span>mysql -uroot -p
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; create database zabbix character set utf8 collate utf8_bin;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">1</span> row affected <span style="color:#f92672">(</span>0.01 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; create user zabbix@localhost identified by <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.00 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; grant all privileges on zabbix.* to zabbix@localhost;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.00 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; set global log_bin_trust_function_creators <span style="color:#f92672">=</span> 1;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.00 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mysql&gt; quit;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 导入初始架构和数据，系统将提示您输入新创建的密码。</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos7 ~<span style="color:#f92672">]</span><span style="color:#75715e"># zcat /usr/share/doc/zabbix-server-mysql-5.0.31/create.sql.gz | mysql -uzabbix -p123456 zabbix</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Disable log_bin_trust_function_creators option after importing database schema.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mysql -uroot -p</span>
+</span></span><span style="display:flex;"><span>password
+</span></span><span style="display:flex;"><span>mysql&gt; set global log_bin_trust_function_creators <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>mysql&gt; quit;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#为Zabbix server配置数据库</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#编辑配置文件 /etc/zabbix/zabbix_server.conf</span>
+</span></span><span style="display:flex;"><span>DBPassword<span style="color:#f92672">=</span><span style="color:#ae81ff">12456</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 为 Zabbix前端配置PHP</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 编辑配置文件 /etc/opt/rh/rh-nginx116/nginx/conf.d/zabbix.conf uncomment and set &#39;listen&#39; and &#39;server_name&#39; directives.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># listen 80;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># server_name example.com;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 编辑配置文件 /etc/opt/rh/rh-php72/php-fpm.d/zabbix.conf add nginx to listen.acl_users directive.</span>
+</span></span><span style="display:flex;"><span>listen.acl_users <span style="color:#f92672">=</span> apache,nginx
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Then uncomment and set the right timezone for you.(取消注释，设置时区)</span>
+</span></span><span style="display:flex;"><span>php_value<span style="color:#f92672">[</span>date.timezone<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> Asia/Shanghai
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 启动Zabbix server和agent进程</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 启动Zabbix server和agent进程，并为它们设置开机自启：</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># systemctl restart zabbix-server zabbix-agent rh-nginx116-nginx rh-php72-php-fpm</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># systemctl enable zabbix-server zabbix-agent rh-nginx116-nginx rh-php72-php-fpm</span>
+</span></span></code></pre></div><ul>
+<li>开始使用</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>http://ip:port
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1677747113512.png" alt="1677747113512"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1677747122483.png" alt="1677747122483"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1677747141707.png" alt="1677747141707"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1677747204306.png" alt="1677747204306"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1677747218962.png" alt="1677747218962"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1677747236290.png" alt="1677747236290"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1677747305904.png" alt="1677747305904"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1677747322004.png" alt="1677747322004"  />
+</p>
+<h2 id="apt安装">apt安装<a hidden class="anchor" aria-hidden="true" href="#apt安装">#</a></h2>
+<p><a href="https://www.zabbix.com/cn/download?zabbix=5.0&amp;os_distribution=ubuntu&amp;os_version=20.04&amp;components=server_frontend_agent&amp;db=mysql&amp;ws=apache">Zabbix 5.0 LTS for Ubuntu 20.04 (Focal), MySQL, Apache</a></p>
+<p><img loading="lazy" src="/posts.images/image.assets/1677748010282.png" alt="1677748010282"  />
+</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Install and configure Zabbix for your platform</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># a. Install Zabbix repository</span>
+</span></span><span style="display:flex;"><span>wget https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1%2Bfocal_all.deb
+</span></span><span style="display:flex;"><span>dpkg -i zabbix-release_5.0-1+focal_all.deb
+</span></span><span style="display:flex;"><span>apt update
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 安装Zabbix server，Web前端，agent</span>
+</span></span><span style="display:flex;"><span>apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 安装数据库</span>
+</span></span><span style="display:flex;"><span>apt install mysql-server -y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 创建初始数据库</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Make sure you have database server up and running.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在数据库主机上运行以下代码。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mysql -uroot -p</span>
+</span></span><span style="display:flex;"><span>password
+</span></span><span style="display:flex;"><span>mysql&gt; create database zabbix character set utf8 collate utf8_bin;
+</span></span><span style="display:flex;"><span>mysql&gt; create user zabbix@localhost identified by <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span><span style="display:flex;"><span>mysql&gt; grant all privileges on zabbix.* to zabbix@localhost;
+</span></span><span style="display:flex;"><span>mysql&gt; set global log_bin_trust_function_creators <span style="color:#f92672">=</span> 1;
+</span></span><span style="display:flex;"><span>mysql&gt; quit;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 导入初始架构和数据，系统将提示您输入新创建的密码。</span>
+</span></span><span style="display:flex;"><span>zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p123456 zabbix
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Disable log_bin_trust_function_creators option after importing database schema.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mysql -uroot -p</span>
+</span></span><span style="display:flex;"><span>password
+</span></span><span style="display:flex;"><span>mysql&gt; set global log_bin_trust_function_creators <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>mysql&gt; quit;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 为Zabbix server配置数据库</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 编辑配置文件 /etc/zabbix/zabbix_server.conf</span>
+</span></span><span style="display:flex;"><span>DBPassword<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 为Zabbix前端配置PHP</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 编辑配置文件 /etc/zabbix/apache.conf uncomment and set the right timezone for you.</span>
+</span></span><span style="display:flex;"><span>php_value date.timezone Asia/Shanghai
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 动Zabbix server和agent进程</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 启动Zabbix server和agent进程，并为它们设置开机自启：</span>
+</span></span><span style="display:flex;"><span>systemctl restart zabbix-server zabbix-agent apache2
+</span></span><span style="display:flex;"><span>systemctl enable zabbix-server zabbix-agent apache2
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Docker镜像加速</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/ansible2/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>运维自动化工具Ansible(二)</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

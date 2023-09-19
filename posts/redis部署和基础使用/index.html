@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Redis部署和基础使用 | Hopeful</title>
+<meta name="keywords" content="Redis">
+<meta name="description" content="Redis (Remote Dictionary Server远程字典服务)是一个遵循BSD MIT开源协议的高性能的NoSQL">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="Redis部署和基础使用" />
+<meta property="og:description" content="Redis (Remote Dictionary Server远程字典服务)是一个遵循BSD MIT开源协议的高性能的NoSQL" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/30.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-07T21:16:33+00:00" />
+<meta property="article:modified_time" content="2022-12-07T21:16:33+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/30.jpg" />
+<meta name="twitter:title" content="Redis部署和基础使用"/>
+<meta name="twitter:description" content="Redis (Remote Dictionary Server远程字典服务)是一个遵循BSD MIT开源协议的高性能的NoSQL"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Redis部署和基础使用",
+      "item": "https://xyenvy.github.io/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Redis部署和基础使用",
+  "name": "Redis部署和基础使用",
+  "description": "Redis (Remote Dictionary Server远程字典服务)是一个遵循BSD MIT开源协议的高性能的NoSQL",
+  "keywords": [
+    "Redis"
+  ],
+  "articleBody": "Redis基础 简介 Redis (Remote Dictionary Server远程字典服务)是一个遵循BSD MIT开源协议的高性能的NoSQL.Redis基于ANSI C语言语言)编写的key-value数据库,是意大利的Salvatore Sanfilippo在2009年发布，从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal公司赞助。目前国内外使用的公司众多,比如:阿里,腾讯,百度,京东,新浪微博,GitHub,Twitter 等Redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，Go, C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端 DB-Engine月度排行榜Redis在键值型存储类的数据库长期居于首位,远远高于第二位的memcached\n特性 速度快: 10W QPS,基于内存,C语言实现 单线程 持久化 支持多种数据结构 支持多种编程语言 功能丰富: 支持Lua脚本,发布订阅,事务,pipeline等功能 简单: 代码短小精悍(单机核心代码只有23000行左右),单线程开发容易,不依赖外部库,使用简单 主从复制 支持高可用和分布式 单线程 Redis 6.0版本前一直是单线程方式处理用户的请求\n单线程为何如此快?\n纯内存 非阻塞避免线程切换和竞态消耗 注意事项\n一次只运行一条命令 避免执行长(慢)命令:keys *, flushall, flushdb, slow lua script, mutil/exec, operate bigvalue(collection) 其实不是单线程: 早期版本是单进程单线程,3.0 版本后实际还有其它的线程, 实现特定功能,如: fysnc file descriptor,close file descriptor 常见应用场景 缓存：缓存RDBMS中数据,比如网站的查询结果、商品信息、微博、新闻、消息 Session 共享：实现Web集群中的多服务器间的session共享 计数器：商品访问排行榜、浏览数、粉丝数、关注、点赞、评论等和次数相关的数值统计场景 社交：朋友圈、共同好友、可能认识他们等 地理位置: 基于地理信息系统GIS（Geographic Information System)实现摇一摇、附近的人、外卖等功能 消息队列：ELK等日志系统缓存、业务的订阅/发布系统 缓存的实现流程 数据更新操作流程：\n数据读操作流程：\nRedis安装及连接 官网下载地址\nhttp://download.redis.io/releases/ yum安装 查看yum库redis版本\nyum info redis 或者 yum info redis yum 安装 redis\nyum install -y redis # 启动 systemctl enable --now redis # 连接 [root@centos8-backup www]# redis-cli 127.0.0.1:6379\u003e # 查看信息 127.0.0.1:6379\u003e info # Server redis_version:5.0.3 redis_git_sha1:00000000 redis_git_dirty:0 redis_build_id:9529b692c0384fb7 redis_mode:standalone os:Linux 4.18.0-348.7.1.el8_5.x86_64 x86_64 arch_bits:64 multiplexing_api:epoll ...... ...... ...... 编译安装 Redis源码包下载地址 http://download.redis.io/releases/ 下载源码包 [root@centos7-master ~]# wget http://download.redis.io/releases/redis-6.2.6.tar.gz [root@centos7-master ~]# tar xf redis-6.2.6.tar.gz 安装依赖 # centos [root@centos7-master ~]# yum -y install gcc jemalloc-devel systemd-devel # ubuntu apt -y install make gcc libjemalloc-dev libsystemd-dev 编译安装 [root@centos7-master ~]# cd redis-6.2.6 #如果支持systemd,需要执行下面 [root@centos7-master redis-6.2.6]# make -j 2 USE_SYSTEMD=yes PREFIX=/usr/local/src/redis install # 配置环境变量 [root@centos7-master ~]# echo 'PATH=/usr/local/src/redis/bin:$PATH' \u003e /etc/profile.d/redis.sh [root@centos7-master ~]# [root@centos7-master ~]# . /etc/profile.d/redis.sh [root@centos7-master ~]# #准备相关目录和配置文件 #创建配置文件、日志、数据等目录 [root@centos7-master redis]# mkdir /usr/local/src/redis/{etc,log,data,run} [root@centos7-master redis-6.2.6]# cp redis.conf /usr/local/src/redis/etc/ 修改配置文件 logfile “/usr/local/src/redis/log/redis_6379.log”\n# Specify the log file name. Also the empty string can be used to force # Redis to log on the standard output. Note that if you use standard # output for logging but daemonize, logs will be sent to /dev/null logfile \"/usr/local/src/redis/log/redis_6379.log\" # To enable logging to the system logger, just set 'syslog-enabled' to yes, # and optionally update the other syslog parameters to suit your needs. # syslog-enabled no # Specify the syslog identity. # syslog-ident redis pidfile /usr/local/src/redis/run/redis_6379.pid\n# Note that on modern Linux systems \"/run/redis.pid\" is more conforming # and should be used instead. #pidfile /var/run/redis_6379.pid pidfile /usr/local/src/redis/run/redis_6379.pid # Specify the server verbosity level. # This can be one of: # debug (a lot of information, useful for development/testing) # verbose (many rarely useful info, but not a mess like the debug level) # notice (moderately verbose, what you want in production probably) # warning (only very important / critical messages are logged) loglevel notice dir “/usr/local/src/redis/data/6379”\n# Note that you must specify a directory here, not a file name. dir \"/usr/local/src/redis/data/6379\" ################################# REPLICATION ################################# # Master-Replica replication. Use replicaof to make a Redis instance a copy of # another Redis server. A few things to understand ASAP about Redis replication. dbfilename ‘dump.rdb’\n# sanitize-dump-payload no # The filename where to dump the DB dbfilename 'dump.rdb' 前台启动redis [root@centos7-master ~]# redis-server /usr/local/src/redis/etc/redis.conf 51487:C 07 Dec 2022 22:27:26.620 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo 51487:C 07 Dec 2022 22:27:26.620 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=51487, just started 51487:C 07 Dec 2022 22:27:26.620 # Configuration loaded 51487:M 07 Dec 2022 22:27:26.620 * Increased maximum number of open files to 10032 (it was originally set to 1024). 51487:M 07 Dec 2022 22:27:26.620 * monotonic clock: POSIX clock_gettime _._ _.-``__ ''-._ _.-`` `. `_. ''-._ Redis 6.2.6 (00000000/0) 64 bit .-`` .-```. ```\\/ _.,_ ''-._ ( ' , .-` | `, ) Running in standalone mode |`-._`-...-` __...-.``-._|'` _.-'| Port: 6379 | `-._ `._ / _.-' | PID: 51487 `-._ `-._ `-./ _.-' _.-' |`-._`-._ `-.__.-' _.-'_.-'| | `-._`-._ _.-'_.-' | https://redis.io `-._ `-._`-.__.-'_.-' _.-' |`-._`-._ `-.__.-' _.-'_.-'| | `-._`-._ _.-'_.-' | `-._ `-._`-.__.-'_.-' _.-' `-._ `-.__.-' _.-' `-._ _.-' `-.__.-' 51487:M 07 Dec 2022 22:27:26.621 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128. 51487:M 07 Dec 2022 22:27:26.621 # Server initialized 51487:M 07 Dec 2022 22:27:26.621 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect. 51487:M 07 Dec 2022 22:27:26.621 * Ready to accept connections 帮助 [root@centos7-master ~]# redis-server -h Usage: ./redis-server [/path/to/redis.conf] [options] [-] ./redis-server - (read config from stdin) ./redis-server -v or --version ./redis-server -h or --help ./redis-server --test-memory Examples: ./redis-server (run the server with default conf) ./redis-server /etc/redis/6379.conf ./redis-server --port 7777 ./redis-server --port 7777 --replicaof 127.0.0.1 8888 ./redis-server /etc/myredis.conf --loglevel verbose - ./redis-server /etc/myredis.conf --loglevel verbose Sentinel mode: ./redis-server /etc/sentinel.conf --sentinel [root@centos7-master ~]# 消除启动时的三个Warning提示信息(可选) Tcp backlog\nWARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128. Tcp backlog 是指TCP的第三次握手服务器端收到客户端 ack确认号之后到服务器用Accept函数处理请求前的队列长度，即全连接队列\n#vim /etc/sysctl.conf net.core.somaxconn = 511 #sysctl -p overcommit_memory\nWARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect. 内核参数说明\n内核参数overcommit_memory 实现内存分配策略,可选值有三个：0、1、2 0 表示内核将检查是否有足够的可用内存供应用进程使用；如果有足够的可用内存，内存申请允许；否则内存 申请失败，并把错误返回给应用进程 1 表示内核允许分配所有的物理内存，而不管当前的内存状态如何 2 表示内核允许分配超过所有物理内存和交换空间总和的内存 #vim /etc/sysctl.conf vm.overcommit_memory = 1 #sysctl -p transparent hugepage\nWARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never \u003e /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled. 警告：您在内核中启用了透明大页面（THP,不同于一般4k内存页,而为2M）支持。 这将在Redis中造成延迟 和内存使用问题。 要解决此问题，请以root 用户身份运行命令“echo never\u003e /sys/kernel/mm/transparent_hugepage/enabled”，并将其添加到您的/etc/rc.local中，以便在 重启后保留设置。禁用THP后，必须重新启动Redis。 注意：ubuntu20.04, Rocky8/CentOS8 默认为 never，所以此值无需优化\n验证是否消除warning\n[root@centos7-master ~]# redis-server /usr/local/src/redis/etc/redis.conf 51540:C 07 Dec 2022 22:38:45.196 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo 51540:C 07 Dec 2022 22:38:45.196 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=51540, just started 51540:C 07 Dec 2022 22:38:45.196 # Configuration loaded 51540:M 07 Dec 2022 22:38:45.197 * Increased maximum number of open files to 10032 (it was originally set to 1024). 51540:M 07 Dec 2022 22:38:45.197 * monotonic clock: POSIX clock_gettime _._ _.-``__ ''-._ _.-`` `. `_. ''-._ Redis 6.2.6 (00000000/0) 64 bit .-`` .-```. ```\\/ _.,_ ''-._ ( ' , .-` | `, ) Running in standalone mode |`-._`-...-` __...-.``-._|'` _.-'| Port: 6379 | `-._ `._ / _.-' | PID: 51540 `-._ `-._ `-./ _.-' _.-' |`-._`-._ `-.__.-' _.-'_.-'| | `-._`-._ _.-'_.-' | https://redis.io `-._ `-._`-.__.-'_.-' _.-' |`-._`-._ `-.__.-' _.-'_.-'| | `-._`-._ _.-'_.-' | `-._ `-._`-.__.-'_.-' _.-' `-._ `-.__.-' _.-' `-._ _.-' `-.__.-' 51540:M 07 Dec 2022 22:38:45.197 # Server initialized 51540:M 07 Dec 2022 22:38:45.198 * Loading RDB produced by version 6.2.6 51540:M 07 Dec 2022 22:38:45.198 * RDB age 2 seconds 51540:M 07 Dec 2022 22:38:45.198 * RDB memory usage when created 0.77 Mb 51540:M 07 Dec 2022 22:38:45.198 # Done loading RDB, keys loaded: 0, keys expired: 0. 51540:M 07 Dec 2022 22:38:45.198 * DB loaded from disk: 0.000 seconds 51540:M 07 Dec 2022 22:38:45.198 * Ready to accept connections 创建 Redis 用户和设置数据目录权限 [root@centos7-master ~]# useradd -r -s /sbin/nologin redis [root@centos7-master ~]# chown -R redis.redis /usr/local/src/redis/ [root@centos7-master ~]# 创建 Redis 服务 Service 文件 [root@centos7-master ~]# vim /lib/systemd/system/redis.service [Unit] Description=Redis persistent key-value database After=network.target [Service] ExecStart=/usr/local/src/redis/bin/redis-server /usr/local/src/redis/etc/redis.conf --supervised systemd ExecStop=/bin/kill -s QUIT $MAINPID Type=notify User=redis Group=redis RuntimeDirectory=redis RuntimeDirectoryMode=0755 LimitNOFILE=1000000 [Install] WantedBy=multi-user.target Redis 通过Service方式启动 systemctl daemon-reload systemctl restart redis systemctl status redis Redis多实例 基于源码编译安装的前提下实现redis的多实例\n# 进入/usr/local/src/redis/etc [root@centos7-master ~]# cd /usr/local/src/redis/etc/ [root@centos7-master etc]# # 修改配置文件，使用6380,6381端口启动实例 [root@centos7-master etc]# sed 's/6379/6380/' redis.conf \u003e redis6380.conf [root@centos7-master etc]# sed 's/6379/6380/' redis.conf \u003e redis6381.conf # 修改所属组 [root@centos7-master etc]# chown -R redis.redis * # 修改启动文件 [root@centos7-master etc]# cp /lib/systemd/system/redis.service /lib/systemd/system/redis6380.service [root@centos7-master etc]# [root@centos7-master etc]# vim /lib/systemd/system/redis6380.service [Unit] Description=Redis persistent key-value database After=network.target [Service] ExecStart=/usr/local/src/redis/bin/redis-server /usr/local/src/redis/etc/redis6380.conf --supervised systemd ExecStop=/bin/kill -s QUIT $MAINPID Type=notify User=redis Group=redis RuntimeDirectory=redis RuntimeDirectoryMode=0755 LimitNOFILE=1000000 [Install] WantedBy=multi-user.target # 使用相同方法创建/lib/systemd/system/redis6381.service文件并修改内容 # 启动实例 [root@centos7-master etc]# systemctl status redis.service [root@centos7-master etc]# systemctl status redis6380.service [root@centos7-master etc]# systemctl status redis6381.service # 查看6379 6380 6381 端口是否启用 连接测试 [root@centos7-master etc]# redis-cli -p 6379 [root@centos7-master etc]# redis-cli -p 6380 [root@centos7-master etc]# redis-cli -p 6381 Redis 配置管理 配置文件说明 bind 0.0.0.0 #指定监听地址，支持用空格隔开的多个监听IP protected-mode yes #redis3.2之后加入的新特性，在没有设置bind IP和密码的时候,redis只允许访 问127.0.0.1:6379，可以远程连接，但当访问将提示警告信息并拒绝远程访问 port 6379 #监听端口,默认6379/tcp tcp-backlog 511 #三次握手的时候server端收到client ack确认号之后的队列值，即全连接队列长度 timeout 0 #客户端和Redis服务端的连接超时时间，默认是0，表示永不超时 tcp-keepalive 300 #tcp 会话保持时间300s daemonize no #默认no,即直接运行redis-server程序时,不作为守护进程运行，而是以前台方式运行， 如果想在后台运行需改成yes,当redis作为守护进程运行的时候，它会写一个 pid 到 /var/run/redis.pid 文件 supervised no #和OS相关参数，可设置通过upstart和systemd管理Redis守护进程，centos7后都使 用systemd pidfile /var/run/redis_6379.pid #pid文件路径,可以修改 为/apps/redis/run/redis_6379.pid loglevel notice #日志级别 logfile \"/path/redis.log\" #日志路径,示例:logfile \"/apps/redis/log/redis_6379.log\" databases 16 #设置数据库数量，默认：0-15，共16个库 always-show-logo yes #在启动redis 时是否显示或在日志中记录记录redis的logo save 900 1 #在900秒内有1个key内容发生更改,就执行快照机制 save 300 10 #在300秒内有10个key内容发生更改,就执行快照机制 save 60 10000 #60秒内如果有10000个key以上的变化，就自动快照备份 stop-writes-on-bgsave-error yes #默认为yes时,可能会因空间满等原因快照无法保存出错时，会禁 止redis写入操作，生产建议为no #此项只针对配置文件中的自动save有效 rdbcompression yes #持久化到RDB文件时，是否压缩，\"yes\"为压缩，\"no\"则反之 rdbchecksum yes #是否对备份文件开启RC64校验，默认是开启 dbfilename dump.rdb #快照文件名 dir ./ #快照文件保存路径，示例：dir \"/apps/redis/data\" #主从复制相关 # replicaof #指定复制的master主机地址和端口，5.0版之前的指令为 slaveof # masterauth #指定复制的master主机的密码 replica-serve-stale-data yes #当从库同主库失去连接或者复制正在进行，从机库有两种运行方式： 1、设置为yes(默认设置)，从库会继续响应客户端的读请求，此为建议值 2、设置为no，除去特定命令外的任何请求都会返回一个错误\"SYNC with master in progress\"。 replica-read-only yes #是否设置从库只读，建议值为yes,否则主库同步从库时可能会覆盖数据，造成 数据丢失 repl-diskless-sync no #是否使用socket方式复制数据(无盘同步)，新slave第一次连接master时需 要做数据的全量同步，redis server就要从内存dump出新的RDB文件，然后从master传到slave，有两种 方式把RDB文件传输给客户端： 1、基于硬盘（disk-backed）：为no时，master创建一个新进程dump生成RDB磁盘文件，RDB完成之后由 父进程（即主进程）将RDB文件发送给slaves，此为默认值 2、基于socket（diskless）：master创建一个新进程直接dump RDB至slave的网络socket，不经过主 进程和硬盘 #推荐使用基于硬盘（为no），是因为RDB文件创建后，可以同时传输给更多的slave，但是基于socket(为 yes)， 新slave连接到master之后得逐个同步数据。只有当磁盘I/O较慢且网络较快时，可用 diskless(yes),否则一般建议使用磁盘(no) repl-diskless-sync-delay 5 #diskless时复制的服务器等待的延迟时间，设置0为关闭，在延迟时间 内到达的客户端，会一起通过diskless方式同步数据，但是一旦复制开始，master节点不会再接收新slave 的复制请求，直到下一次同步开始才再接收新请求。即无法为延迟时间后到达的新副本提供服务，新副本将排 队等待下一次RDB传输，因此服务器会等待一段时间才能让更多副本到达。推荐值：30-60 repl-ping-replica-period 10 #slave根据master指定的时间进行周期性的PING master,用于监测 master状态,默认10s repl-timeout 60 #复制连接的超时时间，需要大于repl-ping-slave-period，否则会经常报超时 repl-disable-tcp-nodelay no #是否在slave套接字发送SYNC之后禁用 TCP_NODELAY，如果选 择\"yes\"，Redis将合并多个报文为一个大的报文，从而使用更少数量的包向slaves发送数据，但是将使数据 传输到slave上有延迟，Linux内核的默认配置会达到40毫秒，如果 \"no\" ，数据传输到slave的延迟将会 减少，但要使用更多的带宽 repl-backlog-size 512mb #复制缓冲区内存大小，当slave断开连接一段时间后，该缓冲区会累积复制 副本数据，因此当slave 重新连接时，通常不需要完全重新同步，只需传递在副本中的断开连接后没有同步的 部分数据即可。只有在至少有一个slave连接之后才分配此内存空间,建议建立主从时此值要调大一些或在低峰 期配置,否则会导致同步到slave失败 repl-backlog-ttl 3600 #多长时间内master没有slave连接，就清空backlog缓冲区 replica-priority 100 #当master不可用，哨兵Sentinel会根据slave的优先级选举一个master，此 值最低的slave会优先当选master，而配置成0，永远不会被选举，一般多个slave都设为一样的值，让其自 动选择 #min-replicas-to-write 3 #至少有3个可连接的slave，mater才接受写操作 #min-replicas-max-lag 10 #和上面至少3个slave的ping延迟不能超过10秒，否则master也将停止 写操作 requirepass foobared #设置redis连接密码，之后需要AUTH pass,如果有特殊符号，用\" \"引起来,生 产建议设置 rename-command #重命名一些高危命令，示例：rename-command FLUSHALL \"\" 禁用命令 #示例: rename-command del magedu maxclients 10000 #Redis最大连接客户端 maxmemory #redis使用的最大内存，单位为bytes字节，0为不限制，建议设为物理内存一半， 8G内存的计算方式8(G)*1024(MB)1024(KB)*1024(Kbyte)，需要注意的是缓冲区是不计算在maxmemory 内,生产中如果不设置此项,可能会导致OOM #maxmemory-policy noeviction 此为默认值 # MAXMEMORY POLICY：当达到最大内存时，Redis 将如何选择要删除的内容。您可以从以下行为中选择一 种： # # volatile-lru -\u003e Evict 使用近似 LRU，只有设置了过期时间的键。 # allkeys-lru -\u003e 使用近似 LRU 驱逐任何键。 # volatile-lfu -\u003e 使用近似 LFU 驱逐，只有设置了过期时间的键。 # allkeys-lfu -\u003e 使用近似 LFU 驱逐任何键。 # volatile-random -\u003e 删除设置了过期时间的随机密钥。 # allkeys-random -\u003e 删除一个随机密钥，任何密钥。 # volatile-ttl -\u003e 删除过期时间最近的key（次TTL） # noeviction -\u003e 不要驱逐任何东西，只是在写操作时返回一个错误。 # # LRU 表示最近最少使用 # LFU 表示最不常用 # # LRU、LFU 和 volatile-ttl 都是使用近似随机算法实现的。 # # 注意：使用上述任何一种策略，当没有合适的键用于驱逐时，Redis 将在需要更多内存的写操作时返回错 误。这些通常是创建新密钥、添加数据或修改现有密钥的命令。一些示例是：SET、INCR、HSET、LPUSH、 SUNIONSTORE、SORT（由于 STORE 参数）和 EXEC（如果事务包括任何需要内存的命令）。 #MAXMEMORY POLICY：当达到最大内存时，Redis 将如何选择要删除的内容。可以从下面行为中进行选 择： # volatile-lru -\u003e 在具有过期集的键中使用近似 LRU 驱逐。 # allkeys-lru -\u003e 使用近似 LRU 驱逐任何键。 # volatile-lfu -\u003e 在具有过期集的键中使用近似 LFU 驱逐。 # allkeys-lfu -\u003e 使用近似 LFU 驱逐任何键。 # volatile-random -\u003e 从具有过期设置的密钥中删除一个随机密钥。 # allkeys-random -\u003e 删除一个随机密钥，任何密钥。 # volatile-ttl -\u003e 删除过期时间最近的key（次TTL） # noeviction -\u003e 不要驱逐任何东西，只是在写操作时返回一个错误。 # # LRU 表示最近最少使用 # LFU 表示最不常用 # # LRU、LFU 和 volatile-ttl 均使用近似实现随机算法。 # # 注意：使用上述任何一种策略，Redis 都会在写入时返回错误操作，当没有合适的键用于驱逐时。 appendonly no #是否开启AOF日志记录，默认redis使用的是rdb方式持久化，这种方式在许多应用中已经 足够用了，但是redis如果中途宕机，会导致可能有几分钟的数据丢失(取决于dump数据的间隔时间)，根据 save来策略进行持久化，Append Only File是另一种持久化方式，可以提供更好的持久化特性，Redis会 把每次写入的数据在接收后都写入 appendonly.aof 文件，每次启动时Redis都会先把这个文件的数据读入 内存里，先忽略RDB文件。默认不启用此功能 appendfilename \"appendonly.aof\" #文本文件AOF的文件名，存放在dir指令指定的目录中 appendfsync everysec #aof持久化策略的配置 #no表示由操作系统保证数据同步到磁盘,Linux的默认fsync策略是30秒，最多会丢失30s的数据 #always表示每次写入都执行fsync，以保证数据同步到磁盘,安全性高,性能较差 #everysec表示每秒执行一次fsync，可能会导致丢失这1s数据,此为默认值,也生产建议值 #同时在执行bgrewriteaof操作和主进程写aof文件的操作，两者都会操作磁盘，而bgrewriteaof往往会 涉及大量磁盘操作，这样就会造成主进程在写aof文件的时候出现阻塞的情形,以下参数实现控制 no-appendfsync-on-rewrite no #在aof rewrite期间,是否对aof新记录的append暂缓使用文件同步 策略,主要考虑磁盘IO开支和请求阻塞时间。 #默认为no,表示\"不暂缓\",新的aof记录仍然会被立即同步到磁盘，是最安全的方式，不会丢失数据，但是要 忍受阻塞的问题 #为yes,相当于将appendfsync设置为no，这说明并没有执行磁盘操作，只是写入了缓冲区，因此这样并不 会造成阻塞（因为没有竞争磁盘），但是如果这个时候redis挂掉，就会丢失数据。丢失多少数据呢？Linux 的默认fsync策略是30秒，最多会丢失30s的数据,但由于yes性能较好而且会避免出现阻塞因此比较推荐 #rewrite 即对aof文件进行整理,将空闲空间回收,从而可以减少恢复数据时间 auto-aof-rewrite-percentage 100 #当Aof log增长超过指定百分比例时，重写AOF文件，设置为0表 示不自动重写Aof日志，重写是为了使aof体积保持最小，但是还可以确保保存最完整的数据 auto-aof-rewrite-min-size 64mb #触发aof rewrite的最小文件大小 aof-load-truncated yes #是否加载由于某些原因导致的末尾异常的AOF文件(主进程被kill/断电等)， 建议yes aof-use-rdb-preamble no #redis4.0新增RDB-AOF混合持久化格式，在开启了这个功能之后，AOF重 写产生的文件将同时包含RDB格式的内容和AOF格式的内容，其中RDB格式的内容用于记录已有的数据，而AOF 格式的内容则用于记录最近发生了变化的数据，这样Redis就可以同时兼有RDB持久化和AOF持久化的优点（既 能够快速地生成重写文件，也能够在出现问题时，快速地载入数据）,默认为no,即不启用此功能 lua-time-limit 5000 #lua脚本的最大执行时间，单位为毫秒 cluster-enabled yes #是否开启集群模式，默认不开启,即单机模式 cluster-config-file nodes-6379.conf #由node节点自动生成的集群配置文件名称 cluster-node-timeout 15000 #集群中node节点连接超时时间，单位ms,超过此时间，会踢出集群 cluster-replica-validity-factor 10 #单位为次,在执行故障转移的时候可能有些节点和master断 开一段时间导致数据比较旧，这些节点就不适用于选举为master，超过这个时间的就不会被进行故障转移,不 能当选master，计算公式：(node-timeout * replica-validity-factor) + repl-ping- replica-period cluster-migration-barrier 1 #集群迁移屏障，一个主节点至少拥有1个正常工作的从节点，即如果主 节点的slave节点故障后会将多余的从节点分配到当前主节点成为其新的从节点。 cluster-require-full-coverage yes #集群请求槽位全部覆盖，如果一个主库宕机且没有备库就会出 现集群槽位不全，那么yes时redis集群槽位验证不全,就不再对外提供服务(对key赋值时,会出现 CLUSTERDOWN The cluster is down的提示,cluster_state:fail,但ping 仍PONG)，而no则可以 继续使用,但是会出现查询数据查不到的情况(因为有数据丢失)。生产建议为no cluster-replica-no-failover no #如果为yes,此选项阻止在主服务器发生故障时尝试对其主服务器进 行故障转移。 但是，主服务器仍然可以执行手动强制故障转移，一般为no #Slow log 是 Redis 用来记录超过指定执行时间的日志系统，执行时间不包括与客户端交谈，发送回复等 I/O操作，而是实际执行命令所需的时间（在该阶段线程被阻塞并且不能同时为其它请求提供服务）,由于 slow log 保存在内存里面，读写速度非常快，因此可放心地使用，不必担心因为开启 slow log 而影响 Redis 的速度 slowlog-log-slower-than 10000 #以微秒为单位的慢日志记录，为负数会禁用慢日志，为0会记录每个 命令操作。默认值为10ms,一般一条命令执行都在微秒级,生产建议设为1ms-10ms之间 slowlog-max-len 128 #最多记录多少条慢日志的保存队列长度，达到此长度后，记录新命令会将最旧的命 令从命令队列中删除，以此滚动删除,即,先进先出,队列固定长度,默认128,值偏小,生产建议设为1000以上 Redis的配置文件介绍\nconfig 命令实现动态修改配置 config 命令用于查看当前redis配置、以及不重启redis服务实现动态更改redis配置等 注意：不是所有配置都可以动态修改,且此方式无法持久保存\nCONFIG SET parameter value 时间复杂度：O(1) CONFIG SET 命令可以动态地调整 Redis 服务器的配置(configuration)而无须重启。 可以使用它修改配置参数，或者改变 Redis 的持久化(Persistence)方式。 CONFIG SET 可以修改的配置参数可以使用命令 CONFIG GET * 来列出，所有被 CONFIG SET 修改的配 置参数都会立即生效。 CONFIG GET parameter 时间复杂度： O(N)，其中 N 为命令返回的配置选项数量。 CONFIG GET 命令用于取得运行中的 Redis 服务器的配置参数(configuration parameters)，在 Redis 2.4 版本中， 有部分参数没有办法用 CONFIG GET 访问，但是在最新的 Redis 2.6 版本中，所 有配置参数都已经可以用 CONFIG GET 访问了。 CONFIG GET 接受单个参数 parameter 作为搜索关键字，查找所有匹配的配置参数，其中参数和值以“键- 值对”(key-value pairs)的方式排列。 比如执行 CONFIG GET s* 命令，服务器就会返回所有以 s 开头的配置参数及参数的值： 设置客户端连接密码 #设置连接密码 127.0.0.1:6379\u003e CONFIG SET requirepass 123456 OK #查看连接密码 127.0.0.1:6379\u003e CONFIG GET requirepass 1) \"requirepass\" 2) \"123456\" 获取当前配置 #奇数行为键，偶数行为值 127.0.0.1:6379\u003e CONFIG GET * 1) \"dbfilename\" 2) \"dump.rdb\" 3) \"requirepass\" 4) \"\" 5) \"masterauth\" 6) \"\" 7) \"cluster-announce-ip\" 8) \"\" 9) \"unixsocket\" 10) \"\" 11) \"logfile\" 12) \"/var/log/redis/redis.log\" 13) \"pidfile\" 14) \"/var/run/redis_6379.pid\" 15) \"slave-announce-ip\" 16) \"\" 17) \"replica-announce-ip\" 18) \"\" 19) \"maxmemory\" 20) \"0\" ...... #查看bind 127.0.0.1:6379\u003e CONFIG GET bind 1) \"bind\" 2) \"0.0.0.0\" #Redis5.0有些设置无法修改,Redis6.2.6版本支持修改bind 127.0.0.1:6379\u003e CONFIG SET bind 127.0.0.1 (error) ERR Unsupported CONFIG parameter: bind 设置Redis使用的最大内存量 127.0.0.1:6379\u003e CONFIG SET maxmemory 8589934592 OK 127.0.0.1:6379\u003e CONFIG GET maxmemory 1) \"maxmemory\" 2) \"8589934592\" 慢查询 范例：SLOW LOG\nvim /etc/redis.conf slowlog-log-slower-than 1 #指定超过1us即为慢的指令，默认值为10000us slowlog-max-len 1024 #指定只保存最近的1024条慢记录，默认值为128 127.0.0.1:6379\u003e SLOWLOG LEN #查看慢日志的记录条数 (integer) 14 127.0.0.1:6379\u003e SLOWLOG GET [n] #查看慢日志的n条记录 1) 1) (integer) 14 2) (integer) 1544690617 3) (integer) 4 #第3)行表示每条指令的执行时长 4) 1) \"slowlog\" 127.0.0.1:6379\u003e SLOWLOG GET 3 1) 1) (integer) 7 2) (integer) 1602901545 3) (integer) 26 4) 1) \"SLOWLOG\" 2) \"get\" 5) \"127.0.0.1:38258\" 6) \"\" 2) 1) (integer) 6 2) (integer) 1602901540 3) (integer) 22 4) 1) \"SLOWLOG\" 2) \"get\" 3) \"2\" 5) \"127.0.0.1:38258\" 6) \"\" 3) 1) (integer) 5 2) (integer) 1602901497 3) (integer) 22 4) 1) \"SLOWLOG\" 2) \"GET\" 5) \"127.0.0.1:38258\" 6) \"\" 127.0.0.1:6379\u003e SLOWLOG RESET #清空慢日志 OK Redis持久化 RDB RDB 工作原理\n配置 AOF ",
+  "wordCount" : "8920",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/30.jpg","datePublished": "2022-12-07T21:16:33Z",
+  "dateModified": "2022-12-07T21:16:33Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                Redis部署和基础使用
+            </h1>
+            <div class="post-description">
+                Redis (Remote Dictionary Server远程字典服务)是一个遵循BSD MIT开源协议的高性能的NoSQL
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-12-07
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>8920字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>18分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/redis/" style="color: var(--secondary)!important;">Redis</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/30.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#redis%e5%9f%ba%e7%a1%80" aria-label="Redis基础">Redis基础</a><ul>
+                        
+                <li>
+                    <a href="#%e7%ae%80%e4%bb%8b" aria-label="简介">简介</a></li>
+                <li>
+                    <a href="#%e7%89%b9%e6%80%a7" aria-label="特性">特性</a></li>
+                <li>
+                    <a href="#%e5%8d%95%e7%ba%bf%e7%a8%8b" aria-label="单线程">单线程</a></li>
+                <li>
+                    <a href="#%e5%b8%b8%e8%a7%81%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="常见应用场景">常见应用场景</a></li>
+                <li>
+                    <a href="#%e7%bc%93%e5%ad%98%e7%9a%84%e5%ae%9e%e7%8e%b0%e6%b5%81%e7%a8%8b" aria-label="缓存的实现流程">缓存的实现流程</a></li></ul>
+                </li>
+                <li>
+                    <a href="#redis%e5%ae%89%e8%a3%85%e5%8f%8a%e8%bf%9e%e6%8e%a5" aria-label="Redis安装及连接">Redis安装及连接</a><ul>
+                        
+                <li>
+                    <a href="#yum%e5%ae%89%e8%a3%85" aria-label="yum安装">yum安装</a></li>
+                <li>
+                    <a href="#%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85" aria-label="编译安装">编译安装</a></li>
+                <li>
+                    <a href="#redis%e5%a4%9a%e5%ae%9e%e4%be%8b" aria-label="Redis多实例">Redis多实例</a></li></ul>
+                </li>
+                <li>
+                    <a href="#redis-%e9%85%8d%e7%bd%ae%e7%ae%a1%e7%90%86" aria-label="Redis 配置管理">Redis 配置管理</a><ul>
+                        
+                <li>
+                    <a href="#%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6%e8%af%b4%e6%98%8e" aria-label="配置文件说明">配置文件说明</a></li>
+                <li>
+                    <a href="#config-%e5%91%bd%e4%bb%a4%e5%ae%9e%e7%8e%b0%e5%8a%a8%e6%80%81%e4%bf%ae%e6%94%b9%e9%85%8d%e7%bd%ae" aria-label="config 命令实现动态修改配置">config 命令实现动态修改配置</a><ul>
+                        
+                <li>
+                    <a href="#%e8%ae%be%e7%bd%ae%e5%ae%a2%e6%88%b7%e7%ab%af%e8%bf%9e%e6%8e%a5%e5%af%86%e7%a0%81" aria-label="设置客户端连接密码">设置客户端连接密码</a></li>
+                <li>
+                    <a href="#%e8%8e%b7%e5%8f%96%e5%bd%93%e5%89%8d%e9%85%8d%e7%bd%ae" aria-label="获取当前配置">获取当前配置</a></li>
+                <li>
+                    <a href="#%e8%ae%be%e7%bd%aeredis%e4%bd%bf%e7%94%a8%e7%9a%84%e6%9c%80%e5%a4%a7%e5%86%85%e5%ad%98%e9%87%8f" aria-label="设置Redis使用的最大内存量">设置Redis使用的最大内存量</a></li>
+                <li>
+                    <a href="#%e6%85%a2%e6%9f%a5%e8%af%a2" aria-label="慢查询">慢查询</a></li>
+                <li>
+                    <a href="#redis%e6%8c%81%e4%b9%85%e5%8c%96" aria-label="Redis持久化">Redis持久化</a><ul>
+                        
+                <li>
+                    <a href="#rdb" aria-label="RDB">RDB</a></li>
+                <li>
+                    <a href="#%e9%85%8d%e7%bd%ae" aria-label="配置">配置</a></li>
+                <li>
+                    <a href="#aof" aria-label="AOF">AOF</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="redis基础">Redis基础<a hidden class="anchor" aria-hidden="true" href="#redis基础">#</a></h1>
+<h2 id="简介">简介<a hidden class="anchor" aria-hidden="true" href="#简介">#</a></h2>
+<p>Redis (Remote Dictionary Server远程字典服务)是一个遵循BSD MIT开源协议的高性能的NoSQL.Redis基于ANSI C语言语言)编写的key-value数据库,是意大利的Salvatore Sanfilippo在2009年发布，从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal公司赞助。目前国内外使用的公司众多,比如:阿里,腾讯,百度,京东,新浪微博,GitHub,Twitter 等Redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，Go, C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端
+DB-Engine月度排行榜Redis在键值型存储类的数据库长期居于首位,远远高于第二位的memcached</p>
+<h2 id="特性">特性<a hidden class="anchor" aria-hidden="true" href="#特性">#</a></h2>
+<ul>
+<li>速度快: 10W QPS,基于内存,C语言实现</li>
+<li>单线程</li>
+<li>持久化</li>
+<li>支持多种数据结构</li>
+<li>支持多种编程语言</li>
+<li>功能丰富: 支持Lua脚本,发布订阅,事务,pipeline等功能</li>
+<li>简单: 代码短小精悍(单机核心代码只有23000行左右),单线程开发容易,不依赖外部库,使用简单</li>
+<li>主从复制</li>
+<li>支持高可用和分布式</li>
+</ul>
+<h2 id="单线程">单线程<a hidden class="anchor" aria-hidden="true" href="#单线程">#</a></h2>
+<p>Redis 6.0版本前一直是单线程方式处理用户的请求</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670419301827.png" alt="1670419301827"  />
+</p>
+<p>单线程为何如此快?</p>
+<ul>
+<li>纯内存</li>
+<li>非阻塞避免线程切换和竞态消耗</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1670419331717.png" alt="1670419331717"  />
+</p>
+<p>注意事项</p>
+<ul>
+<li>一次只运行一条命令</li>
+<li>避免执行长(慢)命令:keys *, flushall, flushdb, slow lua script, mutil/exec, operate bigvalue(collection)</li>
+<li>其实不是单线程: 早期版本是单进程单线程,3.0 版本后实际还有其它的线程, 实现特定功能,如: fysnc file descriptor,close file descriptor</li>
+</ul>
+<h2 id="常见应用场景">常见应用场景<a hidden class="anchor" aria-hidden="true" href="#常见应用场景">#</a></h2>
+<ul>
+<li>缓存：缓存RDBMS中数据,比如网站的查询结果、商品信息、微博、新闻、消息</li>
+<li>Session 共享：实现Web集群中的多服务器间的session共享</li>
+<li>计数器：商品访问排行榜、浏览数、粉丝数、关注、点赞、评论等和次数相关的数值统计场景</li>
+<li>社交：朋友圈、共同好友、可能认识他们等</li>
+<li>地理位置: 基于地理信息系统GIS（Geographic Information System)实现摇一摇、附近的人、外卖等功能</li>
+<li>消息队列：ELK等日志系统缓存、业务的订阅/发布系统</li>
+</ul>
+<h2 id="缓存的实现流程">缓存的实现流程<a hidden class="anchor" aria-hidden="true" href="#缓存的实现流程">#</a></h2>
+<p>数据更新操作流程：</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670419470181.png" alt="1670419470181"  />
+</p>
+<p>数据读操作流程：</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670419490780.png" alt="1670419490780"  />
+</p>
+<h1 id="redis安装及连接">Redis安装及连接<a hidden class="anchor" aria-hidden="true" href="#redis安装及连接">#</a></h1>
+<p>官网下载地址</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>http://download.redis.io/releases/
+</span></span></code></pre></div><h2 id="yum安装">yum安装<a hidden class="anchor" aria-hidden="true" href="#yum安装">#</a></h2>
+<p>查看yum库redis版本</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>yum info redis   或者  yum info redis
+</span></span></code></pre></div><p>yum 安装 redis</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>yum install -y redis
+</span></span><span style="display:flex;"><span># 启动
+</span></span><span style="display:flex;"><span>systemctl enable --now redis
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 连接
+</span></span><span style="display:flex;"><span>[root@centos8-backup www]# redis-cli
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 查看信息
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; info
+</span></span><span style="display:flex;"><span># Server
+</span></span><span style="display:flex;"><span>redis_version:5.0.3
+</span></span><span style="display:flex;"><span>redis_git_sha1:00000000
+</span></span><span style="display:flex;"><span>redis_git_dirty:0
+</span></span><span style="display:flex;"><span>redis_build_id:9529b692c0384fb7
+</span></span><span style="display:flex;"><span>redis_mode:standalone
+</span></span><span style="display:flex;"><span>os:Linux 4.18.0-348.7.1.el8_5.x86_64 x86_64
+</span></span><span style="display:flex;"><span>arch_bits:64
+</span></span><span style="display:flex;"><span>multiplexing_api:epoll
+</span></span><span style="display:flex;"><span>......
+</span></span><span style="display:flex;"><span>......
+</span></span><span style="display:flex;"><span>......
+</span></span></code></pre></div><h2 id="编译安装">编译安装<a hidden class="anchor" aria-hidden="true" href="#编译安装">#</a></h2>
+<ul>
+<li>Redis源码包下载地址</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>http://download.redis.io/releases/
+</span></span></code></pre></div><ul>
+<li>下载源码包</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7-master ~]# wget http://download.redis.io/releases/redis-6.2.6.tar.gz
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# tar xf redis-6.2.6.tar.gz
+</span></span></code></pre></div><ul>
+<li>安装依赖</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># centos
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# yum -y install gcc jemalloc-devel systemd-devel
+</span></span><span style="display:flex;"><span># ubuntu
+</span></span><span style="display:flex;"><span>apt -y install make gcc libjemalloc-dev libsystemd-dev
+</span></span></code></pre></div><ul>
+<li>编译安装</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7-master ~]# cd redis-6.2.6
+</span></span><span style="display:flex;"><span>#如果支持systemd,需要执行下面
+</span></span><span style="display:flex;"><span>[root@centos7-master redis-6.2.6]# make -j 2 USE_SYSTEMD=yes PREFIX=/usr/local/src/redis  install
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 配置环境变量
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# echo &#39;PATH=/usr/local/src/redis/bin:$PATH&#39; &gt; /etc/profile.d/redis.sh
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# 
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# . /etc/profile.d/redis.sh
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#准备相关目录和配置文件
+</span></span><span style="display:flex;"><span>#创建配置文件、日志、数据等目录
+</span></span><span style="display:flex;"><span>[root@centos7-master redis]# mkdir /usr/local/src/redis/{etc,log,data,run}
+</span></span><span style="display:flex;"><span>[root@centos7-master redis-6.2.6]# cp redis.conf /usr/local/src/redis/etc/
+</span></span></code></pre></div><ul>
+<li>修改配置文件</li>
+</ul>
+<p>logfile  &ldquo;/usr/local/src/redis/log/redis_6379.log&rdquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># Specify the log file name. Also the empty string can be used to force
+</span></span><span style="display:flex;"><span># Redis to log on the standard output. Note that if you use standard
+</span></span><span style="display:flex;"><span># output for logging but daemonize, logs will be sent to /dev/null
+</span></span><span style="display:flex;"><span>logfile &#34;/usr/local/src/redis/log/redis_6379.log&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># To enable logging to the system logger, just set &#39;syslog-enabled&#39; to yes,
+</span></span><span style="display:flex;"><span># and optionally update the other syslog parameters to suit your needs.
+</span></span><span style="display:flex;"><span># syslog-enabled no
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># Specify the syslog identity.
+</span></span><span style="display:flex;"><span># syslog-ident redis
+</span></span></code></pre></div><p>pidfile /usr/local/src/redis/run/redis_6379.pid</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># Note that on modern Linux systems &#34;/run/redis.pid&#34; is more conforming
+</span></span><span style="display:flex;"><span># and should be used instead.
+</span></span><span style="display:flex;"><span>#pidfile /var/run/redis_6379.pid
+</span></span><span style="display:flex;"><span>pidfile /usr/local/src/redis/run/redis_6379.pid
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># Specify the server verbosity level.
+</span></span><span style="display:flex;"><span># This can be one of:
+</span></span><span style="display:flex;"><span># debug (a lot of information, useful for development/testing)
+</span></span><span style="display:flex;"><span># verbose (many rarely useful info, but not a mess like the debug level)
+</span></span><span style="display:flex;"><span># notice (moderately verbose, what you want in production probably)
+</span></span><span style="display:flex;"><span># warning (only very important / critical messages are logged)
+</span></span><span style="display:flex;"><span>loglevel notice
+</span></span></code></pre></div><p>dir &ldquo;/usr/local/src/redis/data/6379&rdquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># Note that you must specify a directory here, not a file name.
+</span></span><span style="display:flex;"><span>dir &#34;/usr/local/src/redis/data/6379&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>################################# REPLICATION #################################
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># Master-Replica replication. Use replicaof to make a Redis instance a copy of
+</span></span><span style="display:flex;"><span># another Redis server. A few things to understand ASAP about Redis replication.
+</span></span></code></pre></div><p>dbfilename &lsquo;dump.rdb&rsquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># sanitize-dump-payload no
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># The filename where to dump the DB
+</span></span><span style="display:flex;"><span>dbfilename &#39;dump.rdb&#39;
+</span></span></code></pre></div><ul>
+<li>前台启动redis</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7-master ~]# redis-server /usr/local/src/redis/etc/redis.conf 
+</span></span><span style="display:flex;"><span>51487:C 07 Dec 2022 22:27:26.620 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+</span></span><span style="display:flex;"><span>51487:C 07 Dec 2022 22:27:26.620 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=51487, just started
+</span></span><span style="display:flex;"><span>51487:C 07 Dec 2022 22:27:26.620 # Configuration loaded
+</span></span><span style="display:flex;"><span>51487:M 07 Dec 2022 22:27:26.620 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+</span></span><span style="display:flex;"><span>51487:M 07 Dec 2022 22:27:26.620 * monotonic clock: POSIX clock_gettime
+</span></span><span style="display:flex;"><span>                _._                                                  
+</span></span><span style="display:flex;"><span>           _.-``__ &#39;&#39;-._                                             
+</span></span><span style="display:flex;"><span>      _.-``    `.  `_.  &#39;&#39;-._           Redis 6.2.6 (00000000/0) 64 bit
+</span></span><span style="display:flex;"><span>  .-`` .-```.  ```\/    _.,_ &#39;&#39;-._                                  
+</span></span><span style="display:flex;"><span> (    &#39;      ,       .-`  | `,    )     Running in standalone mode
+</span></span><span style="display:flex;"><span> |`-._`-...-` __...-.``-._|&#39;` _.-&#39;|     Port: 6379
+</span></span><span style="display:flex;"><span> |    `-._   `._    /     _.-&#39;    |     PID: 51487
+</span></span><span style="display:flex;"><span>  `-._    `-._  `-./  _.-&#39;    _.-&#39;                                   
+</span></span><span style="display:flex;"><span> |`-._`-._    `-.__.-&#39;    _.-&#39;_.-&#39;|                                  
+</span></span><span style="display:flex;"><span> |    `-._`-._        _.-&#39;_.-&#39;    |           https://redis.io       
+</span></span><span style="display:flex;"><span>  `-._    `-._`-.__.-&#39;_.-&#39;    _.-&#39;                                   
+</span></span><span style="display:flex;"><span> |`-._`-._    `-.__.-&#39;    _.-&#39;_.-&#39;|                                  
+</span></span><span style="display:flex;"><span> |    `-._`-._        _.-&#39;_.-&#39;    |                                  
+</span></span><span style="display:flex;"><span>  `-._    `-._`-.__.-&#39;_.-&#39;    _.-&#39;                                   
+</span></span><span style="display:flex;"><span>      `-._    `-.__.-&#39;    _.-&#39;                                       
+</span></span><span style="display:flex;"><span>          `-._        _.-&#39;                                           
+</span></span><span style="display:flex;"><span>              `-.__.-&#39;                                               
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>51487:M 07 Dec 2022 22:27:26.621 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+</span></span><span style="display:flex;"><span>51487:M 07 Dec 2022 22:27:26.621 # Server initialized
+</span></span><span style="display:flex;"><span>51487:M 07 Dec 2022 22:27:26.621 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add &#39;vm.overcommit_memory = 1&#39; to /etc/sysctl.conf and then reboot or run the command &#39;sysctl vm.overcommit_memory=1&#39; for this to take effect.
+</span></span><span style="display:flex;"><span>51487:M 07 Dec 2022 22:27:26.621 * Ready to accept connections
+</span></span></code></pre></div><ul>
+<li>帮助</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7-master ~]# redis-server -h
+</span></span><span style="display:flex;"><span>Usage: ./redis-server [/path/to/redis.conf] [options] [-]
+</span></span><span style="display:flex;"><span>       ./redis-server - (read config from stdin)
+</span></span><span style="display:flex;"><span>       ./redis-server -v or --version
+</span></span><span style="display:flex;"><span>       ./redis-server -h or --help
+</span></span><span style="display:flex;"><span>       ./redis-server --test-memory &lt;megabytes&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Examples:
+</span></span><span style="display:flex;"><span>       ./redis-server (run the server with default conf)
+</span></span><span style="display:flex;"><span>       ./redis-server /etc/redis/6379.conf
+</span></span><span style="display:flex;"><span>       ./redis-server --port 7777
+</span></span><span style="display:flex;"><span>       ./redis-server --port 7777 --replicaof 127.0.0.1 8888
+</span></span><span style="display:flex;"><span>       ./redis-server /etc/myredis.conf --loglevel verbose -
+</span></span><span style="display:flex;"><span>       ./redis-server /etc/myredis.conf --loglevel verbose
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Sentinel mode:
+</span></span><span style="display:flex;"><span>       ./redis-server /etc/sentinel.conf --sentinel
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# 
+</span></span></code></pre></div><ul>
+<li>消除启动时的三个Warning提示信息(可选)</li>
+</ul>
+<p>Tcp backlog</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>WARNING: The TCP backlog setting of 511 cannot be enforced because
+</span></span><span style="display:flex;"><span>/proc/sys/net/core/somaxconn is set to the lower value of 128.
+</span></span></code></pre></div><p>Tcp backlog 是指TCP的第三次握手服务器端收到客户端 ack确认号之后到服务器用Accept函数处理请求前的队列长度，即全连接队列</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>#vim /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>net.core.somaxconn = 511
+</span></span><span style="display:flex;"><span>#sysctl -p
+</span></span></code></pre></div><p>overcommit_memory</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>WARNING overcommit_memory is set to 0! Background save may fail under low memory
+</span></span><span style="display:flex;"><span>condition. To fix this issue add &#39;vm.overcommit_memory = 1&#39; to /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>and then reboot or run the command &#39;sysctl vm.overcommit_memory=1&#39; for this to
+</span></span><span style="display:flex;"><span>take effect.
+</span></span></code></pre></div><p>内核参数说明</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>内核参数overcommit_memory 实现内存分配策略,可选值有三个：0、1、2
+</span></span><span style="display:flex;"><span>0 表示内核将检查是否有足够的可用内存供应用进程使用；如果有足够的可用内存，内存申请允许；否则内存
+</span></span><span style="display:flex;"><span>申请失败，并把错误返回给应用进程
+</span></span><span style="display:flex;"><span>1 表示内核允许分配所有的物理内存，而不管当前的内存状态如何
+</span></span><span style="display:flex;"><span>2 表示内核允许分配超过所有物理内存和交换空间总和的内存
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>#vim /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>vm.overcommit_memory = 1
+</span></span><span style="display:flex;"><span>#sysctl -p
+</span></span></code></pre></div><p>transparent hugepage</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>WARNING you have Transparent Huge Pages (THP) support enabled in your kernel.
+</span></span><span style="display:flex;"><span>This will create latency and memory usage issues with Redis. To fix this issue
+</span></span><span style="display:flex;"><span>run the command &#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39; as
+</span></span><span style="display:flex;"><span>root, and add it to your /etc/rc.local in order to retain the setting after a
+</span></span><span style="display:flex;"><span>reboot. Redis must be restarted after THP is disabled.
+</span></span><span style="display:flex;"><span>警告：您在内核中启用了透明大页面（THP,不同于一般4k内存页,而为2M）支持。 这将在Redis中造成延迟
+</span></span><span style="display:flex;"><span>和内存使用问题。 要解决此问题，请以root 用户身份运行命令“echo never&gt;
+</span></span><span style="display:flex;"><span>/sys/kernel/mm/transparent_hugepage/enabled”，并将其添加到您的/etc/rc.local中，以便在
+</span></span><span style="display:flex;"><span>重启后保留设置。禁用THP后，必须重新启动Redis。
+</span></span></code></pre></div><p>注意：ubuntu20.04, Rocky8/CentOS8 默认为 never，所以此值无需优化</p>
+<p>验证是否消除warning</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7-master ~]# redis-server /usr/local/src/redis/etc/redis.conf 
+</span></span><span style="display:flex;"><span>51540:C 07 Dec 2022 22:38:45.196 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+</span></span><span style="display:flex;"><span>51540:C 07 Dec 2022 22:38:45.196 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=51540, just started
+</span></span><span style="display:flex;"><span>51540:C 07 Dec 2022 22:38:45.196 # Configuration loaded
+</span></span><span style="display:flex;"><span>51540:M 07 Dec 2022 22:38:45.197 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+</span></span><span style="display:flex;"><span>51540:M 07 Dec 2022 22:38:45.197 * monotonic clock: POSIX clock_gettime
+</span></span><span style="display:flex;"><span>                _._                                                  
+</span></span><span style="display:flex;"><span>           _.-``__ &#39;&#39;-._                                             
+</span></span><span style="display:flex;"><span>      _.-``    `.  `_.  &#39;&#39;-._           Redis 6.2.6 (00000000/0) 64 bit
+</span></span><span style="display:flex;"><span>  .-`` .-```.  ```\/    _.,_ &#39;&#39;-._                                  
+</span></span><span style="display:flex;"><span> (    &#39;      ,       .-`  | `,    )     Running in standalone mode
+</span></span><span style="display:flex;"><span> |`-._`-...-` __...-.``-._|&#39;` _.-&#39;|     Port: 6379
+</span></span><span style="display:flex;"><span> |    `-._   `._    /     _.-&#39;    |     PID: 51540
+</span></span><span style="display:flex;"><span>  `-._    `-._  `-./  _.-&#39;    _.-&#39;                                   
+</span></span><span style="display:flex;"><span> |`-._`-._    `-.__.-&#39;    _.-&#39;_.-&#39;|                                  
+</span></span><span style="display:flex;"><span> |    `-._`-._        _.-&#39;_.-&#39;    |           https://redis.io       
+</span></span><span style="display:flex;"><span>  `-._    `-._`-.__.-&#39;_.-&#39;    _.-&#39;                                   
+</span></span><span style="display:flex;"><span> |`-._`-._    `-.__.-&#39;    _.-&#39;_.-&#39;|                                  
+</span></span><span style="display:flex;"><span> |    `-._`-._        _.-&#39;_.-&#39;    |                                  
+</span></span><span style="display:flex;"><span>  `-._    `-._`-.__.-&#39;_.-&#39;    _.-&#39;                                   
+</span></span><span style="display:flex;"><span>      `-._    `-.__.-&#39;    _.-&#39;                                       
+</span></span><span style="display:flex;"><span>          `-._        _.-&#39;                                           
+</span></span><span style="display:flex;"><span>              `-.__.-&#39;                                               
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>51540:M 07 Dec 2022 22:38:45.197 # Server initialized
+</span></span><span style="display:flex;"><span>51540:M 07 Dec 2022 22:38:45.198 * Loading RDB produced by version 6.2.6
+</span></span><span style="display:flex;"><span>51540:M 07 Dec 2022 22:38:45.198 * RDB age 2 seconds
+</span></span><span style="display:flex;"><span>51540:M 07 Dec 2022 22:38:45.198 * RDB memory usage when created 0.77 Mb
+</span></span><span style="display:flex;"><span>51540:M 07 Dec 2022 22:38:45.198 # Done loading RDB, keys loaded: 0, keys expired: 0.
+</span></span><span style="display:flex;"><span>51540:M 07 Dec 2022 22:38:45.198 * DB loaded from disk: 0.000 seconds
+</span></span><span style="display:flex;"><span>51540:M 07 Dec 2022 22:38:45.198 * Ready to accept connections
+</span></span></code></pre></div><ul>
+<li>创建 Redis 用户和设置数据目录权限</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7-master ~]# useradd -r -s /sbin/nologin redis
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# chown -R  redis.redis /usr/local/src/redis/
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# 
+</span></span></code></pre></div><ul>
+<li>创建 Redis 服务 Service 文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7-master ~]# vim /lib/systemd/system/redis.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[Unit]
+</span></span><span style="display:flex;"><span>Description=Redis persistent key-value database
+</span></span><span style="display:flex;"><span>After=network.target
+</span></span><span style="display:flex;"><span>[Service]
+</span></span><span style="display:flex;"><span>ExecStart=/usr/local/src/redis/bin/redis-server /usr/local/src/redis/etc/redis.conf --supervised systemd
+</span></span><span style="display:flex;"><span>ExecStop=/bin/kill -s QUIT $MAINPID
+</span></span><span style="display:flex;"><span>Type=notify 
+</span></span><span style="display:flex;"><span>User=redis
+</span></span><span style="display:flex;"><span>Group=redis
+</span></span><span style="display:flex;"><span>RuntimeDirectory=redis
+</span></span><span style="display:flex;"><span>RuntimeDirectoryMode=0755
+</span></span><span style="display:flex;"><span>LimitNOFILE=1000000 
+</span></span><span style="display:flex;"><span>[Install]
+</span></span><span style="display:flex;"><span>WantedBy=multi-user.target
+</span></span></code></pre></div><ul>
+<li>Redis 通过Service方式启动</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>systemctl daemon-reload
+</span></span><span style="display:flex;"><span>systemctl restart redis
+</span></span><span style="display:flex;"><span>systemctl status redis
+</span></span></code></pre></div><h2 id="redis多实例">Redis多实例<a hidden class="anchor" aria-hidden="true" href="#redis多实例">#</a></h2>
+<p>基于源码编译安装的前提下实现redis的多实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># 进入/usr/local/src/redis/etc
+</span></span><span style="display:flex;"><span>[root@centos7-master ~]# cd /usr/local/src/redis/etc/
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 修改配置文件，使用6380,6381端口启动实例
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# sed &#39;s/6379/6380/&#39; redis.conf &gt; redis6380.conf
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# sed &#39;s/6379/6380/&#39; redis.conf &gt; redis6381.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 修改所属组
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# chown -R redis.redis *
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 修改启动文件
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# cp /lib/systemd/system/redis.service /lib/systemd/system/redis6380.service 
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# vim /lib/systemd/system/redis6380.service 
+</span></span><span style="display:flex;"><span>[Unit]
+</span></span><span style="display:flex;"><span>Description=Redis persistent key-value database
+</span></span><span style="display:flex;"><span>After=network.target
+</span></span><span style="display:flex;"><span>[Service]
+</span></span><span style="display:flex;"><span>ExecStart=/usr/local/src/redis/bin/redis-server /usr/local/src/redis/etc/redis6380.conf --supervised systemd
+</span></span><span style="display:flex;"><span>ExecStop=/bin/kill -s QUIT $MAINPID
+</span></span><span style="display:flex;"><span>Type=notify
+</span></span><span style="display:flex;"><span>User=redis
+</span></span><span style="display:flex;"><span>Group=redis
+</span></span><span style="display:flex;"><span>RuntimeDirectory=redis
+</span></span><span style="display:flex;"><span>RuntimeDirectoryMode=0755
+</span></span><span style="display:flex;"><span>LimitNOFILE=1000000
+</span></span><span style="display:flex;"><span>[Install]
+</span></span><span style="display:flex;"><span>WantedBy=multi-user.target
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 使用相同方法创建/lib/systemd/system/redis6381.service文件并修改内容
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 启动实例
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# systemctl status redis.service
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# systemctl status redis6380.service
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# systemctl status redis6381.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 查看6379 6380 6381 端口是否启用
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1670507070884.png" alt="1670507070884"  />
+</p>
+<ul>
+<li>连接测试</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[root@centos7-master etc]# redis-cli -p 6379
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# redis-cli -p 6380
+</span></span><span style="display:flex;"><span>[root@centos7-master etc]# redis-cli -p 6381
+</span></span></code></pre></div><h1 id="redis-配置管理">Redis 配置管理<a hidden class="anchor" aria-hidden="true" href="#redis-配置管理">#</a></h1>
+<h2 id="配置文件说明">配置文件说明<a hidden class="anchor" aria-hidden="true" href="#配置文件说明">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>bind 0.0.0.0 #指定监听地址，支持用空格隔开的多个监听IP
+</span></span><span style="display:flex;"><span>protected-mode yes #redis3.2之后加入的新特性，在没有设置bind IP和密码的时候,redis只允许访
+</span></span><span style="display:flex;"><span>问127.0.0.1:6379，可以远程连接，但当访问将提示警告信息并拒绝远程访问
+</span></span><span style="display:flex;"><span>port 6379 #监听端口,默认6379/tcp
+</span></span><span style="display:flex;"><span>tcp-backlog 511 #三次握手的时候server端收到client ack确认号之后的队列值，即全连接队列长度
+</span></span><span style="display:flex;"><span>timeout 0 #客户端和Redis服务端的连接超时时间，默认是0，表示永不超时
+</span></span><span style="display:flex;"><span>tcp-keepalive 300 #tcp 会话保持时间300s
+</span></span><span style="display:flex;"><span>daemonize no #默认no,即直接运行redis-server程序时,不作为守护进程运行，而是以前台方式运行，
+</span></span><span style="display:flex;"><span>如果想在后台运行需改成yes,当redis作为守护进程运行的时候，它会写一个 pid 到
+</span></span><span style="display:flex;"><span>/var/run/redis.pid 文件
+</span></span><span style="display:flex;"><span>supervised no #和OS相关参数，可设置通过upstart和systemd管理Redis守护进程，centos7后都使
+</span></span><span style="display:flex;"><span>用systemd
+</span></span><span style="display:flex;"><span>pidfile /var/run/redis_6379.pid #pid文件路径,可以修改
+</span></span><span style="display:flex;"><span>为/apps/redis/run/redis_6379.pid
+</span></span><span style="display:flex;"><span>loglevel notice #日志级别
+</span></span><span style="display:flex;"><span>logfile &#34;/path/redis.log&#34; #日志路径,示例:logfile &#34;/apps/redis/log/redis_6379.log&#34;
+</span></span><span style="display:flex;"><span>databases 16 #设置数据库数量，默认：0-15，共16个库
+</span></span><span style="display:flex;"><span>always-show-logo yes #在启动redis 时是否显示或在日志中记录记录redis的logo
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>save 900 1 #在900秒内有1个key内容发生更改,就执行快照机制
+</span></span><span style="display:flex;"><span>save 300 10 #在300秒内有10个key内容发生更改,就执行快照机制
+</span></span><span style="display:flex;"><span>save 60 10000 #60秒内如果有10000个key以上的变化，就自动快照备份
+</span></span><span style="display:flex;"><span>stop-writes-on-bgsave-error yes #默认为yes时,可能会因空间满等原因快照无法保存出错时，会禁
+</span></span><span style="display:flex;"><span>止redis写入操作，生产建议为no
+</span></span><span style="display:flex;"><span>#此项只针对配置文件中的自动save有效
+</span></span><span style="display:flex;"><span>rdbcompression yes #持久化到RDB文件时，是否压缩，&#34;yes&#34;为压缩，&#34;no&#34;则反之
+</span></span><span style="display:flex;"><span>rdbchecksum yes #是否对备份文件开启RC64校验，默认是开启
+</span></span><span style="display:flex;"><span>dbfilename dump.rdb #快照文件名
+</span></span><span style="display:flex;"><span>dir ./ #快照文件保存路径，示例：dir &#34;/apps/redis/data&#34;
+</span></span><span style="display:flex;"><span>#主从复制相关
+</span></span><span style="display:flex;"><span># replicaof &lt;masterip&gt; &lt;masterport&gt; #指定复制的master主机地址和端口，5.0版之前的指令为
+</span></span><span style="display:flex;"><span>slaveof
+</span></span><span style="display:flex;"><span># masterauth &lt;master-password&gt; #指定复制的master主机的密码
+</span></span><span style="display:flex;"><span>replica-serve-stale-data yes #当从库同主库失去连接或者复制正在进行，从机库有两种运行方式：
+</span></span><span style="display:flex;"><span>1、设置为yes(默认设置)，从库会继续响应客户端的读请求，此为建议值
+</span></span><span style="display:flex;"><span>2、设置为no，除去特定命令外的任何请求都会返回一个错误&#34;SYNC with master in progress&#34;。
+</span></span><span style="display:flex;"><span>replica-read-only yes #是否设置从库只读，建议值为yes,否则主库同步从库时可能会覆盖数据，造成
+</span></span><span style="display:flex;"><span>数据丢失
+</span></span><span style="display:flex;"><span>repl-diskless-sync no #是否使用socket方式复制数据(无盘同步)，新slave第一次连接master时需
+</span></span><span style="display:flex;"><span>要做数据的全量同步，redis server就要从内存dump出新的RDB文件，然后从master传到slave，有两种
+</span></span><span style="display:flex;"><span>方式把RDB文件传输给客户端：
+</span></span><span style="display:flex;"><span>1、基于硬盘（disk-backed）：为no时，master创建一个新进程dump生成RDB磁盘文件，RDB完成之后由
+</span></span><span style="display:flex;"><span>父进程（即主进程）将RDB文件发送给slaves，此为默认值
+</span></span><span style="display:flex;"><span>2、基于socket（diskless）：master创建一个新进程直接dump RDB至slave的网络socket，不经过主
+</span></span><span style="display:flex;"><span>进程和硬盘
+</span></span><span style="display:flex;"><span>#推荐使用基于硬盘（为no），是因为RDB文件创建后，可以同时传输给更多的slave，但是基于socket(为
+</span></span><span style="display:flex;"><span>yes)， 新slave连接到master之后得逐个同步数据。只有当磁盘I/O较慢且网络较快时，可用
+</span></span><span style="display:flex;"><span>diskless(yes),否则一般建议使用磁盘(no)
+</span></span><span style="display:flex;"><span>repl-diskless-sync-delay 5 #diskless时复制的服务器等待的延迟时间，设置0为关闭，在延迟时间
+</span></span><span style="display:flex;"><span>内到达的客户端，会一起通过diskless方式同步数据，但是一旦复制开始，master节点不会再接收新slave
+</span></span><span style="display:flex;"><span>的复制请求，直到下一次同步开始才再接收新请求。即无法为延迟时间后到达的新副本提供服务，新副本将排
+</span></span><span style="display:flex;"><span>队等待下一次RDB传输，因此服务器会等待一段时间才能让更多副本到达。推荐值：30-60
+</span></span><span style="display:flex;"><span>repl-ping-replica-period 10 #slave根据master指定的时间进行周期性的PING master,用于监测
+</span></span><span style="display:flex;"><span>master状态,默认10s
+</span></span><span style="display:flex;"><span>repl-timeout 60 #复制连接的超时时间，需要大于repl-ping-slave-period，否则会经常报超时
+</span></span><span style="display:flex;"><span>repl-disable-tcp-nodelay no #是否在slave套接字发送SYNC之后禁用 TCP_NODELAY，如果选
+</span></span><span style="display:flex;"><span>择&#34;yes&#34;，Redis将合并多个报文为一个大的报文，从而使用更少数量的包向slaves发送数据，但是将使数据
+</span></span><span style="display:flex;"><span>传输到slave上有延迟，Linux内核的默认配置会达到40毫秒，如果 &#34;no&#34; ，数据传输到slave的延迟将会
+</span></span><span style="display:flex;"><span>减少，但要使用更多的带宽
+</span></span><span style="display:flex;"><span>repl-backlog-size 512mb #复制缓冲区内存大小，当slave断开连接一段时间后，该缓冲区会累积复制
+</span></span><span style="display:flex;"><span>副本数据，因此当slave 重新连接时，通常不需要完全重新同步，只需传递在副本中的断开连接后没有同步的
+</span></span><span style="display:flex;"><span>部分数据即可。只有在至少有一个slave连接之后才分配此内存空间,建议建立主从时此值要调大一些或在低峰
+</span></span><span style="display:flex;"><span>期配置,否则会导致同步到slave失败
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>repl-backlog-ttl 3600 #多长时间内master没有slave连接，就清空backlog缓冲区
+</span></span><span style="display:flex;"><span>replica-priority 100 #当master不可用，哨兵Sentinel会根据slave的优先级选举一个master，此
+</span></span><span style="display:flex;"><span>值最低的slave会优先当选master，而配置成0，永远不会被选举，一般多个slave都设为一样的值，让其自
+</span></span><span style="display:flex;"><span>动选择
+</span></span><span style="display:flex;"><span>#min-replicas-to-write 3 #至少有3个可连接的slave，mater才接受写操作
+</span></span><span style="display:flex;"><span>#min-replicas-max-lag 10 #和上面至少3个slave的ping延迟不能超过10秒，否则master也将停止
+</span></span><span style="display:flex;"><span>写操作
+</span></span><span style="display:flex;"><span>requirepass foobared #设置redis连接密码，之后需要AUTH pass,如果有特殊符号，用&#34; &#34;引起来,生
+</span></span><span style="display:flex;"><span>产建议设置
+</span></span><span style="display:flex;"><span>rename-command #重命名一些高危命令，示例：rename-command FLUSHALL &#34;&#34; 禁用命令
+</span></span><span style="display:flex;"><span>#示例: rename-command del magedu
+</span></span><span style="display:flex;"><span>maxclients 10000 #Redis最大连接客户端
+</span></span><span style="display:flex;"><span>maxmemory &lt;bytes&gt; #redis使用的最大内存，单位为bytes字节，0为不限制，建议设为物理内存一半，
+</span></span><span style="display:flex;"><span>8G内存的计算方式8(G)*1024(MB)1024(KB)*1024(Kbyte)，需要注意的是缓冲区是不计算在maxmemory
+</span></span><span style="display:flex;"><span>内,生产中如果不设置此项,可能会导致OOM
+</span></span><span style="display:flex;"><span>#maxmemory-policy noeviction 此为默认值
+</span></span><span style="display:flex;"><span># MAXMEMORY POLICY：当达到最大内存时，Redis 将如何选择要删除的内容。您可以从以下行为中选择一
+</span></span><span style="display:flex;"><span>种：
+</span></span><span style="display:flex;"><span>#
+</span></span><span style="display:flex;"><span># volatile-lru -&gt; Evict 使用近似 LRU，只有设置了过期时间的键。
+</span></span><span style="display:flex;"><span># allkeys-lru -&gt; 使用近似 LRU 驱逐任何键。
+</span></span><span style="display:flex;"><span># volatile-lfu -&gt; 使用近似 LFU 驱逐，只有设置了过期时间的键。
+</span></span><span style="display:flex;"><span># allkeys-lfu -&gt; 使用近似 LFU 驱逐任何键。
+</span></span><span style="display:flex;"><span># volatile-random -&gt; 删除设置了过期时间的随机密钥。
+</span></span><span style="display:flex;"><span># allkeys-random -&gt; 删除一个随机密钥，任何密钥。
+</span></span><span style="display:flex;"><span># volatile-ttl -&gt; 删除过期时间最近的key（次TTL）
+</span></span><span style="display:flex;"><span># noeviction -&gt; 不要驱逐任何东西，只是在写操作时返回一个错误。
+</span></span><span style="display:flex;"><span>#
+</span></span><span style="display:flex;"><span># LRU 表示最近最少使用
+</span></span><span style="display:flex;"><span># LFU 表示最不常用
+</span></span><span style="display:flex;"><span>#
+</span></span><span style="display:flex;"><span># LRU、LFU 和 volatile-ttl 都是使用近似随机算法实现的。
+</span></span><span style="display:flex;"><span>#
+</span></span><span style="display:flex;"><span># 注意：使用上述任何一种策略，当没有合适的键用于驱逐时，Redis 将在需要更多内存的写操作时返回错
+</span></span><span style="display:flex;"><span>误。这些通常是创建新密钥、添加数据或修改现有密钥的命令。一些示例是：SET、INCR、HSET、LPUSH、
+</span></span><span style="display:flex;"><span>SUNIONSTORE、SORT（由于 STORE 参数）和 EXEC（如果事务包括任何需要内存的命令）。
+</span></span><span style="display:flex;"><span>#MAXMEMORY POLICY：当达到最大内存时，Redis 将如何选择要删除的内容。可以从下面行为中进行选
+</span></span><span style="display:flex;"><span>择：
+</span></span><span style="display:flex;"><span># volatile-lru -&gt; 在具有过期集的键中使用近似 LRU 驱逐。
+</span></span><span style="display:flex;"><span># allkeys-lru -&gt; 使用近似 LRU 驱逐任何键。
+</span></span><span style="display:flex;"><span># volatile-lfu -&gt; 在具有过期集的键中使用近似 LFU 驱逐。
+</span></span><span style="display:flex;"><span># allkeys-lfu -&gt; 使用近似 LFU 驱逐任何键。
+</span></span><span style="display:flex;"><span># volatile-random -&gt; 从具有过期设置的密钥中删除一个随机密钥。
+</span></span><span style="display:flex;"><span># allkeys-random -&gt; 删除一个随机密钥，任何密钥。
+</span></span><span style="display:flex;"><span># volatile-ttl -&gt; 删除过期时间最近的key（次TTL）
+</span></span><span style="display:flex;"><span># noeviction -&gt; 不要驱逐任何东西，只是在写操作时返回一个错误。
+</span></span><span style="display:flex;"><span>#
+</span></span><span style="display:flex;"><span># LRU 表示最近最少使用
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># LFU 表示最不常用
+</span></span><span style="display:flex;"><span>#
+</span></span><span style="display:flex;"><span># LRU、LFU 和 volatile-ttl 均使用近似实现随机算法。
+</span></span><span style="display:flex;"><span>#
+</span></span><span style="display:flex;"><span># 注意：使用上述任何一种策略，Redis 都会在写入时返回错误操作，当没有合适的键用于驱逐时。
+</span></span><span style="display:flex;"><span>appendonly no #是否开启AOF日志记录，默认redis使用的是rdb方式持久化，这种方式在许多应用中已经
+</span></span><span style="display:flex;"><span>足够用了，但是redis如果中途宕机，会导致可能有几分钟的数据丢失(取决于dump数据的间隔时间)，根据
+</span></span><span style="display:flex;"><span>save来策略进行持久化，Append Only File是另一种持久化方式，可以提供更好的持久化特性，Redis会
+</span></span><span style="display:flex;"><span>把每次写入的数据在接收后都写入 appendonly.aof 文件，每次启动时Redis都会先把这个文件的数据读入
+</span></span><span style="display:flex;"><span>内存里，先忽略RDB文件。默认不启用此功能
+</span></span><span style="display:flex;"><span>appendfilename &#34;appendonly.aof&#34; #文本文件AOF的文件名，存放在dir指令指定的目录中
+</span></span><span style="display:flex;"><span>appendfsync everysec #aof持久化策略的配置
+</span></span><span style="display:flex;"><span>#no表示由操作系统保证数据同步到磁盘,Linux的默认fsync策略是30秒，最多会丢失30s的数据
+</span></span><span style="display:flex;"><span>#always表示每次写入都执行fsync，以保证数据同步到磁盘,安全性高,性能较差
+</span></span><span style="display:flex;"><span>#everysec表示每秒执行一次fsync，可能会导致丢失这1s数据,此为默认值,也生产建议值
+</span></span><span style="display:flex;"><span>#同时在执行bgrewriteaof操作和主进程写aof文件的操作，两者都会操作磁盘，而bgrewriteaof往往会
+</span></span><span style="display:flex;"><span>涉及大量磁盘操作，这样就会造成主进程在写aof文件的时候出现阻塞的情形,以下参数实现控制
+</span></span><span style="display:flex;"><span>no-appendfsync-on-rewrite no #在aof rewrite期间,是否对aof新记录的append暂缓使用文件同步
+</span></span><span style="display:flex;"><span>策略,主要考虑磁盘IO开支和请求阻塞时间。
+</span></span><span style="display:flex;"><span>#默认为no,表示&#34;不暂缓&#34;,新的aof记录仍然会被立即同步到磁盘，是最安全的方式，不会丢失数据，但是要
+</span></span><span style="display:flex;"><span>忍受阻塞的问题
+</span></span><span style="display:flex;"><span>#为yes,相当于将appendfsync设置为no，这说明并没有执行磁盘操作，只是写入了缓冲区，因此这样并不
+</span></span><span style="display:flex;"><span>会造成阻塞（因为没有竞争磁盘），但是如果这个时候redis挂掉，就会丢失数据。丢失多少数据呢？Linux
+</span></span><span style="display:flex;"><span>的默认fsync策略是30秒，最多会丢失30s的数据,但由于yes性能较好而且会避免出现阻塞因此比较推荐
+</span></span><span style="display:flex;"><span>#rewrite 即对aof文件进行整理,将空闲空间回收,从而可以减少恢复数据时间
+</span></span><span style="display:flex;"><span>auto-aof-rewrite-percentage 100 #当Aof log增长超过指定百分比例时，重写AOF文件，设置为0表
+</span></span><span style="display:flex;"><span>示不自动重写Aof日志，重写是为了使aof体积保持最小，但是还可以确保保存最完整的数据
+</span></span><span style="display:flex;"><span>auto-aof-rewrite-min-size 64mb #触发aof rewrite的最小文件大小
+</span></span><span style="display:flex;"><span>aof-load-truncated yes #是否加载由于某些原因导致的末尾异常的AOF文件(主进程被kill/断电等)，
+</span></span><span style="display:flex;"><span>建议yes
+</span></span><span style="display:flex;"><span>aof-use-rdb-preamble no #redis4.0新增RDB-AOF混合持久化格式，在开启了这个功能之后，AOF重
+</span></span><span style="display:flex;"><span>写产生的文件将同时包含RDB格式的内容和AOF格式的内容，其中RDB格式的内容用于记录已有的数据，而AOF
+</span></span><span style="display:flex;"><span>格式的内容则用于记录最近发生了变化的数据，这样Redis就可以同时兼有RDB持久化和AOF持久化的优点（既
+</span></span><span style="display:flex;"><span>能够快速地生成重写文件，也能够在出现问题时，快速地载入数据）,默认为no,即不启用此功能
+</span></span><span style="display:flex;"><span>lua-time-limit 5000 #lua脚本的最大执行时间，单位为毫秒
+</span></span><span style="display:flex;"><span>cluster-enabled yes #是否开启集群模式，默认不开启,即单机模式
+</span></span><span style="display:flex;"><span>cluster-config-file nodes-6379.conf #由node节点自动生成的集群配置文件名称
+</span></span><span style="display:flex;"><span>cluster-node-timeout 15000 #集群中node节点连接超时时间，单位ms,超过此时间，会踢出集群
+</span></span><span style="display:flex;"><span>cluster-replica-validity-factor 10 #单位为次,在执行故障转移的时候可能有些节点和master断
+</span></span><span style="display:flex;"><span>开一段时间导致数据比较旧，这些节点就不适用于选举为master，超过这个时间的就不会被进行故障转移,不
+</span></span><span style="display:flex;"><span>能当选master，计算公式：(node-timeout * replica-validity-factor) + repl-ping-
+</span></span><span style="display:flex;"><span>replica-period
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>cluster-migration-barrier 1 #集群迁移屏障，一个主节点至少拥有1个正常工作的从节点，即如果主
+</span></span><span style="display:flex;"><span>节点的slave节点故障后会将多余的从节点分配到当前主节点成为其新的从节点。
+</span></span><span style="display:flex;"><span>cluster-require-full-coverage yes #集群请求槽位全部覆盖，如果一个主库宕机且没有备库就会出
+</span></span><span style="display:flex;"><span>现集群槽位不全，那么yes时redis集群槽位验证不全,就不再对外提供服务(对key赋值时,会出现
+</span></span><span style="display:flex;"><span>CLUSTERDOWN The cluster is down的提示,cluster_state:fail,但ping 仍PONG)，而no则可以
+</span></span><span style="display:flex;"><span>继续使用,但是会出现查询数据查不到的情况(因为有数据丢失)。生产建议为no
+</span></span><span style="display:flex;"><span>cluster-replica-no-failover no #如果为yes,此选项阻止在主服务器发生故障时尝试对其主服务器进
+</span></span><span style="display:flex;"><span>行故障转移。 但是，主服务器仍然可以执行手动强制故障转移，一般为no
+</span></span><span style="display:flex;"><span>#Slow log 是 Redis 用来记录超过指定执行时间的日志系统，执行时间不包括与客户端交谈，发送回复等
+</span></span><span style="display:flex;"><span>I/O操作，而是实际执行命令所需的时间（在该阶段线程被阻塞并且不能同时为其它请求提供服务）,由于
+</span></span><span style="display:flex;"><span>slow log 保存在内存里面，读写速度非常快，因此可放心地使用，不必担心因为开启 slow log 而影响
+</span></span><span style="display:flex;"><span>Redis 的速度
+</span></span><span style="display:flex;"><span>slowlog-log-slower-than 10000 #以微秒为单位的慢日志记录，为负数会禁用慢日志，为0会记录每个
+</span></span><span style="display:flex;"><span>命令操作。默认值为10ms,一般一条命令执行都在微秒级,生产建议设为1ms-10ms之间
+</span></span><span style="display:flex;"><span>slowlog-max-len 128 #最多记录多少条慢日志的保存队列长度，达到此长度后，记录新命令会将最旧的命
+</span></span><span style="display:flex;"><span>令从命令队列中删除，以此滚动删除,即,先进先出,队列固定长度,默认128,值偏小,生产建议设为1000以上
+</span></span></code></pre></div><p><a href="https://www.cnblogs.com/ysocean/p/9074787.html">Redis的配置文件介绍</a></p>
+<h2 id="config-命令实现动态修改配置">config 命令实现动态修改配置<a hidden class="anchor" aria-hidden="true" href="#config-命令实现动态修改配置">#</a></h2>
+<p>config 命令用于查看当前redis配置、以及不重启redis服务实现动态更改redis配置等
+注意：不是所有配置都可以动态修改,且此方式无法持久保存</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>CONFIG SET parameter value
+</span></span><span style="display:flex;"><span>时间复杂度：O(1)
+</span></span><span style="display:flex;"><span>CONFIG SET 命令可以动态地调整 Redis 服务器的配置(configuration)而无须重启。
+</span></span><span style="display:flex;"><span>可以使用它修改配置参数，或者改变 Redis 的持久化(Persistence)方式。
+</span></span><span style="display:flex;"><span>CONFIG SET 可以修改的配置参数可以使用命令 CONFIG GET * 来列出，所有被 CONFIG SET 修改的配
+</span></span><span style="display:flex;"><span>置参数都会立即生效。
+</span></span><span style="display:flex;"><span>CONFIG GET parameter
+</span></span><span style="display:flex;"><span>时间复杂度： O(N)，其中 N 为命令返回的配置选项数量。
+</span></span><span style="display:flex;"><span>CONFIG GET 命令用于取得运行中的 Redis 服务器的配置参数(configuration parameters)，在
+</span></span><span style="display:flex;"><span>Redis 2.4 版本中， 有部分参数没有办法用 CONFIG GET 访问，但是在最新的 Redis 2.6 版本中，所
+</span></span><span style="display:flex;"><span>有配置参数都已经可以用 CONFIG GET 访问了。
+</span></span><span style="display:flex;"><span>CONFIG GET 接受单个参数 parameter 作为搜索关键字，查找所有匹配的配置参数，其中参数和值以“键-
+</span></span><span style="display:flex;"><span>值对”(key-value pairs)的方式排列。
+</span></span><span style="display:flex;"><span>比如执行 CONFIG GET s* 命令，服务器就会返回所有以 s 开头的配置参数及参数的值：
+</span></span></code></pre></div><h3 id="设置客户端连接密码">设置客户端连接密码<a hidden class="anchor" aria-hidden="true" href="#设置客户端连接密码">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>#设置连接密码
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; CONFIG SET requirepass 123456
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>#查看连接密码
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; CONFIG GET requirepass
+</span></span><span style="display:flex;"><span>1) &#34;requirepass&#34;
+</span></span><span style="display:flex;"><span>2) &#34;123456&#34;
+</span></span></code></pre></div><h3 id="获取当前配置">获取当前配置<a hidden class="anchor" aria-hidden="true" href="#获取当前配置">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>#奇数行为键，偶数行为值
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; CONFIG GET *
+</span></span><span style="display:flex;"><span>1) &#34;dbfilename&#34;
+</span></span><span style="display:flex;"><span>2) &#34;dump.rdb&#34;
+</span></span><span style="display:flex;"><span>3) &#34;requirepass&#34;
+</span></span><span style="display:flex;"><span>4) &#34;&#34;
+</span></span><span style="display:flex;"><span>5) &#34;masterauth&#34;
+</span></span><span style="display:flex;"><span>6) &#34;&#34;
+</span></span><span style="display:flex;"><span>7) &#34;cluster-announce-ip&#34;
+</span></span><span style="display:flex;"><span>8) &#34;&#34;
+</span></span><span style="display:flex;"><span>9) &#34;unixsocket&#34;
+</span></span><span style="display:flex;"><span>10) &#34;&#34;
+</span></span><span style="display:flex;"><span>11) &#34;logfile&#34;
+</span></span><span style="display:flex;"><span>12) &#34;/var/log/redis/redis.log&#34;
+</span></span><span style="display:flex;"><span>13) &#34;pidfile&#34;
+</span></span><span style="display:flex;"><span>14) &#34;/var/run/redis_6379.pid&#34;
+</span></span><span style="display:flex;"><span>15) &#34;slave-announce-ip&#34;
+</span></span><span style="display:flex;"><span>16) &#34;&#34;
+</span></span><span style="display:flex;"><span>17) &#34;replica-announce-ip&#34;
+</span></span><span style="display:flex;"><span>18) &#34;&#34;
+</span></span><span style="display:flex;"><span>19) &#34;maxmemory&#34;
+</span></span><span style="display:flex;"><span>20) &#34;0&#34;
+</span></span><span style="display:flex;"><span>......
+</span></span><span style="display:flex;"><span>#查看bind
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; CONFIG GET bind
+</span></span><span style="display:flex;"><span>1) &#34;bind&#34;
+</span></span><span style="display:flex;"><span>2) &#34;0.0.0.0&#34;
+</span></span><span style="display:flex;"><span>#Redis5.0有些设置无法修改,Redis6.2.6版本支持修改bind
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; CONFIG SET bind 127.0.0.1
+</span></span><span style="display:flex;"><span>(error) ERR Unsupported CONFIG parameter: bind
+</span></span></code></pre></div><h3 id="设置redis使用的最大内存量">设置Redis使用的最大内存量<a hidden class="anchor" aria-hidden="true" href="#设置redis使用的最大内存量">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>127.0.0.1:6379&gt; CONFIG SET maxmemory 8589934592
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; CONFIG GET maxmemory
+</span></span><span style="display:flex;"><span>1) &#34;maxmemory&#34;
+</span></span><span style="display:flex;"><span>2) &#34;8589934592&#34;
+</span></span></code></pre></div><h3 id="慢查询">慢查询<a hidden class="anchor" aria-hidden="true" href="#慢查询">#</a></h3>
+<p>范例：SLOW LOG</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>vim /etc/redis.conf
+</span></span><span style="display:flex;"><span>slowlog-log-slower-than 1 #指定超过1us即为慢的指令，默认值为10000us
+</span></span><span style="display:flex;"><span>slowlog-max-len 1024 #指定只保存最近的1024条慢记录，默认值为128
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; SLOWLOG LEN #查看慢日志的记录条数
+</span></span><span style="display:flex;"><span>(integer) 14
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; SLOWLOG GET [n] #查看慢日志的n条记录
+</span></span><span style="display:flex;"><span>1) 1) (integer) 14
+</span></span><span style="display:flex;"><span>2) (integer) 1544690617
+</span></span><span style="display:flex;"><span>3) (integer) 4 #第3)行表示每条指令的执行时长
+</span></span><span style="display:flex;"><span>4) 1) &#34;slowlog&#34;
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; SLOWLOG GET 3
+</span></span><span style="display:flex;"><span>1) 1) (integer) 7
+</span></span><span style="display:flex;"><span>2) (integer) 1602901545
+</span></span><span style="display:flex;"><span>3) (integer) 26
+</span></span><span style="display:flex;"><span>4) 1) &#34;SLOWLOG&#34;
+</span></span><span style="display:flex;"><span>2) &#34;get&#34;
+</span></span><span style="display:flex;"><span>5) &#34;127.0.0.1:38258&#34;
+</span></span><span style="display:flex;"><span>6) &#34;&#34;
+</span></span><span style="display:flex;"><span>2) 1) (integer) 6
+</span></span><span style="display:flex;"><span>2) (integer) 1602901540
+</span></span><span style="display:flex;"><span>3) (integer) 22
+</span></span><span style="display:flex;"><span>4) 1) &#34;SLOWLOG&#34;
+</span></span><span style="display:flex;"><span>2) &#34;get&#34;
+</span></span><span style="display:flex;"><span>3) &#34;2&#34;
+</span></span><span style="display:flex;"><span>5) &#34;127.0.0.1:38258&#34;
+</span></span><span style="display:flex;"><span>6) &#34;&#34;
+</span></span><span style="display:flex;"><span>3) 1) (integer) 5
+</span></span><span style="display:flex;"><span>2) (integer) 1602901497
+</span></span><span style="display:flex;"><span>3) (integer) 22
+</span></span><span style="display:flex;"><span>4) 1) &#34;SLOWLOG&#34;
+</span></span><span style="display:flex;"><span>2) &#34;GET&#34;
+</span></span><span style="display:flex;"><span>5) &#34;127.0.0.1:38258&#34;
+</span></span><span style="display:flex;"><span>6) &#34;&#34;
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; SLOWLOG RESET #清空慢日志
+</span></span><span style="display:flex;"><span>OK
+</span></span></code></pre></div><h3 id="redis持久化">Redis持久化<a hidden class="anchor" aria-hidden="true" href="#redis持久化">#</a></h3>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853239934.png" alt="1670853239934"  />
+</p>
+<h4 id="rdb">RDB<a hidden class="anchor" aria-hidden="true" href="#rdb">#</a></h4>
+<p>RDB 工作原理</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853325839.png" alt="1670853325839"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853341364.png" alt="1670853341364"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853373976.png" alt="1670853373976"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853388030.png" alt="1670853388030"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853405541.png" alt="1670853405541"  />
+</p>
+<h4 id="配置">配置<a hidden class="anchor" aria-hidden="true" href="#配置">#</a></h4>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853437912.png" alt="1670853437912"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853466251.png" alt="1670853466251"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853480093.png" alt="1670853480093"  />
+</p>
+<h4 id="aof">AOF<a hidden class="anchor" aria-hidden="true" href="#aof">#</a></h4>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853532980.png" alt="1670853532980"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1670853557144.png" alt="1670853557144"  />
+</p>
+
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Redis集群和高可用</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/nginx/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Nginx</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

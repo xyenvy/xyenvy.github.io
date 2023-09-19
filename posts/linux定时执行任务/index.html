@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Linux定时执行任务 | Hopeful</title>
+<meta name="keywords" content="Linux, 定时, 任务, 定时任务">
+<meta name="description" content="定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="Linux定时执行任务" />
+<meta property="og:description" content="定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-05T23:48:34+00:00" />
+<meta property="article:modified_time" content="2022-09-05T23:48:34+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" />
+<meta name="twitter:title" content="Linux定时执行任务"/>
+<meta name="twitter:description" content="定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Linux定时执行任务",
+      "item": "https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Linux定时执行任务",
+  "name": "Linux定时执行任务",
+  "description": "定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。",
+  "keywords": [
+    "Linux", "定时", "任务", "定时任务"
+  ],
+  "articleBody": "一、at命令 1、at命令的准备工作 1）安装 at 软件包\n[root@centos7 ~]# yum install -y at 2）需要 atd 服务的支持。atd 服务是独立的服务\n查看atd服务状态：# systemctl status atd 开启atd服务：# systemctl start atd 关闭atd服务：# systemctl stop atd 3）查看是否开始开机启动服务：如果弹出enabled，说明开机启动此服务\n[root@rocky ~]# systemctl is-enabled atd enabled [root@rocky ~]# 4）安装好 at 软件包并开启 atd 服务之后，at 命令才可以正常使用。\n[root@rocky ~]# systemctl start atd [root@rocky ~]# systemctl status atd 2、at 命令的访问控制 访问控制：是指允许哪些用户使用 at 命令设定定时任务，或者不允许哪些用户使用 at 命令。可以将其想象成设定黑名单或白名单。at 命令的访问控制是依靠 /etc/at.allow（白名单）和 /etc/at.deny（黑名单）这两个文件来实现的，具体规则如下：\n1)如果系统中有 /etc/at.allow 文件，那么只有写入 /etc/at.allow 文件（白名单）中的用户可以使用 at 命令，其他用户不能使用 at 命令(（注意，/etc/at.allow 文件的优先级更高，也就是说，如果同一个用户既写入 /etc/at.allow 文件，又写入 /etc/at.deny 文件，那么这个用户是可以使用 at 命令的);\n2)如果系统中没有 /etc/at.allow 文件，只有 /etc/at.deny 文件，那么写入 /etc/at.deny 文件（黑名单）中的用户不能使用 at 命令，其他用户可以使用 at 命令。不过这个文件对 root 用户不生效;\n3)如果系统中这两个文件都不存在，那么只有 root 用户可以使用 at 命令;\n4)系统中默认只有 /etc/at.deny 文件，而且这个文件是空的，因此，系统中所有的用户都可以使用 at 命令。如果我们打算控制用户的 at 命令权限，那么只需把用户名写入 /etc/at.deny 文件即可。\n3、at 命令语法添加定时执行任务 基本格式\nat [选项] [时间] or at [option] TIME 选项\n-V 显示版本信息 -t time 时间格式 [[CC]YY]MMDDhhmm[.ss] -l 列出指定队列中等待运行的作业；相当于atq -d N 删除指定的N号作业；相当于atrm -c N 查看具体作业N号任务 -f file 指定的文件中读取任务 -m 当任务被完成之后，将给用户发送邮件，即使没有标准输出 注意：\n作业执行命令的结果中的标准输出和错误以执行任务的用户身份发邮件通知给 root 默认CentOS 8 最小化安装没有安装邮件服务,需要自行安装 TIME：定义出什么时候进行 at 这项任务的时间 此命令中关于时间参数可用的以下格式：\n格式 用法 HH:MM 比如 04:00 AM。 Midnight（midnight） 代表 12:00 AM Noon（noon） 代表 12:00 PM（相当于 12:00） Teatime（teatime） 代表 4:00 PM（相当于 16:00）。 英文月名 日期 年份 比如 January 15 2018 表示 2018 年 1 月 15 号，年份可有可无。 MMDDYY、MM/DD/YY、MM.DD.YY 比如 011518 表示 2018 年 1 月 15 号。 now+时间 以 minutes、hours、days 或 weeks 为单位，例如 now+5 days 表示命令在 5 天之后的此时此刻执行。 具体的使用方法： at命令后想要输入执行程序的确切时间，然后回车，接着在 \u003e 后输入想要执行的命令，最后用 Ctrl+d 组合键退出 at 命令。\n范例\n[root@centos7 ~]# at now+2 min at\u003e ls ./ \u003e a.log 范例: ubuntu at任务存放路径\nroot@ubuntu200404-1:~# ll /var/spool/cron/ total 20 drwxr-xr-x 5 root root 4096 Feb 23 2022 ./ drwxr-xr-x 4 root root 4096 Feb 23 2022 ../ drwxrwx--T 2 daemon daemon 4096 Sep 6 13:32 atjobs/ drwxrwx--T 2 daemon daemon 4096 Nov 12 2018 atspool/ drwx-wx--T 2 root crontab 4096 Feb 13 2020 crontabs/ root@ubuntu200404-1:~# ll /var/spool/cron/atjobs/ total 16 drwxrwx--T 2 daemon daemon 4096 Sep 6 13:32 ./ drwxr-xr-x 5 root root 4096 Feb 23 2022 ../ -rwx------ 1 root daemon 2838 Sep 6 13:33 a0000101a6c9d1* -rw------- 1 daemon daemon 6 Sep 6 13:32 .SEQ root@ubuntu200404-1:~# 范例：centos at任务存放路径\n[root@centos7 ~]# ll /var/spool/at/ total 4 -rwx------. 1 root root 2831 Sep 6 21:37 a0000501a6c9d5 drwx------. 2 root root 19 Sep 6 21:31 spool [root@centos7 ~]# 二、 crontab命令 at 命令：是在指定的时间只能执行一次任务。 crontab 命令：可以循环重复的执行定时任务。\n1、crontab 命令的准备工作 crontab 命令需要 crond 服务支持。crond 是 Linux 下用来周期地执行某种任务或等待处理某些事件的一个守护进程，在安装完成操作系统后，默认会安装 crond 服务工具，且 crond 服务默认就是自启动的。crond 进程每分钟会定期检查是否有要执行的任务，如果有，则会自动执行该任务。\ncrontab 命令和 at 命令类似，也是通过 /etc/cron.allow 和 /etc/cron.deny 文件来限制某些用户是否可以使用 crontab 命令的。\n启动crond服务之后才能使用crontab 命令：\n# systemctl start crond 或者 # systemctl enable crond 2、 crontab 命令语法 命令格式\ncrontab [-u user] [-l | -r | -e] [-i] 常用选项\n-l 列出所有任务 -e 编辑任务 -r 移除所有任务 -i 同-r一同使用，以交互式模式移除指定任务 -u user 指定用户管理cron任务,仅root可运行 crontab 定时任务非常简单，只需执“crontab -e”命令，然后输入想要定时执行的任务即可。注意文件格式如下：\n[root@centos7 ~]## crontab -e #进入 crontab 编辑界面。会打开Vim编辑你的任务 * * * * * 执行的任务 /etc/crontab 格式说明，详情参见 man 5 crontab 注释行以 # 开头\n[root@centos7 ~]# cat /etc/crontab SHELL=/bin/bash PATH=/sbin:/bin:/usr/sbin:/usr/bin MAILTO=root # For details see man 4 crontabs # Example of job definition: # .---------------- minute (0 - 59) # | .------------- hour (0 - 23) # | | .---------- day of month (1 - 31) # | | | .------- month (1 - 12) OR jan,feb,mar,apr ... # | | | | .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat # | | | | | # * * * * * user-name command to be executed You have mail in /var/spool/mail/root [root@centos7 ~]# 项目 含义 范围 第一个\"*\" 一小时当中的第几分钟（minute） 0~59 第二个\"*\" 一天当中的第几小时（hour） 0~23 第三个\"*\" 一个月当中的第几天（day） 1~31 第四个\"*\" 一年当中的第几个月（month） 1~12 第五个\"*\" 一周当中的星期几（week） 0~7（0和7都代表星期日） **在这个时间的表达式中，还有一些特殊符号如下： **\n特殊符号 含义 *（星号） 代表任何时间。比如第一个\"*“就代表一小时种每分钟都执行一次的意思。 ,（逗号） 代表不连续的时间。比如\"0 8，12，16***命令\"就代表在每天的 8 点 0 分、12 点 0 分、16 点 0 分都执行一次命令。 -（中杠） 代表连续的时间范围。比如\"0 5 ** 1-6命令”，代表在周一到周六的凌晨 5 点 0 分执行命令。 /（正斜线） 代表每隔多久执行一次。比如\"/10***命令\"，代表每隔 10 分钟就执行一次命令。 当“crontab -e”编辑完成之后，一旦保存退出，那么这个定时任务实际就会写入 /var/spool/cron/ 目录中，每个用户的定时任务用自己的用户名进行区分。而且 crontab 命令只要保存就会生效，只要 crond 服务是启动的。\n这里举几个时间的例子来熟悉一下时间字段（星期几和几日最好不要同时出现，非常容易让管理员混淆）：\n时间 含义 1 2 * * * 在每天凌晨 2 点 1 分执行命令 0 17 * * 1 在每周一的 17 点 0 分执行命令 0 5 1,15 * * 在每月 1 日和 15 日的凌晨 5 点 0 分执行命令 40 4 * * 1-5 在每周一到周五的凌晨 4 点 40 分执行命令 */10 4 * * * 在每天的凌晨 4 点，每隔 10 分钟执行命令 3,15 8-11 */2 * * 在每隔两天的上午 8 点到 11 点的第 3 和第 15 分钟执行命令。 ",
+  "wordCount" : "2551",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/2.jpg","datePublished": "2022-09-05T23:48:34Z",
+  "dateModified": "2022-09-05T23:48:34Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                Linux定时执行任务
+            </h1>
+            <div class="post-description">
+                定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-09-05
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2551字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>6分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/2.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e4%b8%80at%e5%91%bd%e4%bb%a4" aria-label="一、at命令">一、at命令</a><ul>
+                        
+                <li>
+                    <a href="#1at%e5%91%bd%e4%bb%a4%e7%9a%84%e5%87%86%e5%a4%87%e5%b7%a5%e4%bd%9c" aria-label="1、at命令的准备工作">1、at命令的准备工作</a></li>
+                <li>
+                    <a href="#2at-%e5%91%bd%e4%bb%a4%e7%9a%84%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6" aria-label="2、at 命令的访问控制">2、at 命令的访问控制</a></li>
+                <li>
+                    <a href="#3at-%e5%91%bd%e4%bb%a4%e8%af%ad%e6%b3%95%e6%b7%bb%e5%8a%a0%e5%ae%9a%e6%97%b6%e6%89%a7%e8%a1%8c%e4%bb%bb%e5%8a%a1" aria-label="3、at 命令语法添加定时执行任务">3、at 命令语法添加定时执行任务</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%ba%8c-crontab%e5%91%bd%e4%bb%a4" aria-label="二、 crontab命令">二、 crontab命令</a><ul>
+                        
+                <li>
+                    <a href="#1crontab-%e5%91%bd%e4%bb%a4%e7%9a%84%e5%87%86%e5%a4%87%e5%b7%a5%e4%bd%9c" aria-label="1、crontab 命令的准备工作">1、crontab 命令的准备工作</a></li>
+                <li>
+                    <a href="#2-crontab-%e5%91%bd%e4%bb%a4%e8%af%ad%e6%b3%95" aria-label="2、 crontab 命令语法">2、 <strong>crontab 命令语法</strong></a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="一at命令">一、at命令<a hidden class="anchor" aria-hidden="true" href="#一at命令">#</a></h1>
+<h2 id="1at命令的准备工作">1、at命令的准备工作<a hidden class="anchor" aria-hidden="true" href="#1at命令的准备工作">#</a></h2>
+<p><strong>1）安装 at 软件包</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos7 ~]# yum install -y at
+</span></span></code></pre></div><p><strong>2）需要 atd 服务的支持。atd 服务是独立的服务</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>查看atd服务状态：# systemctl status atd  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>开启atd服务：# systemctl start atd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>关闭atd服务：# systemctl stop atd
+</span></span></code></pre></div><p><strong>3）查看是否开始开机启动服务：如果弹出enabled，说明开机启动此服务</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@rocky ~]# systemctl is-enabled atd
+</span></span><span style="display:flex;"><span>enabled
+</span></span><span style="display:flex;"><span>[root@rocky ~]# 
+</span></span></code></pre></div><p><strong>4）安装好 at 软件包并开启 atd 服务之后，at 命令才可以正常使用。</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@rocky ~]# systemctl start atd 
+</span></span><span style="display:flex;"><span>[root@rocky ~]# systemctl status atd
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1662393874290.png" alt="1662393874290"  />
+</p>
+<h2 id="2at-命令的访问控制">2、at 命令的访问控制<a hidden class="anchor" aria-hidden="true" href="#2at-命令的访问控制">#</a></h2>
+<p>访问控制：是指允许哪些用户使用 at 命令设定定时任务，或者不允许哪些用户使用 at 命令。可以将其想象成设定黑名单或白名单。at 命令的访问控制是依靠 /etc/at.allow（白名单）和 /etc/at.deny（黑名单）这两个文件来实现的，具体规则如下：</p>
+<ul>
+<li>
+<p>1)如果系统中有 /etc/at.allow 文件，那么只有写入 /etc/at.allow 文件（白名单）中的用户可以使用 at 命令，其他用户不能使用 at 命令(（注意，/etc/at.allow 文件的优先级更高，也就是说，如果同一个用户既写入 /etc/at.allow 文件，又写入 /etc/at.deny 文件，那么这个用户是可以使用 at 命令的);</p>
+</li>
+<li>
+<p>2)如果系统中没有 /etc/at.allow 文件，只有 /etc/at.deny 文件，那么写入 /etc/at.deny 文件（黑名单）中的用户不能使用 at 命令，其他用户可以使用 at 命令。不过这个文件对 root 用户不生效;</p>
+</li>
+<li>
+<p>3)如果系统中这两个文件都不存在，那么只有 root 用户可以使用 at 命令;</p>
+</li>
+<li>
+<p>4)系统中默认只有 /etc/at.deny 文件，而且这个文件是空的，因此，系统中所有的用户都可以使用 at 命令。如果我们打算控制用户的 at 命令权限，那么只需把用户名写入 /etc/at.deny 文件即可。</p>
+</li>
+</ul>
+<h2 id="3at-命令语法添加定时执行任务">3、at 命令语法添加定时执行任务<a hidden class="anchor" aria-hidden="true" href="#3at-命令语法添加定时执行任务">#</a></h2>
+<p><strong>基本格式</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>at [选项] [时间] or at [option] TIME
+</span></span></code></pre></div><p><strong>选项</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-V 显示版本信息
+</span></span><span style="display:flex;"><span>-t time 时间格式 [[CC]YY]MMDDhhmm[.ss]
+</span></span><span style="display:flex;"><span>-l 列出指定队列中等待运行的作业；相当于atq
+</span></span><span style="display:flex;"><span>-d N 删除指定的N号作业；相当于atrm
+</span></span><span style="display:flex;"><span>-c N 查看具体作业N号任务
+</span></span><span style="display:flex;"><span>-f file 指定的文件中读取任务
+</span></span><span style="display:flex;"><span>-m 当任务被完成之后，将给用户发送邮件，即使没有标准输出  
+</span></span></code></pre></div><p><strong>注意：</strong></p>
+<ul>
+<li>作业执行命令的结果中的标准输出和错误以执行任务的用户身份发邮件通知给 root</li>
+<li>默认CentOS 8 最小化安装没有安装邮件服务,需要自行安装</li>
+<li>TIME：定义出什么时候进行 at 这项任务的时间</li>
+</ul>
+<p><strong>此命令中关于时间参数可用的以下格式：</strong></p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HH:MM</td>
+<td>比如 04:00 AM。</td>
+</tr>
+<tr>
+<td>Midnight（midnight）</td>
+<td>代表 12:00 AM</td>
+</tr>
+<tr>
+<td>Noon（noon）</td>
+<td>代表 12:00 PM（相当于 12:00）</td>
+</tr>
+<tr>
+<td>Teatime（teatime）</td>
+<td>代表 4:00 PM（相当于 16:00）。</td>
+</tr>
+<tr>
+<td>英文月名 日期 年份</td>
+<td>比如 January 15 2018 表示 2018 年 1 月 15 号，年份可有可无。</td>
+</tr>
+<tr>
+<td>MMDDYY、MM/DD/YY、MM.DD.YY</td>
+<td>比如 011518 表示 2018 年 1 月 15 号。</td>
+</tr>
+<tr>
+<td>now+时间</td>
+<td>以 minutes、hours、days 或 weeks 为单位，例如 now+5 days 表示命令在 5 天之后的此时此刻执行。</td>
+</tr>
+<tr>
+<td><strong>具体的使用方法：</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>at命令后想要输入执行程序的确切时间，然后回车，接着在 &gt; 后输入想要执行的命令，最后用 Ctrl+d 组合键退出 at 命令。</p>
+<p><strong>范例</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos7 ~]# at now+2 min
+</span></span><span style="display:flex;"><span>at&gt; ls ./ &gt; a.log
+</span></span></code></pre></div><p><strong>范例: ubuntu at任务存放路径</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@ubuntu200404-1:~# ll /var/spool/cron/
+</span></span><span style="display:flex;"><span>total 20
+</span></span><span style="display:flex;"><span>drwxr-xr-x 5 root   root    4096 Feb 23  2022 ./
+</span></span><span style="display:flex;"><span>drwxr-xr-x 4 root   root    4096 Feb 23  2022 ../
+</span></span><span style="display:flex;"><span>drwxrwx--T 2 daemon daemon  4096 Sep  6 13:32 atjobs/
+</span></span><span style="display:flex;"><span>drwxrwx--T 2 daemon daemon  4096 Nov 12  2018 atspool/
+</span></span><span style="display:flex;"><span>drwx-wx--T 2 root   crontab 4096 Feb 13  2020 crontabs/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>root@ubuntu200404-1:~# ll /var/spool/cron/atjobs/
+</span></span><span style="display:flex;"><span>total 16
+</span></span><span style="display:flex;"><span>drwxrwx--T 2 daemon daemon 4096 Sep  6 13:32 ./
+</span></span><span style="display:flex;"><span>drwxr-xr-x 5 root   root   4096 Feb 23  2022 ../
+</span></span><span style="display:flex;"><span>-rwx------ 1 root   daemon 2838 Sep  6 13:33 a0000101a6c9d1*
+</span></span><span style="display:flex;"><span>-rw------- 1 daemon daemon    6 Sep  6 13:32 .SEQ
+</span></span><span style="display:flex;"><span>root@ubuntu200404-1:~# 
+</span></span></code></pre></div><p><strong>范例：centos at任务存放路径</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos7 ~]# ll /var/spool/at/
+</span></span><span style="display:flex;"><span>total 4
+</span></span><span style="display:flex;"><span>-rwx------. 1 root root 2831 Sep  6 21:37 a0000501a6c9d5
+</span></span><span style="display:flex;"><span>drwx------. 2 root root   19 Sep  6 21:31 spool
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# 
+</span></span></code></pre></div><h1 id="二-crontab命令">二、 crontab命令<a hidden class="anchor" aria-hidden="true" href="#二-crontab命令">#</a></h1>
+<p>at 命令：是在指定的时间只能执行一次任务。 crontab 命令：可以循环重复的执行定时任务。</p>
+<h2 id="1crontab-命令的准备工作">1、crontab 命令的准备工作<a hidden class="anchor" aria-hidden="true" href="#1crontab-命令的准备工作">#</a></h2>
+<p>crontab 命令需要 crond 服务支持。crond 是 Linux 下用来周期地执行某种任务或等待处理某些事件的一个守护进程，在安装完成操作系统后，默认会安装 crond 服务工具，且 crond 服务默认就是自启动的。crond 进程每分钟会定期检查是否有要执行的任务，如果有，则会自动执行该任务。</p>
+<p>crontab 命令和 at 命令类似，也是通过 /etc/cron.allow 和 /etc/cron.deny 文件来限制某些用户是否可以使用 crontab 命令的。</p>
+<p>启动crond服务之后才能使用crontab 命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># systemctl start crond 或者  # systemctl enable crond
+</span></span></code></pre></div><h2 id="2-crontab-命令语法">2、 <strong>crontab 命令语法</strong><a hidden class="anchor" aria-hidden="true" href="#2-crontab-命令语法">#</a></h2>
+<p><strong>命令格式</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>crontab [-u user] [-l | -r | -e] [-i]
+</span></span></code></pre></div><p><strong>常用选项</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-l 列出所有任务
+</span></span><span style="display:flex;"><span>-e 编辑任务
+</span></span><span style="display:flex;"><span>-r 移除所有任务
+</span></span><span style="display:flex;"><span>-i 同-r一同使用，以交互式模式移除指定任务
+</span></span><span style="display:flex;"><span>-u user 指定用户管理cron任务,仅root可运行
+</span></span></code></pre></div><p>crontab 定时任务非常简单，只需执“crontab -e”命令，然后输入想要定时执行的任务即可。注意文件格式如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos7 ~]## crontab -e
+</span></span><span style="display:flex;"><span>#进入 crontab 编辑界面。会打开Vim编辑你的任务
+</span></span><span style="display:flex;"><span>* * * * * 执行的任务
+</span></span></code></pre></div><p>/etc/crontab 格式说明，详情参见 man 5 crontab
+注释行以 # 开头</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos7 ~]# cat /etc/crontab 
+</span></span><span style="display:flex;"><span>SHELL=/bin/bash
+</span></span><span style="display:flex;"><span>PATH=/sbin:/bin:/usr/sbin:/usr/bin
+</span></span><span style="display:flex;"><span>MAILTO=root
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># For details see man 4 crontabs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># Example of job definition:
+</span></span><span style="display:flex;"><span># .---------------- minute (0 - 59)
+</span></span><span style="display:flex;"><span># |  .------------- hour (0 - 23)
+</span></span><span style="display:flex;"><span># |  |  .---------- day of month (1 - 31)
+</span></span><span style="display:flex;"><span># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+</span></span><span style="display:flex;"><span># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+</span></span><span style="display:flex;"><span># |  |  |  |  |
+</span></span><span style="display:flex;"><span># *  *  *  *  * user-name  command to be executed
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You have mail in /var/spool/mail/root
+</span></span><span style="display:flex;"><span>[root@centos7 ~]# 
+</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>含义</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一个&quot;*&quot;</td>
+<td>一小时当中的第几分钟（minute）</td>
+<td>0~59</td>
+</tr>
+<tr>
+<td>第二个&quot;*&quot;</td>
+<td>一天当中的第几小时（hour）</td>
+<td>0~23</td>
+</tr>
+<tr>
+<td>第三个&quot;*&quot;</td>
+<td>一个月当中的第几天（day）</td>
+<td>1~31</td>
+</tr>
+<tr>
+<td>第四个&quot;*&quot;</td>
+<td>一年当中的第几个月（month）</td>
+<td>1~12</td>
+</tr>
+<tr>
+<td>第五个&quot;*&quot;</td>
+<td>一周当中的星期几（week）</td>
+<td>0~7（0和7都代表星期日）</td>
+</tr>
+</tbody>
+</table>
+<p>**在这个时间的表达式中，还有一些特殊符号如下：    **</p>
+<table>
+<thead>
+<tr>
+<th>特殊符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*（星号）</td>
+<td>代表任何时间。比如第一个&quot;*&ldquo;就代表一小时种每分钟都执行一次的意思。</td>
+</tr>
+<tr>
+<td>,（逗号）</td>
+<td>代表不连续的时间。比如&quot;0 8，12，16***命令&quot;就代表在每天的 8 点 0 分、12 点 0 分、16 点 0 分都执行一次命令。</td>
+</tr>
+<tr>
+<td>-（中杠）</td>
+<td>代表连续的时间范围。比如&quot;0 5 ** 1-6命令&rdquo;，代表在周一到周六的凌晨 5 点 0 分执行命令。</td>
+</tr>
+<tr>
+<td>/（正斜线）</td>
+<td>代表每隔多久执行一次。比如&quot;<em>/10</em>***命令&quot;，代表每隔 10 分钟就执行一次命令。</td>
+</tr>
+</tbody>
+</table>
+<p>当“crontab -e”编辑完成之后，一旦保存退出，那么这个定时任务实际就会写入 /var/spool/cron/ 目录中，每个用户的定时任务用自己的用户名进行区分。而且 crontab 命令只要保存就会生效，只要 crond 服务是启动的。</p>
+<p>这里举几个时间的例子来熟悉一下时间字段（星期几和几日最好不要同时出现，非常容易让管理员混淆）：</p>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 2 * * *</td>
+<td>在每天凌晨 2 点 1 分执行命令</td>
+</tr>
+<tr>
+<td>0 17 * * 1</td>
+<td>在每周一的 17 点 0 分执行命令</td>
+</tr>
+<tr>
+<td>0 5 1,15 * *</td>
+<td>在每月 1 日和 15 日的凌晨 5 点 0 分执行命令</td>
+</tr>
+<tr>
+<td>40 4 * * 1-5</td>
+<td>在每周一到周五的凌晨 4 点 40 分执行命令</td>
+</tr>
+<tr>
+<td>*/10 4 * * *</td>
+<td>在每天的凌晨 4 点，每隔 10 分钟执行命令</td>
+</tr>
+<tr>
+<td>3,15 8-11 */2 * *</td>
+<td>在每隔两天的上午 8 点到 11 点的第 3 和第 15 分钟执行命令。</td>
+</tr>
+</tbody>
+</table>
+<p><img loading="lazy" src="/posts.images/image.assets/join.gif" alt="img"  />
+</p>
+
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Rocky上实现私有CA和证书申请</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>进程和线程相关概念</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

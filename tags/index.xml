@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>🧩 标签 on Hopeful</title>
+    <link>https://xyenvy.github.io/tags/</link>
+    <description>Recent content in 🧩 标签 on Hopeful</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 23 Jun 2023 13:24:16 +0800</lastBuildDate><atom:link href="https://xyenvy.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>kubernetes</title>
+      <link>https://xyenvy.github.io/tags/kubernetes/</link>
+      <pubDate>Fri, 23 Jun 2023 13:24:16 +0800</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tabby</title>
+      <link>https://xyenvy.github.io/tags/tabby/</link>
+      <pubDate>Sun, 11 Jun 2023 19:40:22 +0800</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/tabby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Zabbix</title>
+      <link>https://xyenvy.github.io/tags/zabbix/</link>
+      <pubDate>Tue, 02 May 2023 21:33:16 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/zabbix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Zookeeper</title>
+      <link>https://xyenvy.github.io/tags/zookeeper/</link>
+      <pubDate>Sat, 18 Mar 2023 22:15:13 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/zookeeper/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OpenVPN</title>
+      <link>https://xyenvy.github.io/tags/openvpn/</link>
+      <pubDate>Fri, 17 Mar 2023 21:51:21 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/openvpn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://xyenvy.github.io/tags/docker/</link>
+      <pubDate>Tue, 07 Mar 2023 18:45:45 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansible</title>
+      <link>https://xyenvy.github.io/tags/ansible/</link>
+      <pubDate>Sat, 25 Feb 2023 19:12:21 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/ansible/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis</title>
+      <link>https://xyenvy.github.io/tags/redis/</link>
+      <pubDate>Thu, 09 Feb 2023 14:59:00 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nginx</title>
+      <link>https://xyenvy.github.io/tags/nginx/</link>
+      <pubDate>Sat, 07 Jan 2023 13:34:33 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/nginx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://xyenvy.github.io/tags/linux/</link>
+      <pubDate>Sat, 17 Dec 2022 09:28:09 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MySQL</title>
+      <link>https://xyenvy.github.io/tags/mysql/</link>
+      <pubDate>Wed, 23 Nov 2022 13:38:00 +0000</pubDate>
+      
+      <guid>https://xyenvy.github.io/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

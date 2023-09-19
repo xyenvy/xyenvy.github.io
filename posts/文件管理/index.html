@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>文件管理 | Hopeful</title>
+<meta name="keywords" content="Linux, File, 文件管理">
+<meta name="description" content="Linux中的所有数据都被保存在文件中，所有的文件被分配到不同的目录。目录是一种类似于树的结构，称为文件系统;当你使用Linux时，大部分时间都会和文件打交道，通过本节可以了解基本的文件操作，如创建文件、删除文件、复制文件、重命名文件以及为文件创建链接等。">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="文件管理" />
+<meta property="og:description" content="Linux中的所有数据都被保存在文件中，所有的文件被分配到不同的目录。目录是一种类似于树的结构，称为文件系统;当你使用Linux时，大部分时间都会和文件打交道，通过本节可以了解基本的文件操作，如创建文件、删除文件、复制文件、重命名文件以及为文件创建链接等。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/13.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-23T16:37:00+00:00" />
+<meta property="article:modified_time" content="2022-07-23T16:37:00+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/13.jpg" />
+<meta name="twitter:title" content="文件管理"/>
+<meta name="twitter:description" content="Linux中的所有数据都被保存在文件中，所有的文件被分配到不同的目录。目录是一种类似于树的结构，称为文件系统;当你使用Linux时，大部分时间都会和文件打交道，通过本节可以了解基本的文件操作，如创建文件、删除文件、复制文件、重命名文件以及为文件创建链接等。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "文件管理",
+      "item": "https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "文件管理",
+  "name": "文件管理",
+  "description": "Linux中的所有数据都被保存在文件中，所有的文件被分配到不同的目录。目录是一种类似于树的结构，称为文件系统;当你使用Linux时，大部分时间都会和文件打交道，通过本节可以了解基本的文件操作，如创建文件、删除文件、复制文件、重命名文件以及为文件创建链接等。",
+  "keywords": [
+    "Linux", "File", "文件管理"
+  ],
+  "articleBody": "1.文件系统目录结构 1.1常见的文件系统目录功能 /boot：引导文件存放目录，内核文件(vmlinuz)、引导加载器(bootloader, grub)都存放于此目录 /bin：所有用户使用的基本命令；不能关联至独立分区，OS启动即会用到的程序 /sbin：管理类的基本命令；不能关联至独立分区，OS启动即会用到的程序 /lib：启动时程序依赖的基本共享库文件以及内核模块文件(/lib/modules) /lib64：专用于x86_64系统上的辅助共享库文件存放位置 /etc：配置文件目录 /home/USERNAME：普通用户家目录 /root：管理员的家目录 /media：便携式移动设备挂载点 /mnt：临时文件系统挂载点 /dev：设备文件及特殊文件存储位置 b: block device，随机访问 c: character device，线性访问 /opt：第三方应用程序的安装位置 /srv：系统上运行的服务用到的数据 /tmp：临时文件存储位置 /usr: universal shared, read-only data bin: 保证系统拥有完整功能而提供的应用程序 sbin: lib：32位使用 lib64：只存在64位系统 include: C程序的头文件(header files) share：结构化独立的数据，例如doc, man等 local：第三方应用程序的安装位置 bin, sbin, lib, lib64, etc, share /var: variable data files cache: 应用程序缓存数据目录 lib: 应用程序状态信息数据 local：专用于为/usr/local下的应用程序存储可变数据 lock: 锁文件 log: 日志目录及文件 opt: 专用于为/opt下的应用程序存储可变数据 run: 运行中的进程相关数据,通常用于存储进程pid文件 spool: 应用程序数据池 tmp: 保存系统两次重启之间产生的临时数据 /proc: 用于输出内核与进程信息相关的虚拟文件系统 /sys：用于输出当前系统上硬件设备相关信息虚拟文件系统 /selinux: security enhanced Linux，selinux相关的安全策略等信息的存储位置 1.2Linux下的文件类型 -普通文件 d 目录文件directory I 符号链接文件link b 块设备block c 字符设备character p 管道文件pipe s 套接字文件socket 注意:面试题目容易出现\n2.文件操作命令 2.1相对路径和绝对路径 绝对路径 以正斜杠/ 即根目录开始 完整的文件的位置路径 可用于任何想指定一个文件名的时候 相对路径名 不以斜线开始 一般情况下，是指相对于当前工作目录的路径，特殊场景下，是相对于某目录的位置 可以作为一个简短的形式指定一个文件名 基名：basename，只取文件名而不要路径 目录名：dirname，只取路径，不要文件名 范例: 2.2更改目录 命令 cd ： change directory 改变目录 选项：-P 切换至物理路径，而非软链接目录 可以使用绝对或相对路径 切换至父目录： cd .. 切换至当前用户主目录： cd 切换至以前的工作目录： cd -\n2.3列出目录内容 ls 命令可以列出当前目录的内容或指定目录 用法：\nls [options] [files_or_dirs] 常见选项：\n-a 包含隐藏文件 -l 显示额外的信息 -R 目录递归 -ld 目录和符号链接信息 -1 文件分行显示 -S 按从大到小排序 -t 按mtime排序 -u 配合-t选项，显示并按atime从新到旧排序 -U 按目录存放顺序显示 -X 按文件后缀排序 -F 对不同类型文件显示时附加不同的符号：*/=\u003e@| -C 文件多时，以多列的方式显示文件，默认是一列（标准输出） 说明：\nls 查看不同后缀文件时的颜色由 /etc/DIR_COLORS 和@LS_COLORS变量定义 ls -l 看到文件的大小,不一定是实际文件真正占用空间的大小 2.4查看文件状态 用法：\nstat filename 每个文件有三个时间戳：\naccess time 访问时间，atime，读取文件内容 modify time 修改时间，mtime，改变文件内容（数据） change time 改变时间，ctime，元数据发生改变 2.5查看文件内容 用法：\nfile [options] filename 常用选项：\n-b 列出文件辨识结果时，不显示文件名称 -f filelist 列出文件filelist中文件名的文件类型 -F 使用指定分隔符号替换输出文件名后默认的”:”分隔符 -L 查看对应软链接对应文件的文件类型 –help 显示命令在线帮助 2.6文件通配符模式 常见的通配符如下\n* 匹配零个或多个字符，但不匹配 \".\" 开头的文件，即隐藏文件 ? 匹配任何单个字符,一个汉字也算一个字符 ~ 当前用户家目录 ~mage 用户mage家目录 [0-9] 匹配数字范围 [a-z] 一个字母 [A-Z] 一个字母 [wang] 匹配列表中的任何的一个字符 [^wang] 匹配列表中的所有字符以外的字符 [^a-z] 匹配列表中的所有字符以外的字符 . 和 ~+ 当前工作目录 ~- 前一个工作目录 2.7批量修改文件名 利用 rename 可以批量修改文件名 格式：\nrename [options] ... 范例：\n#为所有的f开头包含conf的文件加上.bak后缀： rename 'conf' 'conf.bak' f* #去掉所有的bak后缀： rename '.bak' '' *.bak 3.硬链接和软链接 3.1硬链接 硬链接本质上就给一个文件起一个新的名称，实质是同一个文件 硬链接特性\n创建硬链接会在对应的目录中增加额外的记录项以引用文件 对应于同一文件系统上一个物理文件 每个目录引用相同的inode号 创建时链接数递增 删除文件时：rm命令递减计数的链接，文件要存在，至少有一个链接数，当链接数为零时，该文件被删除 不能跨越驱动器或分区 不支持对目录创建硬链接 格式：\nln filename [linkname] 3.2软链接 一个符号链接指向另一个文件,就像 windows 中快捷方式，软链接文件和原文件本质上不是同一个文件 软链接特点\n一个符号链接的内容是它引用文件的名称 可以对目录创建软链接 可以跨分区的文件实现 指向的是另一个文件的路径；其大小为指向的路径字符串的长度；不增加或减少目标文件inode的引用计数 在创建软链接时, 如果源文件使用相对路径，是相对于软链接文件的路径，而非相对于当前工作目录,但是软链接的路径如果是相对路径,则是相对于当前工作目录 格式： ln -s filename [linkname] 范例： 查看软链接\nrm -rf /data/dirlink #只删除软链接本身,不会删除源目录内容 rm -rf /data/dirlink/ #删除源目录的文件,但不会删除链接文件,此方法非常危险 #注意: 删除此软链接务必不要加-r选项 4.硬链接和软链接区别 本质： 硬链接：本质是同一个文件 软链接：本质不是同一个文件 跨设备 硬链接：不支持 软链接：支持 inode 硬链接：相同 软链接：不同 链接数 硬链接：创建新的硬链接,链接数会增加,删除硬链接,链接数减少 软链接：创建或删除,链接数不会变化 文件夹 硬链接：不支持 软链接：支持 相对路径 硬链接：原始文件相对路径是相对于当前工作目录 软链接：原始文件的相对路径是相对于链接文件的相对路径 删除源文件 硬链接：只是链接数减一,但链接文件的访问不受影响 软链接：链接文件将无法访问 文件类型 硬链接：和源文件相同 软链接：链接文件,和源文件无关 文件大小 硬链接: 和源文件相同 软链接: 源文件的路径的长度 5.生产案例 案例1：提示空间满 No space left on device，但 df 可以看到空间很多，为什么？ 解决方法：节点编号用完了，增加节点编号增加不了，说明你的磁盘上的文件都是小文件； 1、删除不用的文件和文件夹释放inode 2、迁移数据到新磁盘然后格式化重新指定inode 知识点： 1.Linux下一个文件夹或者一个文件就会占用一个inode资源 2.inode资源数量是在格式化磁盘的时候就指定的（可以不指定，但也会有一个值），要更改这个 数量必须格式化磁盘 3.如果某个磁盘的inode资源用尽，即便磁盘有空间，也不能进行任何文件或者文件夹的新增 4.删除一个文件夹或者文件就能释放一个inode资源 案例2：提示空间快满，使用 rm 删除了很大的无用文件后，df仍然看到空间不足，为什么？如何解决？ 有其他程序在使用该文件，可以清空该文件内容。使用\u003e清空文件内容 \u003e filename # \u003e test.log 6.重定向和管道 6.1 标准输入和输出 程序：指令+数据 读入数据：Input 输出数据：Output 打开的文件都有一个fd: file descriptor (文件描述符) Linux给程序提供三种 I/O 设备\n标准输入（STDIN） －0 默认接受来自终端窗口的输入 标准输出（STDOUT）－1 默认输出到终端窗口 标准错误（STDERR） －2 默认输出到终端窗口 6.2标准的输出和错误重定向 格式：\n命令 操作符号 文件名 支持的操作符号包括：\n1\u003e 或 \u003e 把STDOUT重定向到文件 2\u003e 把STDERR重定向到文件 \u0026\u003e 把标准输出和错误都重定向 \u003e\u0026 和上面功能一样，建议使用上面方式 以上的文件如果已经存在，文件内容则会覆盖\n# \u003e\u003e 可以在原有的基础内容上追加内容 \u003e\u003e 追加标准输出重定向至文件 2\u003e\u003e 追加标准错误重定向至文件 6.3将标准输出和错误输出指定向不同的文件 格式：\nCOMMAND \u003e /path/to/file.log 2\u003e /path/to/error.log 6.4合并标准输出和错误输出为同一个数据流进行重定向 \u0026\u003e 覆盖重定向 \u0026\u003e\u003e 追加重定向 COMMAND \u003e /path/to/file.out 2\u003e\u00261 （顺序很重要） COMMAND \u003e\u003e /path/to/file.out 2\u003e\u00261 错误案例 6.5标准输入重定向 实现标准输入重定向的符号\nCOMMAND 0\u003c FILE COMMAND \u003c FILE 面试题： # 求1+2+···+10的和 seq -s+ 10 \u003e seq.log bc \u003c seq.log 扩展：求1*2*···*10的值： seq -s* 10 \u003eseq.log bc \u003c seq.log 6.5.1tr命令 tr 转换和删除字符\ntr [option] ··· SET1 [SET2] 选项：\n-d --delete：删除所有属于第一字符集的字符 -s --squeeze-repeats：把连续重复的字符以单独一个字符表示,即去重 -t --truncate-set1：将第一个字符集对应字符转化为第二字符集对应的字符 -c –C --complement：取字符集的补集 \\NNN character with octal value NNN (1 to 3 octal digits) \\\\ backslash \\a audible BEL \\b backspace \\f form feed \\n new line \\r return \\t horizontal tab \\v vertical tab [:alnum:]：字母和数字 [:alpha:]：字母 [:digit:]：数字 [:lower:]：小写字母 [:upper:]：大写字母 [:space:]：空白字符 [:print:]：可打印字符 [:punct:]：标点符号 [:graph:]：图形字符 [:cntrl:]：控制（非打印）字符 [:xdigit:]：十六进制字符 范例：\n删除字符,删除’abcd’中的’a' echo abcd | tr -d 'a' 将’aaabbbccc‘中字符去重 echo aaabbbccc |tr -s 'abc' 输入df将空格用\"+“替换 df | tr -s ' ' + 6.5.2多行重定向 使用 “«终止词” 命令从键盘把多行重导向给STDIN，直到终止词位置之前的所有文本都发送给 STDIN，有时被称为就地文本（here documents） 其中终止词可以是任何一个或多个符号，比如：!，@，$，EOF（End Of File），magedu等，其中EOF 比较常用\n范例：\n6.5.3高级重定向 6.5.3.1 cmd1 \u003c \u003c(cmd2) 名称为 Process substitution ,是由两个部分组成 \u003c(cmd2) 表示把cmd2的输出写入一个临时文件, 注意：\u003c和（之间无空格 cmd1 \u003c 这是一个标准的stdin重定向 把两个合起来，就是把cmd2的输出stdout传递给cmd1作为输入stdin, 中间通过临时文件做传递\n6.5.3.2cmd1«\u003c‘string’ 含义是 here-string ，表示传给给cmd的stdin的内容从这里开始是一个字符串。 范例：\nbc \u003c\u003c\u003c'2+4' 6.6 tee命令 tee命令用于读取标准输入的数据，并将其内容输出成文件。\ntee指令会从标准输入设备读取数据，将其内容输出到标准输出设备，同时保存成文件。\n选项：\n-a 追加 7.用户和组相关概念 7.1 用户 Linux中每个用户是通过 User Id （UID）来唯一标识的\n管理员：root, 0\n普通用户：1-60000 自动分配\n系统用户：1-499 （CentOS 6以前）, 1-999 （CentOS 7以后） 对守护进程获取资源进行权限分配 登录用户：500+ （CentOS6以前）, 1000+（CentOS7以后） 给用户进行交互式登录使用 7.2 用户组 Linux中可以将一个或多个用户加入用户组中，用户组是通过Group ID（GID） 来唯一标识的。\n管理员组：root, 0 普通组： 系统组：1-499（CentOS 6以前）, 1-999（CentOS7以后）, 对守护进程获取资源进行权限分配 普通组：500+（CentOS 6以前）, 1000+（CentOS7以后）, 给用户使用 7.3 用户和组的关系 用户的主要组(primary group)：用户必须属于一个且只有一个主组，默认创建用户时会自动创建和用户名同名的组，做为用户的主要组，由于此组中只有一个用户，又称为私有组 用户的附加组(supplementary group)： 一个用户可以属于零个或多个辅助组，附属组 范例：\n[root@rocky8 home]# id yuankun uid=1000(yuankun) gid=1000(yuankun) groups=1000(yuankun) 7.4用户和组的配置文件 7.4.1用户和组的主要配置文件 /etc/passwd：用户及其属性信息(名称、UID、主组ID等） /etc/shadow：用户密码及其相关属性 /etc/group：组及其属性信息 /etc/gshadow：组密码及其相关属性 7.4.2 passwd文件格式 login name：登录用名（yuankun） passwd：密码 (x) UID：用户身份编号 (1000) GID：登录默认所在组编号 (1000) GECOS：用户全名或注释 home directory：用户主目录 (/home/wang) shell：用户默认使用shell (/bin/bash) 7.4.3shadow文件格式 登录用名 用户密码:一般用sha512加密 从1970年1月1日起到密码最近一次被更改的时间 密码再过几天可以被变更（0表示随时可被变更） 密码再过几天必须被变更（99999表示永不过期） 密码过期前几天系统提醒用户（默认为一周） 密码过期几天后帐号会被锁定 从1970年1月1日算起，多少天后帐号失效 7.4.4group文件格式 群组名称：就是群组名称 群组密码：通常不需要设定，密码是被记录在 /etc/gshadow GID：就是群组的 ID 以当前组为附加组的用户列表(分隔符为逗号) 7.4.5gshadow文件格式 群组名称：就是群的名称 群组密码： 组管理员列表：组管理员的列表，更改组密码和成员 以当前组为附加组的用户列表：多个用户间用逗号分隔 7.5 用户和组管理命令 用户管理命令 useradd(添加用户) usermod(修改用户) userdel(删除用户) 组账号维护命令 groupadd groupmod groupdel 面试题：添加新用户后家目录下的文件来源什么地方？\n来源于/etc/skel,进入/etc/skel下查看文件和进入test用户的家目录下查看文件是一致的\n7.5.1用户创建 useradd命令可以创建新的linux用户\n格式：\nuseradd [options] login 常见的选项：\n-u UID -o 配合-u 选项，不检查UID的唯一性 -g GID 指明用户所属基本组，可为组名，也可以GID -c \"COMMENT“ 用户的注释信息 -d HOME_DIR 以指定的路径(不存在)为家目录 -s SHELL 指明用户的默认shell程序，可用列表在/etc/shells文件中 -G GROUP1[,GROUP2,...] 为用户指明附加组，组须事先存在 -N 不创建私用组做主组，使用users组做主组 -r 创建系统用户 CentOS 6之前: ID\u003c500，CentOS7 以后: ID\u003c1000 -m 创建家目录，用于系统用户 -M 不创建家目录，用于非系统用户 -p 指定加密的密码 范例:\n[root@rocky8 home]# groupadd apache [root@rocky8 home]# useradd -r -u 48 -g apache -s /sbin/nologin -d /var/www -c \"Apache\" apache useradd命令默认值设置由/etc/default/useradd定义\n[root@centos8 ~]#cat /etc/default/useradd # useradd defaults file GROUP=100 HOME=/home INACTIVE=-1 #对应/etc/shadow文件第7列，即用户密码过期后的帐号锁定的宽限期,-1表示不锁定 EXPIRE= #对应/etc/shadow文件第8列，即用户帐号的有效期 SHELL=/bin/bash SKEL=/etc/skel #用于生成新建用户家目录的模版文件 CREATE_MAIL_SPOOL=yes 7.5.2用户属性修改 usermod命令可以修改用户属性\n格式：\nusermod [options] login 常见选项：\n-u UID: 新UID -g GID: 新主组 -G GROUP1[,GROUP2,...[,GROUPN]]]：新附加组，原来的附加组将会被覆盖；若保留原有，则要同时使 用-a选项 -s SHELL：新的默认SHELL -c 'COMMENT'：新的注释信息 -d HOME: 新家目录不会自动创建；若要创建新家目录并移动原家数据，同时使用-m选项 -l login_name: 新的名字 -L: lock指定用户,在/etc/shadow 密码栏的增加 ! -U: unlock指定用户,将 /etc/shadow 密码栏的 ! 拿掉 -e YYYY-MM-DD: 指明用户账号过期日期 -f INACTIVE: 设定非活动期限，即宽限期 范例：创建test用户，使用id username查看用户的uid,然后修改其uid\n[root@rocky8 home]# useradd test #添加tes用户 [root@rocky8 home]# id test\t#查看用户信息 uid=1001(test) gid=1001(test) groups=1001(test) [root@rocky8 home]# usermod -u 1002 test # 将uid修改为1002 [root@rocky8 home]# id test\t#查看用户信息修改成功 uid=1002(test) gid=1001(test) groups=1001(test) 7.5.4删除用户 userdel可以删除用户\n格式：\nuserdel [options] login 常见的选项：\n-f, --force 强制 -r, --remove 删除用户家目录和邮箱 范例：\nuserdel -f test #强制删除 userdel -rf test # 删除家目录和邮箱 7.5.5查看用户相关ID id命令可以查看用户的UID、GID等信息\nid [options] [username] 常见选项：\n-u: 显示UID -g: 显示GID -G: 显示用户所属的组的ID -n: 显示名称，需配合ugG使用 范例：\n[root@rocky8 home]# id test uid=1002(test) gid=1001(test) groups=1001(test) [root@rocky8 home]# id -u test 1002 [root@rocky8 home]# id -g test 1001 [root@rocky8 home]# id -G test 1001 [root@rocky8 home]# 7.5.6查看linux所有用户 查看/etc/passwd getent passwd 7.5.7切换用户 su: 即 switch user，命令可以切换用户身份，并且以指定用户的身份执行命令 格式：\nsu [options...] [-] [user [args...]] 常见的选项\n-l --login su -l UserName 相当于 su - UserName -c, --command pass a single command to the shell with -c 切换用户的方式：\nsu UserName：非登录式切换，即不会读取目标用户的配置文件，不改变当前工作目录，即不完全切换 su - UserName：登录式切换，会读取目标用户的配置文件，切换至自已的家目录，即完全切换 说明：root su至其他用户无须密码；非root用户切换时需要密码 注意：su 切换新用户后，使用 exit 退回至旧的用户身份，而不要再用 su 切换至旧用户，否则会生成很多的bash子进程，环境可能会混乱。 换个身份执行命令：\nsu - username -c 'command' 范例：\n[root@rocky8 skel]# su - test -c 'touch test.log' [root@rocky8 skel]# su test [test@rocky8 skel]$ ll total 0 [test@rocky8 skel]$ ls -a . .. .bash_logout .bash_profile .bashrc [test@rocky8 skel]$ cd /home/ [test@rocky8 home]$ ll total 0 drwx------. 2 test test 99 Jul 24 11:38 test drwx------. 2 test1 test1 78 Jul 24 11:24 test1 drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun [test@rocky8 home]$ cd test [test@rocky8 ~]$ ll total 0 -rw-rw-r--. 1 test test 0 Jul 24 11:38 test.log [test@rocky8 ~]$ 7.5.8设置密码 passwd 可以修改用户密码\n格式：\npasswd [options] username 常见选项：\n-d：删除指定用户密码 -l：锁定指定用户 -u：解锁指定用户 -e：强制用户下次登录修改密码 -f：强制操作 -n mindays：指定最短使用期限 -x maxdays：最大使用期限 -w warndays：提前多少天开始警告 -i inactivedays：非活动期限 --stdin：从标准输入接收用户密码,Ubuntu无此选项 范例：非交互式修改用户密码\n#此方式更通用，适用于各种Linux版本，如:ubuntu root@ununtu2004:/home# echo -e '123456\\n123456' | passwd test New password: Retype new password: passwd: password updated successfully root@ununtu2004:/home# #适用于红帽系列的Linux版本 [root@rocky8 home]# echo -e '123456'| passwd --stdin test Changing password for user test. passwd: all authentication tokens updated successfully. [root@rocky8 home]# 7.6文件权限管理 7.6.1文件所有者和属组属性操作 7.6.1.1设置文件的所有者chown chown 命令可以修改文件的属主，也可以修改文件属组 格式：\nchown [OPTION]... [OWNER][:[GROUP]] FILE... chown [OPTION]... --reference=RFILE FILE... 用法说明：\nOWNER #只修改所有者 OWNER:GROUP #同时修改所有者和属组 :GROUP #只修改属组，冒号也可用 . 替换 --reference=RFILE #参考指定的的属性，来修改 -R\t#递归，此选项慎用，非常危险！ 范例：\n修改所有者 [root@rocky8 home]# touch data.log [root@rocky8 home]# ll\t# data.log所有者为root total 0 -rw-r--r--. 1 root root 0 Jul 24 13:16 data.log drwx------. 2 gentoo gentoo 62 Jul 24 12:39 gentoo drwx------. 2 test test 99 Jul 24 11:38 test drwx------. 2 test1 test1 78 Jul 24 11:24 test1 drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun [root@rocky8 home]# chown yuankun data.log # 修改所有者为yuankun [root@rocky8 home]# ll total 0 -rw-r--r--. 1 yuankun root 0 Jul 24 13:16 data.log drwx------. 2 gentoo gentoo 62 Jul 24 12:39 gentoo drwx------. 2 test test 99 Jul 24 11:38 test drwx------. 2 test1 test1 78 Jul 24 11:24 test1 drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun [root@rocky8 home]# 修改所属组 chown :bin data.log 同时修改所有者和所属组 [root@rocky8 home]# touch test.log [root@rocky8 home]# [root@rocky8 home]# [root@rocky8 home]# chown yuankun:bin test.log # 冒号用.替换也可以 [root@rocky8 home]# ll total 0 -rw-r--r--. 1 yuankun bin 0 Jul 24 13:16 data.log drwx------. 2 gentoo gentoo 62 Jul 24 12:39 gentoo drwx------. 2 test test 99 Jul 24 11:38 test drwx------. 2 test1 test1 78 Jul 24 11:24 test1 -rw-r--r--. 1 yuankun bin 0 Jul 24 13:22 test.log drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun [root@rocky8 home]# 修改为参考的所有者户所属组 chown --reference=root.log data.log 递归修改 chown -R yuankun:yuankun ./data/mysql/ 7.6.1.2设置文件的属组信息chgrp chgrp 命令可以只修改文件的属组 格式:\nchgrp [OPTION]... GROUP FILE... chgrp [OPTION]... --reference=RFILE FILE... -R 递归\n范例：\nchgrp yuankun data.log 7.6.2文件权限 每个文件针对每类访问者都定义了三种权限\nr Readable 4 w Writable 2 x eXcutable 1 对文件的权限\nr 可使用文件查看类工具，比如：cat，可以获取其内容 w 可修改其内容,文件的是否被删除和文件的权限无关 x 可以把此文件提请内核启动为一个进程，即可以执行（运行）此文件（此文件的内容必须是可执行） 文件权限常见组合 --- 0 r 4 r-x 5 rw 6 rwx 7 对目录的权限\nr 可以使用ls查看此目录中文件名列表,但无法看到文件的属性meta信息,包括inode号,不能查看文件的 内容 w 可在此目录中创建文件，也可删除此目录中的文件，而和此被删除的文件的权限无关 x 可以cd进入此目录，可以使用ls -l file或stat file 查看此目录中指定文件的元数据，当预先知 道文件名称时,也可以查看文件的内容,属于目录的可访问的最小权限 X 分配给目录或有部分x权限的文件的x权限，对无任意x权限的文件则不会分配x权限 目录权限常见组合 - 不能访问目录 r-x 只读目录 rwx 可读也可写目录 面试题：Linux中的目录和文件的权限区别？分别说明读，写和执行权限的区别?\n修改文件权限chmod\n面试题：执行 cp /etc/issue /data/dir/ 所需要的最小权限？\n",
+  "wordCount" : "8039",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/13.jpg","datePublished": "2022-07-23T16:37:00Z",
+  "dateModified": "2022-07-23T16:37:00Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                文件管理
+            </h1>
+            <div class="post-description">
+                Linux中的所有数据都被保存在文件中，所有的文件被分配到不同的目录。目录是一种类似于树的结构，称为文件系统;当你使用Linux时，大部分时间都会和文件打交道，通过本节可以了解基本的文件操作，如创建文件、删除文件、复制文件、重命名文件以及为文件创建链接等。
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-07-23
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>8039字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>17分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/13.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul><ul>
+                <li>
+                    <a href="#1%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e7%9b%ae%e5%bd%95%e7%bb%93%e6%9e%84" aria-label="1.文件系统目录结构">1.文件系统目录结构</a></li>
+                <li>
+                    <a href="#11%e5%b8%b8%e8%a7%81%e7%9a%84%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e7%9b%ae%e5%bd%95%e5%8a%9f%e8%83%bd" aria-label="1.1常见的文件系统目录功能">1.1常见的文件系统目录功能</a></li>
+                <li>
+                    <a href="#12linux%e4%b8%8b%e7%9a%84%e6%96%87%e4%bb%b6%e7%b1%bb%e5%9e%8b" aria-label="1.2Linux下的文件类型">1.2Linux下的文件类型</a></li></ul>
+                    
+                <li>
+                    <a href="#2%e6%96%87%e4%bb%b6%e6%93%8d%e4%bd%9c%e5%91%bd%e4%bb%a4" aria-label="2.文件操作命令">2.文件操作命令</a><ul>
+                        
+                <li>
+                    <a href="#21%e7%9b%b8%e5%af%b9%e8%b7%af%e5%be%84%e5%92%8c%e7%bb%9d%e5%af%b9%e8%b7%af%e5%be%84" aria-label="2.1相对路径和绝对路径">2.1相对路径和绝对路径</a></li>
+                <li>
+                    <a href="#22%e6%9b%b4%e6%94%b9%e7%9b%ae%e5%bd%95" aria-label="2.2更改目录">2.2更改目录</a></li>
+                <li>
+                    <a href="#23%e5%88%97%e5%87%ba%e7%9b%ae%e5%bd%95%e5%86%85%e5%ae%b9" aria-label="2.3列出目录内容">2.3列出目录内容</a></li>
+                <li>
+                    <a href="#24%e6%9f%a5%e7%9c%8b%e6%96%87%e4%bb%b6%e7%8a%b6%e6%80%81" aria-label="2.4查看文件状态">2.4查看文件状态</a></li>
+                <li>
+                    <a href="#25%e6%9f%a5%e7%9c%8b%e6%96%87%e4%bb%b6%e5%86%85%e5%ae%b9" aria-label="2.5查看文件内容">2.5查看文件内容</a></li>
+                <li>
+                    <a href="#26%e6%96%87%e4%bb%b6%e9%80%9a%e9%85%8d%e7%ac%a6%e6%a8%a1%e5%bc%8f" aria-label="2.6文件通配符模式">2.6文件通配符模式</a></li>
+                <li>
+                    <a href="#27%e6%89%b9%e9%87%8f%e4%bf%ae%e6%94%b9%e6%96%87%e4%bb%b6%e5%90%8d" aria-label="2.7批量修改文件名">2.7批量修改文件名</a></li></ul>
+                </li>
+                <li>
+                    <a href="#3%e7%a1%ac%e9%93%be%e6%8e%a5%e5%92%8c%e8%bd%af%e9%93%be%e6%8e%a5" aria-label="3.硬链接和软链接">3.硬链接和软链接</a><ul>
+                        
+                <li>
+                    <a href="#31%e7%a1%ac%e9%93%be%e6%8e%a5" aria-label="3.1硬链接">3.1硬链接</a></li>
+                <li>
+                    <a href="#32%e8%bd%af%e9%93%be%e6%8e%a5" aria-label="3.2软链接">3.2软链接</a></li></ul>
+                </li>
+                <li>
+                    <a href="#4%e7%a1%ac%e9%93%be%e6%8e%a5%e5%92%8c%e8%bd%af%e9%93%be%e6%8e%a5%e5%8c%ba%e5%88%ab" aria-label="4.硬链接和软链接区别">4.硬链接和软链接区别</a></li>
+                <li>
+                    <a href="#5%e7%94%9f%e4%ba%a7%e6%a1%88%e4%be%8b" aria-label="5.生产案例">5.生产案例</a></li>
+                <li>
+                    <a href="#6%e9%87%8d%e5%ae%9a%e5%90%91%e5%92%8c%e7%ae%a1%e9%81%93" aria-label="6.重定向和管道">6.重定向和管道</a><ul>
+                        
+                <li>
+                    <a href="#61-%e6%a0%87%e5%87%86%e8%be%93%e5%85%a5%e5%92%8c%e8%be%93%e5%87%ba" aria-label="6.1 标准输入和输出">6.1 标准输入和输出</a></li>
+                <li>
+                    <a href="#62%e6%a0%87%e5%87%86%e7%9a%84%e8%be%93%e5%87%ba%e5%92%8c%e9%94%99%e8%af%af%e9%87%8d%e5%ae%9a%e5%90%91" aria-label="6.2标准的输出和错误重定向">6.2标准的输出和错误重定向</a></li>
+                <li>
+                    <a href="#63%e5%b0%86%e6%a0%87%e5%87%86%e8%be%93%e5%87%ba%e5%92%8c%e9%94%99%e8%af%af%e8%be%93%e5%87%ba%e6%8c%87%e5%ae%9a%e5%90%91%e4%b8%8d%e5%90%8c%e7%9a%84%e6%96%87%e4%bb%b6" aria-label="6.3将标准输出和错误输出指定向不同的文件">6.3将标准输出和错误输出指定向不同的文件</a></li>
+                <li>
+                    <a href="#64%e5%90%88%e5%b9%b6%e6%a0%87%e5%87%86%e8%be%93%e5%87%ba%e5%92%8c%e9%94%99%e8%af%af%e8%be%93%e5%87%ba%e4%b8%ba%e5%90%8c%e4%b8%80%e4%b8%aa%e6%95%b0%e6%8d%ae%e6%b5%81%e8%bf%9b%e8%a1%8c%e9%87%8d%e5%ae%9a%e5%90%91" aria-label="6.4合并标准输出和错误输出为同一个数据流进行重定向">6.4合并标准输出和错误输出为同一个数据流进行重定向</a></li>
+                <li>
+                    <a href="#65%e6%a0%87%e5%87%86%e8%be%93%e5%85%a5%e9%87%8d%e5%ae%9a%e5%90%91" aria-label="6.5标准输入重定向">6.5标准输入重定向</a><ul>
+                        
+                <li>
+                    <a href="#651tr%e5%91%bd%e4%bb%a4" aria-label="6.5.1tr命令">6.5.1tr命令</a></li>
+                <li>
+                    <a href="#652%e5%a4%9a%e8%a1%8c%e9%87%8d%e5%ae%9a%e5%90%91" aria-label="6.5.2多行重定向">6.5.2多行重定向</a></li>
+                <li>
+                    <a href="#653%e9%ab%98%e7%ba%a7%e9%87%8d%e5%ae%9a%e5%90%91" aria-label="6.5.3高级重定向">6.5.3高级重定向</a><ul>
+                        
+                <li>
+                    <a href="#6531-cmd1--cmd2" aria-label="6.5.3.1 cmd1 &amp;lt; &amp;lt;(cmd2)">6.5.3.1 cmd1 &lt; &lt;(cmd2)</a></li>
+                <li>
+                    <a href="#6532cmd1string" aria-label="6.5.3.2cmd1&amp;laquo;&amp;lt;&amp;lsquo;string&amp;rsquo;">6.5.3.2cmd1&laquo;&lt;&lsquo;string&rsquo;</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#66-tee%e5%91%bd%e4%bb%a4" aria-label="6.6 tee命令">6.6 tee命令</a></li></ul>
+                </li>
+                <li>
+                    <a href="#7%e7%94%a8%e6%88%b7%e5%92%8c%e7%bb%84%e7%9b%b8%e5%85%b3%e6%a6%82%e5%bf%b5" aria-label="7.用户和组相关概念">7.用户和组相关概念</a><ul>
+                        
+                <li>
+                    <a href="#71-%e7%94%a8%e6%88%b7" aria-label="7.1 用户">7.1 用户</a></li>
+                <li>
+                    <a href="#72-%e7%94%a8%e6%88%b7%e7%bb%84" aria-label="7.2 用户组">7.2 用户组</a></li>
+                <li>
+                    <a href="#73-%e7%94%a8%e6%88%b7%e5%92%8c%e7%bb%84%e7%9a%84%e5%85%b3%e7%b3%bb" aria-label="7.3 用户和组的关系">7.3 用户和组的关系</a></li>
+                <li>
+                    <a href="#74%e7%94%a8%e6%88%b7%e5%92%8c%e7%bb%84%e7%9a%84%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="7.4用户和组的配置文件">7.4用户和组的配置文件</a><ul>
+                        
+                <li>
+                    <a href="#741%e7%94%a8%e6%88%b7%e5%92%8c%e7%bb%84%e7%9a%84%e4%b8%bb%e8%a6%81%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="7.4.1用户和组的主要配置文件">7.4.1用户和组的主要配置文件</a></li>
+                <li>
+                    <a href="#742-passwd%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f" aria-label="7.4.2 passwd文件格式">7.4.2 passwd文件格式</a></li>
+                <li>
+                    <a href="#743shadow%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f" aria-label="7.4.3shadow文件格式">7.4.3shadow文件格式</a></li>
+                <li>
+                    <a href="#744group%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f" aria-label="7.4.4group文件格式">7.4.4group文件格式</a></li>
+                <li>
+                    <a href="#745gshadow%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f" aria-label="7.4.5gshadow文件格式">7.4.5gshadow文件格式</a></li></ul>
+                </li>
+                <li>
+                    <a href="#75-%e7%94%a8%e6%88%b7%e5%92%8c%e7%bb%84%e7%ae%a1%e7%90%86%e5%91%bd%e4%bb%a4" aria-label="7.5 用户和组管理命令">7.5 用户和组管理命令</a><ul>
+                        
+                <li>
+                    <a href="#751%e7%94%a8%e6%88%b7%e5%88%9b%e5%bb%ba" aria-label="7.5.1用户创建">7.5.1用户创建</a></li>
+                <li>
+                    <a href="#752%e7%94%a8%e6%88%b7%e5%b1%9e%e6%80%a7%e4%bf%ae%e6%94%b9" aria-label="7.5.2用户属性修改">7.5.2用户属性修改</a></li>
+                <li>
+                    <a href="#754%e5%88%a0%e9%99%a4%e7%94%a8%e6%88%b7" aria-label="7.5.4删除用户">7.5.4删除用户</a></li>
+                <li>
+                    <a href="#755%e6%9f%a5%e7%9c%8b%e7%94%a8%e6%88%b7%e7%9b%b8%e5%85%b3id" aria-label="7.5.5查看用户相关ID">7.5.5查看用户相关ID</a></li>
+                <li>
+                    <a href="#756%e6%9f%a5%e7%9c%8blinux%e6%89%80%e6%9c%89%e7%94%a8%e6%88%b7" aria-label="7.5.6查看linux所有用户">7.5.6查看linux所有用户</a></li>
+                <li>
+                    <a href="#757%e5%88%87%e6%8d%a2%e7%94%a8%e6%88%b7" aria-label="7.5.7切换用户">7.5.7切换用户</a></li>
+                <li>
+                    <a href="#758%e8%ae%be%e7%bd%ae%e5%af%86%e7%a0%81" aria-label="7.5.8设置密码">7.5.8设置密码</a></li></ul>
+                </li>
+                <li>
+                    <a href="#76%e6%96%87%e4%bb%b6%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86" aria-label="7.6文件权限管理">7.6文件权限管理</a><ul>
+                        
+                <li>
+                    <a href="#761%e6%96%87%e4%bb%b6%e6%89%80%e6%9c%89%e8%80%85%e5%92%8c%e5%b1%9e%e7%bb%84%e5%b1%9e%e6%80%a7%e6%93%8d%e4%bd%9c" aria-label="7.6.1文件所有者和属组属性操作">7.6.1文件所有者和属组属性操作</a><ul>
+                        
+                <li>
+                    <a href="#7611%e8%ae%be%e7%bd%ae%e6%96%87%e4%bb%b6%e7%9a%84%e6%89%80%e6%9c%89%e8%80%85chown" aria-label="7.6.1.1设置文件的所有者chown">7.6.1.1设置文件的所有者chown</a></li>
+                <li>
+                    <a href="#7612%e8%ae%be%e7%bd%ae%e6%96%87%e4%bb%b6%e7%9a%84%e5%b1%9e%e7%bb%84%e4%bf%a1%e6%81%afchgrp" aria-label="7.6.1.2设置文件的属组信息chgrp">7.6.1.2设置文件的属组信息chgrp</a></li></ul>
+                </li>
+                <li>
+                    <a href="#762%e6%96%87%e4%bb%b6%e6%9d%83%e9%99%90" aria-label="7.6.2文件权限">7.6.2文件权限</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="1文件系统目录结构">1.文件系统目录结构<a hidden class="anchor" aria-hidden="true" href="#1文件系统目录结构">#</a></h2>
+<h2 id="11常见的文件系统目录功能">1.1常见的文件系统目录功能<a hidden class="anchor" aria-hidden="true" href="#11常见的文件系统目录功能">#</a></h2>
+<p><img loading="lazy" src="/posts.images/image.assets/1658580842757.png" alt="1658580842757"  />
+</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>/boot：引导文件存放目录，内核文件<span style="color:#f92672">(</span>vmlinuz<span style="color:#f92672">)</span>、引导加载器<span style="color:#f92672">(</span>bootloader, grub<span style="color:#f92672">)</span>都存放于此目录
+</span></span><span style="display:flex;"><span>/bin：所有用户使用的基本命令；不能关联至独立分区，OS启动即会用到的程序
+</span></span><span style="display:flex;"><span>/sbin：管理类的基本命令；不能关联至独立分区，OS启动即会用到的程序
+</span></span><span style="display:flex;"><span>/lib：启动时程序依赖的基本共享库文件以及内核模块文件<span style="color:#f92672">(</span>/lib/modules<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>/lib64：专用于x86_64系统上的辅助共享库文件存放位置
+</span></span><span style="display:flex;"><span>/etc：配置文件目录
+</span></span><span style="display:flex;"><span>/home/USERNAME：普通用户家目录
+</span></span><span style="display:flex;"><span>/root：管理员的家目录
+</span></span><span style="display:flex;"><span>/media：便携式移动设备挂载点
+</span></span><span style="display:flex;"><span>/mnt：临时文件系统挂载点
+</span></span><span style="display:flex;"><span>/dev：设备文件及特殊文件存储位置
+</span></span><span style="display:flex;"><span>b: block device，随机访问
+</span></span><span style="display:flex;"><span>c: character device，线性访问
+</span></span><span style="display:flex;"><span>/opt：第三方应用程序的安装位置
+</span></span><span style="display:flex;"><span>/srv：系统上运行的服务用到的数据
+</span></span><span style="display:flex;"><span>/tmp：临时文件存储位置
+</span></span><span style="display:flex;"><span>/usr: universal shared, read-only data
+</span></span><span style="display:flex;"><span>bin: 保证系统拥有完整功能而提供的应用程序
+</span></span><span style="display:flex;"><span>sbin:
+</span></span><span style="display:flex;"><span>lib：32位使用
+</span></span><span style="display:flex;"><span>lib64：只存在64位系统
+</span></span><span style="display:flex;"><span>include: C程序的头文件<span style="color:#f92672">(</span>header files<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>share：结构化独立的数据，例如doc, man等
+</span></span><span style="display:flex;"><span>local：第三方应用程序的安装位置
+</span></span><span style="display:flex;"><span>bin, sbin, lib, lib64, etc, share
+</span></span><span style="display:flex;"><span>/var: variable data files
+</span></span><span style="display:flex;"><span>cache: 应用程序缓存数据目录
+</span></span><span style="display:flex;"><span>lib: 应用程序状态信息数据
+</span></span><span style="display:flex;"><span>local：专用于为/usr/local下的应用程序存储可变数据
+</span></span><span style="display:flex;"><span>lock: 锁文件
+</span></span><span style="display:flex;"><span>log: 日志目录及文件
+</span></span><span style="display:flex;"><span>opt: 专用于为/opt下的应用程序存储可变数据
+</span></span><span style="display:flex;"><span>run: 运行中的进程相关数据,通常用于存储进程pid文件
+</span></span><span style="display:flex;"><span>spool: 应用程序数据池
+</span></span><span style="display:flex;"><span>tmp: 保存系统两次重启之间产生的临时数据
+</span></span><span style="display:flex;"><span>/proc: 用于输出内核与进程信息相关的虚拟文件系统
+</span></span><span style="display:flex;"><span>/sys：用于输出当前系统上硬件设备相关信息虚拟文件系统
+</span></span><span style="display:flex;"><span>/selinux: security enhanced Linux，selinux相关的安全策略等信息的存储位置
+</span></span></code></pre></div><h2 id="12linux下的文件类型">1.2Linux下的文件类型<a hidden class="anchor" aria-hidden="true" href="#12linux下的文件类型">#</a></h2>
+<ul>
+<li>-普通文件</li>
+<li>d 目录文件directory</li>
+<li>I 符号链接文件link</li>
+<li>b 块设备block</li>
+<li>c 字符设备character</li>
+<li>p 管道文件pipe</li>
+<li>s 套接字文件socket</li>
+</ul>
+<p><mark style="background-color：colorName/hexOfColor">注意:面试题目容易出现</mark></p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658568673282.png" alt="1658568673282"  />
+</p>
+<h1 id="2文件操作命令">2.文件操作命令<a hidden class="anchor" aria-hidden="true" href="#2文件操作命令">#</a></h1>
+<h2 id="21相对路径和绝对路径">2.1相对路径和绝对路径<a hidden class="anchor" aria-hidden="true" href="#21相对路径和绝对路径">#</a></h2>
+<ul>
+<li>绝对路径
+以正斜杠/ 即根目录开始
+完整的文件的位置路径
+可用于任何想指定一个文件名的时候</li>
+<li>相对路径名
+不以斜线开始
+一般情况下，是指相对于当前工作目录的路径，特殊场景下，是相对于某目录的位置
+可以作为一个简短的形式指定一个文件名</li>
+<li>基名：basename，只取文件名而不要路径</li>
+<li>目录名：dirname，只取路径，不要文件名
+范例:</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1658569417929.png" alt="1658569417929"  />
+</p>
+<h2 id="22更改目录">2.2更改目录<a hidden class="anchor" aria-hidden="true" href="#22更改目录">#</a></h2>
+<p>命令 cd ： change directory 改变目录
+选项：-P 切换至物理路径，而非软链接目录
+可以使用绝对或相对路径
+切换至父目录： cd ..
+切换至当前用户主目录： cd
+切换至以前的工作目录： cd -</p>
+<h2 id="23列出目录内容">2.3列出目录内容<a hidden class="anchor" aria-hidden="true" href="#23列出目录内容">#</a></h2>
+<p>ls 命令可以列出当前目录的内容或指定目录
+用法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ls <span style="color:#f92672">[</span>options<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>files_or_dirs<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>常见选项：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>-a 包含隐藏文件
+</span></span><span style="display:flex;"><span>-l 显示额外的信息
+</span></span><span style="display:flex;"><span>-R 目录递归
+</span></span><span style="display:flex;"><span>-ld 目录和符号链接信息
+</span></span><span style="display:flex;"><span>-1 文件分行显示
+</span></span><span style="display:flex;"><span>-S 按从大到小排序
+</span></span><span style="display:flex;"><span>-t 按mtime排序
+</span></span><span style="display:flex;"><span>-u 配合-t选项，显示并按atime从新到旧排序
+</span></span><span style="display:flex;"><span>-U 按目录存放顺序显示
+</span></span><span style="display:flex;"><span>-X 按文件后缀排序
+</span></span><span style="display:flex;"><span>-F 对不同类型文件显示时附加不同的符号：*/<span style="color:#f92672">=</span>&gt;@|
+</span></span><span style="display:flex;"><span>-C 文件多时，以多列的方式显示文件，默认是一列（标准输出）
+</span></span></code></pre></div><p>说明：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ls 查看不同后缀文件时的颜色由 /etc/DIR_COLORS 和@LS_COLORS变量定义
+</span></span><span style="display:flex;"><span>ls -l 看到文件的大小,不一定是实际文件真正占用空间的大小
+</span></span></code></pre></div><h2 id="24查看文件状态">2.4查看文件状态<a hidden class="anchor" aria-hidden="true" href="#24查看文件状态">#</a></h2>
+<p>用法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>stat filename
+</span></span></code></pre></div><p>每个文件有三个时间戳：</p>
+<ul>
+<li>access time 访问时间，atime，读取文件内容</li>
+<li>modify time 修改时间，mtime，改变文件内容（数据）</li>
+<li>change time 改变时间，ctime，元数据发生改变</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1658570229648.png" alt="1658570229648"  />
+</p>
+<h2 id="25查看文件内容">2.5查看文件内容<a hidden class="anchor" aria-hidden="true" href="#25查看文件内容">#</a></h2>
+<p>用法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>file [options] filename
+</span></span></code></pre></div><p>常用选项：</p>
+<ul>
+<li>-b 列出文件辨识结果时，不显示文件名称</li>
+<li>-f filelist 列出文件filelist中文件名的文件类型</li>
+<li>-F 使用指定分隔符号替换输出文件名后默认的”:”分隔符</li>
+<li>-L 查看对应软链接对应文件的文件类型</li>
+<li>&ndash;help 显示命令在线帮助</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1658570620547.png" alt="1658570620547"  />
+</p>
+<h2 id="26文件通配符模式">2.6文件通配符模式<a hidden class="anchor" aria-hidden="true" href="#26文件通配符模式">#</a></h2>
+<p>常见的通配符如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>* 匹配零个或多个字符，但不匹配 &#34;.&#34; 开头的文件，即隐藏文件
+</span></span><span style="display:flex;"><span>? 匹配任何单个字符,一个汉字也算一个字符
+</span></span><span style="display:flex;"><span>~ 当前用户家目录
+</span></span><span style="display:flex;"><span>~mage 用户mage家目录
+</span></span><span style="display:flex;"><span>[0-9] 匹配数字范围
+</span></span><span style="display:flex;"><span>[a-z] 一个字母
+</span></span><span style="display:flex;"><span>[A-Z] 一个字母
+</span></span><span style="display:flex;"><span>[wang] 匹配列表中的任何的一个字符
+</span></span><span style="display:flex;"><span>[^wang] 匹配列表中的所有字符以外的字符
+</span></span><span style="display:flex;"><span>[^a-z] 匹配列表中的所有字符以外的字符
+</span></span><span style="display:flex;"><span>. 和 ~+ 当前工作目录
+</span></span><span style="display:flex;"><span>~- 前一个工作目录
+</span></span></code></pre></div><h2 id="27批量修改文件名">2.7批量修改文件名<a hidden class="anchor" aria-hidden="true" href="#27批量修改文件名">#</a></h2>
+<p>利用 rename 可以批量修改文件名
+格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>rename [options] &lt;expression&gt; &lt;replacement&gt; &lt;file&gt;...
+</span></span></code></pre></div><p>范例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#为所有的f开头包含conf的文件加上.bak后缀：
+</span></span><span style="display:flex;"><span>rename &#39;conf&#39; &#39;conf.bak&#39; f*
+</span></span><span style="display:flex;"><span>#去掉所有的bak后缀：
+</span></span><span style="display:flex;"><span>rename &#39;.bak&#39; &#39;&#39; *.bak
+</span></span></code></pre></div><h1 id="3硬链接和软链接">3.硬链接和软链接<a hidden class="anchor" aria-hidden="true" href="#3硬链接和软链接">#</a></h1>
+<h2 id="31硬链接">3.1硬链接<a hidden class="anchor" aria-hidden="true" href="#31硬链接">#</a></h2>
+<p>硬链接本质上就给一个文件起一个新的名称，实质是同一个文件
+硬链接特性</p>
+<ul>
+<li>创建硬链接会在对应的目录中增加额外的记录项以引用文件</li>
+<li>对应于同一文件系统上一个物理文件</li>
+<li>每个目录引用相同的inode号</li>
+<li>创建时链接数递增</li>
+<li>删除文件时：rm命令递减计数的链接，文件要存在，至少有一个链接数，当链接数为零时，该文件被删除</li>
+<li>不能跨越驱动器或分区</li>
+<li>不支持对目录创建硬链接</li>
+</ul>
+<p>格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ln filename [linkname]
+</span></span></code></pre></div><h2 id="32软链接">3.2软链接<a hidden class="anchor" aria-hidden="true" href="#32软链接">#</a></h2>
+<p>一个符号链接指向另一个文件,就像 windows 中快捷方式，软链接文件和原文件本质上不是同一个文件
+软链接特点</p>
+<ul>
+<li>一个符号链接的内容是它引用文件的名称</li>
+<li>可以对目录创建软链接</li>
+<li>可以跨分区的文件实现</li>
+<li>指向的是另一个文件的路径；其大小为指向的路径字符串的长度；不增加或减少目标文件inode的引用计数</li>
+<li>在创建软链接时, 如果源文件使用相对路径，是相对于软链接文件的路径，而非相对于当前工作目录,但是软链接的路径如果是相对路径,则是相对于当前工作目录
+格式：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ln -s filename [linkname]
+</span></span></code></pre></div><p>范例： 查看软链接</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658588131214.png" alt="1658588131214"  />
+</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>rm -rf /data/dirlink #只删除软链接本身,不会删除源目录内容
+</span></span><span style="display:flex;"><span>rm -rf /data/dirlink/ #删除源目录的文件,但不会删除链接文件,此方法非常危险
+</span></span><span style="display:flex;"><span>#注意: 删除此软链接务必不要加-r选项
+</span></span></code></pre></div><h1 id="4硬链接和软链接区别">4.硬链接和软链接区别<a hidden class="anchor" aria-hidden="true" href="#4硬链接和软链接区别">#</a></h1>
+<ol>
+<li>本质：</li>
+</ol>
+<ul>
+<li>硬链接：本质是同一个文件</li>
+<li>软链接：本质不是同一个文件</li>
+</ul>
+<ol start="2">
+<li>跨设备</li>
+</ol>
+<ul>
+<li>硬链接：不支持</li>
+<li>软链接：支持</li>
+</ul>
+<ol start="3">
+<li>inode</li>
+</ol>
+<ul>
+<li>硬链接：相同</li>
+<li>软链接：不同</li>
+</ul>
+<ol start="4">
+<li>链接数</li>
+</ol>
+<ul>
+<li>硬链接：创建新的硬链接,链接数会增加,删除硬链接,链接数减少</li>
+<li>软链接：创建或删除,链接数不会变化</li>
+</ul>
+<ol start="5">
+<li>文件夹</li>
+</ol>
+<ul>
+<li>硬链接：不支持</li>
+<li>软链接：支持</li>
+</ul>
+<ol start="6">
+<li>相对路径</li>
+</ol>
+<ul>
+<li>硬链接：原始文件相对路径是相对于当前工作目录</li>
+<li>软链接：原始文件的相对路径是相对于链接文件的相对路径</li>
+</ul>
+<ol start="7">
+<li>删除源文件</li>
+</ol>
+<ul>
+<li>硬链接：只是链接数减一,但链接文件的访问不受影响</li>
+<li>软链接：链接文件将无法访问</li>
+</ul>
+<ol start="8">
+<li>文件类型</li>
+</ol>
+<ul>
+<li>硬链接：和源文件相同</li>
+<li>软链接：链接文件,和源文件无关</li>
+</ul>
+<ol start="9">
+<li>文件大小</li>
+</ol>
+<ul>
+<li>硬链接: 和源文件相同</li>
+<li>软链接: 源文件的路径的长度</li>
+</ul>
+<h1 id="5生产案例">5.生产案例<a hidden class="anchor" aria-hidden="true" href="#5生产案例">#</a></h1>
+<ul>
+<li>案例1：提示空间满 No space left on device，但 df 可以看到空间很多，为什么？</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>解决方法：节点编号用完了，增加节点编号增加不了，说明你的磁盘上的文件都是小文件；
+</span></span><span style="display:flex;"><span>1、删除不用的文件和文件夹释放inode
+</span></span><span style="display:flex;"><span>2、迁移数据到新磁盘然后格式化重新指定inode
+</span></span><span style="display:flex;"><span>知识点：
+</span></span><span style="display:flex;"><span>1.Linux下一个文件夹或者一个文件就会占用一个inode资源
+</span></span><span style="display:flex;"><span>2.inode资源数量是在格式化磁盘的时候就指定的（可以不指定，但也会有一个值），要更改这个
+</span></span><span style="display:flex;"><span>数量必须格式化磁盘
+</span></span><span style="display:flex;"><span>3.如果某个磁盘的inode资源用尽，即便磁盘有空间，也不能进行任何文件或者文件夹的新增
+</span></span><span style="display:flex;"><span>4.删除一个文件夹或者文件就能释放一个inode资源
+</span></span></code></pre></div><ul>
+<li>案例2：提示空间快满，使用 rm 删除了很大的无用文件后，df仍然看到空间不足，为什么？如何解决？</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>有其他程序在使用该文件，可以清空该文件内容。使用&gt;清空文件内容
+</span></span><span style="display:flex;"><span>&gt; filename
+</span></span><span style="display:flex;"><span># &gt; test.log
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658589334005.png" alt="1658589334005"  />
+</p>
+<h1 id="6重定向和管道">6.重定向和管道<a hidden class="anchor" aria-hidden="true" href="#6重定向和管道">#</a></h1>
+<h2 id="61-标准输入和输出">6.1 标准输入和输出<a hidden class="anchor" aria-hidden="true" href="#61-标准输入和输出">#</a></h2>
+<p>程序：指令+数据
+读入数据：Input
+输出数据：Output
+打开的文件都有一个fd: file descriptor (文件描述符)
+Linux给程序提供三种 I/O 设备</p>
+<ul>
+<li>标准输入（STDIN） －0 默认接受来自终端窗口的输入</li>
+<li>标准输出（STDOUT）－1 默认输出到终端窗口</li>
+<li>标准错误（STDERR） －2 默认输出到终端窗口</li>
+</ul>
+<h2 id="62标准的输出和错误重定向">6.2标准的输出和错误重定向<a hidden class="anchor" aria-hidden="true" href="#62标准的输出和错误重定向">#</a></h2>
+<p>格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>命令 操作符号 文件名
+</span></span></code></pre></div><p>支持的操作符号包括：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1&gt; 或 &gt; 把STDOUT重定向到文件
+</span></span><span style="display:flex;"><span>2&gt; 把STDERR重定向到文件
+</span></span><span style="display:flex;"><span>&amp;&gt; 把标准输出和错误都重定向
+</span></span><span style="display:flex;"><span>&gt;&amp; 和上面功能一样，建议使用上面方式
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658627818949.png" alt="1658627818949"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658627951062.png" alt="1658627951062"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658628044574.png" alt="1658628044574"  />
+</p>
+<p>以上的文件如果已经存在，文件内容则会覆盖</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># &gt;&gt; 可以在原有的基础内容上追加内容
+</span></span><span style="display:flex;"><span>&gt;&gt; 追加标准输出重定向至文件
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658628188096.png" alt="1658628188096"  />
+</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>2&gt;&gt; 追加标准错误重定向至文件
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658628249117.png" alt="1658628249117"  />
+</p>
+<h2 id="63将标准输出和错误输出指定向不同的文件">6.3将标准输出和错误输出指定向不同的文件<a hidden class="anchor" aria-hidden="true" href="#63将标准输出和错误输出指定向不同的文件">#</a></h2>
+<p>格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>COMMAND &gt; /path/to/file.log 2&gt; /path/to/error.log
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658628570176.png" alt="1658628570176"  />
+</p>
+<h2 id="64合并标准输出和错误输出为同一个数据流进行重定向">6.4合并标准输出和错误输出为同一个数据流进行重定向<a hidden class="anchor" aria-hidden="true" href="#64合并标准输出和错误输出为同一个数据流进行重定向">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&amp;&gt; 覆盖重定向
+</span></span><span style="display:flex;"><span>&amp;&gt;&gt; 追加重定向
+</span></span><span style="display:flex;"><span>COMMAND &gt; /path/to/file.out 2&gt;&amp;1 （顺序很重要）
+</span></span><span style="display:flex;"><span>COMMAND &gt;&gt; /path/to/file.out 2&gt;&amp;1
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658628863373.png" alt="1658628863373"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658628910790.png" alt="1658628910790"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658629123843.png" alt="1658629123843"  />
+</p>
+<ul>
+<li>错误案例</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1658629245131.png" alt="1658629245131"  />
+</p>
+<h2 id="65标准输入重定向">6.5标准输入重定向<a hidden class="anchor" aria-hidden="true" href="#65标准输入重定向">#</a></h2>
+<p>实现标准输入重定向的符号</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>COMMAND 0&lt; FILE
+</span></span><span style="display:flex;"><span>COMMAND &lt; FILE
+</span></span></code></pre></div><ul>
+<li>面试题：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 求1+2+···+10的和
+</span></span><span style="display:flex;"><span>seq -s+ 10 &gt; seq.log
+</span></span><span style="display:flex;"><span>bc &lt; seq.log
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658631614537.png" alt="1658631614537"  />
+</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>扩展：求1*2*···*10的值：
+</span></span><span style="display:flex;"><span>seq -s* 10 &gt;seq.log
+</span></span><span style="display:flex;"><span>bc &lt; seq.log
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658631847010.png" alt="1658631847010"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658631986469.png" alt="1658631986469"  />
+</p>
+<h3 id="651tr命令">6.5.1tr命令<a hidden class="anchor" aria-hidden="true" href="#651tr命令">#</a></h3>
+<p>tr 转换和删除字符</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>tr [option] ··· SET1 [SET2]
+</span></span></code></pre></div><p>选项：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-d --delete：删除所有属于第一字符集的字符
+</span></span><span style="display:flex;"><span>-s --squeeze-repeats：把连续重复的字符以单独一个字符表示,即去重
+</span></span><span style="display:flex;"><span>-t --truncate-set1：将第一个字符集对应字符转化为第二字符集对应的字符
+</span></span><span style="display:flex;"><span>-c –C --complement：取字符集的补集
+</span></span><span style="display:flex;"><span>\NNN character with octal value NNN (1 to 3 octal digits)
+</span></span><span style="display:flex;"><span>\\ backslash
+</span></span><span style="display:flex;"><span>\a audible BEL
+</span></span><span style="display:flex;"><span>\b backspace
+</span></span><span style="display:flex;"><span>\f form feed
+</span></span><span style="display:flex;"><span>\n new line
+</span></span><span style="display:flex;"><span>\r return
+</span></span><span style="display:flex;"><span>\t horizontal tab
+</span></span><span style="display:flex;"><span>\v vertical tab
+</span></span><span style="display:flex;"><span>[:alnum:]：字母和数字
+</span></span><span style="display:flex;"><span>[:alpha:]：字母
+</span></span><span style="display:flex;"><span>[:digit:]：数字
+</span></span><span style="display:flex;"><span>[:lower:]：小写字母
+</span></span><span style="display:flex;"><span>[:upper:]：大写字母
+</span></span><span style="display:flex;"><span>[:space:]：空白字符
+</span></span><span style="display:flex;"><span>[:print:]：可打印字符
+</span></span><span style="display:flex;"><span>[:punct:]：标点符号
+</span></span><span style="display:flex;"><span>[:graph:]：图形字符
+</span></span><span style="display:flex;"><span>[:cntrl:]：控制（非打印）字符
+</span></span><span style="display:flex;"><span>[:xdigit:]：十六进制字符
+</span></span></code></pre></div><p>范例：</p>
+<ul>
+<li>删除字符,删除&rsquo;abcd&rsquo;中的&rsquo;a'</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>echo abcd | tr -d &#39;a&#39;
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658633116721.png" alt="1658633116721"  />
+</p>
+<ul>
+<li>将’aaabbbccc‘中字符去重</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>echo aaabbbccc |tr -s &#39;abc&#39;
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658633240146.png" alt="1658633240146"  />
+</p>
+<ul>
+<li>输入df将空格用&quot;+&ldquo;替换</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>df | tr -s &#39; &#39; +
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658633697556.png" alt="1658633697556"  />
+</p>
+<h3 id="652多行重定向">6.5.2多行重定向<a hidden class="anchor" aria-hidden="true" href="#652多行重定向">#</a></h3>
+<p>使用 &ldquo;&laquo;终止词&rdquo; 命令从键盘把多行重导向给STDIN，直到终止词位置之前的所有文本都发送给
+STDIN，有时被称为就地文本（here documents）
+其中终止词可以是任何一个或多个符号，比如：!，@，$，EOF（End Of File），magedu等，其中EOF
+比较常用</p>
+<p>范例：</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658634064057.png" alt="1658634064057"  />
+</p>
+<h3 id="653高级重定向">6.5.3高级重定向<a hidden class="anchor" aria-hidden="true" href="#653高级重定向">#</a></h3>
+<h4 id="6531-cmd1--cmd2">6.5.3.1 cmd1 &lt; &lt;(cmd2)<a hidden class="anchor" aria-hidden="true" href="#6531-cmd1--cmd2">#</a></h4>
+<p>名称为 Process substitution ,是由两个部分组成
+&lt;(cmd2) 表示把cmd2的输出写入一个临时文件, 注意：&lt;和（之间无空格
+cmd1 &lt; 这是一个标准的stdin重定向
+把两个合起来，就是把cmd2的输出stdout传递给cmd1作为输入stdin, 中间通过临时文件做传递</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658634342387.png" alt="1658634342387"  />
+</p>
+<h4 id="6532cmd1string">6.5.3.2cmd1&laquo;&lt;&lsquo;string&rsquo;<a hidden class="anchor" aria-hidden="true" href="#6532cmd1string">#</a></h4>
+<p>含义是 here-string ，表示传给给cmd的stdin的内容从这里开始是一个字符串。
+范例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>bc &lt;&lt;&lt;&#39;2+4&#39;
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658634687295.png" alt="1658634687295"  />
+</p>
+<h2 id="66-tee命令">6.6 tee命令<a hidden class="anchor" aria-hidden="true" href="#66-tee命令">#</a></h2>
+<p>tee命令用于读取标准输入的数据，并将其内容输出成文件。</p>
+<p>tee指令会从标准输入设备读取数据，将其内容输出到标准输出设备，同时保存成文件。</p>
+<p>选项：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-a 追加
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658643404404.png" alt="1658643404404"  />
+</p>
+<h1 id="7用户和组相关概念">7.用户和组相关概念<a hidden class="anchor" aria-hidden="true" href="#7用户和组相关概念">#</a></h1>
+<h2 id="71-用户">7.1 用户<a hidden class="anchor" aria-hidden="true" href="#71-用户">#</a></h2>
+<p>Linux中每个用户是通过 User Id （UID）来唯一标识的</p>
+<ul>
+<li>
+<p>管理员：root, 0</p>
+</li>
+<li>
+<p>普通用户：1-60000 自动分配</p>
+<ul>
+<li>系统用户：1-499 （CentOS 6以前）, 1-999 （CentOS 7以后）
+对守护进程获取资源进行权限分配</li>
+<li>登录用户：500+ （CentOS6以前）, 1000+（CentOS7以后）
+给用户进行交互式登录使用</li>
+</ul>
+</li>
+</ul>
+<h2 id="72-用户组">7.2 用户组<a hidden class="anchor" aria-hidden="true" href="#72-用户组">#</a></h2>
+<p>Linux中可以将一个或多个用户加入用户组中，用户组是通过Group ID（GID） 来唯一标识的。</p>
+<ul>
+<li>管理员组：root, 0</li>
+<li>普通组：
+<ul>
+<li>系统组：1-499（CentOS 6以前）, 1-999（CentOS7以后）, 对守护进程获取资源进行权限分配</li>
+<li>普通组：500+（CentOS 6以前）, 1000+（CentOS7以后）, 给用户使用</li>
+</ul>
+</li>
+</ul>
+<h2 id="73-用户和组的关系">7.3 用户和组的关系<a hidden class="anchor" aria-hidden="true" href="#73-用户和组的关系">#</a></h2>
+<ul>
+<li>用户的主要组(primary group)：用户必须属于一个且只有一个主组，默认创建用户时会自动创建和用户名同名的组，做为用户的主要组，由于此组中只有一个用户，又称为私有组</li>
+<li>用户的附加组(supplementary group)： 一个用户可以属于零个或多个辅助组，附属组</li>
+</ul>
+<p>范例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@rocky8 home]# id yuankun
+</span></span><span style="display:flex;"><span>uid=1000(yuankun) gid=1000(yuankun) groups=1000(yuankun)
+</span></span></code></pre></div><h2 id="74用户和组的配置文件">7.4用户和组的配置文件<a hidden class="anchor" aria-hidden="true" href="#74用户和组的配置文件">#</a></h2>
+<h3 id="741用户和组的主要配置文件">7.4.1用户和组的主要配置文件<a hidden class="anchor" aria-hidden="true" href="#741用户和组的主要配置文件">#</a></h3>
+<ul>
+<li>/etc/passwd：用户及其属性信息(名称、UID、主组ID等）</li>
+<li>/etc/shadow：用户密码及其相关属性</li>
+<li>/etc/group：组及其属性信息</li>
+<li>/etc/gshadow：组密码及其相关属性</li>
+</ul>
+<h3 id="742-passwd文件格式">7.4.2 passwd文件格式<a hidden class="anchor" aria-hidden="true" href="#742-passwd文件格式">#</a></h3>
+<ul>
+<li>login name：登录用名（yuankun）</li>
+<li>passwd：密码 (x)</li>
+<li>UID：用户身份编号 (1000)</li>
+<li>GID：登录默认所在组编号 (1000)</li>
+<li>GECOS：用户全名或注释</li>
+<li>home directory：用户主目录 (/home/wang)</li>
+<li>shell：用户默认使用shell (/bin/bash)</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1658659141980.png" alt="1658659141980"  />
+</p>
+<h3 id="743shadow文件格式">7.4.3shadow文件格式<a hidden class="anchor" aria-hidden="true" href="#743shadow文件格式">#</a></h3>
+<ul>
+<li>登录用名</li>
+<li>用户密码:一般用sha512加密</li>
+<li>从1970年1月1日起到密码最近一次被更改的时间</li>
+<li>密码再过几天可以被变更（0表示随时可被变更）</li>
+<li>密码再过几天必须被变更（99999表示永不过期）</li>
+<li>密码过期前几天系统提醒用户（默认为一周）</li>
+<li>密码过期几天后帐号会被锁定</li>
+<li>从1970年1月1日算起，多少天后帐号失效
+<img loading="lazy" src="/posts.images/image.assets/1658662334418.png" alt="1658662334418"  />
+</li>
+</ul>
+<h3 id="744group文件格式">7.4.4group文件格式<a hidden class="anchor" aria-hidden="true" href="#744group文件格式">#</a></h3>
+<ul>
+<li>群组名称：就是群组名称</li>
+<li>群组密码：通常不需要设定，密码是被记录在 /etc/gshadow</li>
+<li>GID：就是群组的 ID</li>
+<li>以当前组为附加组的用户列表(分隔符为逗号)</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1658662552564.png" alt="1658662552564"  />
+</p>
+<h3 id="745gshadow文件格式">7.4.5gshadow文件格式<a hidden class="anchor" aria-hidden="true" href="#745gshadow文件格式">#</a></h3>
+<ul>
+<li>群组名称：就是群的名称</li>
+<li>群组密码：</li>
+<li>组管理员列表：组管理员的列表，更改组密码和成员</li>
+<li>以当前组为附加组的用户列表：多个用户间用逗号分隔</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1658662641679.png" alt="1658662641679"  />
+</p>
+<h2 id="75-用户和组管理命令">7.5 用户和组管理命令<a hidden class="anchor" aria-hidden="true" href="#75-用户和组管理命令">#</a></h2>
+<ul>
+<li>用户管理命令
+<ul>
+<li>useradd(添加用户)</li>
+<li>usermod(修改用户)</li>
+<li>userdel(删除用户)</li>
+</ul>
+</li>
+<li>组账号维护命令
+<ul>
+<li>groupadd</li>
+<li>groupmod</li>
+<li>groupdel</li>
+</ul>
+</li>
+</ul>
+<p>面试题：添加新用户后家目录下的文件来源什么地方？</p>
+<p>来源于/etc/skel,进入/etc/skel下查看文件和进入test用户的家目录下查看文件是一致的</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658665374181.png" alt="1658665374181"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1658665436871.png" alt="1658665436871"  />
+</p>
+<h3 id="751用户创建">7.5.1用户创建<a hidden class="anchor" aria-hidden="true" href="#751用户创建">#</a></h3>
+<p>useradd命令可以创建新的linux用户</p>
+<p>格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>useradd [options] login
+</span></span></code></pre></div><p>常见的选项：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-u UID
+</span></span><span style="display:flex;"><span>-o 配合-u 选项，不检查UID的唯一性
+</span></span><span style="display:flex;"><span>-g GID 指明用户所属基本组，可为组名，也可以GID
+</span></span><span style="display:flex;"><span>-c &#34;COMMENT“ 用户的注释信息
+</span></span><span style="display:flex;"><span>-d HOME_DIR 以指定的路径(不存在)为家目录
+</span></span><span style="display:flex;"><span>-s SHELL 指明用户的默认shell程序，可用列表在/etc/shells文件中
+</span></span><span style="display:flex;"><span>-G GROUP1[,GROUP2,...] 为用户指明附加组，组须事先存在
+</span></span><span style="display:flex;"><span>-N 不创建私用组做主组，使用users组做主组
+</span></span><span style="display:flex;"><span>-r 创建系统用户 CentOS 6之前: ID&lt;500，CentOS7 以后: ID&lt;1000
+</span></span><span style="display:flex;"><span>-m 创建家目录，用于系统用户
+</span></span><span style="display:flex;"><span>-M 不创建家目录，用于非系统用户
+</span></span><span style="display:flex;"><span>-p 指定加密的密码
+</span></span></code></pre></div><p>范例:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@rocky8 home]# groupadd apache
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# useradd -r -u 48 -g apache -s /sbin/nologin -d /var/www -c &#34;Apache&#34; apache
+</span></span></code></pre></div><p>useradd命令默认值设置由/etc/default/useradd定义</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos8 ~]#cat /etc/default/useradd
+</span></span><span style="display:flex;"><span># useradd defaults file
+</span></span><span style="display:flex;"><span>GROUP=100
+</span></span><span style="display:flex;"><span>HOME=/home
+</span></span><span style="display:flex;"><span>INACTIVE=-1 #对应/etc/shadow文件第7列，即用户密码过期后的帐号锁定的宽限期,-1表示不锁定
+</span></span><span style="display:flex;"><span>EXPIRE= #对应/etc/shadow文件第8列，即用户帐号的有效期
+</span></span><span style="display:flex;"><span>SHELL=/bin/bash
+</span></span><span style="display:flex;"><span>SKEL=/etc/skel #用于生成新建用户家目录的模版文件
+</span></span><span style="display:flex;"><span>CREATE_MAIL_SPOOL=yes
+</span></span></code></pre></div><h3 id="752用户属性修改">7.5.2用户属性修改<a hidden class="anchor" aria-hidden="true" href="#752用户属性修改">#</a></h3>
+<p>usermod命令可以修改用户属性</p>
+<p>格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>usermod [options] login
+</span></span></code></pre></div><p>常见选项：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-u UID: 新UID
+</span></span><span style="display:flex;"><span>-g GID: 新主组
+</span></span><span style="display:flex;"><span>-G GROUP1[,GROUP2,...[,GROUPN]]]：新附加组，原来的附加组将会被覆盖；若保留原有，则要同时使
+</span></span><span style="display:flex;"><span>用-a选项
+</span></span><span style="display:flex;"><span>-s SHELL：新的默认SHELL
+</span></span><span style="display:flex;"><span>-c &#39;COMMENT&#39;：新的注释信息
+</span></span><span style="display:flex;"><span>-d HOME: 新家目录不会自动创建；若要创建新家目录并移动原家数据，同时使用-m选项
+</span></span><span style="display:flex;"><span>-l login_name: 新的名字
+</span></span><span style="display:flex;"><span>-L: lock指定用户,在/etc/shadow 密码栏的增加 !
+</span></span><span style="display:flex;"><span>-U: unlock指定用户,将 /etc/shadow 密码栏的 ! 拿掉
+</span></span><span style="display:flex;"><span>-e YYYY-MM-DD: 指明用户账号过期日期
+</span></span><span style="display:flex;"><span>-f INACTIVE: 设定非活动期限，即宽限期
+</span></span></code></pre></div><p>范例：创建test用户，使用id username查看用户的uid,然后修改其uid</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@rocky8 home]# useradd test   #添加tes用户
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# id test			#查看用户信息
+</span></span><span style="display:flex;"><span>uid=1001(test) gid=1001(test) groups=1001(test)
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# usermod -u 1002 test   # 将uid修改为1002
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# id test			#查看用户信息修改成功
+</span></span><span style="display:flex;"><span>uid=1002(test) gid=1001(test) groups=1001(test)
+</span></span></code></pre></div><h3 id="754删除用户">7.5.4删除用户<a hidden class="anchor" aria-hidden="true" href="#754删除用户">#</a></h3>
+<p>userdel可以删除用户</p>
+<p>格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>userdel [options] login
+</span></span></code></pre></div><p>常见的选项：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-f, --force 强制
+</span></span><span style="display:flex;"><span>-r, --remove 删除用户家目录和邮箱
+</span></span></code></pre></div><p>范例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>userdel -f test  #强制删除
+</span></span><span style="display:flex;"><span>userdel -rf test # 删除家目录和邮箱
+</span></span></code></pre></div><h3 id="755查看用户相关id">7.5.5查看用户相关ID<a hidden class="anchor" aria-hidden="true" href="#755查看用户相关id">#</a></h3>
+<p>id命令可以查看用户的UID、GID等信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>id [options] [username]
+</span></span></code></pre></div><p>常见选项：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-u: 显示UID
+</span></span><span style="display:flex;"><span>-g: 显示GID
+</span></span><span style="display:flex;"><span>-G: 显示用户所属的组的ID
+</span></span><span style="display:flex;"><span>-n: 显示名称，需配合ugG使用
+</span></span></code></pre></div><p>范例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@rocky8 home]# id test
+</span></span><span style="display:flex;"><span>uid=1002(test) gid=1001(test) groups=1001(test)
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# id -u test
+</span></span><span style="display:flex;"><span>1002
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# id -g test
+</span></span><span style="display:flex;"><span>1001
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# id -G test
+</span></span><span style="display:flex;"><span>1001
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# 
+</span></span></code></pre></div><h3 id="756查看linux所有用户">7.5.6查看linux所有用户<a hidden class="anchor" aria-hidden="true" href="#756查看linux所有用户">#</a></h3>
+<ul>
+<li>查看/etc/passwd</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1658664876880.png" alt="1658664876880"  />
+</p>
+<ul>
+<li>getent passwd</li>
+</ul>
+<p><img loading="lazy" src="/posts.images/image.assets/1658664946447.png" alt="1658664946447"  />
+</p>
+<h3 id="757切换用户">7.5.7切换用户<a hidden class="anchor" aria-hidden="true" href="#757切换用户">#</a></h3>
+<p>su: 即 switch user，命令可以切换用户身份，并且以指定用户的身份执行命令
+格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>su [options...] [-] [user [args...]]
+</span></span></code></pre></div><p>常见的选项</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-l --login su -l UserName 相当于 su - UserName
+</span></span><span style="display:flex;"><span>-c, --command &lt;command&gt; pass a single command to the shell with -c
+</span></span></code></pre></div><p>切换用户的方式：</p>
+<ul>
+<li>su UserName：非登录式切换，即不会读取目标用户的配置文件，不改变当前工作目录，即不完全切换</li>
+<li>su - UserName：登录式切换，会读取目标用户的配置文件，切换至自已的家目录，即完全切换
+说明：root su至其他用户无须密码；非root用户切换时需要密码
+注意：su 切换新用户后，使用 exit 退回至旧的用户身份，而不要再用 su 切换至旧用户，否则会生成很多的bash子进程，环境可能会混乱。</li>
+</ul>
+<p>换个身份执行命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>su - username -c &#39;command&#39;
+</span></span></code></pre></div><p>范例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@rocky8 skel]# su - test -c &#39;touch test.log&#39;
+</span></span><span style="display:flex;"><span>[root@rocky8 skel]# su test
+</span></span><span style="display:flex;"><span>[test@rocky8 skel]$ ll
+</span></span><span style="display:flex;"><span>total 0
+</span></span><span style="display:flex;"><span>[test@rocky8 skel]$ ls -a
+</span></span><span style="display:flex;"><span>.  ..  .bash_logout  .bash_profile  .bashrc
+</span></span><span style="display:flex;"><span>[test@rocky8 skel]$ cd /home/
+</span></span><span style="display:flex;"><span>[test@rocky8 home]$ ll
+</span></span><span style="display:flex;"><span>total 0
+</span></span><span style="display:flex;"><span>drwx------. 2 test    test     99 Jul 24 11:38 test
+</span></span><span style="display:flex;"><span>drwx------. 2 test1   test1    78 Jul 24 11:24 test1
+</span></span><span style="display:flex;"><span>drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun
+</span></span><span style="display:flex;"><span>[test@rocky8 home]$ cd test
+</span></span><span style="display:flex;"><span>[test@rocky8 ~]$ ll
+</span></span><span style="display:flex;"><span>total 0
+</span></span><span style="display:flex;"><span>-rw-rw-r--. 1 test test 0 Jul 24 11:38 test.log
+</span></span><span style="display:flex;"><span>[test@rocky8 ~]$ 
+</span></span></code></pre></div><h3 id="758设置密码">7.5.8设置密码<a hidden class="anchor" aria-hidden="true" href="#758设置密码">#</a></h3>
+<p>passwd 可以修改用户密码</p>
+<p>格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>passwd [options] username
+</span></span></code></pre></div><p>常见选项：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-d：删除指定用户密码
+</span></span><span style="display:flex;"><span>-l：锁定指定用户
+</span></span><span style="display:flex;"><span>-u：解锁指定用户
+</span></span><span style="display:flex;"><span>-e：强制用户下次登录修改密码
+</span></span><span style="display:flex;"><span>-f：强制操作
+</span></span><span style="display:flex;"><span>-n mindays：指定最短使用期限
+</span></span><span style="display:flex;"><span>-x maxdays：最大使用期限
+</span></span><span style="display:flex;"><span>-w warndays：提前多少天开始警告
+</span></span><span style="display:flex;"><span>-i inactivedays：非活动期限
+</span></span><span style="display:flex;"><span>--stdin：从标准输入接收用户密码,Ubuntu无此选项
+</span></span></code></pre></div><p>范例：非交互式修改用户密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#此方式更通用，适用于各种Linux版本，如:ubuntu
+</span></span><span style="display:flex;"><span>root@ununtu2004:/home# echo -e &#39;123456\n123456&#39; | passwd test
+</span></span><span style="display:flex;"><span>New password: Retype new password: passwd: password updated successfully
+</span></span><span style="display:flex;"><span>root@ununtu2004:/home# 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#适用于红帽系列的Linux版本
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# echo -e &#39;123456&#39;| passwd --stdin test
+</span></span><span style="display:flex;"><span>Changing password for user test.
+</span></span><span style="display:flex;"><span>passwd: all authentication tokens updated successfully.
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# 
+</span></span></code></pre></div><h2 id="76文件权限管理">7.6文件权限管理<a hidden class="anchor" aria-hidden="true" href="#76文件权限管理">#</a></h2>
+<h3 id="761文件所有者和属组属性操作">7.6.1文件所有者和属组属性操作<a hidden class="anchor" aria-hidden="true" href="#761文件所有者和属组属性操作">#</a></h3>
+<h4 id="7611设置文件的所有者chown">7.6.1.1设置文件的所有者chown<a hidden class="anchor" aria-hidden="true" href="#7611设置文件的所有者chown">#</a></h4>
+<p>chown 命令可以修改文件的属主，也可以修改文件属组
+格式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>chown [OPTION]... [OWNER][:[GROUP]] FILE...
+</span></span><span style="display:flex;"><span>chown [OPTION]... --reference=RFILE FILE...
+</span></span></code></pre></div><p>用法说明：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>OWNER #只修改所有者
+</span></span><span style="display:flex;"><span>OWNER:GROUP #同时修改所有者和属组
+</span></span><span style="display:flex;"><span>:GROUP #只修改属组，冒号也可用 . 替换
+</span></span><span style="display:flex;"><span>--reference=RFILE #参考指定的的属性，来修改
+</span></span><span style="display:flex;"><span>-R	#递归，此选项慎用，非常危险！
+</span></span></code></pre></div><p>范例：</p>
+<ul>
+<li>修改所有者</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@rocky8 home]# touch data.log
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# ll				# data.log所有者为root
+</span></span><span style="display:flex;"><span>total 0
+</span></span><span style="display:flex;"><span>-rw-r--r--. 1 root    root      0 Jul 24 13:16 data.log
+</span></span><span style="display:flex;"><span>drwx------. 2 gentoo  gentoo   62 Jul 24 12:39 gentoo
+</span></span><span style="display:flex;"><span>drwx------. 2 test    test     99 Jul 24 11:38 test
+</span></span><span style="display:flex;"><span>drwx------. 2 test1   test1    78 Jul 24 11:24 test1
+</span></span><span style="display:flex;"><span>drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# chown yuankun data.log # 修改所有者为yuankun
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# ll
+</span></span><span style="display:flex;"><span>total 0
+</span></span><span style="display:flex;"><span>-rw-r--r--. 1 yuankun root      0 Jul 24 13:16 data.log
+</span></span><span style="display:flex;"><span>drwx------. 2 gentoo  gentoo   62 Jul 24 12:39 gentoo
+</span></span><span style="display:flex;"><span>drwx------. 2 test    test     99 Jul 24 11:38 test
+</span></span><span style="display:flex;"><span>drwx------. 2 test1   test1    78 Jul 24 11:24 test1
+</span></span><span style="display:flex;"><span>drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# 
+</span></span></code></pre></div><ul>
+<li>修改所属组</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>chown :bin data.log
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658672497952.png" alt="1658672497952"  />
+</p>
+<ul>
+<li>同时修改所有者和所属组</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@rocky8 home]# touch test.log
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# 
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# 
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# chown yuankun:bin test.log   # 冒号用.替换也可以
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# ll
+</span></span><span style="display:flex;"><span>total 0
+</span></span><span style="display:flex;"><span>-rw-r--r--. 1 yuankun bin       0 Jul 24 13:16 data.log
+</span></span><span style="display:flex;"><span>drwx------. 2 gentoo  gentoo   62 Jul 24 12:39 gentoo
+</span></span><span style="display:flex;"><span>drwx------. 2 test    test     99 Jul 24 11:38 test
+</span></span><span style="display:flex;"><span>drwx------. 2 test1   test1    78 Jul 24 11:24 test1
+</span></span><span style="display:flex;"><span>-rw-r--r--. 1 yuankun bin       0 Jul 24 13:22 test.log
+</span></span><span style="display:flex;"><span>drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun
+</span></span><span style="display:flex;"><span>[root@rocky8 home]# 
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658672628070.png" alt="1658672628070"  />
+</p>
+<ul>
+<li>修改为参考的所有者户所属组</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>chown --reference=root.log data.log
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658672912639.png" alt="1658672912639"  />
+</p>
+<ul>
+<li>递归修改</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chown -R yuankun:yuankun ./data/mysql/
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658673109132.png" alt="1658673109132"  />
+</p>
+<h4 id="7612设置文件的属组信息chgrp">7.6.1.2设置文件的属组信息chgrp<a hidden class="anchor" aria-hidden="true" href="#7612设置文件的属组信息chgrp">#</a></h4>
+<p>chgrp 命令可以只修改文件的属组
+格式:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>chgrp [OPTION]... GROUP FILE...
+</span></span><span style="display:flex;"><span>chgrp [OPTION]... --reference=RFILE FILE...
+</span></span></code></pre></div><p>-R 递归</p>
+<p>范例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chgrp yuankun data.log
+</span></span></code></pre></div><p><img loading="lazy" src="/posts.images/image.assets/1658673362886.png" alt="1658673362886"  />
+</p>
+<h3 id="762文件权限">7.6.2文件权限<a hidden class="anchor" aria-hidden="true" href="#762文件权限">#</a></h3>
+<p>每个文件针对每类访问者都定义了三种权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>r Readable 4
+</span></span><span style="display:flex;"><span>w Writable 2
+</span></span><span style="display:flex;"><span>x eXcutable 1
+</span></span></code></pre></div><p>对文件的权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>r 可使用文件查看类工具，比如：cat，可以获取其内容
+</span></span><span style="display:flex;"><span>w 可修改其内容,文件的是否被删除和文件的权限无关
+</span></span><span style="display:flex;"><span>x 可以把此文件提请内核启动为一个进程，即可以执行（运行）此文件（此文件的内容必须是可执行）
+</span></span><span style="display:flex;"><span>文件权限常见组合
+</span></span><span style="display:flex;"><span>--- 0
+</span></span><span style="display:flex;"><span>r 4
+</span></span><span style="display:flex;"><span>r-x 5
+</span></span><span style="display:flex;"><span>rw 6
+</span></span><span style="display:flex;"><span>rwx 7
+</span></span></code></pre></div><p>对目录的权限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>r 可以使用ls查看此目录中文件名列表,但无法看到文件的属性meta信息,包括inode号,不能查看文件的
+</span></span><span style="display:flex;"><span>内容
+</span></span><span style="display:flex;"><span>w 可在此目录中创建文件，也可删除此目录中的文件，而和此被删除的文件的权限无关
+</span></span><span style="display:flex;"><span>x 可以cd进入此目录，可以使用ls -l file或stat file 查看此目录中指定文件的元数据，当预先知
+</span></span><span style="display:flex;"><span>道文件名称时,也可以查看文件的内容,属于目录的可访问的最小权限
+</span></span><span style="display:flex;"><span>X 分配给目录或有部分x权限的文件的x权限，对无任意x权限的文件则不会分配x权限
+</span></span><span style="display:flex;"><span>目录权限常见组合
+</span></span><span style="display:flex;"><span>- 不能访问目录
+</span></span><span style="display:flex;"><span>r-x 只读目录
+</span></span><span style="display:flex;"><span>rwx 可读也可写目录
+</span></span></code></pre></div><p>面试题：Linux中的目录和文件的权限区别？分别说明读，写和执行权限的区别?</p>
+<p>修改文件权限chmod</p>
+<p>面试题：执行 cp /etc/issue /data/dir/ 所需要的最小权限？</p>
+
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>权限管理及文本编辑工具</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>linux基础和常用命令</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

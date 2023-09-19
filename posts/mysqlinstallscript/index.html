@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>MySQL一键安装脚本 | Hopeful</title>
+<meta name="keywords" content="MySQL">
+<meta name="description" content="Rocky8.5系统在线一键安装MySQL脚本">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/mysqlinstallscript/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="MySQL一键安装脚本" />
+<meta property="og:description" content="Rocky8.5系统在线一键安装MySQL脚本" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/mysqlinstallscript/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/18.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-30T00:19:44+00:00" />
+<meta property="article:modified_time" content="2022-09-30T00:19:44+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/18.jpg" />
+<meta name="twitter:title" content="MySQL一键安装脚本"/>
+<meta name="twitter:description" content="Rocky8.5系统在线一键安装MySQL脚本"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "MySQL一键安装脚本",
+      "item": "https://xyenvy.github.io/posts/mysqlinstallscript/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "MySQL一键安装脚本",
+  "name": "MySQL一键安装脚本",
+  "description": "Rocky8.5系统在线一键安装MySQL脚本",
+  "keywords": [
+    "MySQL"
+  ],
+  "articleBody": "环境：\n系统：rocky8.5 MySQL版本:8.0.28 在线安装 #!/bin/bash # #Author\tyuankun #Date\t2022-09-29 #Filename\tinstall_mysql-8.0.28-linux-glibc2.12-x86_64.sh . /etc/init.d/functions color='echo -e \\E[01;31m' end='\\E[0m' # 设置mysql root用户密码 MYSQL_ROOT_PASSWD=123456 MYSQL_VERSION=mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz check(){ ${color}安装前环境检查......${end}\t# 判断当前用户是否是root用户，不是则退出安装 if [ ${UID} -ne 0 ];then action \"当前用户不是root,安装失败!\" false exit fi # 判断是否安装wget，没有安装则使用yum安装wget rpm -q wget || yum install -y wget # 判断/usr/local/mysql目录是否存在，存在则exit if [ -e /usr/local/mysql ];then ${color}\"mysql已经安装,安装失败!\"${end} exit fi # 下载二进制程序包\twget https://cdn.mysql.com/archives/mysql-8.0/mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz # 判断二进制程序包是否存在 if [ ! -e ${MYSQL_VERSION} ];then ${color}\"文件不存在,安装失败!\"${end} ${color}\"请检查脚本以及主机环境，然后再次尝试安装。即将退出安装流程!\"${end} exit else ${color}\"安装前环境检查完毕,环境要求满足!\"${end} fi } # 安装mysql install_mysql(){ ${color}\"开始安装mysql......\"${end} # 安装依赖 yum install -y -q libaio numactl-libs # 解压缩 tar xf ${MYSQL_VERSION} -C /usr/local/ cd /usr/local/ MYSQL_FILE=`echo ${MYSQL_VERSION} | sed -nr 's/^(.*[0-9]).*/\\1/p'` ln -s /usr/local/${MYSQL_FILE} /usr/local/mysql chown -R root.root /usr/local/mysql/ id mysql \u0026\u003e /dev/null || { useradd -s /sbin/nologin -r mysql ; action \"创建mysql用户\"; } # 环境变量 echo 'PATH=/usr/local/mysql/bin/:$PATH' \u003e /etc/profile.d/mysql.sh . /etc/profile.d/mysql.sh ln -s /usr/local/mysql/bin/* /usr/bin/ # 配置文件 cat \u003e /etc/my.cnf \u003c\u003c-EOF [mysqld] server-id=1 log-bin datadir=/data/mysql socket=/data/mysql/mysql.sock log-error=/data/mysql/mysql.log pid-file=/data/mysql/mysql.pid [client] socket=/data/mysql/mysql.sock EOF [ -d /data ] || mkdir /data mysqld --initialize --user=mysql --datadir=/data/mysql cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld chkconfig --add mysqld chkconfig mysqld on service mysqld start [ $? -ne 0 ] \u0026\u0026 { $color\"数据库启动失败，退出!\"$end;exit; } sleep 3 MYSQL_OLDPASSWORD=`awk '/A temporary password/{print $NF}' /data/mysql/mysql.log` mysqladmin -uroot -p${MYSQL_OLDPASSWORD} password ${MYSQL_ROOT_PASSWD} \u0026\u003e/dev/null action \"数据库安装完成\" } # 调用函数 check install_mysql 扩展：在线一键安装MySQL5.7.39脚本\n系统：rocky8.5 MySQL版本:5.7.39 在线安装 #!/bin/bash # #Author\tyuankun #Date\t2022-11-19 #Filename\tinstall_mysql-5.7.39-linux-glibc2.12-x86_64.sh . /etc/init.d/functions color='echo -e \\E[01;31m' end='\\E[0m' # 设置mysql root用户密码 MYSQL_ROOT_PASSWD=123456 MYSQL_VERSION=mysql-5.7.39-linux-glibc2.12-x86_64.tar.gz check(){ ${color}安装前环境检查......${end}\t# 判断当前用户是否是root用户，不是则退出安装 if [ ${UID} -ne 0 ];then action \"当前用户不是root,安装失败!\" false exit fi # 判断是否安装wget，没有安装则使用yum安装wget rpm -q wget || yum install -y wget # 判断/usr/local/mysql目录是否存在，存在则exit if [ -e /usr/local/mysql ];then ${color}\"mysql已经安装,安装失败!\"${end} exit fi # 下载二进制程序包\twget https://cdn.mysql.com/archives/mysql-5.7/mysql-5.7.39-linux-glibc2.12-x86_64.tar.gz # 判断二进制程序包是否存在 if [ ! -e ${MYSQL_VERSION} ];then ${color}\"文件不存在,安装失败!\"${end} ${color}\"请检查脚本以及主机环境，然后再次尝试安装。即将退出安装流程!\"${end} exit else ${color}\"安装前环境检查完毕,环境要求满足!\"${end} fi } # 安装mysql install_mysql(){ ${color}\"开始安装mysql......\"${end} # 安装依赖 yum install -y -q libaio numactl-libs # 解压缩 tar xf ${MYSQL_VERSION} -C /usr/local/ cd /usr/local/ MYSQL_FILE=`echo ${MYSQL_VERSION} | sed -nr 's/^(.*[0-9]).*/\\1/p'` ln -s /usr/local/${MYSQL_FILE} /usr/local/mysql chown -R root.root /usr/local/mysql/ id mysql \u0026\u003e /dev/null || { useradd -s /sbin/nologin -r mysql ; action \"创建mysql用户\"; } # 环境变量 echo 'PATH=/usr/local/mysql/bin/:$PATH' \u003e /etc/profile.d/mysql.sh . /etc/profile.d/mysql.sh ln -s /usr/local/mysql/bin/* /usr/bin/ # 配置文件 cat \u003e /etc/my.cnf \u003c\u003c-EOF [mysqld] server-id=1 log-bin datadir=/data/mysql socket=/data/mysql/mysql.sock log-error=/data/mysql/mysql.log pid-file=/data/mysql/mysql.pid [client] socket=/data/mysql/mysql.sock EOF [ -d /data ] || mkdir /data mysqld --initialize --user=mysql --datadir=/data/mysql cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld chkconfig --add mysqld chkconfig mysqld on service mysqld start [ $? -ne 0 ] \u0026\u0026 { $color\"数据库启动失败，退出!\"$end;exit; } sleep 3 MYSQL_OLDPASSWORD=`awk '/A temporary password/{print $NF}' /data/mysql/mysql.log` mysqladmin -uroot -p${MYSQL_OLDPASSWORD} password ${MYSQL_ROOT_PASSWD} \u0026\u003e/dev/null action \"数据库安装完成\" } # 调用函数 check install_mysql 离线安装\n注意：需要提前将二进制包下载到本地\n系统：rocky8.5\nMySQL版本:8.0.28\n#!/bin/bash # #Author\tyuankun #Date\t2022-11-19 #Filename\tinstall_offline_mysql-8.0.28-linux-glibc2.12-x86_64.sh . /etc/init.d/functions color='echo -e \\E[01;31m' end='\\E[0m' # 设置mysql root用户密码 MYSQL_ROOT_PASSWD=123456 # mysql 版本 MYSQL_VERSION=mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz check(){ ${color}安装前环境检查......${end} # 判断当前用户是否是root用户，不是则退出安装 if [ ${UID} -ne 0 ];then action \"当前用户不是root,安装失败!\" false exit fi # 判断/usr/local/mysql目录是否存在，存在则exit if [ -e /usr/local/mysql ];then ${color}\"mysql已经安装，安装失败!\"${end} exit fi # 判断二进制程序包是否存在 if [ ! -e ${MYSQL_VERSION} ];then ${color}\"文件不存在,安装失败!\"${end} ${color}\"请检查脚本以及主机环境，然后再次尝试安装。即将退出安装流程!\"${end} exit else ${color}\"安装前环境检查完毕,环境要求满足!\"${end} fi } install_mysql(){ ${color}\"开始安装mysql......\"${end} # 安装依赖 yum install -y -q libaio numactl-libs # 解压缩 tar xf ${MYSQL_VERSION} -C /usr/local/ cd /usr/local/ MYSQL_FILE=`echo ${MYSQL_VERSION} | sed -nr 's/^(.*[0-9]).*/\\1/p'` ln -s /usr/local/${MYSQL_FILE} /usr/local/mysql chown -R root.root /usr/local/mysql/ id mysql \u0026\u003e /dev/null || { useradd -s /sbin/nologin -r mysql ; action \"创建mysql用户\"; } # 环境变量 echo 'PATH=/usr/local/mysql/bin/:$PATH' \u003e /etc/profile.d/mysql.sh . /etc/profile.d/mysql.sh ln -s /usr/local/mysql/bin/* /usr/bin/ # 配置文件 cat \u003e /etc/my.cnf \u003c\u003c-EOF [mysqld] server-id=1 log-bin datadir=/data/mysql socket=/data/mysql/mysql.sock log-error=/data/mysql/mysql.log pid-file=/data/mysql/mysql.pid [client] socket=/data/mysql/mysql.sock EOF [ -d /data ] || mkdir /data mysqld --initialize --user=mysql --datadir=/data/mysql cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld chkconfig --add mysqld chkconfig mysqld on service mysqld start [ $? -ne 0 ] \u0026\u0026 { $color\"数据库启动失败，退出!\"$end;exit; } sleep 3 MYSQL_OLDPASSWORD=`awk '/A temporary password/{print $NF}' /data/mysql/mysql.log` mysqladmin -uroot -p${MYSQL_OLDPASSWORD} password ${MYSQL_ROOT_PASSWD} \u0026\u003e/dev/null action \"数据库安装完成\" } # 调用函数 check install_mysql 离线安装Mysql5.7.38\n操作系统：centos7.9 mysql版本：5.7.38 mysql-5.7.38-linux-glibc2.12-x86_64.tar.gz下载链接 wget https://mirrors.cloud.tencent.com/mysql/downloads/MySQL-5.7/mysql-5.7.38-linux-glibc2.12-x86_64.tar.gz #!/bin/bash # #Author\tyuankun #Date\t2022-11-24 #Filename\tinstall_offline_mysql-5.7.38-linux-glibc2.12-x86_64.sh . /etc/init.d/functions color='echo -e \\E[01;31m' end='\\E[0m' # 设置mysql root用户密码 MYSQL_ROOT_PASSWD=123456 # mysql 版本 MYSQL_VERSION=mysql-5.7.38-linux-glibc2.12-x86_64.tar.gz check(){ ${color}安装前环境检查......${end} # 判断当前用户是否是root用户，不是则退出安装 if [ ${UID} -ne 0 ];then action \"当前用户不是root,安装失败!\" false exit fi # 判断/usr/local/mysql目录是否存在，存在则exit if [ -e /usr/local/mysql ];then ${color}\"mysql已经安装，安装失败!\"${end} exit fi # 判断二进制程序包是否存在 if [ ! -e ${MYSQL_VERSION} ];then ${color}\"文件不存在,安装失败!\"${end} ${color}\"请检查脚本以及主机环境，然后再次尝试安装。即将退出安装流程!\"${end} exit else ${color}\"安装前环境检查完毕,环境要求满足!\"${end} fi } install_mysql(){ ${color}\"开始安装mysql......\"${end} # 安装依赖 yum install -y -q libaio numactl-libs # 解压缩 tar xf ${MYSQL_VERSION} -C /usr/local/ cd /usr/local/ MYSQL_FILE=`echo ${MYSQL_VERSION} | sed -nr 's/^(.*[0-9]).*/\\1/p'` ln -s /usr/local/${MYSQL_FILE} /usr/local/mysql chown -R root.root /usr/local/mysql/ id mysql \u0026\u003e /dev/null || { useradd -s /sbin/nologin -r mysql ; action \"创建mysql用户\"; } # 环境变量 echo 'PATH=/usr/local/mysql/bin/:$PATH' \u003e /etc/profile.d/mysql.sh . /etc/profile.d/mysql.sh ln -s /usr/local/mysql/bin/* /usr/bin/ # 配置文件 cat \u003e /etc/my.cnf \u003c\u003c-EOF [mysqld] server-id=1 log-bin datadir=/data/mysql socket=/data/mysql/mysql.sock log-error=/data/mysql/mysql.log pid-file=/data/mysql/mysql.pid [client] socket=/data/mysql/mysql.sock EOF [ -d /data ] || mkdir /data mysqld --initialize --user=mysql --datadir=/data/mysql cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld chkconfig --add mysqld chkconfig mysqld on service mysqld start [ $? -ne 0 ] \u0026\u0026 { $color\"数据库启动失败，退出!\"$end;exit; } sleep 3 MYSQL_OLDPASSWORD=`awk '/A temporary password/{print $NF}' /data/mysql/mysql.log` mysqladmin -uroot -p${MYSQL_OLDPASSWORD} password ${MYSQL_ROOT_PASSWD} \u0026\u003e/dev/null action \"数据库安装完成\" } # 调用函数 check install_mysql ",
+  "wordCount" : "2754",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/18.jpg","datePublished": "2022-09-30T00:19:44Z",
+  "dateModified": "2022-09-30T00:19:44Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/mysqlinstallscript/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                MySQL一键安装脚本
+            </h1>
+            <div class="post-description">
+                Rocky8.5系统在线一键安装MySQL脚本
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-09-30
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2754字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>6分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/mysql/" style="color: var(--secondary)!important;">MySQL</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/18.jpg" alt="">
+    
+</figure>
+        <div class="post-content"><p><strong>环境：</strong></p>
+<ul>
+<li>系统：rocky8.5</li>
+<li>MySQL版本:8.0.28</li>
+<li>在线安装</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>#!/bin/bash
+</span></span><span style="display:flex;"><span>#
+</span></span><span style="display:flex;"><span>#Author			yuankun
+</span></span><span style="display:flex;"><span>#Date			2022-09-29
+</span></span><span style="display:flex;"><span>#Filename		install_mysql-8.0.28-linux-glibc2.12-x86_64.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>. /etc/init.d/functions
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>color=&#39;echo -e \E[01;31m&#39;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>end=&#39;\E[0m&#39;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 设置mysql root用户密码
+</span></span><span style="display:flex;"><span>MYSQL_ROOT_PASSWD=123456
+</span></span><span style="display:flex;"><span>MYSQL_VERSION=mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check(){
+</span></span><span style="display:flex;"><span>	${color}安装前环境检查......${end}	
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	# 判断当前用户是否是root用户，不是则退出安装
+</span></span><span style="display:flex;"><span>	if [ ${UID} -ne 0 ];then
+</span></span><span style="display:flex;"><span>		action &#34;当前用户不是root,安装失败!&#34; false
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	fi
+</span></span><span style="display:flex;"><span>	# 判断是否安装wget，没有安装则使用yum安装wget
+</span></span><span style="display:flex;"><span>	rpm -q wget || yum install -y wget
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	# 判断/usr/local/mysql目录是否存在，存在则exit
+</span></span><span style="display:flex;"><span>	if [ -e /usr/local/mysql ];then
+</span></span><span style="display:flex;"><span>		${color}&#34;mysql已经安装,安装失败!&#34;${end}
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	fi
+</span></span><span style="display:flex;"><span>	# 下载二进制程序包	
+</span></span><span style="display:flex;"><span>	wget https://cdn.mysql.com/archives/mysql-8.0/mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	# 判断二进制程序包是否存在
+</span></span><span style="display:flex;"><span>	if [ ! -e ${MYSQL_VERSION} ];then
+</span></span><span style="display:flex;"><span>		${color}&#34;文件不存在,安装失败!&#34;${end}
+</span></span><span style="display:flex;"><span>		${color}&#34;请检查脚本以及主机环境，然后再次尝试安装。即将退出安装流程!&#34;${end}
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	else
+</span></span><span style="display:flex;"><span>		${color}&#34;安装前环境检查完毕,环境要求满足!&#34;${end}
+</span></span><span style="display:flex;"><span>	fi
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span># 安装mysql
+</span></span><span style="display:flex;"><span>install_mysql(){
+</span></span><span style="display:flex;"><span>	${color}&#34;开始安装mysql......&#34;${end}
+</span></span><span style="display:flex;"><span>	# 安装依赖
+</span></span><span style="display:flex;"><span>	yum install -y -q libaio numactl-libs
+</span></span><span style="display:flex;"><span>	# 解压缩
+</span></span><span style="display:flex;"><span>	tar xf ${MYSQL_VERSION} -C /usr/local/
+</span></span><span style="display:flex;"><span>	cd /usr/local/
+</span></span><span style="display:flex;"><span>	MYSQL_FILE=`echo ${MYSQL_VERSION} | sed -nr &#39;s/^(.*[0-9]).*/\1/p&#39;`
+</span></span><span style="display:flex;"><span>	ln -s /usr/local/${MYSQL_FILE} /usr/local/mysql
+</span></span><span style="display:flex;"><span>	chown -R root.root /usr/local/mysql/
+</span></span><span style="display:flex;"><span>	id mysql &amp;&gt; /dev/null || { useradd -s /sbin/nologin -r mysql ; action &#34;创建mysql用户&#34;; }
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	# 环境变量
+</span></span><span style="display:flex;"><span>	echo &#39;PATH=/usr/local/mysql/bin/:$PATH&#39; &gt; /etc/profile.d/mysql.sh
+</span></span><span style="display:flex;"><span>	. /etc/profile.d/mysql.sh
+</span></span><span style="display:flex;"><span>	ln -s /usr/local/mysql/bin/* /usr/bin/
+</span></span><span style="display:flex;"><span>	# 配置文件
+</span></span><span style="display:flex;"><span>	cat &gt; /etc/my.cnf &lt;&lt;-EOF
+</span></span><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>server-id=1
+</span></span><span style="display:flex;"><span>log-bin
+</span></span><span style="display:flex;"><span>datadir=/data/mysql
+</span></span><span style="display:flex;"><span>socket=/data/mysql/mysql.sock
+</span></span><span style="display:flex;"><span>log-error=/data/mysql/mysql.log
+</span></span><span style="display:flex;"><span>pid-file=/data/mysql/mysql.pid
+</span></span><span style="display:flex;"><span>[client]
+</span></span><span style="display:flex;"><span>socket=/data/mysql/mysql.sock
+</span></span><span style="display:flex;"><span>EOF
+</span></span><span style="display:flex;"><span>	[ -d /data ] || mkdir /data
+</span></span><span style="display:flex;"><span>	mysqld --initialize --user=mysql --datadir=/data/mysql
+</span></span><span style="display:flex;"><span>	cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+</span></span><span style="display:flex;"><span>	chkconfig --add mysqld
+</span></span><span style="display:flex;"><span>	chkconfig mysqld on
+</span></span><span style="display:flex;"><span>	service mysqld start
+</span></span><span style="display:flex;"><span>	[ $? -ne 0 ] &amp;&amp; { $color&#34;数据库启动失败，退出!&#34;$end;exit; }
+</span></span><span style="display:flex;"><span>	sleep 3
+</span></span><span style="display:flex;"><span>	MYSQL_OLDPASSWORD=`awk &#39;/A temporary password/{print $NF}&#39; /data/mysql/mysql.log`
+</span></span><span style="display:flex;"><span>	mysqladmin -uroot -p${MYSQL_OLDPASSWORD} password ${MYSQL_ROOT_PASSWD} &amp;&gt;/dev/null
+</span></span><span style="display:flex;"><span>	action &#34;数据库安装完成&#34;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span># 调用函数
+</span></span><span style="display:flex;"><span>check
+</span></span><span style="display:flex;"><span>install_mysql
+</span></span></code></pre></div><p><strong>扩展</strong>：在线一键安装MySQL5.7.39脚本</p>
+<ul>
+<li>系统：rocky8.5</li>
+<li>MySQL版本:5.7.39</li>
+<li>在线安装</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>#!/bin/bash
+</span></span><span style="display:flex;"><span>#
+</span></span><span style="display:flex;"><span>#Author			yuankun
+</span></span><span style="display:flex;"><span>#Date			2022-11-19
+</span></span><span style="display:flex;"><span>#Filename		install_mysql-5.7.39-linux-glibc2.12-x86_64.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>. /etc/init.d/functions
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>color=&#39;echo -e \E[01;31m&#39;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>end=&#39;\E[0m&#39;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 设置mysql root用户密码
+</span></span><span style="display:flex;"><span>MYSQL_ROOT_PASSWD=123456
+</span></span><span style="display:flex;"><span>MYSQL_VERSION=mysql-5.7.39-linux-glibc2.12-x86_64.tar.gz
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check(){
+</span></span><span style="display:flex;"><span>	${color}安装前环境检查......${end}	
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	# 判断当前用户是否是root用户，不是则退出安装
+</span></span><span style="display:flex;"><span>	if [ ${UID} -ne 0 ];then
+</span></span><span style="display:flex;"><span>		action &#34;当前用户不是root,安装失败!&#34; false
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	fi
+</span></span><span style="display:flex;"><span>	# 判断是否安装wget，没有安装则使用yum安装wget
+</span></span><span style="display:flex;"><span>	rpm -q wget || yum install -y wget
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	# 判断/usr/local/mysql目录是否存在，存在则exit
+</span></span><span style="display:flex;"><span>	if [ -e /usr/local/mysql ];then
+</span></span><span style="display:flex;"><span>		${color}&#34;mysql已经安装,安装失败!&#34;${end}
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	fi
+</span></span><span style="display:flex;"><span>	# 下载二进制程序包	
+</span></span><span style="display:flex;"><span>	wget https://cdn.mysql.com/archives/mysql-5.7/mysql-5.7.39-linux-glibc2.12-x86_64.tar.gz
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	# 判断二进制程序包是否存在
+</span></span><span style="display:flex;"><span>	if [ ! -e ${MYSQL_VERSION} ];then
+</span></span><span style="display:flex;"><span>		${color}&#34;文件不存在,安装失败!&#34;${end}
+</span></span><span style="display:flex;"><span>		${color}&#34;请检查脚本以及主机环境，然后再次尝试安装。即将退出安装流程!&#34;${end}
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	else
+</span></span><span style="display:flex;"><span>		${color}&#34;安装前环境检查完毕,环境要求满足!&#34;${end}
+</span></span><span style="display:flex;"><span>	fi
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span># 安装mysql
+</span></span><span style="display:flex;"><span>install_mysql(){
+</span></span><span style="display:flex;"><span>	${color}&#34;开始安装mysql......&#34;${end}
+</span></span><span style="display:flex;"><span>	# 安装依赖
+</span></span><span style="display:flex;"><span>	yum install -y -q libaio numactl-libs
+</span></span><span style="display:flex;"><span>	# 解压缩
+</span></span><span style="display:flex;"><span>	tar xf ${MYSQL_VERSION} -C /usr/local/
+</span></span><span style="display:flex;"><span>	cd /usr/local/
+</span></span><span style="display:flex;"><span>	MYSQL_FILE=`echo ${MYSQL_VERSION} | sed -nr &#39;s/^(.*[0-9]).*/\1/p&#39;`
+</span></span><span style="display:flex;"><span>	ln -s /usr/local/${MYSQL_FILE} /usr/local/mysql
+</span></span><span style="display:flex;"><span>	chown -R root.root /usr/local/mysql/
+</span></span><span style="display:flex;"><span>	id mysql &amp;&gt; /dev/null || { useradd -s /sbin/nologin -r mysql ; action &#34;创建mysql用户&#34;; }
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	# 环境变量
+</span></span><span style="display:flex;"><span>	echo &#39;PATH=/usr/local/mysql/bin/:$PATH&#39; &gt; /etc/profile.d/mysql.sh
+</span></span><span style="display:flex;"><span>	. /etc/profile.d/mysql.sh
+</span></span><span style="display:flex;"><span>	ln -s /usr/local/mysql/bin/* /usr/bin/
+</span></span><span style="display:flex;"><span>	# 配置文件
+</span></span><span style="display:flex;"><span>	cat &gt; /etc/my.cnf &lt;&lt;-EOF
+</span></span><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>server-id=1
+</span></span><span style="display:flex;"><span>log-bin
+</span></span><span style="display:flex;"><span>datadir=/data/mysql
+</span></span><span style="display:flex;"><span>socket=/data/mysql/mysql.sock
+</span></span><span style="display:flex;"><span>log-error=/data/mysql/mysql.log
+</span></span><span style="display:flex;"><span>pid-file=/data/mysql/mysql.pid
+</span></span><span style="display:flex;"><span>[client]
+</span></span><span style="display:flex;"><span>socket=/data/mysql/mysql.sock
+</span></span><span style="display:flex;"><span>EOF
+</span></span><span style="display:flex;"><span>	[ -d /data ] || mkdir /data
+</span></span><span style="display:flex;"><span>	mysqld --initialize --user=mysql --datadir=/data/mysql
+</span></span><span style="display:flex;"><span>	cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+</span></span><span style="display:flex;"><span>	chkconfig --add mysqld
+</span></span><span style="display:flex;"><span>	chkconfig mysqld on
+</span></span><span style="display:flex;"><span>	service mysqld start
+</span></span><span style="display:flex;"><span>	[ $? -ne 0 ] &amp;&amp; { $color&#34;数据库启动失败，退出!&#34;$end;exit; }
+</span></span><span style="display:flex;"><span>	sleep 3
+</span></span><span style="display:flex;"><span>	MYSQL_OLDPASSWORD=`awk &#39;/A temporary password/{print $NF}&#39; /data/mysql/mysql.log`
+</span></span><span style="display:flex;"><span>	mysqladmin -uroot -p${MYSQL_OLDPASSWORD} password ${MYSQL_ROOT_PASSWD} &amp;&gt;/dev/null
+</span></span><span style="display:flex;"><span>	action &#34;数据库安装完成&#34;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span># 调用函数
+</span></span><span style="display:flex;"><span>check
+</span></span><span style="display:flex;"><span>install_mysql
+</span></span></code></pre></div><p><strong>离线安装</strong></p>
+<ul>
+<li>
+<p>注意：需要提前将二进制包下载到本地</p>
+</li>
+<li>
+<p>系统：rocky8.5</p>
+</li>
+<li>
+<p>MySQL版本:8.0.28</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>#!/bin/bash
+</span></span><span style="display:flex;"><span>#
+</span></span><span style="display:flex;"><span>#Author			yuankun
+</span></span><span style="display:flex;"><span>#Date			2022-11-19
+</span></span><span style="display:flex;"><span>#Filename		install_offline_mysql-8.0.28-linux-glibc2.12-x86_64.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>. /etc/init.d/functions
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>color=&#39;echo -e \E[01;31m&#39;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>end=&#39;\E[0m&#39;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 设置mysql root用户密码
+</span></span><span style="display:flex;"><span>MYSQL_ROOT_PASSWD=123456
+</span></span><span style="display:flex;"><span># mysql 版本
+</span></span><span style="display:flex;"><span>MYSQL_VERSION=mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check(){
+</span></span><span style="display:flex;"><span>	${color}安装前环境检查......${end}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	# 判断当前用户是否是root用户，不是则退出安装
+</span></span><span style="display:flex;"><span>	if [ ${UID} -ne 0 ];then
+</span></span><span style="display:flex;"><span>		action &#34;当前用户不是root,安装失败!&#34; false
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	fi
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	# 判断/usr/local/mysql目录是否存在，存在则exit
+</span></span><span style="display:flex;"><span>	if [ -e /usr/local/mysql ];then
+</span></span><span style="display:flex;"><span>		${color}&#34;mysql已经安装，安装失败!&#34;${end}
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	fi
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	# 判断二进制程序包是否存在
+</span></span><span style="display:flex;"><span>	if [ ! -e ${MYSQL_VERSION} ];then
+</span></span><span style="display:flex;"><span>		${color}&#34;文件不存在,安装失败!&#34;${end}
+</span></span><span style="display:flex;"><span>		${color}&#34;请检查脚本以及主机环境，然后再次尝试安装。即将退出安装流程!&#34;${end}
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	else
+</span></span><span style="display:flex;"><span>		${color}&#34;安装前环境检查完毕,环境要求满足!&#34;${end}
+</span></span><span style="display:flex;"><span>	fi
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>install_mysql(){
+</span></span><span style="display:flex;"><span>	${color}&#34;开始安装mysql......&#34;${end}
+</span></span><span style="display:flex;"><span>	# 安装依赖
+</span></span><span style="display:flex;"><span>	yum install -y -q libaio numactl-libs
+</span></span><span style="display:flex;"><span>	# 解压缩
+</span></span><span style="display:flex;"><span>	tar xf ${MYSQL_VERSION} -C /usr/local/
+</span></span><span style="display:flex;"><span>	cd /usr/local/
+</span></span><span style="display:flex;"><span>	MYSQL_FILE=`echo ${MYSQL_VERSION} | sed -nr &#39;s/^(.*[0-9]).*/\1/p&#39;`
+</span></span><span style="display:flex;"><span>	ln -s /usr/local/${MYSQL_FILE} /usr/local/mysql
+</span></span><span style="display:flex;"><span>	chown -R root.root /usr/local/mysql/
+</span></span><span style="display:flex;"><span>	id mysql &amp;&gt; /dev/null || { useradd -s /sbin/nologin -r mysql ; action &#34;创建mysql用户&#34;; }
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	# 环境变量
+</span></span><span style="display:flex;"><span>	echo &#39;PATH=/usr/local/mysql/bin/:$PATH&#39; &gt; /etc/profile.d/mysql.sh
+</span></span><span style="display:flex;"><span>	. /etc/profile.d/mysql.sh
+</span></span><span style="display:flex;"><span>	ln -s /usr/local/mysql/bin/* /usr/bin/
+</span></span><span style="display:flex;"><span>	# 配置文件
+</span></span><span style="display:flex;"><span>	cat &gt; /etc/my.cnf &lt;&lt;-EOF
+</span></span><span style="display:flex;"><span>[mysqld]
+</span></span><span style="display:flex;"><span>server-id=1
+</span></span><span style="display:flex;"><span>log-bin
+</span></span><span style="display:flex;"><span>datadir=/data/mysql
+</span></span><span style="display:flex;"><span>socket=/data/mysql/mysql.sock
+</span></span><span style="display:flex;"><span>log-error=/data/mysql/mysql.log
+</span></span><span style="display:flex;"><span>pid-file=/data/mysql/mysql.pid
+</span></span><span style="display:flex;"><span>[client]
+</span></span><span style="display:flex;"><span>socket=/data/mysql/mysql.sock
+</span></span><span style="display:flex;"><span>EOF
+</span></span><span style="display:flex;"><span>	[ -d /data ] || mkdir /data
+</span></span><span style="display:flex;"><span>	mysqld --initialize --user=mysql --datadir=/data/mysql
+</span></span><span style="display:flex;"><span>	cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+</span></span><span style="display:flex;"><span>	chkconfig --add mysqld
+</span></span><span style="display:flex;"><span>	chkconfig mysqld on
+</span></span><span style="display:flex;"><span>	service mysqld start
+</span></span><span style="display:flex;"><span>	[ $? -ne 0 ] &amp;&amp; { $color&#34;数据库启动失败，退出!&#34;$end;exit; }
+</span></span><span style="display:flex;"><span>	sleep 3
+</span></span><span style="display:flex;"><span>	MYSQL_OLDPASSWORD=`awk &#39;/A temporary password/{print $NF}&#39; /data/mysql/mysql.log`
+</span></span><span style="display:flex;"><span>	mysqladmin -uroot -p${MYSQL_OLDPASSWORD} password ${MYSQL_ROOT_PASSWD} &amp;&gt;/dev/null
+</span></span><span style="display:flex;"><span>	action &#34;数据库安装完成&#34;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span># 调用函数
+</span></span><span style="display:flex;"><span>check
+</span></span><span style="display:flex;"><span>install_mysql
+</span></span></code></pre></div><p><strong>离线安装Mysql5.7.38</strong></p>
+<ul>
+<li>操作系统：centos7.9</li>
+<li>mysql版本：5.7.38</li>
+<li>mysql-5.7.38-linux-glibc2.12-x86_64.tar.gz下载链接</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>wget https://mirrors.cloud.tencent.com/mysql/downloads/MySQL-5.7/mysql-5.7.38-linux-glibc2.12-x86_64.tar.gz
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Author			yuankun</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Date			2022-11-24</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Filename		install_offline_mysql-5.7.38-linux-glibc2.12-x86_64.sh</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>. /etc/init.d/functions
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;echo -e \E[01;31m&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>end<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;\E[0m&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 设置mysql root用户密码</span>
+</span></span><span style="display:flex;"><span>MYSQL_ROOT_PASSWD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mysql 版本</span>
+</span></span><span style="display:flex;"><span>MYSQL_VERSION<span style="color:#f92672">=</span>mysql-5.7.38-linux-glibc2.12-x86_64.tar.gz
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check<span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">${</span>color<span style="color:#e6db74">}</span>安装前环境检查......<span style="color:#e6db74">${</span>end<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># 判断当前用户是否是root用户，不是则退出安装</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">${</span>UID<span style="color:#e6db74">}</span> -ne <span style="color:#ae81ff">0</span> <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>		action <span style="color:#e6db74">&#34;当前用户不是root,安装失败!&#34;</span> false
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># 判断/usr/local/mysql目录是否存在，存在则exit</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -e /usr/local/mysql <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">${</span>color<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;mysql已经安装，安装失败!&#34;</span><span style="color:#e6db74">${</span>end<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># 判断二进制程序包是否存在</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -e <span style="color:#e6db74">${</span>MYSQL_VERSION<span style="color:#e6db74">}</span> <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">${</span>color<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;文件不存在,安装失败!&#34;</span><span style="color:#e6db74">${</span>end<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">${</span>color<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;请检查脚本以及主机环境，然后再次尝试安装。即将退出安装流程!&#34;</span><span style="color:#e6db74">${</span>end<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>		exit
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">${</span>color<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;安装前环境检查完毕,环境要求满足!&#34;</span><span style="color:#e6db74">${</span>end<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>install_mysql<span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">${</span>color<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;开始安装mysql......&#34;</span><span style="color:#e6db74">${</span>end<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># 安装依赖</span>
+</span></span><span style="display:flex;"><span>	yum install -y -q libaio numactl-libs
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># 解压缩</span>
+</span></span><span style="display:flex;"><span>	tar xf <span style="color:#e6db74">${</span>MYSQL_VERSION<span style="color:#e6db74">}</span> -C /usr/local/
+</span></span><span style="display:flex;"><span>	cd /usr/local/
+</span></span><span style="display:flex;"><span>	MYSQL_FILE<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>echo <span style="color:#e6db74">${</span>MYSQL_VERSION<span style="color:#e6db74">}</span> | sed -nr <span style="color:#e6db74">&#39;s/^(.*[0-9]).*/\1/p&#39;</span><span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>	ln -s /usr/local/<span style="color:#e6db74">${</span>MYSQL_FILE<span style="color:#e6db74">}</span> /usr/local/mysql
+</span></span><span style="display:flex;"><span>	chown -R root.root /usr/local/mysql/
+</span></span><span style="display:flex;"><span>	id mysql &amp;&gt; /dev/null <span style="color:#f92672">||</span> <span style="color:#f92672">{</span> useradd -s /sbin/nologin -r mysql ; action <span style="color:#e6db74">&#34;创建mysql用户&#34;</span>; <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># 环境变量</span>
+</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">&#39;PATH=/usr/local/mysql/bin/:$PATH&#39;</span> &gt; /etc/profile.d/mysql.sh
+</span></span><span style="display:flex;"><span>	. /etc/profile.d/mysql.sh
+</span></span><span style="display:flex;"><span>	ln -s /usr/local/mysql/bin/* /usr/bin/
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># 配置文件</span>
+</span></span><span style="display:flex;"><span>	cat &gt; /etc/my.cnf <span style="color:#e6db74">&lt;&lt;-EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[mysqld]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">server-id=1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">log-bin
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">datadir=/data/mysql
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">socket=/data/mysql/mysql.sock
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">log-error=/data/mysql/mysql.log
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">pid-file=/data/mysql/mysql.pid
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[client]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">socket=/data/mysql/mysql.sock
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">[</span> -d /data <span style="color:#f92672">]</span> <span style="color:#f92672">||</span> mkdir /data
+</span></span><span style="display:flex;"><span>	mysqld --initialize --user<span style="color:#f92672">=</span>mysql --datadir<span style="color:#f92672">=</span>/data/mysql
+</span></span><span style="display:flex;"><span>	cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+</span></span><span style="display:flex;"><span>	chkconfig --add mysqld
+</span></span><span style="display:flex;"><span>	chkconfig mysqld on
+</span></span><span style="display:flex;"><span>	service mysqld start
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">[</span> $? -ne <span style="color:#ae81ff">0</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">{</span> $color<span style="color:#e6db74">&#34;数据库启动失败，退出!&#34;</span>$end;exit; <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>	sleep <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>	MYSQL_OLDPASSWORD<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>awk <span style="color:#e6db74">&#39;/A temporary password/{print $NF}&#39;</span> /data/mysql/mysql.log<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>	mysqladmin -uroot -p<span style="color:#e6db74">${</span>MYSQL_OLDPASSWORD<span style="color:#e6db74">}</span> password <span style="color:#e6db74">${</span>MYSQL_ROOT_PASSWD<span style="color:#e6db74">}</span> &amp;&gt;/dev/null
+</span></span><span style="display:flex;"><span>	action <span style="color:#e6db74">&#34;数据库安装完成&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 调用函数</span>
+</span></span><span style="display:flex;"><span>check
+</span></span><span style="display:flex;"><span>install_mysql
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/http/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>http</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/mysql/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>MySQL</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

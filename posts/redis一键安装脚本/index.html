@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Redis一键安装脚本 | Hopeful</title>
+<meta name="keywords" content="Redis">
+<meta name="description" content="centos、ubuntu、rockylinux系统Redis一键安装脚本">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="Redis一键安装脚本" />
+<meta property="og:description" content="centos、ubuntu、rockylinux系统Redis一键安装脚本" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/24.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-17T11:56:02+00:00" />
+<meta property="article:modified_time" content="2022-12-17T11:56:02+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/24.jpg" />
+<meta name="twitter:title" content="Redis一键安装脚本"/>
+<meta name="twitter:description" content="centos、ubuntu、rockylinux系统Redis一键安装脚本"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Redis一键安装脚本",
+      "item": "https://xyenvy.github.io/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Redis一键安装脚本",
+  "name": "Redis一键安装脚本",
+  "description": "centos、ubuntu、rockylinux系统Redis一键安装脚本",
+  "keywords": [
+    "Redis"
+  ],
+  "articleBody": " 在线安装 系统 Centos7.9 、Rockylinux8.5、Centos8.5、ubuntu20.04实测安装成功\n#!/bin/bash # #******************************************************************** #Author: yuankun #Date: 2022-12-17 #FileName： install_redis.sh #URL: https://gzyuankun.github.io #Description: The test script #Copyright (C): 2020 All rights reserved #******************************************************************** REDIS_VERSION=redis-6.2.5 PASSWORD=123456 INSTALL_DIR=/usr/local/src/redis CPUS=`lscpu |awk '/^CPU\\(s\\)/{print $2}'` . /etc/os-release color () { RES_COL=60 MOVE_TO_COL=\"echo -en \\\\033[${RES_COL}G\" SETCOLOR_SUCCESS=\"echo -en \\\\033[1;32m\" SETCOLOR_FAILURE=\"echo -en \\\\033[1;31m\" SETCOLOR_WARNING=\"echo -en \\\\033[1;33m\" SETCOLOR_NORMAL=\"echo -en \\E[0m\" echo -n \"$1\" \u0026\u0026 $MOVE_TO_COL echo -n \"[\" if [ $2 = \"success\" -o $2 = \"0\" ] ;then ${SETCOLOR_SUCCESS} echo -n $\" OK \" elif [ $2 = \"failure\" -o $2 = \"1\" ] ;then ${SETCOLOR_FAILURE} echo -n $\"FAILED\" else ${SETCOLOR_WARNING} echo -n $\"WARNING\" fi ${SETCOLOR_NORMAL} echo -n \"]\" echo } prepare(){ if [ $ID = \"centos\" -o $ID = \"rocky\" ];then yum -y install gcc make systemd-devel else apt update apt -y install gcc make libjemalloc-dev libsystemd-dev fi if [ $? -eq 0 ];then color \"安装软件包成功\" 0 else color \"安装软件包失败，请检查网络配置\" 1 exit fi } install() { if [ ! -f ${REDIS_VERSION}.tar.gz ];then wget http://download.redis.io/releases/${REDIS_VERSION}.tar.gz || { color \"Redis 源码下载失败\" 1 ; exit; } fi tar xf ${REDIS_VERSION}.tar.gz -C /usr/local/src cd /usr/local/src/${REDIS_VERSION} make -j $CUPS USE_SYSTEMD=yes PREFIX=${INSTALL_DIR} install \u0026\u0026 color \"Redis 编译安装完成\" 0 || { color \"Redis 编译安装失败\" 1 ;exit ; } ln -s ${INSTALL_DIR}/bin/redis-* /usr/bin/ mkdir -p ${INSTALL_DIR}/{etc,log,data,run} cp redis.conf ${INSTALL_DIR}/etc/ sed -i -e 's/bind 127.0.0.1/bind 0.0.0.0/' -e \"/# requirepass/a requirepass $PASSWORD\" -e \"/^dir .*/c dir ${INSTALL_DIR}/data/\" -e \"/logfile .*/c logfile ${INSTALL_DIR}/log/redis-6379.log\" -e \"/^pidfile .*/c pidfile ${INSTALL_DIR}/run/redis_6379.pid\" ${INSTALL_DIR}/etc/redis.conf if id redis \u0026\u003e /dev/null ;then color \"Redis 用户已存在\" 1 else useradd -r -s /sbin/nologin redis color \"Redis 用户创建成功\" 0 fi chown -R redis.redis ${INSTALL_DIR} cat \u003e\u003e /etc/sysctl.conf \u003c",
+  "wordCount" : "544",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/24.jpg","datePublished": "2022-12-17T11:56:02Z",
+  "dateModified": "2022-12-17T11:56:02Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                Redis一键安装脚本
+            </h1>
+            <div class="post-description">
+                centos、ubuntu、rockylinux系统Redis一键安装脚本
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-12-17
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>544字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>2分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/redis/" style="color: var(--secondary)!important;">Redis</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/24.jpg" alt="">
+    
+</figure>
+        <div class="post-content"><ul>
+<li>在线安装</li>
+<li>系统</li>
+</ul>
+<p>Centos7.9 、Rockylinux8.5、Centos8.5、ubuntu20.04实测安装成功</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#********************************************************************</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Author:          yuankun</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Date:            2022-12-17</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#FileName：       install_redis.sh</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#URL:             https://gzyuankun.github.io</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Description:     The test script</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Copyright (C):   2020 All rights reserved</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#********************************************************************</span>
+</span></span><span style="display:flex;"><span>REDIS_VERSION<span style="color:#f92672">=</span>redis-6.2.5
+</span></span><span style="display:flex;"><span>PASSWORD<span style="color:#f92672">=</span><span style="color:#ae81ff">123456</span>
+</span></span><span style="display:flex;"><span>INSTALL_DIR<span style="color:#f92672">=</span>/usr/local/src/redis
+</span></span><span style="display:flex;"><span>CPUS<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>lscpu |awk <span style="color:#e6db74">&#39;/^CPU\(s\)/{print $2}&#39;</span><span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>. /etc/os-release
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>color <span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    RES_COL<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span>
+</span></span><span style="display:flex;"><span>    MOVE_TO_COL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;echo -en \\033[</span><span style="color:#e6db74">${</span>RES_COL<span style="color:#e6db74">}</span><span style="color:#e6db74">G&#34;</span>
+</span></span><span style="display:flex;"><span>    SETCOLOR_SUCCESS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;echo -en \\033[1;32m&#34;</span>
+</span></span><span style="display:flex;"><span>    SETCOLOR_FAILURE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;echo -en \\033[1;31m&#34;</span>
+</span></span><span style="display:flex;"><span>    SETCOLOR_WARNING<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;echo -en \\033[1;33m&#34;</span>
+</span></span><span style="display:flex;"><span>    SETCOLOR_NORMAL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;echo -en \E[0m&#34;</span>
+</span></span><span style="display:flex;"><span>    echo -n <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&amp;&amp;</span> $MOVE_TO_COL
+</span></span><span style="display:flex;"><span>    echo -n <span style="color:#e6db74">&#34;[&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;success&#34;</span> -o $2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#f92672">]</span> ;<span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">${</span>SETCOLOR_SUCCESS<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>        echo -n <span style="color:#e6db74">$&#34;  OK  &#34;</span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> <span style="color:#f92672">[</span> $2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;failure&#34;</span> -o $2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1&#34;</span>  <span style="color:#f92672">]</span> ;<span style="color:#66d9ef">then</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">${</span>SETCOLOR_FAILURE<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>        echo -n <span style="color:#e6db74">$&#34;FAILED&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">${</span>SETCOLOR_WARNING<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>        echo -n <span style="color:#e6db74">$&#34;WARNING&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">${</span>SETCOLOR_NORMAL<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>    echo -n <span style="color:#e6db74">&#34;]&#34;</span>
+</span></span><span style="display:flex;"><span>    echo 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prepare<span style="color:#f92672">(){</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $ID <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;centos&#34;</span> -o $ID <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;rocky&#34;</span> <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        yum  -y install gcc make systemd-devel
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>	    apt update 
+</span></span><span style="display:flex;"><span>	    apt -y install  gcc make libjemalloc-dev libsystemd-dev
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $? -eq <span style="color:#ae81ff">0</span> <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        color <span style="color:#e6db74">&#34;安装软件包成功&#34;</span>  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        color <span style="color:#e6db74">&#34;安装软件包失败，请检查网络配置&#34;</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        exit
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>install<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>   
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -f <span style="color:#e6db74">${</span>REDIS_VERSION<span style="color:#e6db74">}</span>.tar.gz <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        wget http://download.redis.io/releases/<span style="color:#e6db74">${</span>REDIS_VERSION<span style="color:#e6db74">}</span>.tar.gz <span style="color:#f92672">||</span> <span style="color:#f92672">{</span> color <span style="color:#e6db74">&#34;Redis 源码下载失败&#34;</span> <span style="color:#ae81ff">1</span> ; exit; <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>    tar xf <span style="color:#e6db74">${</span>REDIS_VERSION<span style="color:#e6db74">}</span>.tar.gz -C /usr/local/src
+</span></span><span style="display:flex;"><span>    cd /usr/local/src/<span style="color:#e6db74">${</span>REDIS_VERSION<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>    make -j $CUPS USE_SYSTEMD<span style="color:#f92672">=</span>yes PREFIX<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>INSTALL_DIR<span style="color:#e6db74">}</span> install <span style="color:#f92672">&amp;&amp;</span> color <span style="color:#e6db74">&#34;Redis 编译安装完成&#34;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> <span style="color:#f92672">{</span> color <span style="color:#e6db74">&#34;Redis 编译安装失败&#34;</span> <span style="color:#ae81ff">1</span> ;exit ; <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ln -s <span style="color:#e6db74">${</span>INSTALL_DIR<span style="color:#e6db74">}</span>/bin/redis-*  /usr/bin/
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    mkdir -p <span style="color:#e6db74">${</span>INSTALL_DIR<span style="color:#e6db74">}</span>/<span style="color:#f92672">{</span>etc,log,data,run<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    cp redis.conf  <span style="color:#e6db74">${</span>INSTALL_DIR<span style="color:#e6db74">}</span>/etc/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    sed -i -e <span style="color:#e6db74">&#39;s/bind 127.0.0.1/bind 0.0.0.0/&#39;</span>  -e <span style="color:#e6db74">&#34;/# requirepass/a requirepass </span>$PASSWORD<span style="color:#e6db74">&#34;</span>  -e <span style="color:#e6db74">&#34;/^dir .*/c dir </span><span style="color:#e6db74">${</span>INSTALL_DIR<span style="color:#e6db74">}</span><span style="color:#e6db74">/data/&#34;</span>  -e <span style="color:#e6db74">&#34;/logfile .*/c logfile </span><span style="color:#e6db74">${</span>INSTALL_DIR<span style="color:#e6db74">}</span><span style="color:#e6db74">/log/redis-6379.log&#34;</span>  -e  <span style="color:#e6db74">&#34;/^pidfile .*/c  pidfile </span><span style="color:#e6db74">${</span>INSTALL_DIR<span style="color:#e6db74">}</span><span style="color:#e6db74">/run/redis_6379.pid&#34;</span> <span style="color:#e6db74">${</span>INSTALL_DIR<span style="color:#e6db74">}</span>/etc/redis.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> id redis &amp;&gt; /dev/null ;<span style="color:#66d9ef">then</span> 
+</span></span><span style="display:flex;"><span>         color <span style="color:#e6db74">&#34;Redis 用户已存在&#34;</span> <span style="color:#ae81ff">1</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>         useradd -r -s /sbin/nologin redis
+</span></span><span style="display:flex;"><span>         color <span style="color:#e6db74">&#34;Redis 用户创建成功&#34;</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    chown -R redis.redis <span style="color:#e6db74">${</span>INSTALL_DIR<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cat &gt;&gt; /etc/sysctl.conf <span style="color:#e6db74">&lt;&lt;EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">net.core.somaxconn = 1024
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">vm.overcommit_memory = 1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span><span style="display:flex;"><span>    sysctl -p 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $ID <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;centos&#34;</span> -o $ID <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;rocky&#34;</span> <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        echo <span style="color:#e6db74">&#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39;</span> &gt;&gt; /etc/rc.d/rc.local
+</span></span><span style="display:flex;"><span>        chmod +x /etc/rc.d/rc.local
+</span></span><span style="display:flex;"><span>        /etc/rc.d/rc.local 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> 
+</span></span><span style="display:flex;"><span>        echo -e <span style="color:#e6db74">&#39;#!/bin/bash\necho never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39;</span> &gt;&gt; /etc/rc.local
+</span></span><span style="display:flex;"><span>        chmod +x /etc/rc.local
+</span></span><span style="display:flex;"><span>        /etc/rc.local
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat &gt; /lib/systemd/system/redis.service <span style="color:#e6db74">&lt;&lt;EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[Unit]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Description=Redis persistent key-value database
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">After=network.target
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[Service]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ExecStart=${INSTALL_DIR}/bin/redis-server ${INSTALL_DIR}/etc/redis.conf --supervised systemd
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ExecStop=/bin/kill -s QUIT \$MAINPID
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Type=notify
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">User=redis
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Group=redis
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">RuntimeDirectory=redis
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">RuntimeDirectoryMode=0755
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">LimitNOFILE=1000000
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[Install]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">WantedBy=multi-user.target
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span><span style="display:flex;"><span>     systemctl daemon-reload 
+</span></span><span style="display:flex;"><span>     systemctl enable --now  redis &amp;&gt; /dev/null 
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $? -eq <span style="color:#ae81ff">0</span> <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>         color <span style="color:#e6db74">&#34;Redis 服务启动成功,Redis信息如下:&#34;</span>  <span style="color:#ae81ff">0</span> 
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>         color <span style="color:#e6db74">&#34;Redis 启动失败&#34;</span> <span style="color:#ae81ff">1</span> 
+</span></span><span style="display:flex;"><span>         exit
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>     sleep <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>     redis-cli -a $PASSWORD INFO Server 2&gt; /dev/null
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prepare 
+</span></span><span style="display:flex;"><span>install 
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Nginx基础</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Centos系统yum源配置</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

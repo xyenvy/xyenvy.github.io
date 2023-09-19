@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>软件管理 | Hopeful</title>
+<meta name="keywords" content="Linux, 软件, apt, yum">
+<meta name="description" content="Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="软件管理" />
+<meta property="og:description" content="Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/15.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-08T21:05:59+00:00" />
+<meta property="article:modified_time" content="2022-08-08T21:05:59+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/15.jpg" />
+<meta name="twitter:title" content="软件管理"/>
+<meta name="twitter:description" content="Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "软件管理",
+      "item": "https://xyenvy.github.io/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "软件管理",
+  "name": "软件管理",
+  "description": "Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。",
+  "keywords": [
+    "Linux", "软件", "apt", "yum"
+  ],
+  "articleBody": "1、软件管理简介 Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的\nRPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能\n2、软件包管理器简介 2.1 软件包管理器的职责 将二进制文件、库文件、配置文件、帮助文件打包成一个文件 安装软件时按需将二进制、库文件、配置文件、帮助文件放到相应的位置 生成数据库，追踪所安装的每一个文件 软件卸载时根据安装时生成的数据库将相应的文件删除 2.2 软件包管理器的核心功能 制作软件包 安装软件 卸载软件 升级软件 查询软件 校验软件 3、软件包简介 3.1 软件包组成 软件包的组成清单 文件清单 安装或卸载的运行脚本 数据库 程序包名称及版本 依赖关系 功能说明 安装生成的各个文件的路径及校验码信息 3.2 软件包分类 源码格式 特点：需要编译成二进制格式才能进行\n命名方式：name-VERSION.tar.gz VERSION：主版本号.次版本号.系统发行版本 二进制格式 特点：编译好的，安装之后可以直接运行\n软件的作者下载软件的源码，编译配置为二进制软件包 Redhat和Centos中使用的二进制包为rpm包 源码格式和二进制格式的区别\n源码格式的包编译为二进制包时可以选择需要的特性，如果未选择，则编译后安装后的软件就不会有相应的功能 源码包在编译成为二进制包时可以实现软件功能的定制 二进制包的本版落后于源码包。 4、rpm简介 Redhat和Centos中二进制包的扩展包为.rpm，这是由红帽公司最先发布的一种用来打包软件的文件格式，我们叫做rpm包；RPM软件包管理器就是管理rpm包\n4.1 rpm包命名规范\n5、软件包的获取途径 5.1 系统发行的光盘 Linux的IOS镜像文件自带了非常多的系统扩展RPM安装包，且这些软件版本最适合当前Linux系统 IOS镜像文件自带的扩展RPM安装包的存放目录为：Packages 使用IOS镜像文件自带的扩展RPM安装包前必须先挂载ISO镜像，挂在方法如下：\n# 创建挂载点，挂载光盘镜像到挂载点 [root@jlin ~]# mkdir /mnt/cdrom [root@jlin ~]# mount /dev/sr0 /mnt/cdrom/ # 复制挂载点里面所有的文件到/media/目录，避免光盘断开连接就读取不到扩展RPM安装包 [root@jlin ~]# cp -r /mnt/cdrom/ /media/ [root@jlin ~]# cd /media/cdrom/ [root@jlin cdrom]# ll 总用量 320 -rw-r--r-- 1 root root 14 7月 10 08:27 CentOS_BuildTag drwxr-xr-x 3 root root 35 7月 10 08:27 EFI -rw-r--r-- 1 root root 227 7月 10 08:27 EULA -rw-r--r-- 1 root root 18009 7月 10 08:27 GPL drwxr-xr-x 3 root root 57 7月 10 08:27 images drwxr-xr-x 2 root root 198 7月 10 08:27 isolinux drwxr-xr-x 2 root root 43 7月 10 08:27 LiveOS drwxr-xr-x 2 root root 221184 7月 10 08:29 Packages drwxr-xr-x 2 root root 4096 7月 10 08:29 repodata -rw-r--r-- 1 root root 1690 7月 10 08:29 RPM-GPG-KEY-CentOS-7 -rw-r--r-- 1 root root 1690 7月 10 08:29 RPM-GPG-KEY-CentOS-Testing-7 -r--r--r-- 1 root root 2883 7月 10 08:29 TRANS.TBL 5.2 开源镜像站 开源镜像站上会存放RPM安装包\n阿里巴巴开源镜像站 http://mirrors.aliyun.com\n网易开源镜像站 http://mirrors.163.com\n清华大学开源镜像站 https://mirrors.tuna.tsinghua.edu.cn\n5.3 搜索引擎 有一些搜索引擎直接提供rpm包搜索功能\nrpmfind http://rpmfind.net\nrpm pbone http://rpm.pbone.net\npkgs http://pkgs.org/\n6、rpm包管理 6.1 RPM包安装 // 语法：rpm -ivh /PATH/TO/PACKAGE_FILE ... // 选项： -i：安装 -v：显示详细信息 -h：显示安装进度条 --test：测试安装，但不真正执行安装过程 --nodeps：忽略依赖关系 --force：强行安装，可以实现重装或降级 --replacepkgs：重新安装，替换原有安装 --oldpackage：降级 --nodigest：不检查包的完整性 --nosignature：不检查报的来源合法性 --noscripts：不执行rpm包自带的四类脚本： --nopre：不执行rpm包自带的preinstall脚本 --nopost：不执行rpm包自带的postinstall脚本 --nopreun：不执行rpm包自带的preuninstall脚本 --nopostun：不执行rpm包自带的postuninstall脚本 --preinstall：安装过程开始之前运行的脚本，标记为%pre：--nopre --postinstall：安装过程完成之后运行的脚本，标记为%post：--nopost --preuninstall：卸载过程开始执行之前运行的脚本，标记为%preun：--nopreun --postunistall：写在过程完成之后运行的脚本，标记为%postrun：--nopostun // 安装软件包，需要指定软件包绝对路径 [root@jlin ~]# rpm -ivh /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm // 在软件包所在目录下可以不指定绝对路径 [root@jlin ~]# cd /mnt/cdrom/Packages/ [root@jlin Packages]# rpm -ivh tree-1.6.0-10.el7.x86_64.rpm // 测试一个软件包是否能在该系统上安装 [root@jlin ~]# rpm -ivh --test /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm // 如果软件包已经安装，强制再次安装 [root@jlin ~]# rpm -ivh --force /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm // 安装httpd服务需要依赖其他组件，使用--nodeps可忽略以来强制安装 [root@jlin ~]# rpm -ivh --nodeps /mnt/cdrom/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm 6.2 RPM包查询 // 查询httpd的rpm包是否安装 [root@jlin ~]# rpm -q httpd // 模糊查找系统已安装的rpm包 [root@jlin ~]# rpm -qa | grep ftp // 查询已安装的httpd软件包相关信息 [root@jlin ~]# rpm -qi httpd // 查询已安装的rpm包生成的文件 [root@jlin ~]# rpm -ql httpd // 查询已安装的rpm包生成的配置文件 所有 [root@jlin ~]# rpm -qc httpd // 查询配置文件或命令来自于哪个rpm包 [root@jlin ~]# rpm -qf /etc/httpd/httpd.conf [root@jlin ~]# rpm -qf /usr/sbin/httpd // 查询未安装的软件包会产生哪些文件 [root@jlin ~]# rpm -qpl / mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm // 查询未安装的软件包的说明信息 [root@jlin ~]# rpm -qpi /mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm 6.4 RPM包升级 // 升级tree软件包 [root@jlin ~]# rpm -Uvh /mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm 6.5 RPM包卸载 // 先查询，然后卸载 [root@jlin ~]# rpm -qa lgrep httpd [root@jlin ~]# rpm -e httpd 6.6 RPM包校验 // 校验已经安装的软件包的文件是否被修改；如果执行以下命令无内容输出说明安装的软件 [root@jlin ~]# rpm -v vsftpd S #文件的容量大小是否被改变 M #文件的类型或者文件的属性是否被修改 5 #MD5加密的内容已经不同 D #装置的主/次代码已经改变 L #路径已经被改变 U #文件的所属主已被修改 G #文件的所属组已被修改 T #文件的创建时间已被改变 6.7 RPM重建数据库 // 数据库信息在/var/lib/rpm目录 // 重建数据库，重建Packages数据库，一定会重建 rpm --rebuilddb // 初始化数据库，重建所有数据库，没有才建立，有就不建立 rpm --initdb 6.8 检查软件包来源合法性 加密类型: - 对称加密 #加密解密使用同一个密钥 - 公钥加密 #一对密钥，公钥和私钥。公钥隐含于私钥中，可以提取出来并公布出去 - 单向加密 #只能加密不能解密 // 红帽官方公钥存放位置 /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release // 检查指定rpm包合法性，出现oK字样表示包没问题 rpm -K PACKAGE_FILE // 导入密钥文件 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release1 Centos 7发行版光盘提供的密钥文件名为:RPM-GPG-KEY-Centos-7 7、yum和dnf CentOS 使用 yum, dnf 解决rpm的包依赖关系 YUM: Yellowdog Update Modifier，rpm的前端程序，可解决软件包相关依赖性，可在多个库之间定位 软件包，up2date的替代工具，CentOS 8 用dnf 代替了yum ,不过保留了和yum的兼容性，配置也是通 用的\n7.1 yum/dnf 工作原理 yum/dnf 是基于C/S 模式 yum 服务器存放rpm包和相关包的元数据库 yum 客户端访问yum服务器进行安装或查询等 yum 实现过程 先在yum服务器上创建 yum repository（仓库），在仓库中事先存储了众多rpm包，以及包的相关的 元数据文件（放置于特定目录repodata下），当yum客户端利用yum/dnf工具进行安装时包时，会自动 下载repodata中的元数据，查询远数据是否存在相关的包及依赖关系，自动从仓库中找到相关包下载并 安装。\n7.2 yum客户端配置 yum客户端配置文件\n/etc/yum.conf #为所有仓库提供公共配置 /etc/yum.repos.d/*.repo： #为每个仓库的提供配置文件 帮助参考： man 5 yum.conf repo仓库配置文件指向的定义：\n[repositoryID] name=Some name for this repository baseurl=url://path/to/repository/ enabled={1|0} gpgcheck={1|0} gpgkey=URL enablegroups={1|0} failovermethod={roundrobin|priority} roundrobin：意为随机挑选，默认值 priority:按顺序访问 cost= 默认为1000 yum服务器的baseurl形式\nfile:// 本地路径 http:// https:// ftp:// 注意：yum仓库指向的路径一定必须是repodata目录所在目录 相关变量\nyum的repo配置文件中可用的变量： $releasever: 当前OS的发行版的主版本号，如：8，7，6 $arch: CPU架构，如：aarch64, i586, i686，x86_64等 $basearch：系统基础平台；i386, x86_64 $contentdir：表示目录，比如：centos-8，centos-7 $YUM0-$YUM9:自定义变量 7.3 yum命令 yum命令的用法\nyum [options] [command] [package ...] yum的命令行选项\n-y #自动回答为\"yes\" -q #静默模式 --nogpgcheck #禁止进行gpg check --enablerepo=repoidglob #临时启用此处指定的repo，支持通配符，如：\"*\" --disablerepo=repoidglob #临时禁用此处指定的repo,和上面语句同时使用，放在后面的生效 7.3.1 显示仓库列表 yum repolist [all|enabled|disabled] 范例\n7.3.2 显示程序包 yum list yum list [all | glob_exp1] [glob_exp2] [...] yum list {available|installed|updates} [glob_exp1] [...] 范例\nyum list yum list [all | glob_exp1] [glob_exp2] [...] yum list {available|installed|updates} [glob_exp1] [...] 范例：只查看安装的包\n[root@rocky ~]# yum list installed|head Installed Packages NetworkManager.x86_64 1:1.32.10-4.el8 @anaconda NetworkManager-config-server.noarch 1:1.32.10-4.el8 @anaconda NetworkManager-libnm.x86_64 1:1.32.10-4.el8 @anaconda NetworkManager-team.x86_64 1:1.32.10-4.el8 @anaconda NetworkManager-tui.x86_64 1:1.32.10-4.el8 @anaconda acl.x86_64 2.2.53-1.el8.1 @anaconda adcli.x86_64 0.8.2-12.el8 @anaconda alsa-sof-firmware.noarch 1.8-1.el8 @anaconda at.x86_64 3.1.20-11.el8 @anaconda [root@rocky ~]# 范例：查看可以安装的包\n[root@rocky ~]# yum list available | head Last metadata expiration check: 2:21:04 ago on Tue 09 Aug 2022 09:50:19 AM CST. Available Packages CUnit.i686 2.1.3-17.el8 appstream CUnit.x86_64 2.1.3-17.el8 appstream GConf2.i686 3.2.6-22.el8 appstream GConf2.x86_64 3.2.6-22.el8 appstream HdrHistogram.noarch 2.1.11-3.module+el8.4.0+405+66dfe7da appstream HdrHistogram-javadoc.noarch 2.1.11-3.module+el8.4.0+405+66dfe7da appstream HdrHistogram_c.i686 0.9.13-2.el8 appstream HdrHistogram_c.x86_64 0.9.13-2.el8 appstream [root@rocky ~]# 范例：查看可以升级的包\nyum list updates 范例：查看指定的包\n[root@centos8 ~]#yum list exim ",
+  "wordCount" : "3483",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/15.jpg","datePublished": "2022-08-08T21:05:59Z",
+  "dateModified": "2022-08-08T21:05:59Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                软件管理
+            </h1>
+            <div class="post-description">
+                Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2022-08-08
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>3483字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>7分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/15.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#1%e8%bd%af%e4%bb%b6%e7%ae%a1%e7%90%86%e7%ae%80%e4%bb%8b" aria-label="1、软件管理简介">1、软件管理简介</a></li>
+                <li>
+                    <a href="#2%e8%bd%af%e4%bb%b6%e5%8c%85%e7%ae%a1%e7%90%86%e5%99%a8%e7%ae%80%e4%bb%8b" aria-label="2、软件包管理器简介">2、软件包管理器简介</a></li>
+                <li>
+                    <a href="#21-%e8%bd%af%e4%bb%b6%e5%8c%85%e7%ae%a1%e7%90%86%e5%99%a8%e7%9a%84%e8%81%8c%e8%b4%a3" aria-label="2.1 软件包管理器的职责">2.1 软件包管理器的职责</a></li>
+                <li>
+                    <a href="#22-%e8%bd%af%e4%bb%b6%e5%8c%85%e7%ae%a1%e7%90%86%e5%99%a8%e7%9a%84%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bd" aria-label="2.2 软件包管理器的核心功能">2.2 软件包管理器的核心功能</a></li>
+                <li>
+                    <a href="#3%e8%bd%af%e4%bb%b6%e5%8c%85%e7%ae%80%e4%bb%8b" aria-label="3、软件包简介">3、软件包简介</a></li>
+                <li>
+                    <a href="#31-%e8%bd%af%e4%bb%b6%e5%8c%85%e7%bb%84%e6%88%90" aria-label="3.1 软件包组成">3.1 软件包组成</a></li>
+                <li>
+                    <a href="#32-%e8%bd%af%e4%bb%b6%e5%8c%85%e5%88%86%e7%b1%bb" aria-label="3.2 软件包分类">3.2 软件包分类</a></li>
+                <li>
+                    <a href="#4rpm%e7%ae%80%e4%bb%8b" aria-label="4、rpm简介">4、rpm简介</a></li>
+                <li>
+                    <a href="#5%e8%bd%af%e4%bb%b6%e5%8c%85%e7%9a%84%e8%8e%b7%e5%8f%96%e9%80%94%e5%be%84" aria-label="5、软件包的获取途径">5、软件包的获取途径</a></li>
+                <li>
+                    <a href="#51-%e7%b3%bb%e7%bb%9f%e5%8f%91%e8%a1%8c%e7%9a%84%e5%85%89%e7%9b%98" aria-label="5.1 系统发行的光盘">5.1 系统发行的光盘</a></li>
+                <li>
+                    <a href="#52-%e5%bc%80%e6%ba%90%e9%95%9c%e5%83%8f%e7%ab%99" aria-label="5.2 开源镜像站">5.2 开源镜像站</a></li>
+                <li>
+                    <a href="#53-%e6%90%9c%e7%b4%a2%e5%bc%95%e6%93%8e" aria-label="5.3 搜索引擎">5.3 搜索引擎</a></li>
+                <li>
+                    <a href="#6rpm%e5%8c%85%e7%ae%a1%e7%90%86" aria-label="6、rpm包管理">6、rpm包管理</a></li>
+                <li>
+                    <a href="#61-rpm%e5%8c%85%e5%ae%89%e8%a3%85" aria-label="6.1 RPM包安装">6.1 RPM包安装</a></li>
+                <li>
+                    <a href="#62-rpm%e5%8c%85%e6%9f%a5%e8%af%a2" aria-label="6.2 RPM包查询">6.2 RPM包查询</a></li>
+                <li>
+                    <a href="#64-rpm%e5%8c%85%e5%8d%87%e7%ba%a7" aria-label="6.4 RPM包升级">6.4 RPM包升级</a></li>
+                <li>
+                    <a href="#65-rpm%e5%8c%85%e5%8d%b8%e8%bd%bd" aria-label="6.5 RPM包卸载">6.5 RPM包卸载</a></li>
+                <li>
+                    <a href="#66-rpm%e5%8c%85%e6%a0%a1%e9%aa%8c" aria-label="6.6 RPM包校验">6.6 RPM包校验</a></li>
+                <li>
+                    <a href="#67-rpm%e9%87%8d%e5%bb%ba%e6%95%b0%e6%8d%ae%e5%ba%93" aria-label="6.7 RPM重建数据库">6.7 RPM重建数据库</a></li>
+                <li>
+                    <a href="#68-%e6%a3%80%e6%9f%a5%e8%bd%af%e4%bb%b6%e5%8c%85%e6%9d%a5%e6%ba%90%e5%90%88%e6%b3%95%e6%80%a7" aria-label="6.8 检查软件包来源合法性">6.8 检查软件包来源合法性</a></li>
+                <li>
+                    <a href="#7yum%e5%92%8cdnf" aria-label="7、yum和dnf">7、yum和dnf</a></li>
+                <li>
+                    <a href="#71-yumdnf-%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86" aria-label="7.1 yum/dnf 工作原理">7.1 yum/dnf 工作原理</a></li>
+                <li>
+                    <a href="#72-yum%e5%ae%a2%e6%88%b7%e7%ab%af%e9%85%8d%e7%bd%ae" aria-label="7.2 yum客户端配置">7.2 yum客户端配置</a></li>
+                <li>
+                    <a href="#73-yum%e5%91%bd%e4%bb%a4" aria-label="7.3 yum命令">7.3 yum命令</a><ul>
+                        
+                <li>
+                    <a href="#731-%e6%98%be%e7%a4%ba%e4%bb%93%e5%ba%93%e5%88%97%e8%a1%a8" aria-label="7.3.1 显示仓库列表">7.3.1 显示仓库列表</a></li>
+                <li>
+                    <a href="#732-%e6%98%be%e7%a4%ba%e7%a8%8b%e5%ba%8f%e5%8c%85" aria-label="7.3.2 显示程序包">7.3.2 显示程序包</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="1软件管理简介">1、软件管理简介<a hidden class="anchor" aria-hidden="true" href="#1软件管理简介">#</a></h2>
+<p>Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的</p>
+<p>RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能</p>
+<h2 id="2软件包管理器简介">2、软件包管理器简介<a hidden class="anchor" aria-hidden="true" href="#2软件包管理器简介">#</a></h2>
+<h2 id="21-软件包管理器的职责">2.1 软件包管理器的职责<a hidden class="anchor" aria-hidden="true" href="#21-软件包管理器的职责">#</a></h2>
+<ul>
+<li>将二进制文件、库文件、配置文件、帮助文件打包成一个文件</li>
+<li>安装软件时按需将二进制、库文件、配置文件、帮助文件放到相应的位置</li>
+<li>生成数据库，追踪所安装的每一个文件</li>
+<li>软件卸载时根据安装时生成的数据库将相应的文件删除</li>
+</ul>
+<h2 id="22-软件包管理器的核心功能">2.2 软件包管理器的核心功能<a hidden class="anchor" aria-hidden="true" href="#22-软件包管理器的核心功能">#</a></h2>
+<ul>
+<li>制作软件包</li>
+<li>安装软件</li>
+<li>卸载软件</li>
+<li>升级软件</li>
+<li>查询软件</li>
+<li>校验软件</li>
+</ul>
+<h2 id="3软件包简介">3、软件包简介<a hidden class="anchor" aria-hidden="true" href="#3软件包简介">#</a></h2>
+<h2 id="31-软件包组成">3.1 软件包组成<a hidden class="anchor" aria-hidden="true" href="#31-软件包组成">#</a></h2>
+<ul>
+<li>软件包的组成清单
+<ul>
+<li>文件清单</li>
+<li>安装或卸载的运行脚本</li>
+</ul>
+</li>
+<li>数据库
+<ul>
+<li>程序包名称及版本</li>
+<li>依赖关系</li>
+<li>功能说明</li>
+<li>安装生成的各个文件的路径及校验码信息</li>
+</ul>
+</li>
+</ul>
+<h2 id="32-软件包分类">3.2 软件包分类<a hidden class="anchor" aria-hidden="true" href="#32-软件包分类">#</a></h2>
+<p><strong>源码格式</strong>
+特点：需要编译成二进制格式才能进行</p>
+<ul>
+<li>命名方式：name-VERSION.tar.gz
+<ul>
+<li>VERSION：主版本号.次版本号.系统发行版本</li>
+</ul>
+</li>
+</ul>
+<p><strong>二进制格式</strong>
+特点：编译好的，安装之后可以直接运行</p>
+<ul>
+<li>软件的作者下载软件的源码，编译配置为二进制软件包</li>
+<li>Redhat和Centos中使用的二进制包为rpm包</li>
+</ul>
+<p><strong>源码格式和二进制格式的区别</strong></p>
+<ul>
+<li>源码格式的包编译为二进制包时可以选择需要的特性，如果未选择，则编译后安装后的软件就不会有相应的功能</li>
+<li>源码包在编译成为二进制包时可以实现软件功能的定制</li>
+<li>二进制包的本版落后于源码包。</li>
+</ul>
+<h2 id="4rpm简介">4、rpm简介<a hidden class="anchor" aria-hidden="true" href="#4rpm简介">#</a></h2>
+<p>Redhat和Centos中二进制包的扩展包为.rpm，这是由红帽公司最先发布的一种用来打包软件的文件格式，我们叫做rpm包；RPM软件包管理器就是管理rpm包</p>
+<p>4.1 rpm包命名规范</p>
+<h2 id="5软件包的获取途径">5、软件包的获取途径<a hidden class="anchor" aria-hidden="true" href="#5软件包的获取途径">#</a></h2>
+<h2 id="51-系统发行的光盘">5.1 系统发行的光盘<a hidden class="anchor" aria-hidden="true" href="#51-系统发行的光盘">#</a></h2>
+<p>Linux的IOS镜像文件自带了非常多的系统扩展RPM安装包，且这些软件版本最适合当前Linux系统
+IOS镜像文件自带的扩展RPM安装包的存放目录为：Packages
+使用IOS镜像文件自带的扩展RPM安装包前必须先挂载ISO镜像，挂在方法如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 创建挂载点，挂载光盘镜像到挂载点
+</span></span><span style="display:flex;"><span>[root@jlin ~]# mkdir /mnt/cdrom
+</span></span><span style="display:flex;"><span>[root@jlin ~]# mount /dev/sr0 /mnt/cdrom/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 复制挂载点里面所有的文件到/media/目录，避免光盘断开连接就读取不到扩展RPM安装包
+</span></span><span style="display:flex;"><span>[root@jlin ~]# cp -r /mnt/cdrom/ /media/
+</span></span><span style="display:flex;"><span>[root@jlin ~]# cd /media/cdrom/
+</span></span><span style="display:flex;"><span>[root@jlin cdrom]# ll
+</span></span><span style="display:flex;"><span>总用量 320
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root     14 7月  10 08:27 CentOS_BuildTag
+</span></span><span style="display:flex;"><span>drwxr-xr-x 3 root root     35 7月  10 08:27 EFI
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root    227 7月  10 08:27 EULA
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root  18009 7月  10 08:27 GPL
+</span></span><span style="display:flex;"><span>drwxr-xr-x 3 root root     57 7月  10 08:27 images
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root    198 7月  10 08:27 isolinux
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root     43 7月  10 08:27 LiveOS
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root 221184 7月  10 08:29 Packages
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root   4096 7月  10 08:29 repodata
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root   1690 7月  10 08:29 RPM-GPG-KEY-CentOS-7
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root   1690 7月  10 08:29 RPM-GPG-KEY-CentOS-Testing-7
+</span></span><span style="display:flex;"><span>-r--r--r-- 1 root root   2883 7月  10 08:29 TRANS.TBL
+</span></span></code></pre></div><h2 id="52-开源镜像站">5.2 开源镜像站<a hidden class="anchor" aria-hidden="true" href="#52-开源镜像站">#</a></h2>
+<p>开源镜像站上会存放RPM安装包</p>
+<ul>
+<li>阿里巴巴开源镜像站</li>
+</ul>
+<blockquote>
+<p><a href="http://mirrors.aliyun.com">http://mirrors.aliyun.com</a></p>
+</blockquote>
+<ul>
+<li>网易开源镜像站</li>
+</ul>
+<blockquote>
+<p><a href="http://mirrors.163.com">http://mirrors.163.com</a></p>
+</blockquote>
+<ul>
+<li>清华大学开源镜像站</li>
+</ul>
+<blockquote>
+<p><a href="https://mirrors.tuna.tsinghua.edu.cn">https://mirrors.tuna.tsinghua.edu.cn</a></p>
+</blockquote>
+<h2 id="53-搜索引擎">5.3 搜索引擎<a hidden class="anchor" aria-hidden="true" href="#53-搜索引擎">#</a></h2>
+<p>有一些搜索引擎直接提供rpm包搜索功能</p>
+<ul>
+<li>rpmfind</li>
+</ul>
+<blockquote>
+<p><a href="http://rpmfind.net">http://rpmfind.net</a></p>
+</blockquote>
+<ul>
+<li>rpm pbone</li>
+</ul>
+<blockquote>
+<p><a href="http://rpm.pbone.net">http://rpm.pbone.net</a></p>
+</blockquote>
+<ul>
+<li>pkgs</li>
+</ul>
+<blockquote>
+<p><a href="http://pkgs.org/">http://pkgs.org/</a></p>
+</blockquote>
+<h2 id="6rpm包管理">6、rpm包管理<a hidden class="anchor" aria-hidden="true" href="#6rpm包管理">#</a></h2>
+<h2 id="61-rpm包安装">6.1 RPM包安装<a hidden class="anchor" aria-hidden="true" href="#61-rpm包安装">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>// 语法：rpm -ivh /PATH/TO/PACKAGE_FILE ...
+</span></span><span style="display:flex;"><span>// 选项：
+</span></span><span style="display:flex;"><span>-i：安装
+</span></span><span style="display:flex;"><span>-v：显示详细信息
+</span></span><span style="display:flex;"><span>-h：显示安装进度条
+</span></span><span style="display:flex;"><span>--test：测试安装，但不真正执行安装过程
+</span></span><span style="display:flex;"><span>--nodeps：忽略依赖关系
+</span></span><span style="display:flex;"><span>--force：强行安装，可以实现重装或降级
+</span></span><span style="display:flex;"><span>--replacepkgs：重新安装，替换原有安装
+</span></span><span style="display:flex;"><span>--oldpackage：降级
+</span></span><span style="display:flex;"><span>--nodigest：不检查包的完整性
+</span></span><span style="display:flex;"><span>--nosignature：不检查报的来源合法性
+</span></span><span style="display:flex;"><span>--noscripts：不执行rpm包自带的四类脚本：
+</span></span><span style="display:flex;"><span>--nopre：不执行rpm包自带的preinstall脚本
+</span></span><span style="display:flex;"><span>--nopost：不执行rpm包自带的postinstall脚本
+</span></span><span style="display:flex;"><span>--nopreun：不执行rpm包自带的preuninstall脚本
+</span></span><span style="display:flex;"><span>--nopostun：不执行rpm包自带的postuninstall脚本
+</span></span><span style="display:flex;"><span>--preinstall：安装过程开始之前运行的脚本，标记为%pre：--nopre
+</span></span><span style="display:flex;"><span>--postinstall：安装过程完成之后运行的脚本，标记为%post：--nopost
+</span></span><span style="display:flex;"><span>--preuninstall：卸载过程开始执行之前运行的脚本，标记为%preun：--nopreun
+</span></span><span style="display:flex;"><span>--postunistall：写在过程完成之后运行的脚本，标记为%postrun：--nopostun
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 安装软件包，需要指定软件包绝对路径
+</span></span><span style="display:flex;"><span>[root@jlin ~]# rpm -ivh /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 在软件包所在目录下可以不指定绝对路径
+</span></span><span style="display:flex;"><span>[root@jlin ~]# cd /mnt/cdrom/Packages/
+</span></span><span style="display:flex;"><span>[root@jlin Packages]# rpm -ivh tree-1.6.0-10.el7.x86_64.rpm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 测试一个软件包是否能在该系统上安装
+</span></span><span style="display:flex;"><span>[root@jlin ~]# rpm -ivh --test /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 如果软件包已经安装，强制再次安装
+</span></span><span style="display:flex;"><span>[root@jlin ~]# rpm -ivh --force /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 安装httpd服务需要依赖其他组件，使用--nodeps可忽略以来强制安装
+</span></span><span style="display:flex;"><span>[root@jlin ~]# rpm -ivh --nodeps /mnt/cdrom/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm
+</span></span></code></pre></div><h2 id="62-rpm包查询">6.2 RPM包查询<a hidden class="anchor" aria-hidden="true" href="#62-rpm包查询">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>// 查询httpd的rpm包是否安装
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -q httpd</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 模糊查找系统已安装的rpm包
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -qa | grep ftp</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 查询已安装的httpd软件包相关信息
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -qi httpd</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 查询已安装的rpm包生成的文件
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -ql httpd</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 查询已安装的rpm包生成的配置文件
+</span></span><span style="display:flex;"><span>所有
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -qc httpd</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 查询配置文件或命令来自于哪个rpm包
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -qf /etc/httpd/httpd.conf</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -qf /usr/sbin/httpd</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 查询未安装的软件包会产生哪些文件
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -qpl / mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 查询未安装的软件包的说明信息
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -qpi /mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm</span>
+</span></span></code></pre></div><h2 id="64-rpm包升级">6.4 RPM包升级<a hidden class="anchor" aria-hidden="true" href="#64-rpm包升级">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>// 升级tree软件包
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -Uvh /mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm</span>
+</span></span></code></pre></div><h2 id="65-rpm包卸载">6.5 RPM包卸载<a hidden class="anchor" aria-hidden="true" href="#65-rpm包卸载">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>// 先查询，然后卸载
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -qa lgrep httpd</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -e httpd</span>
+</span></span></code></pre></div><h2 id="66-rpm包校验">6.6 RPM包校验<a hidden class="anchor" aria-hidden="true" href="#66-rpm包校验">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>// 校验已经安装的软件包的文件是否被修改；如果执行以下命令无内容输出说明安装的软件
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -v vsftpd</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>S <span style="color:#75715e">#文件的容量大小是否被改变</span>
+</span></span><span style="display:flex;"><span>M <span style="color:#75715e">#文件的类型或者文件的属性是否被修改</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span> <span style="color:#75715e">#MD5加密的内容已经不同</span>
+</span></span><span style="display:flex;"><span>D <span style="color:#75715e">#装置的主/次代码已经改变</span>
+</span></span><span style="display:flex;"><span>L <span style="color:#75715e">#路径已经被改变</span>
+</span></span><span style="display:flex;"><span>U <span style="color:#75715e">#文件的所属主已被修改</span>
+</span></span><span style="display:flex;"><span>G <span style="color:#75715e">#文件的所属组已被修改</span>
+</span></span><span style="display:flex;"><span>T <span style="color:#75715e">#文件的创建时间已被改变</span>
+</span></span></code></pre></div><h2 id="67-rpm重建数据库">6.7 RPM重建数据库<a hidden class="anchor" aria-hidden="true" href="#67-rpm重建数据库">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>// 数据库信息在/var/lib/rpm目录
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 重建数据库，重建Packages数据库，一定会重建
+</span></span><span style="display:flex;"><span>rpm --rebuilddb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 初始化数据库，重建所有数据库，没有才建立，有就不建立
+</span></span><span style="display:flex;"><span>rpm --initdb
+</span></span></code></pre></div><h2 id="68-检查软件包来源合法性">6.8 检查软件包来源合法性<a hidden class="anchor" aria-hidden="true" href="#68-检查软件包来源合法性">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>加密类型:
+</span></span><span style="display:flex;"><span>- 对称加密 #加密解密使用同一个密钥
+</span></span><span style="display:flex;"><span>- 公钥加密 #一对密钥，公钥和私钥。公钥隐含于私钥中，可以提取出来并公布出去
+</span></span><span style="display:flex;"><span>- 单向加密 #只能加密不能解密
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 红帽官方公钥存放位置
+</span></span><span style="display:flex;"><span>/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 检查指定rpm包合法性，出现oK字样表示包没问题
+</span></span><span style="display:flex;"><span>rpm -K PACKAGE_FILE
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 导入密钥文件
+</span></span><span style="display:flex;"><span>rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Centos 7发行版光盘提供的密钥文件名为:RPM-GPG-KEY-Centos-7
+</span></span></code></pre></div><h2 id="7yum和dnf">7、yum和dnf<a hidden class="anchor" aria-hidden="true" href="#7yum和dnf">#</a></h2>
+<p>CentOS 使用 yum, dnf 解决rpm的包依赖关系
+YUM: Yellowdog Update Modifier，rpm的前端程序，可解决软件包相关依赖性，可在多个库之间定位
+软件包，up2date的替代工具，CentOS 8 用dnf 代替了yum ,不过保留了和yum的兼容性，配置也是通
+用的</p>
+<h2 id="71-yumdnf-工作原理">7.1 yum/dnf 工作原理<a hidden class="anchor" aria-hidden="true" href="#71-yumdnf-工作原理">#</a></h2>
+<p><strong>yum/dnf 是基于C/S 模式</strong>
+yum 服务器存放rpm包和相关包的元数据库
+yum 客户端访问yum服务器进行安装或查询等
+<strong>yum 实现过程</strong>
+先在yum服务器上创建 yum repository（仓库），在仓库中事先存储了众多rpm包，以及包的相关的
+元数据文件（放置于特定目录repodata下），当yum客户端利用yum/dnf工具进行安装时包时，会自动
+下载repodata中的元数据，查询远数据是否存在相关的包及依赖关系，自动从仓库中找到相关包下载并
+安装。</p>
+<h2 id="72-yum客户端配置">7.2 yum客户端配置<a hidden class="anchor" aria-hidden="true" href="#72-yum客户端配置">#</a></h2>
+<p>yum客户端配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>/etc/yum.conf <span style="color:#75715e">#为所有仓库提供公共配置</span>
+</span></span><span style="display:flex;"><span>/etc/yum.repos.d/*.repo： <span style="color:#75715e">#为每个仓库的提供配置文件</span>
+</span></span></code></pre></div><p><strong>帮助参考： man 5 yum.conf</strong>
+<strong>repo仓库配置文件指向的定义：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>repositoryID<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>Some name <span style="color:#66d9ef">for</span> this repository
+</span></span><span style="display:flex;"><span>baseurl<span style="color:#f92672">=</span>url://path/to/repository/
+</span></span><span style="display:flex;"><span>enabled<span style="color:#f92672">={</span>1|0<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>gpgcheck<span style="color:#f92672">={</span>1|0<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>gpgkey<span style="color:#f92672">=</span>URL
+</span></span><span style="display:flex;"><span>enablegroups<span style="color:#f92672">={</span>1|0<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>failovermethod<span style="color:#f92672">={</span>roundrobin|priority<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>roundrobin：意为随机挑选，默认值
+</span></span><span style="display:flex;"><span>priority:按顺序访问
+</span></span><span style="display:flex;"><span>cost<span style="color:#f92672">=</span> 默认为1000
+</span></span></code></pre></div><p>yum服务器的baseurl形式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>file:// 本地路径
+</span></span><span style="display:flex;"><span>http://
+</span></span><span style="display:flex;"><span>https://
+</span></span><span style="display:flex;"><span>ftp://
+</span></span></code></pre></div><p><strong>注意：yum仓库指向的路径一定必须是repodata目录所在目录</strong>
+<strong>相关变量</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yum的repo配置文件中可用的变量：
+</span></span><span style="display:flex;"><span>$releasever: 当前OS的发行版的主版本号，如：8，7，6
+</span></span><span style="display:flex;"><span>$arch: CPU架构，如：aarch64, i586, i686，x86_64等
+</span></span><span style="display:flex;"><span>$basearch：系统基础平台；i386, x86_64
+</span></span><span style="display:flex;"><span>$contentdir：表示目录，比如：centos-8，centos-7
+</span></span><span style="display:flex;"><span>$YUM0-$YUM9:自定义变量
+</span></span></code></pre></div><h2 id="73-yum命令">7.3 yum命令<a hidden class="anchor" aria-hidden="true" href="#73-yum命令">#</a></h2>
+<p>yum命令的用法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yum <span style="color:#f92672">[</span>options<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>command<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>package ...<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>yum的命令行选项</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>-y <span style="color:#75715e">#自动回答为&#34;yes&#34;</span>
+</span></span><span style="display:flex;"><span>-q <span style="color:#75715e">#静默模式</span>
+</span></span><span style="display:flex;"><span>--nogpgcheck <span style="color:#75715e">#禁止进行gpg check</span>
+</span></span><span style="display:flex;"><span>--enablerepo<span style="color:#f92672">=</span>repoidglob <span style="color:#75715e">#临时启用此处指定的repo，支持通配符，如：&#34;*&#34;</span>
+</span></span><span style="display:flex;"><span>--disablerepo<span style="color:#f92672">=</span>repoidglob <span style="color:#75715e">#临时禁用此处指定的repo,和上面语句同时使用，放在后面的生效</span>
+</span></span></code></pre></div><h3 id="731-显示仓库列表">7.3.1 显示仓库列表<a hidden class="anchor" aria-hidden="true" href="#731-显示仓库列表">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yum repolist <span style="color:#f92672">[</span>all|enabled|disabled<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>范例</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1660220348105.png" alt="1660220348105"  />
+</p>
+<h3 id="732-显示程序包">7.3.2 显示程序包<a hidden class="anchor" aria-hidden="true" href="#732-显示程序包">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yum list
+</span></span><span style="display:flex;"><span>yum list <span style="color:#f92672">[</span>all | glob_exp1<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>glob_exp2<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>yum list <span style="color:#f92672">{</span>available|installed|updates<span style="color:#f92672">}</span> <span style="color:#f92672">[</span>glob_exp1<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>范例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yum list
+</span></span><span style="display:flex;"><span>yum list <span style="color:#f92672">[</span>all | glob_exp1<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>glob_exp2<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>yum list <span style="color:#f92672">{</span>available|installed|updates<span style="color:#f92672">}</span> <span style="color:#f92672">[</span>glob_exp1<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>范例：只查看安装的包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@rocky ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum list installed|head</span>
+</span></span><span style="display:flex;"><span>Installed Packages
+</span></span><span style="display:flex;"><span>NetworkManager.x86_64                1:1.32.10-4.el8                   @anaconda
+</span></span><span style="display:flex;"><span>NetworkManager-config-server.noarch  1:1.32.10-4.el8                   @anaconda
+</span></span><span style="display:flex;"><span>NetworkManager-libnm.x86_64          1:1.32.10-4.el8                   @anaconda
+</span></span><span style="display:flex;"><span>NetworkManager-team.x86_64           1:1.32.10-4.el8                   @anaconda
+</span></span><span style="display:flex;"><span>NetworkManager-tui.x86_64            1:1.32.10-4.el8                   @anaconda
+</span></span><span style="display:flex;"><span>acl.x86_64                           2.2.53-1.el8.1                    @anaconda
+</span></span><span style="display:flex;"><span>adcli.x86_64                         0.8.2-12.el8                      @anaconda
+</span></span><span style="display:flex;"><span>alsa-sof-firmware.noarch             1.8-1.el8                         @anaconda
+</span></span><span style="display:flex;"><span>at.x86_64                            3.1.20-11.el8                     @anaconda
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@rocky ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><p>范例：查看可以安装的包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@rocky ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum list available | head</span>
+</span></span><span style="display:flex;"><span>Last metadata expiration check: 2:21:04 ago on Tue <span style="color:#ae81ff">09</span> Aug <span style="color:#ae81ff">2022</span> 09:50:19 AM CST.
+</span></span><span style="display:flex;"><span>Available Packages
+</span></span><span style="display:flex;"><span>CUnit.i686                                             2.1.3-17.el8                                              appstream
+</span></span><span style="display:flex;"><span>CUnit.x86_64                                           2.1.3-17.el8                                              appstream
+</span></span><span style="display:flex;"><span>GConf2.i686                                            3.2.6-22.el8                                              appstream
+</span></span><span style="display:flex;"><span>GConf2.x86_64                                          3.2.6-22.el8                                              appstream
+</span></span><span style="display:flex;"><span>HdrHistogram.noarch                                    2.1.11-3.module+el8.4.0+405+66dfe7da                      appstream
+</span></span><span style="display:flex;"><span>HdrHistogram-javadoc.noarch                            2.1.11-3.module+el8.4.0+405+66dfe7da                      appstream
+</span></span><span style="display:flex;"><span>HdrHistogram_c.i686                                    0.9.13-2.el8                                              appstream
+</span></span><span style="display:flex;"><span>HdrHistogram_c.x86_64                                  0.9.13-2.el8                                              appstream
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@rocky ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><p>范例：查看可以升级的包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yum list updates
+</span></span></code></pre></div><p>范例：查看指定的包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#yum list exim</span>
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/network/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>计算机网络</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/disk/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>磁盘存储和文件系统管理</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>

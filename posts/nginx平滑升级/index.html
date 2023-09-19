@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Nginx平滑升级 | Hopeful</title>
+<meta name="keywords" content="Nginx">
+<meta name="description" content="有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级">
+<meta name="author" content="yuan kun">
+<link rel="canonical" href="https://xyenvy.github.io/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<meta property="og:title" content="Nginx平滑升级" />
+<meta property="og:description" content="有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/" />
+<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-07T13:34:33+00:00" />
+<meta property="article:modified_time" content="2023-01-07T13:34:33+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" />
+<meta name="twitter:title" content="Nginx平滑升级"/>
+<meta name="twitter:description" content="有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚文章",
+          "item": "https://xyenvy.github.io/posts/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Nginx平滑升级",
+      "item": "https://xyenvy.github.io/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Nginx平滑升级",
+  "name": "Nginx平滑升级",
+  "description": "有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级",
+  "keywords": [
+    "Nginx"
+  ],
+  "articleBody": "平滑升级流程 将旧Nginx二进制文件换成新Nginx程序文件（注意先备份) 向master进程发送USR2信号启动新nginx进程 master进程修改pid文件名加上后缀.oldbin,成为nginx.pid.oldbin master进程用新Nginx文件启动新master进程及worker子进程成为旧master的子进程,系统中将有新旧两个Nginx主进程和对应的worker子进程并存 当前新的请求仍然由旧Nginx的worker进程进行处理,将新生成的master进程的PID存放至新生成的 pid文件nginx.pid 向旧的Nginx服务进程发送WINCH信号，使旧的Nginx worker进程平滑停止 向旧master进程发送QUIT信号，关闭旧master，并删除Nginx.pid.oldbin文件 如果发现升级有问题,可以回滚∶向旧master发送HUP，向新master发送QUIT 范例：Nginx1.18.0版本升级到1.20.2 Nginx1.18.0编译安装 官方源码包下载地址：\nhttps://nginx.org/en/download.html 范例：编译安装\n系统centos8.5\nNginx版本：1.18.0\n安装扩展依赖\n[root@centos8 ~]# yum -y install gcc pcre-devel openssl-devel zlib-devel 创建用户和组 groupadd nginx useradd -s /sbin/nologin -g nginx nginx 下载安装包并解压 [root@centos8 ~]# cd /usr/local/src/ [root@centos8 ~]# wget https://nginx.org/download/nginx-1.18.0.tar.gz [root@centos8 src]# tar xf nginx-1.18.0.tar.gz [root@centos8 src]# cd nginx-1.18.0 安装 [root@centos8 nginx-1.18.0]# ./configure --prefix=/usr/local/src/nginx/ \\ # 安装位置 --user=nginx \\ # 运行的用户 --group=nginx \\ --with-http_ssl_module \\ --with-http_v2_module \\ --with-http_realip_module \\ --with-http_stub_status_module \\ --with-http_gzip_static_module \\ --with-pcre \\ --with-stream \\ --with-stream_ssl_module [root@centos8 nginx-1.18.0]#make \u0026\u0026 make install 修改权限 [root@centos8 /]# chown -R nginx.nginx /usr/local/src/nginx/ nginx安装完成后有四个主要的目录 [root@centos8 /]# ll /usr/local/src/nginx/ total 4 drwxr-xr-x. 2 nginx nginx 4096 Jan 4 15:17 conf drwxr-xr-x. 2 nginx nginx 40 Jan 4 15:17 html drwxr-xr-x. 2 nginx nginx 6 Jan 4 15:17 logs drwxr-xr-x. 2 nginx nginx 19 Jan 4 15:17 sbin [root@centos8 /]# conf：保存nginx所有的配置文件，其中nginx.conf是nginx服务器的最核心最主要的配置文件，其他 的.conf则是用来配置nginx相关的功能的，例如fastcgi功能使用的是fastcgi.conf和 fastcgi_params两个文件，配置文件一般都有一个样板配置文件，是以.default为后缀，使用时可将其复 制并将default后缀去掉即可。 html目录中保存了nginx服务器的web文件，但是可以更改为其他目录保存web文件,另外还有一个50x的web 文件是默认的错误页面提示页面。 logs：用来保存nginx服务器的访问日志错误日志等日志，logs目录可以放在其他 验证版本及编译参数 [root@centos8 /]# ln -s /usr/local/src/nginx/sbin/nginx /usr/bin/ [root@centos8 /]# nginx -V nginx version: nginx/1.18.0 built by gcc 8.5.0 20210514 (Red Hat 8.5.0-4) (GCC) built with OpenSSL 1.1.1k FIPS 25 Mar 2021 TLS SNI support enabled configure arguments: --prefix=/usr/local/src/nginx --user=nginx --group=nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre --with-stream --with-stream_ssl_module [root@centos8 /]# 创建Nginx启动文件 #复制同一版本的nginx的yum安装生成的service文件 [root@centos8 ~]# vim /lib/systemd/system/nginx.service [Unit] Description=nginx - high performance web server Documentation=http://nginx.org/en/docs/ After=network.target [Service] Type=forking PIDFile=/usr/local/src/nginx/logs/nginx.pid ExecStartPre=/usr/local/src//nginx/sbin/nginx -t -c /usr/local/src/nginx/conf/nginx.conf ExecStart=/usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf ExecReload=/bin/kill -s HUP $MAINPID ExecStop=/bin/kill -s QUIT $MAINPID PrivateTmp=true [Install] WantedBy=multi-user.target 验证启动文件 [root@centos8 ~]#systemctl daemon-reload [root@centos8 ~]#systemctl enable --now nginx Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /usr/lib/systemd/system/nginx.service. [root@centos8 ~]# 查看Nginx运行状态 [root@centos8 ~]# systemctl status nginx ● nginx.service - nginx - high performance web server Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; vendor preset: disabled) Active: active (running) since Wed 2023-01-04 17:53:00 CST; 2 days ago Docs: http://nginx.org/en/docs/ Main PID: 1595 (nginx) Tasks: 2 (limit: 11218) Memory: 9.1M CGroup: /system.slice/nginx.service ├─1595 nginx: master process /usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf └─1596 nginx: worker process Jan 04 17:53:00 centos8 systemd[1]: Starting nginx - high performance web server... Jan 04 17:53:00 centos8 nginx[1592]: nginx: the configuration file /usr/local/src/nginx/conf/nginx.conf syntax is ok Jan 04 17:53:00 centos8 nginx[1592]: nginx: configuration file /usr/local/src/nginx/conf/nginx.conf test is successful Jan 04 17:53:00 centos8 systemd[1]: nginx.service: Failed to parse PID from file /usr/local/src/nginx/logs/nginx.pid: Invalid argument Jan 04 17:53:00 centos8 systemd[1]: Started nginx - high performance web server. [root@centos8 ~]# 编译Nginx1.20.2 下载Nginx1.20.2 [root@centos8 ~]# cd /usr/local/src/ [root@centos8 src]# wget https://nginx.org/download/nginx-1.20.2.tar.gz [root@centos8 src]# tar xf nginx-1.20.2.tar.gz 查看旧版本Nginx编译选项 [root@centos8 src]# nginx -V nginx version: nginx/1.18.0 built by gcc 8.5.0 20210514 (Red Hat 8.5.0-4) (GCC) built with OpenSSL 1.1.1k FIPS 25 Mar 2021 TLS SNI support enabled configure arguments: --prefix=/usr/local/src/nginx/ --user=nginx --group=nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre --with-stream --with-stream_ssl_module [root@centos8 src]# 编译新版本，使用旧版本相同的编译参数选项 [root@centos8 src]# cd nginx-1.20.2 [root@centos8 nginx-1.20.2]# ./configure --prefix=/usr/local/src/nginx/ --user=nginx --group=nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre --with-stream --with-stream_ssl_module # 只需要make无需make install [root@centos8 nginx-1.20.2]# make # 编译完的软件存在objs/nginx [root@centos8 nginx-1.20.2]# ll objs/ total 7684 -rw-r--r--. 1 root root 18498 Jan 7 15:29 autoconf.err -rw-r--r--. 1 root root 53217 Jan 7 15:29 Makefile -rwxr-xr-x. 1 root root 7697296 Jan 7 15:31 nginx -rw-r--r--. 1 root root 5557 Jan 7 15:31 nginx.8 -rw-r--r--. 1 root root 7906 Jan 7 15:29 ngx_auto_config.h -rw-r--r--. 1 root root 657 Jan 7 15:29 ngx_auto_headers.h -rw-r--r--. 1 root root 8758 Jan 7 15:29 ngx_modules.c -rw-r--r--. 1 root root 60056 Jan 7 15:31 ngx_modules.o drwxr-xr-x. 9 root root 91 Jan 7 15:29 src [root@centos8 nginx-1.20.2]# # 查看两个Nginx版本 [root@centos8 nginx-1.20.2]# ./objs/nginx -v nginx version: nginx/1.20.2 [root@centos8 nginx-1.20.2]# /usr/local/src/nginx/sbin/nginx -v nginx version: nginx/1.18.0 [root@centos8 nginx-1.20.2]# # 备份旧版本Nginx [root@centos8 nginx-1.20.2]# cp /usr/local/src/nginx/sbin/nginx /usr/local/src/nginx/sbin/nginx.old [root@centos8 nginx-1.20.2]# ll /usr/local/src/nginx/sbin/ total 14776 -rwxr-xr-x. 1 root root 7562368 Jan 4 17:39 nginx -rwxr-xr-x. 1 root root 7562368 Jan 7 15:36 nginx.old [root@centos8 nginx-1.20.2]# #把新版本的nginx命令复制过去覆盖旧版本程序文件,注意:需要加 -f 选项强制覆盖,否则会提示Text file busy [root@centos8 nginx-1.20.2]# cp -f objs/nginx /usr/local/src/nginx/sbin/ cp: overwrite '/usr/local/src/nginx/sbin/nginx'? y [root@centos8 nginx-1.20.2]# # 检测是否存在问题，必须做的 [root@centos8 nginx-1.20.2]# /usr/local/src/nginx/sbin/nginx -t nginx: the configuration file /usr/local/src/nginx//conf/nginx.conf syntax is ok nginx: configuration file /usr/local/src/nginx//conf/nginx.conf test is successful [root@centos8 nginx-1.20.2]# #发送信号USR2 平滑升级可执行程序,将存储有旧版本主进程PID的文件重命名为nginx.pid.oldbin，并启动新的nginx #此时两个master的进程都在运行,只是旧的master不在监听,由新的master监听80 #此时Nginx开启一个新的master进程，这个master进程会生成新的worker进程，这就是升级后的Nginx进程，此时老的进程不会自动退出，但是当接收到新的请求不作处理而是交给新的进程处理。 [root@centos8 nginx-1.20.2]# kill -USR2 `cat /usr/local/src/nginx/logs/nginx.pid ` [root@centos8 nginx-1.20.2]# #可以看到两个master,新的master是旧版master的子进程,并生成新版的worker进程 [root@centos8 nginx-1.20.2]# ps aux | grep nginx root 1595 0.0 0.1 42452 2724 ? Ss Jan05 0:00 nginx: master process /usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf nginx 1596 0.0 0.2 77120 4612 ? S Jan05 0:00 nginx: worker process root 8328 0.0 0.3 42484 5860 ? S 15:44 0:00 nginx: master process /usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf nginx 8329 0.0 0.2 77240 4652 ? S 15:44 0:00 nginx: worker process root 8333 0.0 0.0 12136 1120 pts/0 S+ 15:45 0:00 grep --color=auto nginx [root@centos8 nginx-1.20.2]# #先关闭旧nginx的worker进程,而不关闭nginx主进程方便回滚 #向原Nginx主进程发送WINCH信号，它会逐步关闭旗下的工作进程（主进程不退出），这时所有请求都会由新版Nginx处理 [root@centos8 nginx-1.20.2]# kill -WINCH `cat /usr/local/src/nginx/logs/nginx.pid.oldbin` #如果旧版worker进程有用户的请求,会一直等待处理完后才会关闭 [root@centos8 nginx-1.20.2]# ps aux | grep nginx root 1595 0.0 0.1 42452 2724 ? Ss Jan05 0:00 nginx: master process /usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf root 8328 0.0 0.3 42484 5860 ? S 15:44 0:00 nginx: master process /usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf nginx 8329 0.0 0.2 77240 5032 ? S 15:44 0:00 nginx: worker process root 8346 0.0 0.0 12136 1144 pts/0 S+ 15:48 0:00 grep --color=auto nginx [root@centos8 nginx-1.20.2]# #经过一段时间测试，新版本服务没问题，最后发送QUIT信号,退出老的master [root@centos8 nginx-1.20.2]# kill -QUIT `cat /usr/local/src/nginx/logs/nginx.pid.oldbin` [root@centos8 nginx-1.20.2]# # 查看版本是否升级成功 [root@centos8 nginx-1.20.2]# nginx -v nginx version: nginx/1.20.2 [root@centos8 nginx-1.20.2]# #回滚 #如果升级的版本发现问题需要回滚,可以发送HUP信号,重新拉起旧版本的worker [root@centos8 nginx-1.20.2]# kill -HUB `cat /usr/local/src/nginx/logs/nginx.pid.oldbin` #最后关闭新版的master [root@centos8 nginx-1.20.2]# kill -QUIT `cat /usr/local/src/nginx/logs/nginx.pid` ",
+  "wordCount" : "2364",
+  "inLanguage": "en",
+  "image":"http://oss.itshare.work/itshare-work-images/2.jpg","datePublished": "2023-01-07T13:34:33Z",
+  "dateModified": "2023-01-07T13:34:33Z",
+  "author":[{
+    "@type": "Person",
+    "name": "yuan kun"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xyenvy.github.io/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hopeful",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xyenvy.github.io/img/Q.gif"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">Hopeful</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <h1 class="post-title">
+                Nginx平滑升级
+            </h1>
+            <div class="post-description">
+                有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级
+            </div>
+            <div class="post-meta">
+
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023-01-07
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2364字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>5分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>yuan kun
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://xyenvy.github.io/tags/nginx/" style="color: var(--secondary)!important;">Nginx</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo/1.5.8/twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://xyenvy.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/2.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%b9%b3%e6%bb%91%e5%8d%87%e7%ba%a7%e6%b5%81%e7%a8%8b" aria-label="平滑升级流程">平滑升级流程</a></li>
+                <li>
+                    <a href="#%e8%8c%83%e4%be%8bnginx1180%e7%89%88%e6%9c%ac%e5%8d%87%e7%ba%a7%e5%88%b01202" aria-label="范例：Nginx1.18.0版本升级到1.20.2">范例：Nginx1.18.0版本升级到1.20.2</a><ul>
+                        
+                <li>
+                    <a href="#nginx1180%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85" aria-label="Nginx1.18.0编译安装">Nginx1.18.0编译安装</a></li>
+                <li>
+                    <a href="#%e7%bc%96%e8%af%91nginx1202" aria-label="编译Nginx1.20.2">编译Nginx1.20.2</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="平滑升级流程">平滑升级流程<a hidden class="anchor" aria-hidden="true" href="#平滑升级流程">#</a></h1>
+<p><img loading="lazy" src="/posts.images/image.assets/1673076066017.png" alt="1673076066017"  />
+</p>
+<p><img loading="lazy" src="/posts.images/image.assets/1673076087140.png" alt="1673076087140"  />
+</p>
+<ul>
+<li>将旧Nginx二进制文件换成新Nginx程序文件（注意先备份)</li>
+<li>向master进程发送USR2信号启动新nginx进程</li>
+<li>master进程修改pid文件名加上后缀.oldbin,成为nginx.pid.oldbin</li>
+<li>master进程用新Nginx文件启动新master进程及worker子进程成为旧master的子进程,系统中将有新旧两个Nginx主进程和对应的worker子进程并存
+当前新的请求仍然由旧Nginx的worker进程进行处理,将新生成的master进程的PID存放至新生成的
+pid文件nginx.pid</li>
+<li>向旧的Nginx服务进程发送WINCH信号，使旧的Nginx worker进程平滑停止</li>
+<li>向旧master进程发送QUIT信号，关闭旧master，并删除Nginx.pid.oldbin文件</li>
+<li>如果发现升级有问题,可以回滚∶向旧master发送HUP，向新master发送QUIT</li>
+</ul>
+<h1 id="范例nginx1180版本升级到1202">范例：Nginx1.18.0版本升级到1.20.2<a hidden class="anchor" aria-hidden="true" href="#范例nginx1180版本升级到1202">#</a></h1>
+<h2 id="nginx1180编译安装">Nginx1.18.0编译安装<a hidden class="anchor" aria-hidden="true" href="#nginx1180编译安装">#</a></h2>
+<p>官方源码包下载地址：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>https://nginx.org/en/download.html
+</span></span></code></pre></div><p>范例：编译安装</p>
+<ul>
+<li>
+<p>系统centos8.5</p>
+</li>
+<li>
+<p>Nginx版本：1.18.0</p>
+</li>
+<li>
+<p>安装扩展依赖</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum -y install gcc pcre-devel openssl-devel zlib-devel</span>
+</span></span></code></pre></div><ul>
+<li>创建用户和组</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>groupadd nginx
+</span></span><span style="display:flex;"><span>useradd -s /sbin/nologin -g nginx nginx
+</span></span></code></pre></div><ul>
+<li>下载安装包并解压</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /usr/local/src/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># wget https://nginx.org/download/nginx-1.18.0.tar.gz</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 src<span style="color:#f92672">]</span><span style="color:#75715e"># tar xf nginx-1.18.0.tar.gz </span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 src<span style="color:#f92672">]</span><span style="color:#75715e"># cd nginx-1.18.0</span>
+</span></span></code></pre></div><ul>
+<li>安装</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.18.0<span style="color:#f92672">]</span><span style="color:#75715e"># ./configure --prefix=/usr/local/src/nginx/ \  # 安装位置</span>
+</span></span><span style="display:flex;"><span>--user<span style="color:#f92672">=</span>nginx <span style="color:#ae81ff">\ </span>  <span style="color:#75715e"># 运行的用户</span>
+</span></span><span style="display:flex;"><span>--group<span style="color:#f92672">=</span>nginx <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-http_ssl_module <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-http_v2_module <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-http_realip_module <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-http_stub_status_module <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-http_gzip_static_module <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-pcre <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-stream <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--with-stream_ssl_module
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.18.0<span style="color:#f92672">]</span><span style="color:#75715e">#make &amp;&amp; make install</span>
+</span></span></code></pre></div><ul>
+<li>修改权限</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># chown -R nginx.nginx /usr/local/src/nginx/</span>
+</span></span></code></pre></div><ul>
+<li>nginx安装完成后有四个主要的目录</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># ll /usr/local/src/nginx/</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>drwxr-xr-x. <span style="color:#ae81ff">2</span> nginx nginx <span style="color:#ae81ff">4096</span> Jan  <span style="color:#ae81ff">4</span> 15:17 conf
+</span></span><span style="display:flex;"><span>drwxr-xr-x. <span style="color:#ae81ff">2</span> nginx nginx   <span style="color:#ae81ff">40</span> Jan  <span style="color:#ae81ff">4</span> 15:17 html
+</span></span><span style="display:flex;"><span>drwxr-xr-x. <span style="color:#ae81ff">2</span> nginx nginx    <span style="color:#ae81ff">6</span> Jan  <span style="color:#ae81ff">4</span> 15:17 logs
+</span></span><span style="display:flex;"><span>drwxr-xr-x. <span style="color:#ae81ff">2</span> nginx nginx   <span style="color:#ae81ff">19</span> Jan  <span style="color:#ae81ff">4</span> 15:17 sbin
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>conf：保存nginx所有的配置文件，其中nginx.conf是nginx服务器的最核心最主要的配置文件，其他
+</span></span><span style="display:flex;"><span>的.conf则是用来配置nginx相关的功能的，例如fastcgi功能使用的是fastcgi.conf和
+</span></span><span style="display:flex;"><span>fastcgi_params两个文件，配置文件一般都有一个样板配置文件，是以.default为后缀，使用时可将其复
+</span></span><span style="display:flex;"><span>制并将default后缀去掉即可。
+</span></span><span style="display:flex;"><span>html目录中保存了nginx服务器的web文件，但是可以更改为其他目录保存web文件,另外还有一个50x的web
+</span></span><span style="display:flex;"><span>文件是默认的错误页面提示页面。
+</span></span><span style="display:flex;"><span>logs：用来保存nginx服务器的访问日志错误日志等日志，logs目录可以放在其他
+</span></span></code></pre></div><ul>
+<li>验证版本及编译参数</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># ln -s /usr/local/src/nginx/sbin/nginx /usr/bin/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># nginx -V</span>
+</span></span><span style="display:flex;"><span>nginx version: nginx/1.18.0
+</span></span><span style="display:flex;"><span>built by gcc 8.5.0 <span style="color:#ae81ff">20210514</span> <span style="color:#f92672">(</span>Red Hat 8.5.0-4<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>GCC<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>built with OpenSSL 1.1.1k  FIPS <span style="color:#ae81ff">25</span> Mar <span style="color:#ae81ff">2021</span>
+</span></span><span style="display:flex;"><span>TLS SNI support enabled
+</span></span><span style="display:flex;"><span>configure arguments: --prefix<span style="color:#f92672">=</span>/usr/local/src/nginx --user<span style="color:#f92672">=</span>nginx --group<span style="color:#f92672">=</span>nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre --with-stream --with-stream_ssl_module
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 /<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><ul>
+<li>创建Nginx启动文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#复制同一版本的nginx的yum安装生成的service文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># vim /lib/systemd/system/nginx.service </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Description<span style="color:#f92672">=</span>nginx - high performance web server 
+</span></span><span style="display:flex;"><span>Documentation<span style="color:#f92672">=</span>http://nginx.org/en/docs/
+</span></span><span style="display:flex;"><span>After<span style="color:#f92672">=</span>network.target
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Service<span style="color:#f92672">]</span> 
+</span></span><span style="display:flex;"><span>Type<span style="color:#f92672">=</span>forking
+</span></span><span style="display:flex;"><span>PIDFile<span style="color:#f92672">=</span>/usr/local/src/nginx/logs/nginx.pid
+</span></span><span style="display:flex;"><span>ExecStartPre<span style="color:#f92672">=</span>/usr/local/src//nginx/sbin/nginx -t -c /usr/local/src/nginx/conf/nginx.conf
+</span></span><span style="display:flex;"><span>ExecStart<span style="color:#f92672">=</span>/usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf
+</span></span><span style="display:flex;"><span>ExecReload<span style="color:#f92672">=</span>/bin/kill -s HUP $MAINPID 
+</span></span><span style="display:flex;"><span>ExecStop<span style="color:#f92672">=</span>/bin/kill -s QUIT $MAINPID
+</span></span><span style="display:flex;"><span>PrivateTmp<span style="color:#f92672">=</span>true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Install<span style="color:#f92672">]</span> 
+</span></span><span style="display:flex;"><span>WantedBy<span style="color:#f92672">=</span>multi-user.target
+</span></span></code></pre></div><ul>
+<li>验证启动文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#systemctl daemon-reload</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#systemctl enable --now nginx</span>
+</span></span><span style="display:flex;"><span>Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /usr/lib/systemd/system/nginx.service.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><ul>
+<li>查看Nginx运行状态</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl status nginx</span>
+</span></span><span style="display:flex;"><span>● nginx.service - nginx - high performance web server
+</span></span><span style="display:flex;"><span>   Loaded: loaded <span style="color:#f92672">(</span>/usr/lib/systemd/system/nginx.service; enabled; vendor preset: disabled<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Wed 2023-01-04 17:53:00 CST; <span style="color:#ae81ff">2</span> days ago
+</span></span><span style="display:flex;"><span>     Docs: http://nginx.org/en/docs/
+</span></span><span style="display:flex;"><span> Main PID: <span style="color:#ae81ff">1595</span> <span style="color:#f92672">(</span>nginx<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    Tasks: <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>limit: 11218<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   Memory: 9.1M
+</span></span><span style="display:flex;"><span>   CGroup: /system.slice/nginx.service
+</span></span><span style="display:flex;"><span>           ├─1595 nginx: master process /usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf
+</span></span><span style="display:flex;"><span>           └─1596 nginx: worker process
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Jan <span style="color:#ae81ff">04</span> 17:53:00 centos8 systemd<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: Starting nginx - high performance web server...
+</span></span><span style="display:flex;"><span>Jan <span style="color:#ae81ff">04</span> 17:53:00 centos8 nginx<span style="color:#f92672">[</span>1592<span style="color:#f92672">]</span>: nginx: the configuration file /usr/local/src/nginx/conf/nginx.conf syntax is ok
+</span></span><span style="display:flex;"><span>Jan <span style="color:#ae81ff">04</span> 17:53:00 centos8 nginx<span style="color:#f92672">[</span>1592<span style="color:#f92672">]</span>: nginx: configuration file /usr/local/src/nginx/conf/nginx.conf test is successful
+</span></span><span style="display:flex;"><span>Jan <span style="color:#ae81ff">04</span> 17:53:00 centos8 systemd<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: nginx.service: Failed to parse PID from file /usr/local/src/nginx/logs/nginx.pid: Invalid argument
+</span></span><span style="display:flex;"><span>Jan <span style="color:#ae81ff">04</span> 17:53:00 centos8 systemd<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: Started nginx - high performance web server.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><h2 id="编译nginx1202">编译Nginx1.20.2<a hidden class="anchor" aria-hidden="true" href="#编译nginx1202">#</a></h2>
+<ul>
+<li>下载Nginx1.20.2</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /usr/local/src/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 src<span style="color:#f92672">]</span><span style="color:#75715e"># wget https://nginx.org/download/nginx-1.20.2.tar.gz</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 src<span style="color:#f92672">]</span><span style="color:#75715e"># tar xf nginx-1.20.2.tar.gz</span>
+</span></span></code></pre></div><ul>
+<li>查看旧版本Nginx编译选项</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 src<span style="color:#f92672">]</span><span style="color:#75715e"># nginx -V</span>
+</span></span><span style="display:flex;"><span>nginx version: nginx/1.18.0
+</span></span><span style="display:flex;"><span>built by gcc 8.5.0 <span style="color:#ae81ff">20210514</span> <span style="color:#f92672">(</span>Red Hat 8.5.0-4<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>GCC<span style="color:#f92672">)</span> 
+</span></span><span style="display:flex;"><span>built with OpenSSL 1.1.1k  FIPS <span style="color:#ae81ff">25</span> Mar <span style="color:#ae81ff">2021</span>
+</span></span><span style="display:flex;"><span>TLS SNI support enabled
+</span></span><span style="display:flex;"><span>configure arguments: --prefix<span style="color:#f92672">=</span>/usr/local/src/nginx/ --user<span style="color:#f92672">=</span>nginx --group<span style="color:#f92672">=</span>nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre --with-stream --with-stream_ssl_module
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 src<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><ul>
+<li>编译新版本，使用旧版本相同的编译参数选项</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 src<span style="color:#f92672">]</span><span style="color:#75715e"># cd nginx-1.20.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># ./configure --prefix=/usr/local/src/nginx/ --user=nginx --group=nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre --with-stream --with-stream_ssl_module</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 只需要make无需make install</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># make</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 编译完的软件存在objs/nginx</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># ll objs/</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">7684</span>
+</span></span><span style="display:flex;"><span>-rw-r--r--. <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">18498</span> Jan  <span style="color:#ae81ff">7</span> 15:29 autoconf.err
+</span></span><span style="display:flex;"><span>-rw-r--r--. <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">53217</span> Jan  <span style="color:#ae81ff">7</span> 15:29 Makefile
+</span></span><span style="display:flex;"><span>-rwxr-xr-x. <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">7697296</span> Jan  <span style="color:#ae81ff">7</span> 15:31 nginx
+</span></span><span style="display:flex;"><span>-rw-r--r--. <span style="color:#ae81ff">1</span> root root    <span style="color:#ae81ff">5557</span> Jan  <span style="color:#ae81ff">7</span> 15:31 nginx.8
+</span></span><span style="display:flex;"><span>-rw-r--r--. <span style="color:#ae81ff">1</span> root root    <span style="color:#ae81ff">7906</span> Jan  <span style="color:#ae81ff">7</span> 15:29 ngx_auto_config.h
+</span></span><span style="display:flex;"><span>-rw-r--r--. <span style="color:#ae81ff">1</span> root root     <span style="color:#ae81ff">657</span> Jan  <span style="color:#ae81ff">7</span> 15:29 ngx_auto_headers.h
+</span></span><span style="display:flex;"><span>-rw-r--r--. <span style="color:#ae81ff">1</span> root root    <span style="color:#ae81ff">8758</span> Jan  <span style="color:#ae81ff">7</span> 15:29 ngx_modules.c
+</span></span><span style="display:flex;"><span>-rw-r--r--. <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">60056</span> Jan  <span style="color:#ae81ff">7</span> 15:31 ngx_modules.o
+</span></span><span style="display:flex;"><span>drwxr-xr-x. <span style="color:#ae81ff">9</span> root root      <span style="color:#ae81ff">91</span> Jan  <span style="color:#ae81ff">7</span> 15:29 src
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看两个Nginx版本</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># ./objs/nginx -v</span>
+</span></span><span style="display:flex;"><span>nginx version: nginx/1.20.2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># /usr/local/src/nginx/sbin/nginx -v</span>
+</span></span><span style="display:flex;"><span>nginx version: nginx/1.18.0
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 备份旧版本Nginx</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># cp /usr/local/src/nginx/sbin/nginx /usr/local/src/nginx/sbin/nginx.old</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># ll /usr/local/src/nginx/sbin/</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">14776</span>
+</span></span><span style="display:flex;"><span>-rwxr-xr-x. <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">7562368</span> Jan  <span style="color:#ae81ff">4</span> 17:39 nginx
+</span></span><span style="display:flex;"><span>-rwxr-xr-x. <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">7562368</span> Jan  <span style="color:#ae81ff">7</span> 15:36 nginx.old
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#把新版本的nginx命令复制过去覆盖旧版本程序文件,注意:需要加 -f 选项强制覆盖,否则会提示Text file busy</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># cp -f objs/nginx /usr/local/src/nginx/sbin/</span>
+</span></span><span style="display:flex;"><span>cp: overwrite <span style="color:#e6db74">&#39;/usr/local/src/nginx/sbin/nginx&#39;</span>? y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 检测是否存在问题，必须做的</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># /usr/local/src/nginx/sbin/nginx -t</span>
+</span></span><span style="display:flex;"><span>nginx: the configuration file /usr/local/src/nginx//conf/nginx.conf syntax is ok
+</span></span><span style="display:flex;"><span>nginx: configuration file /usr/local/src/nginx//conf/nginx.conf test is successful
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#发送信号USR2 平滑升级可执行程序,将存储有旧版本主进程PID的文件重命名为nginx.pid.oldbin，并启动新的nginx</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#此时两个master的进程都在运行,只是旧的master不在监听,由新的master监听80</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#此时Nginx开启一个新的master进程，这个master进程会生成新的worker进程，这就是升级后的Nginx进程，此时老的进程不会自动退出，但是当接收到新的请求不作处理而是交给新的进程处理。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># kill -USR2 `cat /usr/local/src/nginx/logs/nginx.pid `</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#可以看到两个master,新的master是旧版master的子进程,并生成新版的worker进程</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># ps aux | grep nginx</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#ae81ff">1595</span>  0.0  0.1  <span style="color:#ae81ff">42452</span>  <span style="color:#ae81ff">2724</span> ?        Ss   Jan05   0:00 nginx: master process /usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf
+</span></span><span style="display:flex;"><span>nginx       <span style="color:#ae81ff">1596</span>  0.0  0.2  <span style="color:#ae81ff">77120</span>  <span style="color:#ae81ff">4612</span> ?        S    Jan05   0:00 nginx: worker process
+</span></span><span style="display:flex;"><span>root        <span style="color:#ae81ff">8328</span>  0.0  0.3  <span style="color:#ae81ff">42484</span>  <span style="color:#ae81ff">5860</span> ?        S    15:44   0:00 nginx: master process /usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf
+</span></span><span style="display:flex;"><span>nginx       <span style="color:#ae81ff">8329</span>  0.0  0.2  <span style="color:#ae81ff">77240</span>  <span style="color:#ae81ff">4652</span> ?        S    15:44   0:00 nginx: worker process
+</span></span><span style="display:flex;"><span>root        <span style="color:#ae81ff">8333</span>  0.0  0.0  <span style="color:#ae81ff">12136</span>  <span style="color:#ae81ff">1120</span> pts/0    S+   15:45   0:00 grep --color<span style="color:#f92672">=</span>auto nginx
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#先关闭旧nginx的worker进程,而不关闭nginx主进程方便回滚</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#向原Nginx主进程发送WINCH信号，它会逐步关闭旗下的工作进程（主进程不退出），这时所有请求都会由新版Nginx处理</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># kill -WINCH `cat /usr/local/src/nginx/logs/nginx.pid.oldbin` </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#如果旧版worker进程有用户的请求,会一直等待处理完后才会关闭</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># ps aux | grep nginx</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#ae81ff">1595</span>  0.0  0.1  <span style="color:#ae81ff">42452</span>  <span style="color:#ae81ff">2724</span> ?        Ss   Jan05   0:00 nginx: master process /usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf
+</span></span><span style="display:flex;"><span>root        <span style="color:#ae81ff">8328</span>  0.0  0.3  <span style="color:#ae81ff">42484</span>  <span style="color:#ae81ff">5860</span> ?        S    15:44   0:00 nginx: master process /usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf
+</span></span><span style="display:flex;"><span>nginx       <span style="color:#ae81ff">8329</span>  0.0  0.2  <span style="color:#ae81ff">77240</span>  <span style="color:#ae81ff">5032</span> ?        S    15:44   0:00 nginx: worker process
+</span></span><span style="display:flex;"><span>root        <span style="color:#ae81ff">8346</span>  0.0  0.0  <span style="color:#ae81ff">12136</span>  <span style="color:#ae81ff">1144</span> pts/0    S+   15:48   0:00 grep --color<span style="color:#f92672">=</span>auto nginx
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#经过一段时间测试，新版本服务没问题，最后发送QUIT信号,退出老的master</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># kill -QUIT `cat /usr/local/src/nginx/logs/nginx.pid.oldbin`</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看版本是否升级成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># nginx -v</span>
+</span></span><span style="display:flex;"><span>nginx version: nginx/1.20.2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#回滚</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#如果升级的版本发现问题需要回滚,可以发送HUP信号,重新拉起旧版本的worker</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># kill -HUB `cat /usr/local/src/nginx/logs/nginx.pid.oldbin`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#最后关闭新版的master</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 nginx-1.20.2<span style="color:#f92672">]</span><span style="color:#75715e"># kill -QUIT `cat /usr/local/src/nginx/logs/nginx.pid`</span>
+</span></span></code></pre></div>
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="https://xyenvy.github.io/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Nginx核心配置文件</span>
+  </a>
+  <a class="next" href="https://xyenvy.github.io/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>docker-compose部署MySQL</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        2022-2023
+        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        All Rights Reserved
+    </span>
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <span>
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
+           style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
+        </a>
+    </span>
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        (function() {
+            document.cookie = "change-themes" + "="+ escape ("false");
+        })()
+
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    });
+</script>
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+</body>
+
+</html>
