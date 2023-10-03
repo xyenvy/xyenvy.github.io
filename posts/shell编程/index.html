@@ -118,8 +118,8 @@ var _hmt = _hmt || [];
   "keywords": [
     "Linux", "shell", "shell编程"
   ],
-  "articleBody": "内容简述 shell 是操作系统的最外层。shell 合并编程语言以控制进程和文件，以及启动和控制其它程序。shell 通过提示您输入，向操作系统解释该输入，然后处理来自操作系统的任何结果输出来管理您与操作系统之间的交互。\n1.编程基础 Linus：Talk is cheap, show me the code\n1.1 程序组成 程序：算法+数据结构 算法：处理数据的方式 数据结构：数据在计算机中的类型和组织方式 数据：是程序的核心，程序为数据提供服务 1.2 程序编程风格 面向过程语言 做一件事情，排出个步骤，第一步干什么，第二步干什么，如果出现情况A，做什么处理，如果出现了情况B，做什么处理 问题规模小，可以步骤化，按部就班处理 以指令为中心，数据服务于指令 C，shell 面向对象语言 将编程看成是一个事物，对外界来说，事物是直接使用的,不用关心事物内部的情况。而编程就是设置事物能够完成功能。 一种认识世界、分析世界的方法论。将万事万物抽象为各种对象 类是抽象的概念，是万事万物的抽象，是一类事物的共同特征的集合 对象是类的具体实现，是一个实体 问题规模大，复杂系统 以数据为中心，指令服务于数据 java，C#，python，golang等 1.3 编程语言 编程语言排行榜链接\nhttps://www.tiobe.com/tiobe-index/ 计算机：运行二进制指令\n编程语言：人与计算机之间交互的语言。分为两种：低级语言和高级语言\n低级编程语言： 机器：二进制的0和1的序列，称为机器指令。与自然语言差异太大，难懂、难写 汇编：用一些助记符号替代机器指令，称为汇编语言\n如：ADD A,B 将寄存器A的数与寄存器B的数相加得到的数放到寄存器A中\n汇编语言写好的程序需要汇编程序转换成机器指令\n汇编语言稍微好理解，即机器指令对应的助记符，助记符更接近自然语言 高级编程语言： 编译：高级语言–\u003e编译器–\u003e机器代码文件–\u003e执行，如：C，C++ 解释：高级语言–\u003e执行–\u003e解释器–\u003e机器代码，如：shell，python，php，JavaScript，perl 编译和解释型语言\n1.4 编程逻辑处理方式 三种处理逻辑\n顺序执行：程序按从上到下顺序执行 选择执行：程序执行过程中，根据条件的不同，进行选择不同分支继续执行 循环执行：程序执行过程中需要重复执行多次某段语句 2.shell 脚本语言的基本用法 2.1 shell 脚本的用途 将简单的命令组合完成复杂的工作,自动化执行命令,提高工作效率 减少手工命令的输入，一定程度上避免人为错误 将软件或应用的安装及配置实现标准化 用于实现日常性的,重复性的,非交互式的运维工作,如:文件打包压缩备份,监控系统运行状态并实现告警等 2.2 shell脚本基本结构 shell脚本编程：是基于过程式、解释执行的语言\n编程语言的基本结构：\n各种系统命令的组合 数据存储：变量、数组 表达式：a + b 控制语句：if shell脚本：包含一些命令或声明，并符合一定格式的文本文件 格式要求：首行shebang机制\n#!/bin/bash #!/usr/bin/python #!/usr/bin/perl #!/usr/bin/ruby #!/usr/bin/lua 2.3 shell脚本创建过程 第一步：使用文本编编辑器来创建文本文件\n第一行必须包括shell声明序列：#! 示例：\n#!/bin/bash\t# 使用bash，添加注释,注释以#开头\t第二步：加执行权限 给予执行权限，在命令行上指定脚本的绝对或相对路径 第三步：运行脚本 直接运行解释器，将脚本作为解释器程序的参数运行\n扩展：查看当前使用的是何种shell，终端输入：echo $SHELL\nroot@ubuntu200404:~# echo $SHELL /bin/bash root@ubuntu200404:~# 2.4 shell脚本注释规范 第一行一般为调用使用的语言 程序名，避免更改文件名为无法找到正确的文件 版本号 更改后的时间 作者相关信息 该程序的作用，及注意事项 最后是各版本的更新简要说明 2.5 第一个shell脚本 范例：第一个shell脚本hello world\n参考文档：\nhttps://zh.wikipedia.org/wiki/Hello_World https://zh.wikipedia.org/wiki/Hello_World%E7%A8%8B%E5%BA%8F%E6%A0%B7%E4%BE%8B (程序样例)[https://zh.wikipedia.org/wiki/Hello_World]\n第一步：vim创建hello.sh文本\nroot@ubuntu200404:~# vim hello.sh 第二步：声明序列和添加脚本名称、日期等\n#!/bin/bash #****************** #filename:hello.sh #Data:2022-08-06 #author:admin #****************** 第三步：编写代码\n#经典写法 echo \"hello, world\" #流行写法 echo 'Hello, world!' 第四步：执行shell脚本\n方法一：\nroot@ubuntu200404:~# bash hello.sh hello world! ****************** hello world! root@ubuntu200404:~# 方法二：\nroot@ubuntu200404:/data/scripts# cat /data/scripts/hello.sh | bash hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法三：\nroot@ubuntu200404:/data/scripts# bash \u003c /data/scripts/hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法四：添加执行权限使用绝对路径和相对路径\n# 绝对路径 root@ubuntu200404:/data/scripts# /data/scripts/hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# # 相对路径 root@ubuntu200404:/data/scripts# pwd /data/scripts root@ubuntu200404:/data/scripts# ./hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法五：将脚本添加到path变量中\n# 当前path位置 root@ubuntu200404:/data/scripts# echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin root@ubuntu200404:/data/scripts# # 给hello.sh文件创建软链接放到/usr/local/bin目录下 root@ubuntu200404:/data/scripts# ln -s /data/scripts/hello.sh /usr/local/bin/ root@ubuntu200404:/data/scripts# ls /usr/local/bin/\thello.sh root@ubuntu200404:/data/scripts# # 执行shell脚本 root@ubuntu200404:/data/scripts# hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法六：本方法可以实现执行远程主机的shell脚本\n# 扩展：curl加-s选项不显示下载信息 root@ubuntu200404:/data# curl -s http://wangxiaochun.com/testdir/hello.sh |bash hello, world Hello, world! root@ubuntu200404:/data# 案例：备份脚本\n# 脚本内容 root@ubuntu200404:/data/scripts# cat -n bacup.sh 1\t#!/bin/bash 2\t#------------------ 3\t#filename:bacup.sh 4\t#备份脚本 5\t#------------------ 6\t7\t8\ttar zcf /data/scripts-`date +%F_%s`.tar.gz /data/ \u0026\u003e /dev/null 9\t10\techo -e \"\\E[1;32mbacup is success!\\E[0m\" # 执行脚本 root@ubuntu200404:/data/scripts# bash bacup.sh bacup is success! root@ubuntu200404:/data/scripts# 2.6 shell脚本调试 只检测脚本中的语法错误，但无法检查出命令错误，但不真正执行脚本\nbash -n /path/to/some_script 调试并执行\nbash -x /path/to/some_script 案例1：\nroot@ubuntu200404:/data/scripts# bash -x hello.sh + echo 'hello world!' hello world! + echo '******************' ****************** + echo 'hello world!' hello world! root@ubuntu200404:/data/scripts# 案例2:多行重定向\n脚本内容：\n#!/bin/bash # 多行重定向 #data:2022-08-06 #author:admin #-------------------------------------------- echo start cat \u003e/data/demo.conf \u003c",
-  "wordCount" : "14832",
+  "articleBody": "内容简述 shell 是操作系统的最外层。shell 合并编程语言以控制进程和文件，以及启动和控制其它程序。shell 通过提示您输入，向操作系统解释该输入，然后处理来自操作系统的任何结果输出来管理您与操作系统之间的交互。\n1.编程基础 Linus：Talk is cheap, show me the code\n1.1 程序组成 程序：算法+数据结构 算法：处理数据的方式 数据结构：数据在计算机中的类型和组织方式 数据：是程序的核心，程序为数据提供服务 1.2 程序编程风格 面向过程语言 做一件事情，排出个步骤，第一步干什么，第二步干什么，如果出现情况A，做什么处理，如果出现了情况B，做什么处理 问题规模小，可以步骤化，按部就班处理 以指令为中心，数据服务于指令 C，shell 面向对象语言 将编程看成是一个事物，对外界来说，事物是直接使用的,不用关心事物内部的情况。而编程就是设置事物能够完成功能。 一种认识世界、分析世界的方法论。将万事万物抽象为各种对象 类是抽象的概念，是万事万物的抽象，是一类事物的共同特征的集合 对象是类的具体实现，是一个实体 问题规模大，复杂系统 以数据为中心，指令服务于数据 java，C#，python，golang等 1.3 编程语言 编程语言排行榜链接\nhttps://www.tiobe.com/tiobe-index/ 计算机：运行二进制指令\n编程语言：人与计算机之间交互的语言。分为两种：低级语言和高级语言\n低级编程语言： 机器：二进制的0和1的序列，称为机器指令。与自然语言差异太大，难懂、难写 汇编：用一些助记符号替代机器指令，称为汇编语言\n如：ADD A,B 将寄存器A的数与寄存器B的数相加得到的数放到寄存器A中\n汇编语言写好的程序需要汇编程序转换成机器指令\n汇编语言稍微好理解，即机器指令对应的助记符，助记符更接近自然语言 高级编程语言： 编译：高级语言–\u003e编译器–\u003e机器代码文件–\u003e执行，如：C，C++ 解释：高级语言–\u003e执行–\u003e解释器–\u003e机器代码，如：shell，python，php，JavaScript，perl 编译和解释型语言 1.4 编程逻辑处理方式 三种处理逻辑\n顺序执行：程序按从上到下顺序执行 选择执行：程序执行过程中，根据条件的不同，进行选择不同分支继续执行 循环执行：程序执行过程中需要重复执行多次某段语句 2.shell 脚本语言的基本用法 2.1 shell 脚本的用途 将简单的命令组合完成复杂的工作,自动化执行命令,提高工作效率 减少手工命令的输入，一定程度上避免人为错误 将软件或应用的安装及配置实现标准化 用于实现日常性的,重复性的,非交互式的运维工作,如:文件打包压缩备份,监控系统运行状态并实现告警等 2.2 shell脚本基本结构 shell脚本编程：是基于过程式、解释执行的语言\n编程语言的基本结构：\n各种系统命令的组合 数据存储：变量、数组 表达式：a + b 控制语句：if shell脚本：包含一些命令或声明，并符合一定格式的文本文件 格式要求：首行shebang机制\n#!/bin/bash #!/usr/bin/python #!/usr/bin/perl #!/usr/bin/ruby #!/usr/bin/lua 2.3 shell脚本创建过程 第一步：使用文本编编辑器来创建文本文件\n第一行必须包括shell声明序列：#! 示例：\n#!/bin/bash # 使用bash，添加注释,注释以#开头 第二步：加执行权限 给予执行权限，在命令行上指定脚本的绝对或相对路径 第三步：运行脚本 直接运行解释器，将脚本作为解释器程序的参数运行\n扩展：查看当前使用的是何种shell，终端输入：echo $SHELL\nroot@ubuntu200404:~# echo $SHELL /bin/bash root@ubuntu200404:~# 2.4 shell脚本注释规范 第一行一般为调用使用的语言 程序名，避免更改文件名为无法找到正确的文件 版本号 更改后的时间 作者相关信息 该程序的作用，及注意事项 最后是各版本的更新简要说明 2.5 第一个shell脚本 范例：第一个shell脚本hello world\n参考文档：\nhttps://zh.wikipedia.org/wiki/Hello_World https://zh.wikipedia.org/wiki/Hello_World%E7%A8%8B%E5%BA%8F%E6%A0%B7%E4%BE%8B 程序样例\n第一步：vim创建hello.sh文本\nroot@ubuntu200404:~# vim hello.sh 第二步：声明序列和添加脚本名称、日期等\n#!/bin/bash #****************** #filename:hello.sh #Data:2022-08-06 #author:admin #****************** 第三步：编写代码\n#经典写法 echo \"hello, world\" #流行写法 echo 'Hello, world!' 第四步：执行shell脚本\n方法一：\nroot@ubuntu200404:~# bash hello.sh hello world! ****************** hello world! root@ubuntu200404:~# 方法二：\nroot@ubuntu200404:/data/scripts# cat /data/scripts/hello.sh | bash hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法三：\nroot@ubuntu200404:/data/scripts# bash \u003c /data/scripts/hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法四：添加执行权限使用绝对路径和相对路径\n# 绝对路径 root@ubuntu200404:/data/scripts# /data/scripts/hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# # 相对路径 root@ubuntu200404:/data/scripts# pwd /data/scripts root@ubuntu200404:/data/scripts# ./hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法五：将脚本添加到path变量中\n# 当前path位置 root@ubuntu200404:/data/scripts# echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin root@ubuntu200404:/data/scripts# # 给hello.sh文件创建软链接放到/usr/local/bin目录下 root@ubuntu200404:/data/scripts# ln -s /data/scripts/hello.sh /usr/local/bin/ root@ubuntu200404:/data/scripts# ls /usr/local/bin/ hello.sh root@ubuntu200404:/data/scripts# # 执行shell脚本 root@ubuntu200404:/data/scripts# hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法六：本方法可以实现执行远程主机的shell脚本\n# 扩展：curl加-s选项不显示下载信息 root@ubuntu200404:/data# curl -s http://wangxiaochun.com/testdir/hello.sh |bash hello, world Hello, world! root@ubuntu200404:/data# 案例：备份脚本\n# 脚本内容 root@ubuntu200404:/data/scripts# cat -n bacup.sh 1#!/bin/bash 2#------------------ 3#filename:bacup.sh 4#备份脚本 5#------------------ 6 7 8tar zcf /data/scripts-`date +%F_%s`.tar.gz /data/ \u0026\u003e /dev/null 9 10echo -e \"\\E[1;32mbacup is success!\\E[0m\" # 执行脚本 root@ubuntu200404:/data/scripts# bash bacup.sh bacup is success! root@ubuntu200404:/data/scripts# 2.6 shell脚本调试 只检测脚本中的语法错误，但无法检查出命令错误，但不真正执行脚本\nbash -n /path/to/some_script 调试并执行\nbash -x /path/to/some_script 案例1：\nroot@ubuntu200404:/data/scripts# bash -x hello.sh + echo 'hello world!' hello world! + echo '******************' ****************** + echo 'hello world!' hello world! root@ubuntu200404:/data/scripts# 案例2:多行重定向\n脚本内容：\n#!/bin/bash # 多行重定向 #data:2022-08-06 #author:admin #-------------------------------------------- echo start cat \u003e/data/demo.conf \u003c",
+  "wordCount" : "14786",
   "inLanguage": "en",
   "image":"https://xyenvy.github.io/posts.images/banner/3.jpg","datePublished": "2022-08-03T22:23:02Z",
   "dateModified": "2022-08-03T22:23:02Z",
@@ -282,7 +282,7 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>14832字
+        <span>14786字
             &nbsp;&nbsp;
         </span>
     </span>
@@ -369,8 +369,7 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#%e5%86%85%e5%ae%b9%e7%ae%80%e8%bf%b0" aria-label="内容简述">内容简述</a></li>
                 <li>
-                    <a href="#1%e7%bc%96%e7%a8%8b%e5%9f%ba%e7%a1%80" aria-label="1.编程基础">1.编程基础</a><ul>
-                        
+                    <a href="#1%e7%bc%96%e7%a8%8b%e5%9f%ba%e7%a1%80" aria-label="1.编程基础">1.编程基础</a></li>
                 <li>
                     <a href="#11-%e7%a8%8b%e5%ba%8f%e7%bb%84%e6%88%90" aria-label="1.1 程序组成">1.1 程序组成</a></li>
                 <li>
@@ -378,11 +377,9 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#13-%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80" aria-label="1.3 编程语言">1.3 编程语言</a></li>
                 <li>
-                    <a href="#14-%e7%bc%96%e7%a8%8b%e9%80%bb%e8%be%91%e5%a4%84%e7%90%86%e6%96%b9%e5%bc%8f" aria-label="1.4 编程逻辑处理方式">1.4 编程逻辑处理方式</a></li></ul>
-                </li>
+                    <a href="#14-%e7%bc%96%e7%a8%8b%e9%80%bb%e8%be%91%e5%a4%84%e7%90%86%e6%96%b9%e5%bc%8f" aria-label="1.4 编程逻辑处理方式">1.4 编程逻辑处理方式</a></li>
                 <li>
-                    <a href="#2shell-%e8%84%9a%e6%9c%ac%e8%af%ad%e8%a8%80%e7%9a%84%e5%9f%ba%e6%9c%ac%e7%94%a8%e6%b3%95" aria-label="2.shell 脚本语言的基本用法">2.shell 脚本语言的基本用法</a><ul>
-                        
+                    <a href="#2shell-%e8%84%9a%e6%9c%ac%e8%af%ad%e8%a8%80%e7%9a%84%e5%9f%ba%e6%9c%ac%e7%94%a8%e6%b3%95" aria-label="2.shell 脚本语言的基本用法">2.shell 脚本语言的基本用法</a></li>
                 <li>
                     <a href="#21-shell-%e8%84%9a%e6%9c%ac%e7%9a%84%e7%94%a8%e9%80%94" aria-label="2.1 shell 脚本的用途">2.1 shell 脚本的用途</a></li>
                 <li>
@@ -414,8 +411,6 @@ var _hmt = _hmt || [];
                     <a href="#274-%e5%8f%98%e9%87%8f%e5%ae%9a%e4%b9%89%e5%92%8c%e5%bc%95%e7%94%a8" aria-label="2.7.4 变量定义和引用">2.7.4 变量定义和引用</a></li>
                 <li>
                     <a href="#275-%e7%8e%af%e5%a2%83%e5%8f%98%e9%87%8f" aria-label="2.7.5 环境变量">2.7.5 环境变量</a></li>
-                <li>
-                    <a href="#276-%e5%8f%aa%e8%af%bb%e5%8f%98%e9%87%8f" aria-label="2.7.6 只读变量">2.7.6 只读变量</a></li>
                 <li>
                     <a href="#277-%e4%bd%8d%e7%bd%ae%e5%8f%98%e9%87%8f" aria-label="2.7.7 位置变量">2.7.7 位置变量</a></li>
                 <li>
@@ -454,29 +449,23 @@ var _hmt = _hmt || [];
                     <a href="#2122-%e7%ac%ac%e4%ba%8c%e7%a7%8d%e6%96%b9%e5%bc%8f" aria-label="2.12.2 第二种方式">2.12.2 第二种方式</a></li></ul>
                 </li>
                 <li>
-                    <a href="#213-%e4%bd%bf%e7%94%a8read%e5%91%bd%e4%bb%a4%e6%9d%a5%e6%8e%a5%e5%8f%97%e8%be%93%e5%85%a5" aria-label="2.13 使用read命令来接受输入">2.13 使用read命令来接受输入</a></li></ul>
-                </li>
+                    <a href="#213-%e4%bd%bf%e7%94%a8read%e5%91%bd%e4%bb%a4%e6%9d%a5%e6%8e%a5%e5%8f%97%e8%be%93%e5%85%a5" aria-label="2.13 使用read命令来接受输入">2.13 使用read命令来接受输入</a></li>
                 <li>
                     <a href="#3--%e6%9d%a1%e4%bb%b6%e9%80%89%e6%8b%a9if" aria-label="3  条件选择if">3  条件选择if</a></li>
                 <li>
-                    <a href="#4-%e5%be%aa%e7%8e%af" aria-label="4 循环">4 循环</a><ul>
-                        
+                    <a href="#4-%e5%be%aa%e7%8e%af" aria-label="4 循环">4 循环</a></li>
                 <li>
                     <a href="#41-for%e5%be%aa%e7%8e%af" aria-label="4.1 for循环">4.1 for循环</a></li>
                 <li>
-                    <a href="#42-while%e5%be%aa%e7%8e%af" aria-label="4.2 while循环">4.2 while循环</a></li></ul>
-                </li>
+                    <a href="#42-while%e5%be%aa%e7%8e%af" aria-label="4.2 while循环">4.2 while循环</a></li>
                 <li>
-                    <a href="#5-%e5%85%b6%e4%bb%96%e8%84%9a%e6%9c%ac%e7%9b%b8%e5%85%b3%e5%b7%a5%e5%85%b7" aria-label="5 其他脚本相关工具">5 其他脚本相关工具</a><ul>
-                        
+                    <a href="#5-%e5%85%b6%e4%bb%96%e8%84%9a%e6%9c%ac%e7%9b%b8%e5%85%b3%e5%b7%a5%e5%85%b7" aria-label="5 其他脚本相关工具">5 其他脚本相关工具</a></li>
                 <li>
                     <a href="#51-trap%e5%91%bd%e4%bb%a4" aria-label="5.1 trap命令">5.1 trap命令</a></li>
                 <li>
-                    <a href="#5-2-except%e5%ae%9e%e7%8e%b0%e8%87%aa%e5%8a%a8%e5%8c%96%e7%9a%84%e9%9d%9e%e4%ba%a4%e4%ba%92%e6%93%8d%e4%bd%9c" aria-label="5. 2 except实现自动化的非交互操作">5. 2 except实现自动化的非交互操作</a></li></ul>
-                </li>
+                    <a href="#5-2-except%e5%ae%9e%e7%8e%b0%e8%87%aa%e5%8a%a8%e5%8c%96%e7%9a%84%e9%9d%9e%e4%ba%a4%e4%ba%92%e6%93%8d%e4%bd%9c" aria-label="5. 2 except实现自动化的非交互操作">5. 2 except实现自动化的非交互操作</a></li>
                 <li>
-                    <a href="#6-%e6%95%b0%e7%bb%84" aria-label="6 数组">6 数组</a><ul>
-                        
+                    <a href="#6-%e6%95%b0%e7%bb%84" aria-label="6 数组">6 数组</a></li>
                 <li>
                     <a href="#61-%e6%95%b0%e7%bb%84%e4%bb%8b%e7%bb%8d" aria-label="6.1 数组介绍">6.1 数组介绍</a></li>
                 <li>
@@ -490,11 +479,9 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#66-%e5%88%a0%e9%99%a4%e6%95%b0%e7%bb%84" aria-label="6.6 删除数组">6.6 删除数组</a></li>
                 <li>
-                    <a href="#67-%e6%95%b0%e7%bb%84%e6%95%b0%e6%8d%ae%e5%a4%84%e7%90%86" aria-label="6.7 数组数据处理">6.7 数组数据处理</a></li></ul>
-                </li>
+                    <a href="#67-%e6%95%b0%e7%bb%84%e6%95%b0%e6%8d%ae%e5%a4%84%e7%90%86" aria-label="6.7 数组数据处理">6.7 数组数据处理</a></li>
                 <li>
-                    <a href="#7-%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%a4%84%e7%90%86" aria-label="7 字符串处理">7 字符串处理</a><ul>
-                        
+                    <a href="#7-%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%a4%84%e7%90%86" aria-label="7 字符串处理">7 字符串处理</a></li>
                 <li>
                     <a href="#71-%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%88%87%e7%89%87" aria-label="7.1 字符串切片">7.1 字符串切片</a></li>
                 <li>
@@ -506,8 +493,6 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#75-%e5%ad%97%e7%ac%a6%e5%a4%a7%e5%b0%8f%e5%86%99%e8%bd%ac%e6%8d%a2" aria-label="7.5 字符大小写转换">7.5 字符大小写转换</a>
                 </li>
-            </ul>
-            </li>
             </ul>
         </div>
         </details>
@@ -571,9 +556,9 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><h1 id="内容简述">内容简述<a hidden class="anchor" aria-hidden="true" href="#内容简述">#</a></h1>
+        <div class="post-content"><h2 id="内容简述">内容简述<a hidden class="anchor" aria-hidden="true" href="#内容简述">#</a></h2>
 <p>shell 是操作系统的最外层。shell 合并编程语言以控制进程和文件，以及启动和控制其它程序。shell 通过提示您输入，向操作系统解释该输入，然后处理来自操作系统的任何结果输出来管理您与操作系统之间的交互。</p>
-<h1 id="1编程基础">1.编程基础<a hidden class="anchor" aria-hidden="true" href="#1编程基础">#</a></h1>
+<h2 id="1编程基础">1.编程基础<a hidden class="anchor" aria-hidden="true" href="#1编程基础">#</a></h2>
 <p>Linus：Talk is cheap, show me the code</p>
 <h2 id="11-程序组成">1.1 程序组成<a hidden class="anchor" aria-hidden="true" href="#11-程序组成">#</a></h2>
 <ul>
@@ -584,16 +569,12 @@ var _hmt = _hmt || [];
 </ul>
 <h2 id="12-程序编程风格">1.2 程序编程风格<a hidden class="anchor" aria-hidden="true" href="#12-程序编程风格">#</a></h2>
 <ul>
-<li>面向过程语言
-<ul>
+<li>面向过程语言</li>
 <li>做一件事情，排出个步骤，第一步干什么，第二步干什么，如果出现情况A，做什么处理，如果出现了情况B，做什么处理</li>
 <li>问题规模小，可以步骤化，按部就班处理</li>
 <li>以指令为中心，数据服务于指令</li>
 <li>C，shell</li>
-</ul>
-</li>
-<li>面向对象语言
-<ul>
+<li>面向对象语言</li>
 <li>将编程看成是一个事物，对外界来说，事物是直接使用的,不用关心事物内部的情况。而编程就是设置事物能够完成功能。</li>
 <li>一种认识世界、分析世界的方法论。将万事万物抽象为各种对象</li>
 <li>类是抽象的概念，是万事万物的抽象，是一类事物的共同特征的集合</li>
@@ -602,30 +583,22 @@ var _hmt = _hmt || [];
 <li>以数据为中心，指令服务于数据</li>
 <li>java，C#，python，golang等</li>
 </ul>
-</li>
-</ul>
 <h2 id="13-编程语言">1.3 编程语言<a hidden class="anchor" aria-hidden="true" href="#13-编程语言">#</a></h2>
-<p><strong>编程语言排行榜链接</strong></p>
+<p>编程语言排行榜链接</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>https://www.tiobe.com/tiobe-index/
 </span></span></code></pre></div><p>计算机：运行二进制指令<br>
 编程语言：人与计算机之间交互的语言。分为两种：低级语言和高级语言</p>
 <ul>
-<li>低级编程语言：
-<ul>
+<li>低级编程语言：</li>
 <li>机器：二进制的0和1的序列，称为机器指令。与自然语言差异太大，难懂、难写</li>
 <li>汇编：用一些助记符号替代机器指令，称为汇编语言<br>
 如：ADD A,B 将寄存器A的数与寄存器B的数相加得到的数放到寄存器A中<br>
 汇编语言写好的程序需要汇编程序转换成机器指令<br>
 汇编语言稍微好理解，即机器指令对应的助记符，助记符更接近自然语言</li>
-</ul>
-</li>
-<li>高级编程语言：
-<ul>
+<li>高级编程语言：</li>
 <li>编译：高级语言&ndash;&gt;编译器&ndash;&gt;机器代码文件&ndash;&gt;执行，如：C，C++</li>
 <li>解释：高级语言&ndash;&gt;执行&ndash;&gt;解释器&ndash;&gt;机器代码，如：shell，python，php，JavaScript，perl</li>
-</ul>
-</li>
-<li>编译和解释型语言<br>
+<li>编译和解释型语言
 <img loading="lazy" src="/posts.images/image.assets/1659747737724.png" alt="1659747737724"  />
 </li>
 </ul>
@@ -634,13 +607,13 @@ var _hmt = _hmt || [];
 </p>
 <p><img loading="lazy" src="/posts.images/image.assets/1659747863045.png" alt="1659747863045"  />
 </p>
-<p><strong>三种处理逻辑</strong></p>
+<p>三种处理逻辑</p>
 <ul>
 <li>顺序执行：程序按从上到下顺序执行</li>
 <li>选择执行：程序执行过程中，根据条件的不同，进行选择不同分支继续执行</li>
 <li>循环执行：程序执行过程中需要重复执行多次某段语句</li>
 </ul>
-<h1 id="2shell-脚本语言的基本用法">2.shell 脚本语言的基本用法<a hidden class="anchor" aria-hidden="true" href="#2shell-脚本语言的基本用法">#</a></h1>
+<h2 id="2shell-脚本语言的基本用法">2.shell 脚本语言的基本用法<a hidden class="anchor" aria-hidden="true" href="#2shell-脚本语言的基本用法">#</a></h2>
 <h2 id="21-shell-脚本的用途">2.1 shell 脚本的用途<a hidden class="anchor" aria-hidden="true" href="#21-shell-脚本的用途">#</a></h2>
 <ul>
 <li>将简单的命令组合完成复杂的工作,自动化执行命令,提高工作效率</li>
@@ -649,7 +622,7 @@ var _hmt = _hmt || [];
 <li>用于实现日常性的,重复性的,非交互式的运维工作,如:文件打包压缩备份,监控系统运行状态并实现告警等</li>
 </ul>
 <h2 id="22-shell脚本基本结构">2.2 shell脚本基本结构<a hidden class="anchor" aria-hidden="true" href="#22-shell脚本基本结构">#</a></h2>
-<p><strong>shell脚本编程：是基于过程式、解释执行的语言</strong></p>
+<p>shell脚本编程：是基于过程式、解释执行的语言</p>
 <hr>
 <p><strong>编程语言的基本结构：</strong></p>
 <ul>
@@ -666,15 +639,15 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/ruby</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/lua</span>
 </span></span></code></pre></div><h2 id="23-shell脚本创建过程">2.3 shell脚本创建过程<a hidden class="anchor" aria-hidden="true" href="#23-shell脚本创建过程">#</a></h2>
-<p><strong>第一步：使用文本编编辑器来创建文本文件</strong></p>
+<p>第一步：使用文本编编辑器来创建文本文件</p>
 <p><strong>第一行必须包括shell声明序列：#!</strong>
 示例：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash	# 使用bash，添加注释,注释以#开头	
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash # 使用bash，添加注释,注释以#开头
 </span></span></span></code></pre></div><p>第二步：加执行权限
 给予执行权限，在命令行上指定脚本的绝对或相对路径
 第三步：运行脚本
 直接运行解释器，将脚本作为解释器程序的参数运行</p>
-<p><strong>扩展：查看当前使用的是何种shell，终端输入：echo $SHELL</strong></p>
+<p>扩展：查看当前使用的是何种shell，终端输入：echo $SHELL</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@ubuntu200404:~# echo $SHELL
 </span></span><span style="display:flex;"><span>/bin/bash
 </span></span><span style="display:flex;"><span>root@ubuntu200404:~#
@@ -689,26 +662,26 @@ var _hmt = _hmt || [];
 <li>最后是各版本的更新简要说明</li>
 </ul>
 <h2 id="25-第一个shell脚本">2.5 第一个shell脚本<a hidden class="anchor" aria-hidden="true" href="#25-第一个shell脚本">#</a></h2>
-<p><strong>范例：第一个shell脚本hello world</strong></p>
+<p>范例：第一个shell脚本hello world</p>
 <p><strong>参考文档：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>https://zh.wikipedia.org/wiki/Hello_World
 </span></span><span style="display:flex;"><span>https://zh.wikipedia.org/wiki/Hello_World%E7%A8%8B%E5%BA%8F%E6%A0%B7%E4%BE%8B
-</span></span></code></pre></div><p>(程序样例)[https://zh.wikipedia.org/wiki/Hello_World]</p>
-<p><strong>第一步：vim创建hello.sh文本</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@ubuntu200404:~# vim hello.sh
-</span></span></code></pre></div><p><strong>第二步：声明序列和添加脚本名称、日期等</strong></p>
+</span></span></code></pre></div><p><a href="https://zh.wikipedia.org/wiki/Hello_World">程序样例</a></p>
+<p>第一步：vim创建hello.sh文本</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@ubuntu200404:~# vim hello.sh
+</span></span></code></pre></div><p>第二步：声明序列和添加脚本名称、日期等</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>#!<span style="color:#e6db74">/bin/</span><span style="color:#a6e22e">bash</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>#******************<span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>#<span style="color:#a6e22e">filename</span>:<span style="color:#a6e22e">hello</span>.<span style="color:#a6e22e">sh</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>#<span style="color:#a6e22e">Data</span>:<span style="color:#ae81ff">2022-08-06</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>#<span style="color:#a6e22e">author</span>:<span style="color:#a6e22e">admin</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>#******************<span style="color:#960050;background-color:#1e0010">
-</span></span></span></code></pre></div><p><strong>第三步：编写代码</strong></p>
+</span></span></span></code></pre></div><p>第三步：编写代码</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#经典写法</span>
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;hello, world&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#流行写法</span>
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;Hello, world!&#39;</span>
-</span></span></code></pre></div><p><strong>第四步：执行shell脚本</strong></p>
+</span></span></code></pre></div><p>第四步：执行shell脚本</p>
 <p>方法一：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@ubuntu200404:~# bash hello.sh 
 </span></span><span style="display:flex;"><span>hello world!
@@ -751,7 +724,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 给hello.sh文件创建软链接放到/usr/local/bin目录下</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# ln -s /data/scripts/hello.sh /usr/local/bin/ 
-</span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# ls /usr/local/bin/						
+</span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# ls /usr/local/bin/
 </span></span><span style="display:flex;"><span>hello.sh
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts#
 </span></span><span style="display:flex;"><span>
@@ -770,24 +743,24 @@ var _hmt = _hmt || [];
 </span></span></code></pre></div><p>案例：备份脚本</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 脚本内容</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# cat -n bacup.sh 
-</span></span><span style="display:flex;"><span>     1	<span style="color:#75715e">#!/bin/bash</span>
-</span></span><span style="display:flex;"><span>     2	<span style="color:#75715e">#------------------</span>
-</span></span><span style="display:flex;"><span>     3	<span style="color:#75715e">#filename:bacup.sh</span>
-</span></span><span style="display:flex;"><span>     4	<span style="color:#75715e">#备份脚本</span>
-</span></span><span style="display:flex;"><span>     5	<span style="color:#75715e">#------------------</span>
-</span></span><span style="display:flex;"><span>     6	
-</span></span><span style="display:flex;"><span>     7	
-</span></span><span style="display:flex;"><span>     8	tar zcf /data/scripts-<span style="color:#e6db74">`</span>date +%F_%s<span style="color:#e6db74">`</span>.tar.gz /data/ &amp;&gt; /dev/null
-</span></span><span style="display:flex;"><span>     9	
-</span></span><span style="display:flex;"><span>    10	echo -e <span style="color:#e6db74">&#34;\E[1;32mbacup is success!\E[0m&#34;</span>
+</span></span><span style="display:flex;"><span>     1#!/bin/bash
+</span></span><span style="display:flex;"><span>     2#------------------
+</span></span><span style="display:flex;"><span>     3#filename:bacup.sh
+</span></span><span style="display:flex;"><span>     4#备份脚本
+</span></span><span style="display:flex;"><span>     5#------------------
+</span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>     8tar zcf /data/scripts-<span style="color:#e6db74">`</span>date +%F_%s<span style="color:#e6db74">`</span>.tar.gz /data/ &amp;&gt; /dev/null
+</span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">9</span>
+</span></span><span style="display:flex;"><span>    10echo -e <span style="color:#e6db74">&#34;\E[1;32mbacup is success!\E[0m&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 执行脚本</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# bash bacup.sh 
 </span></span><span style="display:flex;"><span>bacup is success!
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts#
 </span></span></code></pre></div><h2 id="26-shell脚本调试">2.6 shell脚本调试<a hidden class="anchor" aria-hidden="true" href="#26-shell脚本调试">#</a></h2>
-<p><strong>只检测脚本中的语法错误，但无法检查出命令错误，但不真正执行脚本</strong></p>
+<p>只检测脚本中的语法错误，但无法检查出命令错误，但不真正执行脚本</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>bash -n /path/to/some_script
-</span></span></code></pre></div><p><strong>调试并执行</strong></p>
+</span></span></code></pre></div><p>调试并执行</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>bash -x /path/to/some_script
 </span></span></code></pre></div><p><strong>案例1：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# bash -x hello.sh 
@@ -798,7 +771,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>+ echo <span style="color:#e6db74">&#39;hello world!&#39;</span>
 </span></span><span style="display:flex;"><span>hello world!
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
-</span></span></code></pre></div><p><strong>案例2:多行重定向</strong></p>
+</span></span></code></pre></div><p>案例2:多行重定向</p>
 <p>脚本内容：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e"># 多行重定向</span>
@@ -827,7 +800,7 @@ var _hmt = _hmt || [];
 <p>在vi命令行模式下输入set list</p>
 <p><img loading="lazy" src="/posts.images/image.assets/1659754927224.png" alt="1659754927224"  />
 </p>
-<p><strong>总结：脚本错误常见的有三种</strong></p>
+<p>总结：脚本错误常见的有三种</p>
 <ul>
 <li>语法错误，会导致后续的命令不继续执行，可以用bash -n 检查错误，提示的出错行数不一定是准
 确的</li>
@@ -836,7 +809,7 @@ var _hmt = _hmt || [];
 </ul>
 <h2 id="27-变量">2.7 变量<a hidden class="anchor" aria-hidden="true" href="#27-变量">#</a></h2>
 <h3 id="271-变量">2.7.1 变量<a hidden class="anchor" aria-hidden="true" href="#271-变量">#</a></h3>
-<p><strong>变量表示命名的内存空间，将数据放在内存空间中，通过变量名引用，获取数据</strong></p>
+<p>变量表示命名的内存空间，将数据放在内存空间中，通过变量名引用，获取数据</p>
 <hr>
 <h3 id="272-变量类型">2.7.2 变量类型<a hidden class="anchor" aria-hidden="true" href="#272-变量类型">#</a></h3>
 <p><strong>变量类型：</strong></p>
@@ -844,7 +817,7 @@ var _hmt = _hmt || [];
 <li>内置变量，如：PS1，PATH，UID，HOSTNAME，$$，BASHPID，PPID，$?，HISTSIZE</li>
 <li>用户自定义变量</li>
 </ul>
-<p><strong>不同的变量存放的数据不同，决定了以下</strong></p>
+<p>不同的变量存放的数据不同，决定了以下</p>
 <ul>
 <li>数据存储方式</li>
 <li>参与的运算</li>
@@ -880,7 +853,7 @@ var _hmt = _hmt || [];
 <li>下划线: student_name</li>
 </ul>
 <h3 id="274-变量定义和引用">2.7.4 变量定义和引用<a hidden class="anchor" aria-hidden="true" href="#274-变量定义和引用">#</a></h3>
-<p><strong>变量的生效范围等标准划分变量类型</strong></p>
+<p>变量的生效范围等标准划分变量类型</p>
 <ul>
 <li>普通变量：生效范围为当前shell进程；对当前shell之外的其它shell进程，包括当前shell的子shell进程均无效</li>
 <li>环境变量：生效范围为当前shell进程及其子进程</li>
@@ -888,7 +861,7 @@ var _hmt = _hmt || [];
 </ul>
 <p><strong>变量赋值：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;value&#39;</span>
-</span></span></code></pre></div><p><strong>value 可以是以下多种形式</strong></p>
+</span></span></code></pre></div><p>value 可以是以下多种形式</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>直接字串：name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;root&#39;</span>
 </span></span><span style="display:flex;"><span>变量引用：name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$USER<span style="color:#e6db74">&#34;</span>
 </span></span><span style="display:flex;"><span>命令引用：name<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>COMMAND<span style="color:#e6db74">`</span> 或者 name<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>COMMAND<span style="color:#66d9ef">)</span>
@@ -896,12 +869,12 @@ var _hmt = _hmt || [];
 <p><strong>变量引用：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$name
 </span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>name<span style="color:#e6db74">}</span>
-</span></span></code></pre></div><p><strong>弱引用和强引用</strong></p>
+</span></span></code></pre></div><p>弱引用和强引用</p>
 <ul>
 <li>&ldquo;$name&rdquo; 弱引用，其中的变量引用会被替换为变量值</li>
 <li>&lsquo;$name&rsquo; 强引用，其中的变量引用不会被替换为变量值，而保持原字符串</li>
 </ul>
-<p><strong>范例：变量的各种赋值方式和引用</strong></p>
+<p>范例：变量的各种赋值方式和引用</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>方式1：
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# TITLE<span style="color:#f92672">=</span>cto
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# echo $TITLE
@@ -947,7 +920,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">9</span>
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">10</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
-</span></span></code></pre></div><p><strong>删除变量： unset name</strong></p>
+</span></span></code></pre></div><p>删除变量： unset name</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>unset &lt;name&gt;
 </span></span><span style="display:flex;"><span>案例：
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# NUM<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq 10<span style="color:#e6db74">`</span>
@@ -957,8 +930,8 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# echo $NUM
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
-</span></span></code></pre></div><p><strong>显示已有的变量</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set
+</span></span></code></pre></div><p>显示已有的变量</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>set
 </span></span></code></pre></div><h3 id="275-环境变量">2.7.5 环境变量<a hidden class="anchor" aria-hidden="true" href="#275-环境变量">#</a></h3>
 <p><strong>环境变量：</strong></p>
 <ul>
@@ -967,38 +940,38 @@ var _hmt = _hmt || [];
 <li>一般只在系统配置文件中使用，在脚本中较少使用</li>
 </ul>
 <p><strong>变量声明和赋值：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#声明并赋值
-</span></span><span style="display:flex;"><span>export name=VALUE
-</span></span><span style="display:flex;"><span>declare -x name=VALUE
-</span></span><span style="display:flex;"><span>#或者分两步实现
-</span></span><span style="display:flex;"><span>name=VALUE
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#声明并赋值</span>
+</span></span><span style="display:flex;"><span>export name<span style="color:#f92672">=</span>VALUE
+</span></span><span style="display:flex;"><span>declare -x name<span style="color:#f92672">=</span>VALUE
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#或者分两步实现</span>
+</span></span><span style="display:flex;"><span>name<span style="color:#f92672">=</span>VALUE
 </span></span><span style="display:flex;"><span>export name
 </span></span></code></pre></div><p><strong>变量引用：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$name
-</span></span><span style="display:flex;"><span>${name}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$name
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>name<span style="color:#e6db74">}</span>
 </span></span></code></pre></div><p><strong>显示所有环境变量：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>env
 </span></span><span style="display:flex;"><span>printenv
 </span></span><span style="display:flex;"><span>export
 </span></span><span style="display:flex;"><span>declare -x
-</span></span></code></pre></div><p><strong>查看指定进程的环境变量</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cat /proc/$PID/environ
-</span></span></code></pre></div><p><strong>删除变量</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>unset name
-</span></span></code></pre></div><p><strong>bash内建的环境变量</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>PATH
+</span></span></code></pre></div><p>查看指定进程的环境变量</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /proc/$PID/environ
+</span></span></code></pre></div><p>删除变量</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>unset name
+</span></span></code></pre></div><p>bash内建的环境变量</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>PATH
 </span></span><span style="display:flex;"><span>SHELL
 </span></span><span style="display:flex;"><span>USER
 </span></span><span style="display:flex;"><span>UID
 </span></span><span style="display:flex;"><span>HOME
 </span></span><span style="display:flex;"><span>PWD
-</span></span><span style="display:flex;"><span>SHLVL #shell的嵌套层数，即深度
+</span></span><span style="display:flex;"><span>SHLVL <span style="color:#75715e">#shell的嵌套层数，即深度</span>
 </span></span><span style="display:flex;"><span>LANG
 </span></span><span style="display:flex;"><span>MAIL
 </span></span><span style="display:flex;"><span>HOSTNAME
 </span></span><span style="display:flex;"><span>HISTSIZE
-</span></span><span style="display:flex;"><span>_ #下划线,表示前一命令的最后一个参数
-</span></span></code></pre></div><p><strong>扩展：pstree -p</strong></p>
+</span></span><span style="display:flex;"><span>_ <span style="color:#75715e">#下划线,表示前一命令的最后一个参数</span>
+</span></span></code></pre></div><p>扩展：pstree -p</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# pstree -p
 </span></span><span style="display:flex;"><span>systemd<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>─┬─VGAuthService<span style="color:#f92672">(</span>757<span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span>           ├─accounts-daemon<span style="color:#f92672">(</span>811<span style="color:#f92672">)</span>─┬─<span style="color:#f92672">{</span>accounts-daemon<span style="color:#f92672">}(</span>818<span style="color:#f92672">)</span>
@@ -1049,31 +1022,34 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>           │               └─<span style="color:#f92672">{</span>upowerd<span style="color:#f92672">}(</span>2943<span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span>           └─vmtoolsd<span style="color:#f92672">(</span>758<span style="color:#f92672">)</span>─┬─<span style="color:#f92672">{</span>vmtoolsd<span style="color:#f92672">}(</span>781<span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span>                           └─<span style="color:#f92672">{</span>vmtoolsd<span style="color:#f92672">}(</span>2774<span style="color:#f92672">)</span>
-</span></span></code></pre></div><h3 id="276-只读变量">2.7.6 只读变量<a hidden class="anchor" aria-hidden="true" href="#276-只读变量">#</a></h3>
-<p><strong>只读变量：只能声明定义，但后续不能修改和删除，即常量</strong>
-<strong>声明只读变量：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>readonly name
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">```</span>bash
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### 2.7.6 只读变量</span>
+</span></span><span style="display:flex;"><span>**只读变量：只能声明定义，但后续不能修改和删除，即常量**
+</span></span><span style="display:flex;"><span>**声明只读变量：**
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">```</span>shell
+</span></span><span style="display:flex;"><span>readonly name
 </span></span><span style="display:flex;"><span>declare -r name
 </span></span></code></pre></div><p><strong>查看只读变量：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>readonly <span style="color:#f92672">[</span>-p<span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>declare -r
 </span></span></code></pre></div><p><strong>范例：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# readonly PI=3.14159
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# readonly PI<span style="color:#f92672">=</span>3.14159
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# echo $PI
 </span></span><span style="display:flex;"><span>3.14159
-</span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# PI=3.14
+</span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# PI<span style="color:#f92672">=</span>3.14
 </span></span><span style="display:flex;"><span>-bash: PI: readonly variable
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
 </span></span></code></pre></div><h3 id="277-位置变量">2.7.7 位置变量<a hidden class="anchor" aria-hidden="true" href="#277-位置变量">#</a></h3>
-<p><strong>位置变量：在bash shell中内置的变量, 在脚本代码中调用通过命令行传递给脚本的参数</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$1, $2, ... 对应第1个、第2个等参数，shift [n]换位置
+<p>位置变量：在bash shell中内置的变量, 在脚本代码中调用通过命令行传递给脚本的参数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$1, $2, ... 对应第1个、第2个等参数，shift <span style="color:#f92672">[</span>n<span style="color:#f92672">]</span>换位置
 </span></span><span style="display:flex;"><span>$0 命令本身,包括路径
 </span></span><span style="display:flex;"><span>$* 传递给脚本的所有参数，全部参数合为一个字符串
 </span></span><span style="display:flex;"><span>$@ 传递给脚本的所有参数，每个参数为独立字符串
 </span></span><span style="display:flex;"><span>$# 传递给脚本的参数的个数
 </span></span><span style="display:flex;"><span>注意：$@ $* 只在被双引号包起来的时候才会有差异
-</span></span></code></pre></div><p><strong>清空所有位置变量</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set --
+</span></span></code></pre></div><p>清空所有位置变量</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>set --
 </span></span></code></pre></div><p><strong>范例：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>echo <span style="color:#e6db74">&#34;1st arg is </span>$1<span style="color:#e6db74">&#34;</span>
@@ -1096,7 +1072,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>All args are a b c d e f g h i j k l m n o p q r s t u v w x y z
 </span></span><span style="display:flex;"><span>The scriptname is args.sh
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
-</span></span></code></pre></div><p><strong>范例：删库跑路之安全命令</strong></p>
+</span></span></code></pre></div><p>范例：删库跑路之安全命令</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 查看命令</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# cat /data/scripts/rm.sh
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
@@ -1133,7 +1109,7 @@ var _hmt = _hmt || [];
 </span></span></code></pre></div><p>*<em>范例：$<em>和$@的区别</em></em></p>
 <ol>
 <li>当 $* 和 $@ 不带双引号时它们两个是没有区别的，都是接收所有参数然后分别单独处理每个参数！而当$*带双引号的时候，会把接收的所有参数当成一个字段处理</li>
-<li>将$@与$* 赋值给变量之后，结果跟不带引号是一样的！这是我们需要注意的地方，当$* 赋值给变量的时候还是跟不带引号的作用是一样的！</li>
+<li>将$@与$<em>赋值给变量之后，结果跟不带引号是一样的！这是我们需要注意的地方，当$</em> 赋值给变量的时候还是跟不带引号的作用是一样的！</li>
 </ol>
 <h3 id="278--利用软链接实现同一个脚本不同功能">2.7.8  利用软链接实现同一个脚本不同功能<a hidden class="anchor" aria-hidden="true" href="#278--利用软链接实现同一个脚本不同功能">#</a></h3>
 <p><strong>范例：</strong></p>
@@ -1148,33 +1124,33 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#./b.sh</span>
 </span></span><span style="display:flex;"><span>./b.sh
 </span></span></code></pre></div><h3 id="279-退出状态码变量">2.7.9 退出状态码变量<a hidden class="anchor" aria-hidden="true" href="#279-退出状态码变量">#</a></h3>
-<p><strong>进程执行后，将使用变量 $? 保存状态码的相关数字，不同的值反应成功或失败，$?取值范例 0-255</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$?的值为0 #代表成功
-</span></span><span style="display:flex;"><span>$?的值是1到255 #代表失败
-</span></span></code></pre></div><p><strong>范例：状态码为0</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# ll
-</span></span><span style="display:flex;"><span>total 40
-</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root 4096 Aug  6 07:29 ./
-</span></span><span style="display:flex;"><span>drwxr-xr-x 3 root root 4096 Aug  6 02:41 ../
-</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root  241 Aug  6 06:48 args.sh
-</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root  192 Aug  6 02:40 bacup.sh
-</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root  185 Aug  6 03:38 demo1.sh
-</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root   85 Aug  6 07:26 f1.sh
-</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root   41 Aug  6 07:29 file.sh
-</span></span><span style="display:flex;"><span>-rwxr-xr-x 1 root root  208 Aug  6 01:42 hello.sh*
-</span></span><span style="display:flex;"><span>-rwxr-xr-x 1 root root  285 Aug  6 07:20 rm.sh*
-</span></span><span style="display:flex;"><span>-rwxr-xr-x 1 root root  284 Aug  6 07:01 rm.sh.bak*
+<p>进程执行后，将使用变量 $? 保存状态码的相关数字，不同的值反应成功或失败，$?取值范例 0-255</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$?的值为0 <span style="color:#75715e">#代表成功</span>
+</span></span><span style="display:flex;"><span>$?的值是1到255 <span style="color:#75715e">#代表失败</span>
+</span></span></code></pre></div><p>范例：状态码为0</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# ll
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">40</span>
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">4096</span> Aug  <span style="color:#ae81ff">6</span> 07:29 ./
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">3</span> root root <span style="color:#ae81ff">4096</span> Aug  <span style="color:#ae81ff">6</span> 02:41 ../
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">241</span> Aug  <span style="color:#ae81ff">6</span> 06:48 args.sh
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">192</span> Aug  <span style="color:#ae81ff">6</span> 02:40 bacup.sh
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">185</span> Aug  <span style="color:#ae81ff">6</span> 03:38 demo1.sh
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">85</span> Aug  <span style="color:#ae81ff">6</span> 07:26 f1.sh
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">41</span> Aug  <span style="color:#ae81ff">6</span> 07:29 file.sh
+</span></span><span style="display:flex;"><span>-rwxr-xr-x <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">208</span> Aug  <span style="color:#ae81ff">6</span> 01:42 hello.sh*
+</span></span><span style="display:flex;"><span>-rwxr-xr-x <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">285</span> Aug  <span style="color:#ae81ff">6</span> 07:20 rm.sh*
+</span></span><span style="display:flex;"><span>-rwxr-xr-x <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">284</span> Aug  <span style="color:#ae81ff">6</span> 07:01 rm.sh.bak*
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# echo $?
-</span></span><span style="display:flex;"><span>0
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
-</span></span></code></pre></div><p><strong>范例：状态码不是0</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# ls ajdksh
-</span></span><span style="display:flex;"><span>ls: cannot access &#39;ajdksh&#39;: No such file or directory
+</span></span></code></pre></div><p>范例：状态码不是0</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# ls ajdksh
+</span></span><span style="display:flex;"><span>ls: cannot access <span style="color:#e6db74">&#39;ajdksh&#39;</span>: No such file or directory
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# echo $?
-</span></span><span style="display:flex;"><span>2
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
-</span></span></code></pre></div><p><strong>用户可以在脚本中使用以下命令自定义退出状态码</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>exit [n]
+</span></span></code></pre></div><p>用户可以在脚本中使用以下命令自定义退出状态码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>exit <span style="color:#f92672">[</span>n<span style="color:#f92672">]</span>
 </span></span></code></pre></div><p><strong>案例：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# cat exit.sh 
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
@@ -1235,55 +1211,55 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 <p>Shell允许在某些情况下对算术表达式进行求值，比如：let和declare 内置命令，(( ))复合命令和算术扩
 展。求值以固定宽度的整数进行，不检查溢出，尽管除以0 被困并标记为错误。运算符及其优先级，关联性和值与C语言相同。以下运算符列表分组为等优先级运算符级别。级别按降序排列优先。
 <strong>注意：bash 只支持整数，不支持小数</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>+ - addition, subtraction
-</span></span><span style="display:flex;"><span>* / % multiplication, division, remainder, %表示取模，即取余数，示例：9%4=1，5%3=2
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>+ - addition, subtraction
+</span></span><span style="display:flex;"><span>* / % multiplication, division, remainder, %表示取模，即取余数，示例：9%4<span style="color:#f92672">=</span>1，5%3<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
 </span></span><span style="display:flex;"><span>i++ i-- variable post-increment and post-decrement
 </span></span><span style="display:flex;"><span>++i --i variable pre-increment and pre-decrement
-</span></span><span style="display:flex;"><span>= *= /= %= += -= &lt;&lt;= &gt;&gt;= &amp;= ^= |= assignment
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span> *<span style="color:#f92672">=</span> /<span style="color:#f92672">=</span> %<span style="color:#f92672">=</span> +<span style="color:#f92672">=</span> -<span style="color:#f92672">=</span> &lt;&lt;<span style="color:#f92672">=</span> &gt;&gt;<span style="color:#f92672">=</span> &amp;<span style="color:#f92672">=</span> ^<span style="color:#f92672">=</span> |<span style="color:#f92672">=</span> assignment
 </span></span><span style="display:flex;"><span>- + unary minus and plus
 </span></span><span style="display:flex;"><span>! ~ logical and bitwise negation
 </span></span><span style="display:flex;"><span>** exponentiation 乘方,即指数运算
 </span></span><span style="display:flex;"><span>&lt;&lt; &gt;&gt; left and right bitwise shifts
-</span></span><span style="display:flex;"><span>&lt;= &gt;= &lt; &gt; comparison
-</span></span><span style="display:flex;"><span>== != equality and inequality
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">=</span> &gt;<span style="color:#f92672">=</span> &lt; &gt; comparison
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span> !<span style="color:#f92672">=</span> equality and inequality
 </span></span><span style="display:flex;"><span>&amp; bitwise AND
 </span></span><span style="display:flex;"><span>| bitwise OR
 </span></span><span style="display:flex;"><span>^ bitwise exclusive OR
-</span></span><span style="display:flex;"><span>&amp;&amp; logical AND
-</span></span><span style="display:flex;"><span>|| logical OR
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&amp;&amp;</span> logical AND
+</span></span><span style="display:flex;"><span><span style="color:#f92672">||</span> logical OR
 </span></span><span style="display:flex;"><span>expr?expr:expr conditional operator
 </span></span><span style="display:flex;"><span>expr1 , expr2 comma
 </span></span></code></pre></div><p><strong>乘法符号有些场景中需要转义</strong>
 <strong>实现算术运算：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>(1) let var=算术表达式
-</span></span><span style="display:flex;"><span>(2) ((var=算术表达式)) 和上面等价
-</span></span><span style="display:flex;"><span>(3) var=$[算术表达式]
-</span></span><span style="display:flex;"><span>(4) var=$((算术表达式))
-</span></span><span style="display:flex;"><span>(5) var=$(expr arg1 arg2 arg3 ...)
-</span></span><span style="display:flex;"><span>(6) declare -i var = 数值
-</span></span><span style="display:flex;"><span>(7) echo &#39;算术表达式&#39; | bc
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>1<span style="color:#f92672">)</span> let var<span style="color:#f92672">=</span>算术表达式
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>2<span style="color:#f92672">)</span> <span style="color:#f92672">((</span>var<span style="color:#f92672">=</span>算术表达式<span style="color:#f92672">))</span> 和上面等价
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>3<span style="color:#f92672">)</span> var<span style="color:#f92672">=</span>$<span style="color:#f92672">[</span>算术表达式<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>4<span style="color:#f92672">)</span> var<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>算术表达式<span style="color:#66d9ef">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>5<span style="color:#f92672">)</span> var<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>expr arg1 arg2 arg3 ...<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>6<span style="color:#f92672">)</span> declare -i var <span style="color:#f92672">=</span> 数值
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>7<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#39;算术表达式&#39;</span> | bc
 </span></span></code></pre></div><p><strong>内建的随机数生成器变量：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$RANDOM 取值范围：0-32767
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$RANDOM 取值范围：0-32767
 </span></span></code></pre></div><p><strong>范例：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#生成 0 - 49 之间随机数
-</span></span><span style="display:flex;"><span>echo $[$RANDOM%50]
-</span></span><span style="display:flex;"><span>#随机字体颜色
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#echo -e &#34;\033[1;$[RANDOM%7+31]mhello\033[0m&#34;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#生成 0 - 49 之间随机数</span>
+</span></span><span style="display:flex;"><span>echo $<span style="color:#f92672">[</span>$RANDOM%50<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#随机字体颜色</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#echo -e &#34;\033[1;$[RANDOM%7+31]mhello\033[0m&#34;</span>
 </span></span><span style="display:flex;"><span>magedu
 </span></span></code></pre></div><h2 id="29-逻辑运算">2.9 逻辑运算<a hidden class="anchor" aria-hidden="true" href="#29-逻辑运算">#</a></h2>
 <p><img loading="lazy" src="/posts.images/image.assets/1659774970166.png" alt="1659774970166"  />
 </p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1,真
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>1,真
 </span></span><span style="display:flex;"><span>0,假
-</span></span><span style="display:flex;"><span>#注意,以上为二进制
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#注意,以上为二进制</span>
 </span></span></code></pre></div><p><strong>与或非符号：&amp; | ！</strong></p>
-<p><strong>异或：^</strong></p>
-<p>**异或：^ **
+<p>异或：^</p>
+<p>异或：^
 异或的两个值，相同为假，不同为真。两个数字X,Y异或得到结果Z，Z再和任意两者之一X异或，将得出另一个值Y</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>0 ^ 0 = 0
-</span></span><span style="display:flex;"><span>0 ^ 1 = 1
-</span></span><span style="display:flex;"><span>1 ^ 0 = 1
-</span></span><span style="display:flex;"><span>1 ^ 1 = 0
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ae81ff">0</span> ^ 0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> ^ 1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> ^ 0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> ^ 1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 </span></span></code></pre></div><h2 id="210-条件测试命令">2.10 条件测试命令<a hidden class="anchor" aria-hidden="true" href="#210-条件测试命令">#</a></h2>
 <p>条件测试：判断某需求是否满足，需要由测试机制来实现，专用的测试表达式需要由测试命令辅助完成
 测试过程，实现评估布尔声明，以便用在条件性环境下进行执行
@@ -1295,112 +1271,112 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 <li>[ EXPRESSION ] #和test 等价，建议使用 <input disabled="" type="checkbox"> </li>
 <li>[[ EXPRESSION ]] 相关于增强版的 <input disabled="" type="checkbox"> , 支持[]的用法,且支持扩展正则表达式和通配</li>
 </ul>
-<p><strong>注意：EXPRESSION前后必须有空白字符</strong></p>
+<p>注意：EXPRESSION前后必须有空白字符</p>
 <p><strong>帮助：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# type [
-</span></span><span style="display:flex;"><span>[ is a shell builtin
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# type <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> is a shell builtin
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# help test
-</span></span><span style="display:flex;"><span>test: test [expr]
+</span></span><span style="display:flex;"><span>test: test <span style="color:#f92672">[</span>expr<span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>    Evaluate conditional expression.
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    Exits with a status of 0 (true) or 1 (false) depending on
+</span></span><span style="display:flex;"><span>    Exits with a status of <span style="color:#ae81ff">0</span> <span style="color:#f92672">(</span>true<span style="color:#f92672">)</span> or <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>false<span style="color:#f92672">)</span> depending on
 </span></span><span style="display:flex;"><span>    the evaluation of EXPR.  Expressions may be unary or binary.  Unary
 </span></span><span style="display:flex;"><span>    expressions are often used to examine the status of a file.  There
 </span></span><span style="display:flex;"><span>    are string operators and numeric comparison operators as well.
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    The behavior of test depends on the number of arguments.  Read the
-</span></span><span style="display:flex;"><span>    bash manual page for the complete specification.
+</span></span><span style="display:flex;"><span>    bash manual page <span style="color:#66d9ef">for</span> the complete specification.
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    File operators:
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>      -a FILE        True if file exists.
-</span></span><span style="display:flex;"><span>      -b FILE        True if file is block special.
-</span></span><span style="display:flex;"><span>      -c FILE        True if file is character special.
-</span></span><span style="display:flex;"><span>      -d FILE        True if file is a directory.
-</span></span><span style="display:flex;"><span>      -e FILE        True if file exists.
-</span></span><span style="display:flex;"><span>      -f FILE        True if file exists and is a regular file.
-</span></span><span style="display:flex;"><span>      -g FILE        True if file is set-group-id.
-</span></span><span style="display:flex;"><span>      -h FILE        True if file is a symbolic link.
-</span></span><span style="display:flex;"><span>      -L FILE        True if file is a symbolic link.
-</span></span><span style="display:flex;"><span>      -k FILE        True if file has its `sticky&#39; bit set.
-</span></span><span style="display:flex;"><span>      -p FILE        True if file is a named pipe.
-</span></span><span style="display:flex;"><span>      -r FILE        True if file is readable by you.
-</span></span><span style="display:flex;"><span>      -s FILE        True if file exists and is not empty.
-</span></span><span style="display:flex;"><span>      -S FILE        True if file is a socket.
-</span></span><span style="display:flex;"><span>      -t FD          True if FD is opened on a terminal.
-</span></span><span style="display:flex;"><span>      -u FILE        True if the file is set-user-id.
-</span></span><span style="display:flex;"><span>      -w FILE        True if the file is writable by you.
-</span></span><span style="display:flex;"><span>      -x FILE        True if the file is executable by you.
-</span></span><span style="display:flex;"><span>      -O FILE        True if the file is effectively owned by you.
-</span></span><span style="display:flex;"><span>      -G FILE        True if the file is effectively owned by your group.
-</span></span><span style="display:flex;"><span>      -N FILE        True if the file has been modified since it was last read.
+</span></span><span style="display:flex;"><span>      -a FILE        True <span style="color:#66d9ef">if</span> file exists.
+</span></span><span style="display:flex;"><span>      -b FILE        True <span style="color:#66d9ef">if</span> file is block special.
+</span></span><span style="display:flex;"><span>      -c FILE        True <span style="color:#66d9ef">if</span> file is character special.
+</span></span><span style="display:flex;"><span>      -d FILE        True <span style="color:#66d9ef">if</span> file is a directory.
+</span></span><span style="display:flex;"><span>      -e FILE        True <span style="color:#66d9ef">if</span> file exists.
+</span></span><span style="display:flex;"><span>      -f FILE        True <span style="color:#66d9ef">if</span> file exists and is a regular file.
+</span></span><span style="display:flex;"><span>      -g FILE        True <span style="color:#66d9ef">if</span> file is set-group-id.
+</span></span><span style="display:flex;"><span>      -h FILE        True <span style="color:#66d9ef">if</span> file is a symbolic link.
+</span></span><span style="display:flex;"><span>      -L FILE        True <span style="color:#66d9ef">if</span> file is a symbolic link.
+</span></span><span style="display:flex;"><span>      -k FILE        True <span style="color:#66d9ef">if</span> file has its <span style="color:#e6db74">`</span>sticky<span style="color:#960050;background-color:#1e0010">&#39;</span> bit set.
+</span></span><span style="display:flex;"><span>      -p FILE        True <span style="color:#66d9ef">if</span> file is a named pipe.
+</span></span><span style="display:flex;"><span>      -r FILE        True <span style="color:#66d9ef">if</span> file is readable by you.
+</span></span><span style="display:flex;"><span>      -s FILE        True <span style="color:#66d9ef">if</span> file exists and is not empty.
+</span></span><span style="display:flex;"><span>      -S FILE        True <span style="color:#66d9ef">if</span> file is a socket.
+</span></span><span style="display:flex;"><span>      -t FD          True <span style="color:#66d9ef">if</span> FD is opened on a terminal.
+</span></span><span style="display:flex;"><span>      -u FILE        True <span style="color:#66d9ef">if</span> the file is set-user-id.
+</span></span><span style="display:flex;"><span>      -w FILE        True <span style="color:#66d9ef">if</span> the file is writable by you.
+</span></span><span style="display:flex;"><span>      -x FILE        True <span style="color:#66d9ef">if</span> the file is executable by you.
+</span></span><span style="display:flex;"><span>      -O FILE        True <span style="color:#66d9ef">if</span> the file is effectively owned by you.
+</span></span><span style="display:flex;"><span>      -G FILE        True <span style="color:#66d9ef">if</span> the file is effectively owned by your group.
+</span></span><span style="display:flex;"><span>      -N FILE        True <span style="color:#66d9ef">if</span> the file has been modified since it was last read.
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>      FILE1 -nt FILE2  True if file1 is newer than file2 (according to
-</span></span><span style="display:flex;"><span>                       modification date).
+</span></span><span style="display:flex;"><span>      FILE1 -nt FILE2  True <span style="color:#66d9ef">if</span> file1 is newer than file2 <span style="color:#f92672">(</span>according to
+</span></span><span style="display:flex;"><span>                       modification date<span style="color:#f92672">)</span>.
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>      FILE1 -ot FILE2  True if file1 is older than file2.
+</span></span><span style="display:flex;"><span>      FILE1 -ot FILE2  True <span style="color:#66d9ef">if</span> file1 is older than file2.
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>      FILE1 -ef FILE2  True if file1 is a hard link to file2.
+</span></span><span style="display:flex;"><span>      FILE1 -ef FILE2  True <span style="color:#66d9ef">if</span> file1 is a hard link to file2.
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    All file operators except -h and -L are acting on the target of a symbolic
-</span></span><span style="display:flex;"><span>    link, not on the symlink itself, if FILE is a symbolic link.
+</span></span><span style="display:flex;"><span>    link, not on the symlink itself, <span style="color:#66d9ef">if</span> FILE is a symbolic link.
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    String operators:
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>      -z STRING      True if string is empty.
+</span></span><span style="display:flex;"><span>      -z STRING      True <span style="color:#66d9ef">if</span> string is empty.
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>      -n STRING
-</span></span><span style="display:flex;"><span>         STRING      True if string is not empty.
+</span></span><span style="display:flex;"><span>         STRING      True <span style="color:#66d9ef">if</span> string is not empty.
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>      STRING1 = STRING2
-</span></span><span style="display:flex;"><span>                     True if the strings are equal.
-</span></span><span style="display:flex;"><span>      STRING1 != STRING2
-</span></span><span style="display:flex;"><span>                     True if the strings are not equal.
+</span></span><span style="display:flex;"><span>      STRING1 <span style="color:#f92672">=</span> STRING2
+</span></span><span style="display:flex;"><span>                     True <span style="color:#66d9ef">if</span> the strings are equal.
+</span></span><span style="display:flex;"><span>      STRING1 !<span style="color:#f92672">=</span> STRING2
+</span></span><span style="display:flex;"><span>                     True <span style="color:#66d9ef">if</span> the strings are not equal.
 </span></span><span style="display:flex;"><span>      STRING1 &lt; STRING2
-</span></span><span style="display:flex;"><span>                     True if STRING1 sorts before STRING2 lexicographically.
+</span></span><span style="display:flex;"><span>                     True <span style="color:#66d9ef">if</span> STRING1 sorts before STRING2 lexicographically.
 </span></span><span style="display:flex;"><span>      STRING1 &gt; STRING2
-</span></span><span style="display:flex;"><span>                     True if STRING1 sorts after STRING2 lexicographically.
+</span></span><span style="display:flex;"><span>                     True <span style="color:#66d9ef">if</span> STRING1 sorts after STRING2 lexicographically.
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    Other operators:
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>      -o OPTION      True if the shell option OPTION is enabled.
-</span></span><span style="display:flex;"><span>      -v VAR         True if the shell variable VAR is set.
-</span></span><span style="display:flex;"><span>      -R VAR         True if the shell variable VAR is set and is a name
+</span></span><span style="display:flex;"><span>      -o OPTION      True <span style="color:#66d9ef">if</span> the shell option OPTION is enabled.
+</span></span><span style="display:flex;"><span>      -v VAR         True <span style="color:#66d9ef">if</span> the shell variable VAR is set.
+</span></span><span style="display:flex;"><span>      -R VAR         True <span style="color:#66d9ef">if</span> the shell variable VAR is set and is a name
 </span></span><span style="display:flex;"><span>                     reference.
-</span></span><span style="display:flex;"><span>      ! EXPR         True if expr is false.
-</span></span><span style="display:flex;"><span>      EXPR1 -a EXPR2 True if both expr1 AND expr2 are true.
-</span></span><span style="display:flex;"><span>      EXPR1 -o EXPR2 True if either expr1 OR expr2 is true.
+</span></span><span style="display:flex;"><span>      ! EXPR         True <span style="color:#66d9ef">if</span> expr is false.
+</span></span><span style="display:flex;"><span>      EXPR1 -a EXPR2 True <span style="color:#66d9ef">if</span> both expr1 AND expr2 are true.
+</span></span><span style="display:flex;"><span>      EXPR1 -o EXPR2 True <span style="color:#66d9ef">if</span> either expr1 OR expr2 is true.
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>      arg1 OP arg2   Arithmetic tests.  OP is one of -eq, -ne,
 </span></span><span style="display:flex;"><span>                     -lt, -le, -gt, or -ge.
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    Arithmetic binary operators return true if ARG1 is equal, not-equal,
+</span></span><span style="display:flex;"><span>    Arithmetic binary operators <span style="color:#66d9ef">return</span> true <span style="color:#66d9ef">if</span> ARG1 is equal, not-equal,
 </span></span><span style="display:flex;"><span>    less-than, less-than-or-equal, greater-than, or greater-than-or-equal
 </span></span><span style="display:flex;"><span>    than ARG2.
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    See the bash manual page bash(1) for the handling of parameters (i.e.
-</span></span><span style="display:flex;"><span>    missing parameters).
+</span></span><span style="display:flex;"><span>    See the bash manual page bash<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> the handling of parameters <span style="color:#f92672">(</span>i.e.
+</span></span><span style="display:flex;"><span>    missing parameters<span style="color:#f92672">)</span>.
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    Exit Status:
-</span></span><span style="display:flex;"><span>    Returns success if EXPR evaluates to true; fails if EXPR evaluates to
+</span></span><span style="display:flex;"><span>    Returns success <span style="color:#66d9ef">if</span> EXPR evaluates to true; fails <span style="color:#66d9ef">if</span> EXPR evaluates to
 </span></span><span style="display:flex;"><span>    false or an invalid argument is given.
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
 </span></span></code></pre></div><h3 id="2101-变量测试">2.10.1 变量测试<a hidden class="anchor" aria-hidden="true" href="#2101-变量测试">#</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#判断 NAME 变量是否定义
-</span></span><span style="display:flex;"><span>[ -v NAME ]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#判断 NAME 变量是否定义</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> -v NAME <span style="color:#f92672">]</span>
 </span></span></code></pre></div><p><strong>范例：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# NAME=&#39;tom&#39;
-</span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# [ -v NAME ]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;tom&#39;</span>
+</span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# <span style="color:#f92672">[</span> -v NAME <span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# echo $?
-</span></span><span style="display:flex;"><span>0
-</span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# [ -v AGE ]
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# <span style="color:#f92672">[</span> -v AGE <span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# echo $?
-</span></span><span style="display:flex;"><span>1
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
 </span></span></code></pre></div><h3 id="2102-数值测试">2.10.2 数值测试<a hidden class="anchor" aria-hidden="true" href="#2102-数值测试">#</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-eq 是否等于
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>-eq 是否等于
 </span></span><span style="display:flex;"><span>-ne 是否不等于
 </span></span><span style="display:flex;"><span>-gt 是否大于
 </span></span><span style="display:flex;"><span>-ge 是否大于等于
@@ -1413,57 +1389,57 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#echo $?</span>
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>
 </span></span></code></pre></div><h3 id="2103-算术表达式比较">2.10.3 算术表达式比较<a hidden class="anchor" aria-hidden="true" href="#2103-算术表达式比较">#</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>== 相等
-</span></span><span style="display:flex;"><span>!= 不相等
-</span></span><span style="display:flex;"><span>&lt;=
-</span></span><span style="display:flex;"><span>&gt;=
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">==</span> 相等
+</span></span><span style="display:flex;"><span>!<span style="color:#f92672">=</span> 不相等
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>&gt;<span style="color:#f92672">=</span>
 </span></span><span style="display:flex;"><span>&lt;
 </span></span><span style="display:flex;"><span>&gt;
 </span></span></code></pre></div><p>范例：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos8 ~]#x=10;y=10;(( x == y ));echo $?
-</span></span><span style="display:flex;"><span>0
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#x=10;y=20;(( x == y ));echo $?
-</span></span><span style="display:flex;"><span>1
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#x=10;y=20;(( x != y ));echo $?
-</span></span><span style="display:flex;"><span>0
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#x=10;y=10;(( x != y ));echo $?
-</span></span><span style="display:flex;"><span>1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#x=10;y=10;(( x == y ));echo $?</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#x=10;y=20;(( x == y ));echo $?</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#x=10;y=20;(( x != y ));echo $?</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#x=10;y=10;(( x != y ));echo $?</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>
 </span></span></code></pre></div><h3 id="2104-字符窜测试">2.10.4 字符窜测试<a hidden class="anchor" aria-hidden="true" href="#2104-字符窜测试">#</a></h3>
-<p><strong>test和 [ ] 字符串测试用法</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-z STRING 字符串是否为空，没定义或空为真，不空为假，
+<p>test和 [ ] 字符串测试用法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>-z STRING 字符串是否为空，没定义或空为真，不空为假，
 </span></span><span style="display:flex;"><span>-n STRING 字符串是否不空，不空为真，空为假
 </span></span><span style="display:flex;"><span>STRING 同上
-</span></span><span style="display:flex;"><span>STRING1 = STRING2 是否等于，注意 = 前后有空格
-</span></span><span style="display:flex;"><span>STRING1 != STRING2 是否不等于
+</span></span><span style="display:flex;"><span>STRING1 <span style="color:#f92672">=</span> STRING2 是否等于，注意 <span style="color:#f92672">=</span> 前后有空格
+</span></span><span style="display:flex;"><span>STRING1 !<span style="color:#f92672">=</span> STRING2 是否不等于
 </span></span><span style="display:flex;"><span>&gt; ascii码是否大于ascii码
 </span></span><span style="display:flex;"><span>&lt; 是否小于
-</span></span></code></pre></div><p><strong>[[]] 字符串测试用法</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[[ expression ]] 用法
-</span></span><span style="display:flex;"><span>== 左侧字符串是否和右侧的PATTERN相同
-</span></span><span style="display:flex;"><span>注意:此表达式用于[[ ]]中，PATTERN为通配符
-</span></span><span style="display:flex;"><span>=~ 左侧字符串是否能够被右侧的正则表达式的PATTERN所匹配
-</span></span><span style="display:flex;"><span>注意: 此表达式用于[[ ]]中为扩展的正则表达式
-</span></span></code></pre></div><p><strong>建议：当使用正则表达式或通配符使用[[ ]]，其它情况一般使用 [ ]</strong></p>
+</span></span></code></pre></div><p>[[]] 字符串测试用法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[[</span> expression <span style="color:#f92672">]]</span> 用法
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span> 左侧字符串是否和右侧的PATTERN相同
+</span></span><span style="display:flex;"><span>注意:此表达式用于<span style="color:#f92672">[[</span> <span style="color:#f92672">]]</span>中，PATTERN为通配符
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span>~ 左侧字符串是否能够被右侧的正则表达式的PATTERN所匹配
+</span></span><span style="display:flex;"><span>注意: 此表达式用于<span style="color:#f92672">[[</span> <span style="color:#f92672">]]</span>中为扩展的正则表达式
+</span></span></code></pre></div><p>建议：当使用正则表达式或通配符使用[[ ]]，其它情况一般使用 [ ]</p>
 <hr>
-<p><strong>范例：使用 [ ]</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos8 ~]#unset str
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#[ -z &#34;$str&#34; ]
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#echo $?
-</span></span><span style="display:flex;"><span>0
-</span></span></code></pre></div><p><strong>范例：在比较字符串时，建议变量放在“ ”中</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos8 ~]#[ &#34;$NAME&#34; ]
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#NAME=&#34;I love linux&#34;
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#[ $NAME ]
-</span></span><span style="display:flex;"><span>-bash: [: love: binary operator expected
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#[ &#34;$NAME&#34; ]
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#echo $?
-</span></span><span style="display:flex;"><span>0
+<p>范例：使用 [ ]</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#unset str</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#[ -z &#34;$str&#34; ]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#echo $?</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>范例：在比较字符串时，建议变量放在“ ”中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#[ &#34;$NAME&#34; ]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#NAME=&#34;I love linux&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#[ $NAME ]</span>
+</span></span><span style="display:flex;"><span>-bash: <span style="color:#f92672">[</span>: love: binary operator expected
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#[ &#34;$NAME&#34; ]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#echo $?</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
 </span></span></code></pre></div><p><em><em>[[]]中如果不想使用通配符</em>,只想表达*本身,可以用&quot; &ldquo;引起来</em>*</p>
 <hr>
 <p>*<em>#[[]]中如果不想使用通配符</em>,只想表达<em>本身,也可以使用转义符*</em></p>
 <h3 id="2105-文件测试">2.10.5 文件测试<a hidden class="anchor" aria-hidden="true" href="#2105-文件测试">#</a></h3>
-<p><strong>存在性测试</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-a FILE：同 -e
+<p>存在性测试</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>-a FILE：同 -e
 </span></span><span style="display:flex;"><span>-e FILE: 文件存在性测试，存在为真，否则为假
 </span></span><span style="display:flex;"><span>-b FILE：是否存在且为块设备文件
 </span></span><span style="display:flex;"><span>-c FILE：是否存在且为字符设备文件
@@ -1473,74 +1449,74 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>-p FILE：是否存在且为命名管道文件
 </span></span><span style="display:flex;"><span>-S FILE：是否存在且为套接字文件
 </span></span></code></pre></div><p><strong>案例：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# [ -e /data/scripts/rm.sh ]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# <span style="color:#f92672">[</span> -e /data/scripts/rm.sh <span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# echo $?
-</span></span><span style="display:flex;"><span>0
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
-</span></span></code></pre></div><p><strong>文件权限测试</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-r FILE：是否存在且可读
+</span></span></code></pre></div><p>文件权限测试</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>-r FILE：是否存在且可读
 </span></span><span style="display:flex;"><span>-w FILE: 是否存在且可写
 </span></span><span style="display:flex;"><span>-x FILE: 是否存在且可执行
 </span></span><span style="display:flex;"><span>-u FILE：是否存在且拥有suid权限
 </span></span><span style="display:flex;"><span>-g FILE：是否存在且拥有sgid权限
 </span></span><span style="display:flex;"><span>-k FILE：是否存在且拥有sticky权限
-</span></span></code></pre></div><p><strong>注意：最终结果由用户对文件的实际权限决定，而非文件属性决定</strong></p>
+</span></span></code></pre></div><p>注意：最终结果由用户对文件的实际权限决定，而非文件属性决定</p>
 <hr>
 <p><strong>范例:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# [ -w /data/scripts/rm.sh ]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# <span style="color:#f92672">[</span> -w /data/scripts/rm.sh <span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# echo $?
-</span></span><span style="display:flex;"><span>0
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
-</span></span></code></pre></div><p><strong>文件属性测试</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-s FILE #是否存在且非空
-</span></span><span style="display:flex;"><span>-t fd #fd 文件描述符是否在某终端已经打开
-</span></span><span style="display:flex;"><span>-N FILE #文件自从上一次被读取之后是否被修改过
-</span></span><span style="display:flex;"><span>-O FILE #当前有效用户是否为文件属主
-</span></span><span style="display:flex;"><span>-G FILE #当前有效用户是否为文件属组
-</span></span><span style="display:flex;"><span>FILE1 -ef FILE2 #FILE1是否是FILE2的硬链接
-</span></span><span style="display:flex;"><span>FILE1 -nt FILE2 #FILE1是否新于FILE2（mtime）
-</span></span><span style="display:flex;"><span>FILE1 -ot FILE2 #FILE1是否旧于FILE2
+</span></span></code></pre></div><p>文件属性测试</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>-s FILE <span style="color:#75715e">#是否存在且非空</span>
+</span></span><span style="display:flex;"><span>-t fd <span style="color:#75715e">#fd 文件描述符是否在某终端已经打开</span>
+</span></span><span style="display:flex;"><span>-N FILE <span style="color:#75715e">#文件自从上一次被读取之后是否被修改过</span>
+</span></span><span style="display:flex;"><span>-O FILE <span style="color:#75715e">#当前有效用户是否为文件属主</span>
+</span></span><span style="display:flex;"><span>-G FILE <span style="color:#75715e">#当前有效用户是否为文件属组</span>
+</span></span><span style="display:flex;"><span>FILE1 -ef FILE2 <span style="color:#75715e">#FILE1是否是FILE2的硬链接</span>
+</span></span><span style="display:flex;"><span>FILE1 -nt FILE2 <span style="color:#75715e">#FILE1是否新于FILE2（mtime）</span>
+</span></span><span style="display:flex;"><span>FILE1 -ot FILE2 <span style="color:#75715e">#FILE1是否旧于FILE2</span>
 </span></span></code></pre></div><p><strong>案例：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# [ -s /data/scripts/rm.sh ]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# <span style="color:#f92672">[</span> -s /data/scripts/rm.sh <span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# echo $?
-</span></span><span style="display:flex;"><span>0
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
 </span></span><span style="display:flex;"><span>root@ubuntu200404:/data/scripts# 
 </span></span></code></pre></div><h2 id="211-关于和">2.11 关于（）和<a hidden class="anchor" aria-hidden="true" href="#211-关于和">#</a></h2>
 <p><strong>（CMD1;CMD2;&hellip;）和 { CMD1;CMD2;&hellip;; } 都可以将多个命令组合在一起，批量执行</strong>**</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>( list ) 会开启子shell,并且list中变量赋值及内部命令执行后,将不再影响后续的环境
-</span></span><span style="display:flex;"><span>帮助参看:man bash 搜索(list)
-</span></span><span style="display:flex;"><span>{ list; } 不会启子shell, 在当前shell中运行,会影响当前shell环境
-</span></span><span style="display:flex;"><span>帮助参看:man bash 搜索{ list; }
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span> list <span style="color:#f92672">)</span> 会开启子shell,并且list中变量赋值及内部命令执行后,将不再影响后续的环境
+</span></span><span style="display:flex;"><span>帮助参看:man bash 搜索<span style="color:#f92672">(</span>list<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span> list; <span style="color:#f92672">}</span> 不会启子shell, 在当前shell中运行,会影响当前shell环境
+</span></span><span style="display:flex;"><span>帮助参看:man bash 搜索<span style="color:#f92672">{</span> list; <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>( list ) 会开启子shell,并且list中变量赋值及内部命令执行后,将不再影响后续的环境
-</span></span><span style="display:flex;"><span>帮助参看:man bash 搜索(list)
-</span></span><span style="display:flex;"><span>{ list; } 不会启子shell, 在当前shell中运行,会影响当前shell环境
-</span></span><span style="display:flex;"><span>帮助参看:man bash 搜索{ list; }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span> list <span style="color:#f92672">)</span> 会开启子shell,并且list中变量赋值及内部命令执行后,将不再影响后续的环境
+</span></span><span style="display:flex;"><span>帮助参看:man bash 搜索<span style="color:#f92672">(</span>list<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span> list; <span style="color:#f92672">}</span> 不会启子shell, 在当前shell中运行,会影响当前shell环境
+</span></span><span style="display:flex;"><span>帮助参看:man bash 搜索<span style="color:#f92672">{</span> list; <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>#（）会开启子shell
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#echo $BASHPID
-</span></span><span style="display:flex;"><span>1920
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#( echo $BASHPID;sleep 100)
-</span></span><span style="display:flex;"><span>1979
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#pstree -p
-</span></span><span style="display:flex;"><span>├─sshd(719)───sshd(1906)───sshd(1919)─┬─bash(1920)───bash(1979)───sleep(1980)
-</span></span><span style="display:flex;"><span>#{ } 不会开启子shell
-</span></span><span style="display:flex;"><span>[root@centos8 ~]#echo $BASHPID
-</span></span><span style="display:flex;"><span>1920
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#（）会开启子shell</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#echo $BASHPID</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1920</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#( echo $BASHPID;sleep 100)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1979</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#pstree -p</span>
+</span></span><span style="display:flex;"><span>├─sshd<span style="color:#f92672">(</span>719<span style="color:#f92672">)</span>───sshd<span style="color:#f92672">(</span>1906<span style="color:#f92672">)</span>───sshd<span style="color:#f92672">(</span>1919<span style="color:#f92672">)</span>─┬─bash<span style="color:#f92672">(</span>1920<span style="color:#f92672">)</span>───bash<span style="color:#f92672">(</span>1979<span style="color:#f92672">)</span>───sleep<span style="color:#f92672">(</span>1980<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#{ } 不会开启子shell</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#echo $BASHPID</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1920</span>
 </span></span></code></pre></div><h2 id="212-组合测试">2.12 组合测试<a hidden class="anchor" aria-hidden="true" href="#212-组合测试">#</a></h2>
 <h3 id="2121-第一种方式">2.12.1 第一种方式<a hidden class="anchor" aria-hidden="true" href="#2121-第一种方式">#</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[ EXPRESSION1 -a EXPRESSION2 ] #并且，EXPRESSION1和EXPRESSION2都是真，结果才为真
-</span></span><span style="display:flex;"><span>[ EXPRESSION1 -o EXPRESSION2 ] #或者，EXPRESSION1和EXPRESSION2只要有一个真，结果就为
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span> EXPRESSION1 -a EXPRESSION2 <span style="color:#f92672">]</span> <span style="color:#75715e">#并且，EXPRESSION1和EXPRESSION2都是真，结果才为真</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> EXPRESSION1 -o EXPRESSION2 <span style="color:#f92672">]</span> <span style="color:#75715e">#或者，EXPRESSION1和EXPRESSION2只要有一个真，结果就为</span>
 </span></span><span style="display:flex;"><span>真
-</span></span><span style="display:flex;"><span>[ ! EXPRESSION ] #取反
-</span></span></code></pre></div><p><strong>说明： -a 和 -o 需要使用测试命令进行，[[ ]] 不支持</strong></p>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> ! EXPRESSION <span style="color:#f92672">]</span> <span style="color:#75715e">#取反</span>
+</span></span></code></pre></div><p>说明： -a 和 -o 需要使用测试命令进行，[[ ]] 不支持</p>
 <h3 id="2122-第二种方式">2.12.2 第二种方式<a hidden class="anchor" aria-hidden="true" href="#2122-第二种方式">#</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>COMMAND1 &amp;&amp; COMMAND2 #并且，短路与，代表条件性的AND THEN
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>COMMAND1 <span style="color:#f92672">&amp;&amp;</span> COMMAND2 <span style="color:#75715e">#并且，短路与，代表条件性的AND THEN</span>
 </span></span><span style="display:flex;"><span>如果COMMAND1 成功,将执行COMMAND2,否则,将不执行COMMAND2
-</span></span><span style="display:flex;"><span>COMMAND1 || COMMAND2 #或者，短路或，代表条件性的OR ELSE
+</span></span><span style="display:flex;"><span>COMMAND1 <span style="color:#f92672">||</span> COMMAND2 <span style="color:#75715e">#或者，短路或，代表条件性的OR ELSE</span>
 </span></span><span style="display:flex;"><span>如果COMMAND1 成功,将不执行COMMAND2,否则,将执行COMMAND2
-</span></span><span style="display:flex;"><span>! COMMAND #非,取反
-</span></span></code></pre></div><p><strong>如果&amp;&amp; 和 || 混合使用，&amp;&amp; 要在前，|| 放在后</strong></p>
+</span></span><span style="display:flex;"><span>! COMMAND <span style="color:#75715e">#非,取反</span>
+</span></span></code></pre></div><p>如果&amp;&amp; 和 || 混合使用，&amp;&amp; 要在前，|| 放在后</p>
 <hr>
 <p><strong>练习</strong>
 1、编写脚本 argsnum.sh，接受一个文件路径作为参数；如果参数个数小于1，则提示用户“至少应该给一个参数”，并立即退出；如果参数个数不小于1，则显示第一个参数所指向的文件中的空白行数
@@ -1552,7 +1528,7 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 <h2 id="213-使用read命令来接受输入">2.13 使用read命令来接受输入<a hidden class="anchor" aria-hidden="true" href="#213-使用read命令来接受输入">#</a></h2>
 <p>使用read来把输入值分配给一个或多个shell变量，read从标准输入中读取值，给每个单词分配一个变量，所有剩余单词都被分配给最后一个变量，如果变量名没有指定，默认标准输入的值赋值给系统内置变量REPLY
 格式：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>read [options] [name ...]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>read <span style="color:#f92672">[</span>options<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>name ...<span style="color:#f92672">]</span>
 </span></span></code></pre></div><p><strong>常用选项：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-p 指定要显示的提示
 </span></span><span style="display:flex;"><span>-s 静默输入，一般用于密码
@@ -1560,51 +1536,51 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>-d &#39;字符&#39; 输入结束符
 </span></span><span style="display:flex;"><span>-t N TIMEOUT为N秒
 </span></span></code></pre></div><p><strong>范例：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@rocky ~]# read -p &#39;请输入任意内容&#39; NAME
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@rocky ~<span style="color:#f92672">]</span><span style="color:#75715e"># read -p &#39;请输入任意内容&#39; NAME</span>
 </span></span><span style="display:flex;"><span>请输入任意内容yuan
-</span></span><span style="display:flex;"><span>[root@rocky ~]# echo ${NAME}
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@rocky ~<span style="color:#f92672">]</span><span style="color:#75715e"># echo ${NAME}</span>
 </span></span><span style="display:flex;"><span>yuan
-</span></span><span style="display:flex;"><span>[root@rocky ~]# 
-</span></span></code></pre></div><h1 id="3--条件选择if">3  条件选择if<a hidden class="anchor" aria-hidden="true" href="#3--条件选择if">#</a></h1>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@rocky ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
+</span></span></code></pre></div><h2 id="3--条件选择if">3  条件选择if<a hidden class="anchor" aria-hidden="true" href="#3--条件选择if">#</a></h2>
 <p><strong>格式：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>if COMMANDS; then COMMANDS; [ elif COMMANDS; then COMMANDS; ]... [ else
-</span></span><span style="display:flex;"><span>COMMANDS; ] fi
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> COMMANDS; <span style="color:#66d9ef">then</span> COMMANDS; <span style="color:#f92672">[</span> <span style="color:#66d9ef">elif</span> COMMANDS; <span style="color:#66d9ef">then</span> COMMANDS; <span style="color:#f92672">]</span>... <span style="color:#f92672">[</span> <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>COMMANDS; <span style="color:#f92672">]</span> <span style="color:#66d9ef">fi</span>
 </span></span></code></pre></div><p><strong>单分支：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>if 判断条件;then
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> 判断条件;<span style="color:#66d9ef">then</span>
 </span></span><span style="display:flex;"><span>条件为真的分支代码
-</span></span><span style="display:flex;"><span>fi
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
 </span></span></code></pre></div><p><strong>双分支：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>if 判断条件; then
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> 判断条件; <span style="color:#66d9ef">then</span>
 </span></span><span style="display:flex;"><span>条件为真的分支代码
-</span></span><span style="display:flex;"><span>else
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>
 </span></span><span style="display:flex;"><span>条件为假的分支代码
-</span></span><span style="display:flex;"><span>fi
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
 </span></span></code></pre></div><p><strong>多分支：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>if 判断条件1; then
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> 判断条件1; <span style="color:#66d9ef">then</span>
 </span></span><span style="display:flex;"><span>条件1为真的分支代码
-</span></span><span style="display:flex;"><span>elif 判断条件2; then
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">elif</span> 判断条件2; <span style="color:#66d9ef">then</span>
 </span></span><span style="display:flex;"><span>条件2为真的分支代码
-</span></span><span style="display:flex;"><span>elif 判断条件3; then
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">elif</span> 判断条件3; <span style="color:#66d9ef">then</span>
 </span></span><span style="display:flex;"><span>条件3为真的分支代码
 </span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span>else
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>
 </span></span><span style="display:flex;"><span>以上条件都为假的分支代码
-</span></span><span style="display:flex;"><span>fi
-</span></span></code></pre></div><h1 id="4-循环">4 循环<a hidden class="anchor" aria-hidden="true" href="#4-循环">#</a></h1>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><h2 id="4-循环">4 循环<a hidden class="anchor" aria-hidden="true" href="#4-循环">#</a></h2>
 <h2 id="41-for循环">4.1 for循环<a hidden class="anchor" aria-hidden="true" href="#41-for循环">#</a></h2>
 <p><strong>帮助：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>help for
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>help <span style="color:#66d9ef">for</span>
 </span></span></code></pre></div><p><strong>格式：</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>for NAME [in WORDS ... ] ; do COMMANDS; done
-</span></span><span style="display:flex;"><span>#方式1
-</span></span><span style="display:flex;"><span>for 变量名 in 列表;do
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> NAME <span style="color:#f92672">[</span>in WORDS ... <span style="color:#f92672">]</span> ; <span style="color:#66d9ef">do</span> COMMANDS; <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#方式1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> 变量名 in 列表;<span style="color:#66d9ef">do</span>
 </span></span><span style="display:flex;"><span>循环体
-</span></span><span style="display:flex;"><span>done
-</span></span><span style="display:flex;"><span>#方式2
-</span></span><span style="display:flex;"><span>for 变量名 in 列表
-</span></span><span style="display:flex;"><span>do
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#方式2</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> 变量名 in 列表
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span>
 </span></span><span style="display:flex;"><span>循环体
-</span></span><span style="display:flex;"><span>done
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
 </span></span></code></pre></div><p><strong>执行机制：</strong></p>
 <ul>
 <li>依次将列表中的元素赋值给“变量名”; 每次赋值后即执行一次循环体; 直到列表中的元素耗尽，循环结束</li>
@@ -1615,17 +1591,17 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 <li>直接给出列表</li>
 <li>整数列表：</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>{start..end}
-</span></span><span style="display:flex;"><span>$(seq [start [step]] end)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">{</span>start..end<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">$(</span>seq <span style="color:#f92672">[</span>start <span style="color:#f92672">[</span>step<span style="color:#f92672">]]</span> end<span style="color:#66d9ef">)</span>
 </span></span></code></pre></div><ul>
 <li>返回列表的命令</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$(COMMAND)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">$(</span>COMMAND<span style="color:#66d9ef">)</span>
 </span></span></code></pre></div><ul>
 <li>使用glob，如：<em>.sh</em></li>
 <li><em>变量引用，如：$@，$</em>，$#</li>
 </ul>
-<p><strong>范例：计算1+···+100的值</strong></p>
+<p>范例：计算1+···+100的值</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#sum=0;for i in {1..100};do let sum+=i;done ;echo sum=$sum</span>
 </span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">5050</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#seq -s+ 100|bc5050</span>
@@ -1635,14 +1611,14 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@centos8 ~<span style="color:#f92672">]</span><span style="color:#75715e">#seq 100|paste -sd +|bc</span>
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">5050</span>
 </span></span></code></pre></div><h2 id="42-while循环">4.2 while循环<a hidden class="anchor" aria-hidden="true" href="#42-while循环">#</a></h2>
-<p><strong>格式</strong></p>
+<p>格式</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#66d9ef">while</span> COMMANDS; <span style="color:#66d9ef">do</span> COMMANDS; <span style="color:#66d9ef">done</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> CONDITION; <span style="color:#66d9ef">do</span>
 </span></span><span style="display:flex;"><span>循环体
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
-</span></span></code></pre></div><p><strong>扩展:nc命令</strong></p>
+</span></span></code></pre></div><p>扩展:nc命令</p>
 <p>nc命令 全称netcat，用于设置路由器。它能通过 TCP 和 UDP 在网络中读写数据。通过与其他工具结合和重定向，你可以在脚本中以多种方式使用它。使用 netcat 命令所能完成的事情令人惊讶。</p>
-<p><strong>选项</strong></p>
+<p>选项</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-g&lt;网关&gt; 设置路由器跃程通信网关，最多可设置8个。
 </span></span><span style="display:flex;"><span>-G&lt;指向器数目&gt; 设置来源路由指向器，其数值为4的倍数。
 </span></span><span style="display:flex;"><span>-h 在线帮助。
@@ -1657,14 +1633,14 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>-v 显示指令执行过程。
 </span></span><span style="display:flex;"><span>-w&lt;超时秒数&gt; 设置等待连线的时间。
 </span></span><span style="display:flex;"><span>-z 使用0输入/输出模式，只在扫描通信端口时使用。
-</span></span></code></pre></div><p><strong>范例</strong></p>
+</span></span></code></pre></div><p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># TCP端口扫描</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@rocky ~<span style="color:#f92672">]</span><span style="color:#75715e"># nc -zv 192.168.179.129 80</span>
 </span></span><span style="display:flex;"><span>Ncat: Version 7.70 <span style="color:#f92672">(</span> https://nmap.org/ncat <span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span>Ncat: Connected to 192.168.179.129:80.
 </span></span><span style="display:flex;"><span>Ncat: <span style="color:#ae81ff">0</span> bytes sent, <span style="color:#ae81ff">0</span> bytes received in 0.01 seconds.
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@rocky ~<span style="color:#f92672">]</span><span style="color:#75715e"># </span>
-</span></span></code></pre></div><p><strong>范例:写一个扫描某个主机端口的状态的脚本</strong></p>
+</span></span></code></pre></div><p>范例:写一个扫描某个主机端口的状态的脚本</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e"># 变量</span>
 </span></span><span style="display:flex;"><span>i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
@@ -1674,7 +1650,7 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>cat /dev/null &gt;port.TXT
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 循环端口1-100</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#f92672">[</span> $i -le <span style="color:#ae81ff">100</span> <span style="color:#f92672">]</span>;<span style="color:#66d9ef">do</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># 扫描端口并将信息放入垃圾箱</span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e"># 扫描端口并将信息放入垃圾箱</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> nc -z <span style="color:#e6db74">${</span>host<span style="color:#e6db74">}</span> <span style="color:#e6db74">${</span>i<span style="color:#e6db74">}</span> &amp;&gt; /dev/null;<span style="color:#66d9ef">then</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 屏幕打印IP+port,输出重定向到port.TXT</span>
 </span></span><span style="display:flex;"><span>        echo <span style="color:#e6db74">${</span>host<span style="color:#e6db74">}</span>:<span style="color:#e6db74">${</span>i<span style="color:#e6db74">}</span> | tee -a port.TXT
@@ -1682,40 +1658,40 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e"># i++</span>
 </span></span><span style="display:flex;"><span>    let i++
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
-</span></span></code></pre></div><h1 id="5-其他脚本相关工具">5 其他脚本相关工具<a hidden class="anchor" aria-hidden="true" href="#5-其他脚本相关工具">#</a></h1>
+</span></span></code></pre></div><h2 id="5-其他脚本相关工具">5 其他脚本相关工具<a hidden class="anchor" aria-hidden="true" href="#5-其他脚本相关工具">#</a></h2>
 <h2 id="51-trap命令">5.1 trap命令<a hidden class="anchor" aria-hidden="true" href="#51-trap命令">#</a></h2>
 <p>trap命令可以捕捉信号，修改信号原有的功能，实现自定义功能</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 查看信号trap -l 或者kill -l
 </span></span><span style="display:flex;"><span>root@ubuntu200404-1:/data/scripts# kill -l
-</span></span><span style="display:flex;"><span> 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP
-</span></span><span style="display:flex;"><span> 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1
-</span></span><span style="display:flex;"><span>11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM
-</span></span><span style="display:flex;"><span>16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP
-</span></span><span style="display:flex;"><span>21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ
-</span></span><span style="display:flex;"><span>26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR
-</span></span><span style="display:flex;"><span>31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3
-</span></span><span style="display:flex;"><span>38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8
-</span></span><span style="display:flex;"><span>43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13
-</span></span><span style="display:flex;"><span>48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12
-</span></span><span style="display:flex;"><span>53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7
-</span></span><span style="display:flex;"><span>58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2
-</span></span><span style="display:flex;"><span>63) SIGRTMAX-1	64) SIGRTMAX	
+</span></span><span style="display:flex;"><span>1) SIGHUP  2) SIGINT  3) SIGQUIT  4) SIGILL  5) SIGTRAP
+</span></span><span style="display:flex;"><span> 6) SIGABRT  7) SIGBUS  8) SIGFPE  9) SIGKILL 10) SIGUSR1
+</span></span><span style="display:flex;"><span>11) SIGSEGV 12) SIGUSR2 13) SIGPIPE 14) SIGALRM 15) SIGTERM
+</span></span><span style="display:flex;"><span>16) SIGSTKFLT 17) SIGCHLD 18) SIGCONT 19) SIGSTOP 20) SIGTSTP
+</span></span><span style="display:flex;"><span>21) SIGTTIN 22) SIGTTOU 23) SIGURG 24) SIGXCPU 25) SIGXFSZ
+</span></span><span style="display:flex;"><span>26) SIGVTALRM 27) SIGPROF 28) SIGWINCH 29) SIGIO 30) SIGPWR
+</span></span><span style="display:flex;"><span>31) SIGSYS 34) SIGRTMIN 35) SIGRTMIN+1 36) SIGRTMIN+2 37) SIGRTMIN+3
+</span></span><span style="display:flex;"><span>38) SIGRTMIN+4 39) SIGRTMIN+5 40) SIGRTMIN+6 41) SIGRTMIN+7 42) SIGRTMIN+8
+</span></span><span style="display:flex;"><span>43) SIGRTMIN+9 44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12 47) SIGRTMIN+13
+</span></span><span style="display:flex;"><span>48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14 51) SIGRTMAX-13 52) SIGRTMAX-12
+</span></span><span style="display:flex;"><span>53) SIGRTMAX-11 54) SIGRTMAX-10 55) SIGRTMAX-9 56) SIGRTMAX-8 57) SIGRTMAX-7
+</span></span><span style="display:flex;"><span>58) SIGRTMAX-6 59) SIGRTMAX-5 60) SIGRTMAX-4 61) SIGRTMAX-3 62) SIGRTMAX-2
+</span></span><span style="display:flex;"><span>63) SIGRTMAX-1 64) SIGRTMAX
 </span></span><span style="display:flex;"><span>root@ubuntu200404-1:/data/scripts#
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 进程收到系统发出的制定信号后，将执行自定义指令，而不会执原操作
-</span></span><span style="display:flex;"><span>trap &#39;触发指令&#39; 信号
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 进程收到系统发出的制定信号后，将执行自定义指令，而不会执原操作</span>
+</span></span><span style="display:flex;"><span>trap <span style="color:#e6db74">&#39;触发指令&#39;</span> 信号
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># 忽略信号的操作
-</span></span><span style="display:flex;"><span>trap &#39;&#39; 信号
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 忽略信号的操作</span>
+</span></span><span style="display:flex;"><span>trap <span style="color:#e6db74">&#39;&#39;</span> 信号
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># 恢复原信号的操作
-</span></span><span style="display:flex;"><span>trap &#39;-&#39; 信号
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 恢复原信号的操作</span>
+</span></span><span style="display:flex;"><span>trap <span style="color:#e6db74">&#39;-&#39;</span> 信号
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># 列出自定义的操作
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 列出自定义的操作</span>
 </span></span><span style="display:flex;"><span>trap -p
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># 当脚本退出时，执行finish函数
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 当脚本退出时，执行finish函数</span>
 </span></span><span style="display:flex;"><span>trap finish exit
-</span></span></code></pre></div><p><strong>范例</strong></p>
+</span></span></code></pre></div><p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 打印press ctrl+c or ctrl+\   replace int quit</span>
@@ -1728,8 +1704,8 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 打印1-10键盘按ctrl+c打印press ctrl+c or ctrl</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#f92672">((</span>i<span style="color:#f92672">=</span>1;i&lt;<span style="color:#f92672">=</span>10;i++<span style="color:#f92672">))</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span>
-</span></span><span style="display:flex;"><span>	sleep <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">${</span>i<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span> sleep <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> echo <span style="color:#e6db74">${</span>i<span style="color:#e6db74">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 忽略2 3信号操作</span>
@@ -1742,8 +1718,8 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 打印11-20的时候键盘按ctrl+c没有任何操作</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span><span style="color:#f92672">((</span>i<span style="color:#f92672">=</span>11;i&lt;<span style="color:#f92672">=</span>20;i++<span style="color:#f92672">))</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span>
-</span></span><span style="display:flex;"><span>	sleep <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">${</span>i<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span> sleep <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> echo <span style="color:#e6db74">${</span>i<span style="color:#e6db74">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 恢复原信号操作</span>
@@ -1758,21 +1734,21 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>        sleep <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>        echo <span style="color:#e6db74">${</span>i<span style="color:#e6db74">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
-</span></span></code></pre></div><p><strong>范例</strong></p>
+</span></span></code></pre></div><p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span>finsh<span style="color:#f92672">(){</span>
-</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">`</span>date +%F-%T<span style="color:#e6db74">`</span>-finsh | tee -a /data/finsh.log
+</span></span><span style="display:flex;"><span> echo <span style="color:#e6db74">`</span>date +%F-%T<span style="color:#e6db74">`</span>-finsh | tee -a /data/finsh.log
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 捕捉到退出执行finsh   trap或者exit</span>
 </span></span><span style="display:flex;"><span>trap finsh exit
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> true;<span style="color:#66d9ef">do</span>
-</span></span><span style="display:flex;"><span>	echo running
-</span></span><span style="display:flex;"><span>	sleep <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> echo running
+</span></span><span style="display:flex;"><span> sleep <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
-</span></span></code></pre></div><p><strong>创建临时文件</strong></p>
+</span></span></code></pre></div><p>创建临时文件</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># mktemp testXXXX
 </span></span><span style="display:flex;"><span>root@ubuntu200404-1:/data/scripts# mktemp testXXXXXX.log
 </span></span><span style="display:flex;"><span>testdnlqM9.log
@@ -1787,20 +1763,20 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 操作的场景，借助 expect 处理交互的命令，可以将交互过程如：ssh登录，ftp登录等写在一个脚本
 上，使之自动化完成。尤其适用于需要对多台服务器执行相同操作的环境中，可以大大提高系统管理人
 员的工作效率。</p>
-<p><strong>expect语法</strong></p>
+<p>expect语法</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>expect [选项] [ -c cmds ] [ [ -[f|b] ] cmdfile ] [ args ]
-</span></span></code></pre></div><p><strong>常见选项</strong></p>
+</span></span></code></pre></div><p>常见选项</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-c：从命令行执行expect脚本，默认expect是交互地执行的
-</span></span><span style="display:flex;"><span>-d：可以调试信息	
-</span></span></code></pre></div><p><strong>expect中相关命令</strong></p>
+</span></span><span style="display:flex;"><span>-d：可以调试信息 
+</span></span></code></pre></div><p>expect中相关命令</p>
 <ul>
-<li>spawn	启动新的进程</li>
+<li>spawn 启动新的进程</li>
 <li>expect    从进程接收字符串</li>
 <li>send 用于向进程发送字符串</li>
 <li>interact 允许用户交互</li>
 <li>exp_continue 匹配多个字符串在执行动作后加此命令</li>
 </ul>
-<p><strong>范例1:自动登录</strong></p>
+<p>范例1:自动登录</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 创建文件
 </span></span><span style="display:flex;"><span>vim filename
 </span></span><span style="display:flex;"><span>
@@ -1811,9 +1787,9 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>spawn ssh 192.168.179.138
 </span></span><span style="display:flex;"><span># 从进程接收字符串
 </span></span><span style="display:flex;"><span>expect {
-</span></span><span style="display:flex;"><span>	# 匹配到yse/no，输入yes
-</span></span><span style="display:flex;"><span>	&#34;yes/no&#34; {send &#34;yes\n&#34;;exp_continue }
-</span></span><span style="display:flex;"><span>	&#34;password&#34; { send &#34;123456\n&#34; }
+</span></span><span style="display:flex;"><span> # 匹配到yse/no，输入yes
+</span></span><span style="display:flex;"><span> &#34;yes/no&#34; {send &#34;yes\n&#34;;exp_continue }
+</span></span><span style="display:flex;"><span> &#34;password&#34; { send &#34;123456\n&#34; }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span># 允许用户交互
 </span></span><span style="display:flex;"><span>interact
@@ -1821,10 +1797,10 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>chmod +x filename
 </span></span><span style="display:flex;"><span># 执行
 </span></span><span style="display:flex;"><span>./filename
-</span></span></code></pre></div><p><strong>扩展：scp命令</strong></p>
-<p><strong>语法</strong></p>
+</span></span></code></pre></div><p>扩展：scp命令</p>
+<p>语法</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>scp 选项 参数
-</span></span></code></pre></div><p><strong>选项</strong></p>
+</span></span></code></pre></div><p>选项</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-1：使用ssh协议版本1；
 </span></span><span style="display:flex;"><span>-2：使用ssh协议版本2；
 </span></span><span style="display:flex;"><span>-4：使用ipv4；
@@ -1841,33 +1817,33 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>-r：以递归方式复制。
 </span></span></code></pre></div><p><strong>实例</strong>
 从远程复制到本地的scp命令与上面的命令雷同，只要将从本地复制到远程的命令后面2个参数互换顺序就行了。</p>
-<p><strong>从远程机器复制文件到本地目录</strong></p>
+<p>从远程机器复制文件到本地目录</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>scp root@10.10.10.10:/opt/soft/nginx-0.5.38.tar.gz /opt/soft/
 </span></span></code></pre></div><p>从10.10.10.10机器上的/opt/soft/的目录中下载nginx-0.5.38.tar.gz 文件到本地/opt/soft/目录中。</p>
-<p><strong>从远程机器复制目录到本地</strong></p>
+<p>从远程机器复制目录到本地</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>scp -r root@10.10.10.10:/opt/soft/mongodb /opt/soft/
 </span></span></code></pre></div><p>从10.10.10.10机器上的/opt/soft/中下载mongodb目录到本地的/opt/soft/目录来。</p>
-<p><strong>上传本地文件到远程机器指定目录</strong></p>
+<p>上传本地文件到远程机器指定目录</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>scp /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest
 </span></span><span style="display:flex;"><span># 指定端口 2222
 </span></span><span style="display:flex;"><span>scp -rp -P 2222 /opt/soft/nginx-0.5.38.tar.gz root@10.10.10.10:/opt/soft/scptest
 </span></span></code></pre></div><p>复制本地/opt/soft/目录下的文件nginx-0.5.38.tar.gz到远程机器10.10.10.10的opt/soft/scptest目录。</p>
-<p><strong>上传本地目录到远程机器指定目录</strong></p>
+<p>上传本地目录到远程机器指定目录</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>scp -r /opt/soft/mongodb root@10.10.10.10:/opt/soft/scptest
 </span></span></code></pre></div><p>上传本地目录/opt/soft/mongodb到远程机器10.10.10.10上/opt/soft/scptest的目录中去。</p>
-<p><strong>范例2:非交互式复制文件</strong></p>
+<p>范例2:非交互式复制文件</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#!/usr/bin/expect
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span># 开启新的进程,复制当前主机下的/root/hello.sh到远程主机
 </span></span><span style="display:flex;"><span>spawn scp /root/hello.sh root@192.168.179.129:/root
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>expect {
-</span></span><span style="display:flex;"><span>	# 匹配到yes/no，输入yes
-</span></span><span style="display:flex;"><span>	&#34;yes/no&#34; { send &#34;yes\n&#34;;exp_continue}
-</span></span><span style="display:flex;"><span>	&#34;password&#34; { send &#34;123456\n&#34;}	
+</span></span><span style="display:flex;"><span> # 匹配到yes/no，输入yes
+</span></span><span style="display:flex;"><span> &#34;yes/no&#34; { send &#34;yes\n&#34;;exp_continue}
+</span></span><span style="display:flex;"><span> &#34;password&#34; { send &#34;123456\n&#34;} 
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>expect eof
-</span></span></code></pre></div><p><strong>范例3:变量</strong></p>
+</span></span></code></pre></div><p>范例3:变量</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#!/usr/bin/expect
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span># 添加变量
@@ -1880,13 +1856,13 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>spawn ssh ${user}@${ip}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>expect {
-</span></span><span style="display:flex;"><span>	&#34;yes/no&#34; { send &#34;yes\n&#34;;exp_continue}
-</span></span><span style="display:flex;"><span>	&#34;password&#34; { send &#34;$passwd\n&#34; }
+</span></span><span style="display:flex;"><span> &#34;yes/no&#34; { send &#34;yes\n&#34;;exp_continue}
+</span></span><span style="display:flex;"><span> &#34;password&#34; { send &#34;$passwd\n&#34; }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span># 允许交互式操作
 </span></span><span style="display:flex;"><span>interact
-</span></span></code></pre></div><p><strong>范例4:位置参数</strong></p>
+</span></span></code></pre></div><p>范例4:位置参数</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#!/usr/bin/expect
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span># 添加变量
@@ -1899,8 +1875,8 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>spawn ssh ${user}@${ip}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>expect {
-</span></span><span style="display:flex;"><span>	&#34;yes/no&#34; { send &#34;yes\n&#34;;exp_continue}
-</span></span><span style="display:flex;"><span>	&#34;password&#34; { send &#34;$passwd\n&#34; }
+</span></span><span style="display:flex;"><span> &#34;yes/no&#34; { send &#34;yes\n&#34;;exp_continue}
+</span></span><span style="display:flex;"><span> &#34;password&#34; { send &#34;$passwd\n&#34; }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>}
@@ -1910,7 +1886,7 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# chmmod +x expect3
 </span></span><span style="display:flex;"><span># 后面跟三个参数
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# ./expect3 192.168.179.138 root 123456
-</span></span></code></pre></div><p><strong>范例5:执行多个命令</strong></p>
+</span></span></code></pre></div><p>范例5:执行多个命令</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#!/usr/bin/expect
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span># 添加变量
@@ -1923,8 +1899,8 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>spawn ssh ${user}@${ip}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>expect {
-</span></span><span style="display:flex;"><span>	&#34;yes/no&#34; { send &#34;yes\n&#34;;exp_continue}
-</span></span><span style="display:flex;"><span>	&#34;password&#34; { send &#34;$passwd\n&#34; }
+</span></span><span style="display:flex;"><span> &#34;yes/no&#34; { send &#34;yes\n&#34;;exp_continue}
+</span></span><span style="display:flex;"><span> &#34;password&#34; { send &#34;$passwd\n&#34; }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span># adduser haha
@@ -1936,7 +1912,7 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>expect eof
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# ./expect4 192.168.179.141 root 123456
-</span></span></code></pre></div><p><strong>范例6:shell脚本调用expect</strong></p>
+</span></span></code></pre></div><p>范例6:shell脚本调用expect</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ip<span style="color:#f92672">=</span>$1
 </span></span><span style="display:flex;"><span>user<span style="color:#f92672">=</span>$2
@@ -1959,7 +1935,7 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">expect eof
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos7 ~]# bash expect5.sh 192.168.179.141 root 123456
-</span></span></code></pre></div><p><strong>范例7: shell脚本利用循环调用expect在CentOS和Ubuntu上批量创建用户</strong></p>
+</span></span></code></pre></div><p>范例7: shell脚本利用循环调用expect在CentOS和Ubuntu上批量创建用户</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>NET=10.0.0
 </span></span><span style="display:flex;"><span>user=root
 </span></span><span style="display:flex;"><span>password=magedu
@@ -1982,7 +1958,7 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>expect eof
 </span></span><span style="display:flex;"><span>EOF
 </span></span><span style="display:flex;"><span>done
-</span></span></code></pre></div><h1 id="6-数组">6 数组<a hidden class="anchor" aria-hidden="true" href="#6-数组">#</a></h1>
+</span></span></code></pre></div><h2 id="6-数组">6 数组<a hidden class="anchor" aria-hidden="true" href="#6-数组">#</a></h2>
 <h2 id="61-数组介绍">6.1 数组介绍<a hidden class="anchor" aria-hidden="true" href="#61-数组介绍">#</a></h2>
 <p>变量：存储单个元素的内存空间
 数组：存储多个元素的连续的内存空间，相当于多个变量的集合
@@ -1997,29 +1973,29 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>declare -a ARRAY_NAME
 </span></span><span style="display:flex;"><span>#关联数组必须先声明,再使用
 </span></span><span style="display:flex;"><span>declare -A ARRAY_NAME
-</span></span></code></pre></div><p><strong>注:两者不可相互转换</strong></p>
+</span></span></code></pre></div><p>注:两者不可相互转换</p>
 <h2 id="63-数组赋值">6.3 数组赋值<a hidden class="anchor" aria-hidden="true" href="#63-数组赋值">#</a></h2>
 <p>数组元素的赋值
-**(1) 一次只赋值一个元素  **</p>
+(1) 一次只赋值一个元素</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ARRAY_NAME[INDEX]=VALUE
 </span></span></code></pre></div><p><strong>范例：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>weekdays[0]=&#34;Sunday&#34;
 </span></span><span style="display:flex;"><span>weekdays[4]=&#34;Thursday&#34;
-</span></span></code></pre></div><p><strong>(2) 一次赋值全部元素</strong></p>
+</span></span></code></pre></div><p>(2) 一次赋值全部元素</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ARRAY_NAME=(&#34;VAL1&#34; &#34;VAL2&#34; &#34;VAL3&#34; ...)
 </span></span></code></pre></div><p><strong>范例:</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>title=(&#34;ceo&#34; &#34;coo&#34; &#34;cto&#34;)
 </span></span><span style="display:flex;"><span>num=({0..10})
 </span></span><span style="display:flex;"><span>alpha=({a..g})
 </span></span><span style="display:flex;"><span>file=( *.sh )
-</span></span></code></pre></div><p><strong>(3)只赋值特定元素</strong></p>
+</span></span></code></pre></div><p>(3)只赋值特定元素</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ARRAY_NAME=([0]=&#34;VAL1&#34; [3]=&#34;VAL2&#34; ...)
-</span></span></code></pre></div><p><strong>(4)交互式赋值元素</strong></p>
+</span></span></code></pre></div><p>(4)交互式赋值元素</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>read -a ARRAY
 </span></span></code></pre></div><h2 id="64-显示所有数组">6.4 显示所有数组<a hidden class="anchor" aria-hidden="true" href="#64-显示所有数组">#</a></h2>
-<p><strong>显示所有数组</strong></p>
+<p>显示所有数组</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>declare -a
-</span></span></code></pre></div><p><strong>范例</strong></p>
+</span></span></code></pre></div><p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos7 ~]# declare -a
 </span></span><span style="display:flex;"><span>declare -a BASH_ARGC=&#39;()&#39;
 </span></span><span style="display:flex;"><span>declare -a BASH_ARGV=&#39;()&#39;
@@ -2032,26 +2008,26 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>declare -a PIPESTATUS=&#39;([0]=&#34;0&#34;)&#39;
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# 
 </span></span></code></pre></div><h2 id="65-引用数组">6.5 引用数组<a hidden class="anchor" aria-hidden="true" href="#65-引用数组">#</a></h2>
-<p><strong>引用特定的数组元素</strong></p>
+<p>引用特定的数组元素</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>${ARRAY_NAME[INDEX]}
 </span></span><span style="display:flex;"><span>#如果省略[INDEX]表示引用下标为0的元素
-</span></span></code></pre></div><p><strong>引用所有数组元素</strong></p>
+</span></span></code></pre></div><p>引用所有数组元素</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>${ARRAY_NAME[*]}
 </span></span><span style="display:flex;"><span>${ARRAY_NAME[@]}
-</span></span></code></pre></div><p><strong>数组的长度，即数组的元素的个数</strong></p>
+</span></span></code></pre></div><p>数组的长度，即数组的元素的个数</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>${#ARRAY_NAME[*]}
 </span></span><span style="display:flex;"><span>${#ARRAY_NAME[@]}
-</span></span></code></pre></div><p><strong>范例</strong></p>
+</span></span></code></pre></div><p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos7 ~]# title[0]=1
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# title[1]=1
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# title[2]=1
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# echo ${#title[*]}
 </span></span><span style="display:flex;"><span>3
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# 
-</span></span></code></pre></div><p><strong>数组的所有下标</strong></p>
+</span></span></code></pre></div><p>数组的所有下标</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>${!ARRAY_NAME[*]}
 </span></span><span style="display:flex;"><span>${!ARRAY_NAME[@]}
-</span></span></code></pre></div><p><strong>范例</strong></p>
+</span></span></code></pre></div><p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos7 ~]# title[0]=1
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# title[1]=1
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# title[2]=1
@@ -2059,12 +2035,12 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>0 1 2
 </span></span><span style="display:flex;"><span>[root@centos7 ~]# 
 </span></span></code></pre></div><h2 id="66-删除数组">6.6 删除数组<a hidden class="anchor" aria-hidden="true" href="#66-删除数组">#</a></h2>
-<p><strong>删除数组中的某个元素</strong></p>
+<p>删除数组中的某个元素</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>unset ARRAY[INDEX]
-</span></span></code></pre></div><p><strong>删除整个数组</strong></p>
+</span></span></code></pre></div><p>删除整个数组</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>unset ARRAY
 </span></span></code></pre></div><h2 id="67-数组数据处理">6.7 数组数据处理<a hidden class="anchor" aria-hidden="true" href="#67-数组数据处理">#</a></h2>
-<p><strong>数据切片</strong></p>
+<p>数据切片</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>${ARRAY[@]:offset:number}
 </span></span><span style="display:flex;"><span>${ARRAY[*]:offset:number}
 </span></span><span style="display:flex;"><span>offset #要跳过的元素个数
@@ -2072,22 +2048,22 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>#取偏移量之后的所有元素
 </span></span><span style="display:flex;"><span>{ARRAY[@]:offset}
 </span></span><span style="display:flex;"><span>{ARRAY[*]:offset}
-</span></span></code></pre></div><p><strong>范例</strong></p>
+</span></span></code></pre></div><p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos8 ~]#num=({0..10})
 </span></span><span style="display:flex;"><span>[root@centos8 ~]#echo ${num[*]:2:3}
 </span></span><span style="display:flex;"><span>2 3 4
 </span></span><span style="display:flex;"><span>[root@centos8 ~]#echo ${num[*]:6}
 </span></span><span style="display:flex;"><span>6 7 8 9 10
-</span></span></code></pre></div><p><strong>向数组中追加元素</strong></p>
+</span></span></code></pre></div><p>向数组中追加元素</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ARRAY[${#ARRAY[*]}]=value
 </span></span><span style="display:flex;"><span>ARRAY[${#ARRAY[@]}]=value
-</span></span></code></pre></div><p><strong>范例</strong></p>
+</span></span></code></pre></div><p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos8 ~]#num[${#num[@]}]=11
 </span></span><span style="display:flex;"><span>[root@centos8 ~]#echo ${#num[@]}
 </span></span><span style="display:flex;"><span>12
 </span></span><span style="display:flex;"><span>[root@centos8 ~]#echo ${num[@]}
 </span></span><span style="display:flex;"><span>0 1 2 3 4 5 6 7 8 9 10 11
-</span></span></code></pre></div><p><strong>范例：生成10个随机数保存于数组中，并找出其最大值和最小值</strong></p>
+</span></span></code></pre></div><p>范例：生成10个随机数保存于数组中，并找出其最大值和最小值</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>declare -i min max
 </span></span><span style="display:flex;"><span>declare -a nums
@@ -2100,7 +2076,7 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;All numbers are </span><span style="color:#e6db74">${</span>nums[*]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 </span></span><span style="display:flex;"><span>echo Max is $max
 </span></span><span style="display:flex;"><span>echo Min is $min
-</span></span></code></pre></div><h1 id="7-字符串处理">7 字符串处理<a hidden class="anchor" aria-hidden="true" href="#7-字符串处理">#</a></h1>
+</span></span></code></pre></div><h2 id="7-字符串处理">7 字符串处理<a hidden class="anchor" aria-hidden="true" href="#7-字符串处理">#</a></h2>
 <h2 id="71-字符串切片">7.1 字符串切片<a hidden class="anchor" aria-hidden="true" href="#71-字符串切片">#</a></h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#返回字符串变量var的字符的长度,一个汉字算一个字符
 </span></span><span style="display:flex;"><span>${#var}
@@ -2116,7 +2092,7 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>#先从最右侧向左取到length个字符开始，再向右取到距离最右侧offset个字符之间的内容,注意：-
 </span></span><span style="display:flex;"><span>length前空格,并且length必须大于offset
 </span></span><span style="display:flex;"><span>${var: -length:-offset}
-</span></span></code></pre></div><p><strong>范例</strong></p>
+</span></span></code></pre></div><p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos8 script40]#str=abcdef我你他
 </span></span><span style="display:flex;"><span>[root@centos8 script40]#echo ${#str}
 </span></span><span style="display:flex;"><span>9
@@ -2150,7 +2126,7 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>式,以最后一个word为界删左留右
 </span></span><span style="display:flex;"><span>${var##*word}
 </span></span><span style="display:flex;"><span>${var##word}
-</span></span></code></pre></div><p><strong>范例</strong></p>
+</span></span></code></pre></div><p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@centos8 ~]#file=&#34;var/log/messages&#34;
 </span></span><span style="display:flex;"><span>[root@centos8 ~]#echo ${file#*/}
 </span></span><span style="display:flex;"><span>log/messages
@@ -2175,14 +2151,14 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
 </span></span><span style="display:flex;"><span>#查找var所表示的字符串中，行尾被pattern所匹配到的字符串，以substr替换之
 </span></span><span style="display:flex;"><span>${var/%pattern/substr}
 </span></span></code></pre></div><h2 id="74-查找和删除">7.4 查找和删除<a hidden class="anchor" aria-hidden="true" href="#74-查找和删除">#</a></h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#删除var表示的字符串中第一次被pattern匹配到的字符串
-</span></span><span style="display:flex;"><span>${var/pattern}
-</span></span><span style="display:flex;"><span>#删除var表示的字符串中所有被pattern匹配到的字符串
-</span></span><span style="display:flex;"><span>${var//pattern}
-</span></span><span style="display:flex;"><span>#删除var表示的字符串中所有以pattern为行首匹配到的字符串
-</span></span><span style="display:flex;"><span>${var/#pattern}
-</span></span><span style="display:flex;"><span>#删除var所表示的字符串中所有以pattern为行尾所匹配到的字符串
-</span></span><span style="display:flex;"><span>${var/%pattern}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#删除var表示的字符串中第一次被pattern匹配到的字符串</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>var/pattern<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#删除var表示的字符串中所有被pattern匹配到的字符串</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>var//pattern<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#删除var表示的字符串中所有以pattern为行首匹配到的字符串</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>var/#pattern<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#删除var所表示的字符串中所有以pattern为行尾所匹配到的字符串</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>var/%pattern<span style="color:#e6db74">}</span>
 </span></span></code></pre></div><h2 id="75-字符大小写转换">7.5 字符大小写转换<a hidden class="anchor" aria-hidden="true" href="#75-字符大小写转换">#</a></h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#把var中的所有小写字母转换为大写
 </span></span><span style="display:flex;"><span>${var^^}

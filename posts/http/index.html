@@ -118,8 +118,8 @@ var _hmt = _hmt || [];
   "keywords": [
     "Linux"
   ],
-  "articleBody": "OSI模型 名称 协议 7 应用层 DNS、http、ssh、FTP等 6 表示层 DNS、http、ssh、FTP等 5 会话层 DNS、http、ssh、FTP等 4 传输层 tcp、udp 3 网络层 IPV4、IPV6、ARP 2 数据链路层 以太网、无线LAN 1 物理层 光纤 http协议 http协议：超文本传输协议，基于TCP协议的应用层传输协议，一种 无状态的、以请求/应答方式的运行的协议（无状态：对于事物处理没有记忆功能）\n主要组成 http协议主要有三大部分组成\n起始行：描述请求或相应的文本 头部字段：使用key-value形式更加详细说明报文 消息正文：实际传输的数据，可以是文本、图片、视频等 http请求报文 请求行 请求头 请求体 http响应报文 响应行 响应头 响应体 TCP协议 tcp/ip协议：面向连接的、可靠的基于字节流的传输层协议。\n特点\n基于连接的：数据传输前需要建立连接\n全双工：双向传输\n字节流：不限制传输大小\n流量缓冲：解决双方处理能力的不匹配\n可靠的传输服务：保证可达、信息丢包时通过重发机制实施可靠性\n拥塞控制：防止网络出现恶性拥塞\n三次握手\n刚开始客户端处于 closed 的状态，服务端处于 listen 状态。然后 1、第一次握手：客户端给服务端发一个 SYN 报文，并指明客户端的初始化序列号 ISN（c）。此时客户端处于 SYN_Send 状态。\n2、第二次握手：服务器收到客户端的 SYN 报文之后，会以自己的 SYN 报文作为应答，并且也是指定了自己的初始化序列号 ISN(s)，同时会把客户端的 ISN + 1 作为 ACK 的值，表示自己已经收到了客户端的 SYN，此时服务器处于 SYN_REVD 的状态。\n3、第三次握手：客户端收到 ACK+SYN 报文之后，会发送一个 ACK 报文，当然，也是一样把服务器的 ISN + 1 作为 ACK 的值，表示已经收到了服务端的 SYN 报文，此时客户端处于 establised 状态。\n4、服务器收到 ACK 报文之后，也处于 establised 状态，此时，双方以建立起了链接。\nSYN是同步的缩写，SYN段是发送到另外一台计算机的TCP数据包，请求在她们之间建立连接\nACK是“确认”的缩写。ACK数据包是任何确认收到一条消息或一系列数据包的TCP数据包\n**四次挥手**\r刚开始双方都处于 establised 状态，假如是客户端先发起关闭请求，则：\n1、第一次挥手：客户端发送一个 FIN 报文，报文中会指定一个序列号。此时客户端处于FIN_WAIT1状态。\n2、第二次握手：服务端收到 FIN 之后，会发送 ACK 报文，且把客户端的序列号值 + 1 作为 ACK 报文的序列号值，表明已经收到客户端的报文了，此时服务端处于 CLOSE_WAIT状态。\n3、第三次挥手：如果服务端也想断开连接了，和客户端的第一次挥手一样，发给 FIN 报文，且指定一个序列号。此时服务端处于 LAST_ACK 的状态。\n4、第四次挥手：客户端收到 FIN 之后，一样发送一个 ACK 报文作为应答，且把服务端的序列号值 + 1 作为自己 ACK 报文的序列号值，此时客户端处于 TIME_WAIT 状态。需要过一阵子以确保服务端收到自己的 ACK 报文之后才会进入 CLOSED 状态\n5、服务端收到 ACK 报文之后，就处于关闭连接了，处于 CLOSED 状态。\n为什么TIME-WAIT状态必须等待2MSL的时间？\n保证客户端最后一个ACK能够到达服务器端 防止失效的请求报文段出现在本次连接中 ",
-  "wordCount" : "1246",
+  "articleBody": "OSI模型 名称 协议 7 应用层 DNS、http、ssh、FTP等 6 表示层 DNS、http、ssh、FTP等 5 会话层 DNS、http、ssh、FTP等 4 传输层 tcp、udp 3 网络层 IPV4、IPV6、ARP 2 数据链路层 以太网、无线LAN 1 物理层 光纤 http协议 http协议：超文本传输协议，基于TCP协议的应用层传输协议，一种 无状态的、以请求/应答方式的运行的协议（无状态：对于事物处理没有记忆功能）\n主要组成 http协议主要有三大部分组成\n起始行：描述请求或相应的文本 头部字段：使用key-value形式更加详细说明报文 消息正文：实际传输的数据，可以是文本、图片、视频等 http请求报文 请求行 请求头 请求体 http响应报文 响应行 响应头 响应体 TCP协议 tcp/ip协议：面向连接的、可靠的基于字节流的传输层协议。\n特点\n基于连接的：数据传输前需要建立连接\n全双工：双向传输\n字节流：不限制传输大小\n流量缓冲：解决双方处理能力的不匹配\n可靠的传输服务：保证可达、信息丢包时通过重发机制实施可靠性\n拥塞控制：防止网络出现恶性拥塞\n三次握手\n刚开始客户端处于 closed 的状态，服务端处于 listen 状态。然后 1、第一次握手：客户端给服务端发一个 SYN 报文，并指明客户端的初始化序列号 ISN（c）。此时客户端处于 SYN_Send 状态。\n2、第二次握手：服务器收到客户端的 SYN 报文之后，会以自己的 SYN 报文作为应答，并且也是指定了自己的初始化序列号 ISN(s)，同时会把客户端的 ISN + 1 作为 ACK 的值，表示自己已经收到了客户端的 SYN，此时服务器处于 SYN_REVD 的状态。\n3、第三次握手：客户端收到 ACK+SYN 报文之后，会发送一个 ACK 报文，当然，也是一样把服务器的 ISN + 1 作为 ACK 的值，表示已经收到了服务端的 SYN 报文，此时客户端处于 establised 状态。\n4、服务器收到 ACK 报文之后，也处于 establised 状态，此时，双方以建立起了链接。\nSYN是同步的缩写，SYN段是发送到另外一台计算机的TCP数据包，请求在她们之间建立连接 ACK是“确认”的缩写。ACK数据包是任何确认收到一条消息或一系列数据包的TCP数据包 四次挥手\n刚开始双方都处于 establised 状态，假如是客户端先发起关闭请求，则：\n1、第一次挥手：客户端发送一个 FIN 报文，报文中会指定一个序列号。此时客户端处于FIN_WAIT1状态。\n2、第二次握手：服务端收到 FIN 之后，会发送 ACK 报文，且把客户端的序列号值 + 1 作为 ACK 报文的序列号值，表明已经收到客户端的报文了，此时服务端处于 CLOSE_WAIT状态。\n3、第三次挥手：如果服务端也想断开连接了，和客户端的第一次挥手一样，发给 FIN 报文，且指定一个序列号。此时服务端处于 LAST_ACK 的状态。\n4、第四次挥手：客户端收到 FIN 之后，一样发送一个 ACK 报文作为应答，且把服务端的序列号值 + 1 作为自己 ACK 报文的序列号值，此时客户端处于 TIME_WAIT 状态。需要过一阵子以确保服务端收到自己的 ACK 报文之后才会进入 CLOSED 状态\n5、服务端收到 ACK 报文之后，就处于关闭连接了，处于 CLOSED 状态。\n为什么TIME-WAIT状态必须等待2MSL的时间？\n保证客户端最后一个ACK能够到达服务器端 防止失效的请求报文段出现在本次连接中 ",
+  "wordCount" : "1242",
   "inLanguage": "en",
   "image":"https://xyenvy.github.io/posts.images/banner/17.jpg","datePublished": "2022-10-15T14:10:20Z",
   "dateModified": "2022-10-15T14:10:20Z",
@@ -282,7 +282,7 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>1246字
+        <span>1242字
             &nbsp;&nbsp;
         </span>
     </span>
@@ -442,7 +442,7 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><h1 id="osi模型">OSI模型<a hidden class="anchor" aria-hidden="true" href="#osi模型">#</a></h1>
+        <div class="post-content"><h2 id="osi模型">OSI模型<a hidden class="anchor" aria-hidden="true" href="#osi模型">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -481,37 +481,37 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<h1 id="http协议">http协议<a hidden class="anchor" aria-hidden="true" href="#http协议">#</a></h1>
+<h2 id="http协议">http协议<a hidden class="anchor" aria-hidden="true" href="#http协议">#</a></h2>
 <p>http协议：超文本传输协议，基于TCP协议的应用层传输协议，一种 无状态的、以请求/应答方式的运行的协议（无状态：对于事物处理没有记忆功能）</p>
-<h1 id="主要组成">主要组成<a hidden class="anchor" aria-hidden="true" href="#主要组成">#</a></h1>
+<h2 id="主要组成">主要组成<a hidden class="anchor" aria-hidden="true" href="#主要组成">#</a></h2>
 <p>http协议主要有三大部分组成</p>
 <ul>
 <li>起始行：描述请求或相应的文本</li>
 <li>头部字段：使用key-value形式更加详细说明报文</li>
 <li>消息正文：实际传输的数据，可以是文本、图片、视频等</li>
 </ul>
-<h1 id="http请求报文">http请求报文<a hidden class="anchor" aria-hidden="true" href="#http请求报文">#</a></h1>
+<h2 id="http请求报文">http请求报文<a hidden class="anchor" aria-hidden="true" href="#http请求报文">#</a></h2>
 <ul>
 <li>请求行</li>
 <li>请求头</li>
 <li>请求体</li>
 </ul>
-<h1 id="http响应报文">http响应报文<a hidden class="anchor" aria-hidden="true" href="#http响应报文">#</a></h1>
+<h2 id="http响应报文">http响应报文<a hidden class="anchor" aria-hidden="true" href="#http响应报文">#</a></h2>
 <ul>
 <li>响应行</li>
 <li>响应头</li>
 <li>响应体</li>
 </ul>
-<h1 id="tcp协议">TCP协议<a hidden class="anchor" aria-hidden="true" href="#tcp协议">#</a></h1>
+<h2 id="tcp协议">TCP协议<a hidden class="anchor" aria-hidden="true" href="#tcp协议">#</a></h2>
 <p>tcp/ip协议：面向连接的、可靠的基于字节流的传输层协议。</p>
-<p><strong>特点</strong></p>
+<p>特点</p>
 <p>基于连接的：数据传输前需要建立连接</p>
 <p>全双工：双向传输</p>
 <p>字节流：不限制传输大小</p>
 <p>流量缓冲：解决双方处理能力的不匹配</p>
 <p>可靠的传输服务：保证可达、信息丢包时通过重发机制实施可靠性</p>
 <p>拥塞控制：防止网络出现恶性拥塞</p>
-<p><strong>三次握手</strong></p>
+<p>三次握手</p>
 <p><img loading="lazy" src="/posts.images/image.assets/20180808105159546.png" alt="alt"  />
 </p>
 <p>刚开始客户端处于 closed 的状态，服务端处于 listen 状态。然后
@@ -519,9 +519,9 @@ var _hmt = _hmt || [];
 <p>2、第二次握手：服务器收到客户端的 SYN 报文之后，会以自己的 SYN 报文作为应答，并且也是指定了自己的初始化序列号 ISN(s)，同时会把客户端的 ISN + 1 作为 ACK 的值，表示自己已经收到了客户端的 SYN，此时服务器处于 SYN_REVD 的状态。</p>
 <p>3、第三次握手：客户端收到 ACK+SYN 报文之后，会发送一个 ACK 报文，当然，也是一样把服务器的 ISN + 1 作为 ACK 的值，表示已经收到了服务端的 SYN 报文，此时客户端处于 establised 状态。</p>
 <p>4、服务器收到 ACK 报文之后，也处于 establised 状态，此时，双方以建立起了链接。</p>
-<p class="note note-success">SYN是同步的缩写，SYN段是发送到另外一台计算机的TCP数据包，请求在她们之间建立连接</p>  
-<p class="note note-success">ACK是“确认”的缩写。ACK数据包是任何确认收到一条消息或一系列数据包的TCP数据包</p>
-**四次挥手**
+<p>SYN是同步的缩写，SYN段是发送到另外一台计算机的TCP数据包，请求在她们之间建立连接
+ACK是“确认”的缩写。ACK数据包是任何确认收到一条消息或一系列数据包的TCP数据包
+<strong>四次挥手</strong></p>
 <p><img loading="lazy" src="/posts.images/image.assets/3971776-9550b64ff16dbb0b.webp" alt="img"  />
 </p>
 <p>刚开始双方都处于 establised 状态，假如是客户端先发起关闭请求，则：</p>

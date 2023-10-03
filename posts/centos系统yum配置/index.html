@@ -118,7 +118,7 @@ var _hmt = _hmt || [];
   "keywords": [
     "Linux"
   ],
-  "articleBody": " 系统 Centos7.9\n步骤\n1.备份\n[root@centos7-master ~]# mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 2.创建/etc/yum.repos.d/CentOS-Base.repo文件并复制如下内容\n[base] name=CentOS-$releasever - Base baseurl=http://mirrors.163.com/centos/$releasever/os/$basearch/ http://mirrors.aliyun.com/centos/$releasever/os/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/os/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/os/$basearch/ http://mirror.centos.org/centos/$releasever/os/$basearch/\tgpgcheck=0 #released updates [updates] name=CentOS-$releasever - Updates baseurl=http://mirrors.163.com/centos/$releasever/updates/$basearch/ http://mirrors.aliyun.com/centos/$releasever/updates/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/updates/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/updates/$basearch/ http://mirror.centos.org/centos/$releasever/updates/$basearch/\tgpgcheck=0 #additional packages that may be useful [extras] name=CentOS-$releasever - Extras baseurl=http://mirrors.163.com/centos/$releasever/extras/$basearch/ http://mirrors.aliyun.com/centos/$releasever/extras/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/extras/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/extras/$basearch/ http://mirror.centos.org/centos/$releasever/extras/$basearch/ gpgcheck=0 #additional packages that extend functionality of existing packages [centosplus] name=CentOS-$releasever - Plus baseurl=http://mirrors.163.com/centos/$releasever/centosplus/$basearch/ http://mirrors.aliyun.com/centos/$releasever/centosplus/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/centosplus/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/centosplus/$basearch/ http://mirror.centos.org/centos/$releasever/centosplus/$basearch/ gpgcheck=0 enabled=1 3.清除缓存\nyum clean all 4.重新生成缓存\nyum makecache ",
+  "articleBody": " 系统 Centos7.9\n步骤\n1.备份\n[root@centos7-master ~]# mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 2.创建/etc/yum.repos.d/CentOS-Base.repo文件并复制如下内容\n[base] name=CentOS-$releasever - Base baseurl=http://mirrors.163.com/centos/$releasever/os/$basearch/ http://mirrors.aliyun.com/centos/$releasever/os/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/os/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/os/$basearch/ http://mirror.centos.org/centos/$releasever/os/$basearch/ gpgcheck=0 #released updates [updates] name=CentOS-$releasever - Updates baseurl=http://mirrors.163.com/centos/$releasever/updates/$basearch/ http://mirrors.aliyun.com/centos/$releasever/updates/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/updates/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/updates/$basearch/ http://mirror.centos.org/centos/$releasever/updates/$basearch/ gpgcheck=0 #additional packages that may be useful [extras] name=CentOS-$releasever - Extras baseurl=http://mirrors.163.com/centos/$releasever/extras/$basearch/ http://mirrors.aliyun.com/centos/$releasever/extras/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/extras/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/extras/$basearch/ http://mirror.centos.org/centos/$releasever/extras/$basearch/ gpgcheck=0 #additional packages that extend functionality of existing packages [centosplus] name=CentOS-$releasever - Plus baseurl=http://mirrors.163.com/centos/$releasever/centosplus/$basearch/ http://mirrors.aliyun.com/centos/$releasever/centosplus/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/centosplus/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/centosplus/$basearch/ http://mirror.centos.org/centos/$releasever/centosplus/$basearch/ gpgcheck=0 enabled=1 3.清除缓存\nyum clean all 4.重新生成缓存\nyum makecache ",
   "wordCount" : "140",
   "inLanguage": "en",
   "image":"https://xyenvy.github.io/posts.images/banner/9.jpg","datePublished": "2022-12-17T09:28:09Z",
@@ -378,7 +378,7 @@ Centos7.9</p>
 </span></span><span style="display:flex;"><span>        http://mirrors.cloud.tencent.com/centos/$releasever/os/$basearch/
 </span></span><span style="display:flex;"><span>        http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/
 </span></span><span style="display:flex;"><span>        http://mirrors.huaweicloud.com/centos/$releasever/os/$basearch/
-</span></span><span style="display:flex;"><span>        http://mirror.centos.org/centos/$releasever/os/$basearch/		
+</span></span><span style="display:flex;"><span>        http://mirror.centos.org/centos/$releasever/os/$basearch/
 </span></span><span style="display:flex;"><span>gpgcheck=0
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>#released updates 
@@ -388,8 +388,8 @@ Centos7.9</p>
 </span></span><span style="display:flex;"><span>        http://mirrors.aliyun.com/centos/$releasever/updates/$basearch/
 </span></span><span style="display:flex;"><span>        http://mirrors.cloud.tencent.com/centos/$releasever/updates/$basearch/
 </span></span><span style="display:flex;"><span>        http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/
-</span></span><span style="display:flex;"><span>		http://mirrors.huaweicloud.com/centos/$releasever/updates/$basearch/
-</span></span><span style="display:flex;"><span>        http://mirror.centos.org/centos/$releasever/updates/$basearch/		
+</span></span><span style="display:flex;"><span>        http://mirrors.huaweicloud.com/centos/$releasever/updates/$basearch/
+</span></span><span style="display:flex;"><span>        http://mirror.centos.org/centos/$releasever/updates/$basearch/
 </span></span><span style="display:flex;"><span>gpgcheck=0
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>#additional packages that may be useful
@@ -397,10 +397,10 @@ Centos7.9</p>
 </span></span><span style="display:flex;"><span>name=CentOS-$releasever - Extras
 </span></span><span style="display:flex;"><span>baseurl=http://mirrors.163.com/centos/$releasever/extras/$basearch/
 </span></span><span style="display:flex;"><span>        http://mirrors.aliyun.com/centos/$releasever/extras/$basearch/
-</span></span><span style="display:flex;"><span>		http://mirrors.cloud.tencent.com/centos/$releasever/extras/$basearch/
+</span></span><span style="display:flex;"><span>        http://mirrors.cloud.tencent.com/centos/$releasever/extras/$basearch/
 </span></span><span style="display:flex;"><span>        http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/
 </span></span><span style="display:flex;"><span>        http://mirrors.huaweicloud.com/centos/$releasever/extras/$basearch/
-</span></span><span style="display:flex;"><span>		http://mirror.centos.org/centos/$releasever/extras/$basearch/
+</span></span><span style="display:flex;"><span>        http://mirror.centos.org/centos/$releasever/extras/$basearch/
 </span></span><span style="display:flex;"><span>gpgcheck=0
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>#additional packages that extend functionality of existing packages
@@ -411,7 +411,7 @@ Centos7.9</p>
 </span></span><span style="display:flex;"><span>        http://mirrors.cloud.tencent.com/centos/$releasever/centosplus/$basearch/
 </span></span><span style="display:flex;"><span>        http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/
 </span></span><span style="display:flex;"><span>        http://mirrors.huaweicloud.com/centos/$releasever/centosplus/$basearch/
-</span></span><span style="display:flex;"><span>		http://mirror.centos.org/centos/$releasever/centosplus/$basearch/
+</span></span><span style="display:flex;"><span>        http://mirror.centos.org/centos/$releasever/centosplus/$basearch/
 </span></span><span style="display:flex;"><span>gpgcheck=0
 </span></span><span style="display:flex;"><span>enabled=1
 </span></span></code></pre></div><p>3.清除缓存</p>

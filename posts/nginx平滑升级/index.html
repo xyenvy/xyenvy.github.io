@@ -369,15 +369,12 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#%e5%b9%b3%e6%bb%91%e5%8d%87%e7%ba%a7%e6%b5%81%e7%a8%8b" aria-label="平滑升级流程">平滑升级流程</a></li>
                 <li>
-                    <a href="#%e8%8c%83%e4%be%8bnginx1180%e7%89%88%e6%9c%ac%e5%8d%87%e7%ba%a7%e5%88%b01202" aria-label="范例：Nginx1.18.0版本升级到1.20.2">范例：Nginx1.18.0版本升级到1.20.2</a><ul>
-                        
+                    <a href="#%e8%8c%83%e4%be%8bnginx1180%e7%89%88%e6%9c%ac%e5%8d%87%e7%ba%a7%e5%88%b01202" aria-label="范例：Nginx1.18.0版本升级到1.20.2">范例：Nginx1.18.0版本升级到1.20.2</a></li>
                 <li>
                     <a href="#nginx1180%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85" aria-label="Nginx1.18.0编译安装">Nginx1.18.0编译安装</a></li>
                 <li>
                     <a href="#%e7%bc%96%e8%af%91nginx1202" aria-label="编译Nginx1.20.2">编译Nginx1.20.2</a>
                 </li>
-            </ul>
-            </li>
             </ul>
         </div>
         </details>
@@ -441,7 +438,7 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><h1 id="平滑升级流程">平滑升级流程<a hidden class="anchor" aria-hidden="true" href="#平滑升级流程">#</a></h1>
+        <div class="post-content"><h2 id="平滑升级流程">平滑升级流程<a hidden class="anchor" aria-hidden="true" href="#平滑升级流程">#</a></h2>
 <p><img loading="lazy" src="/posts.images/image.assets/1673076066017.png" alt="1673076066017"  />
 </p>
 <p><img loading="lazy" src="/posts.images/image.assets/1673076087140.png" alt="1673076087140"  />
@@ -457,7 +454,7 @@ pid文件nginx.pid</li>
 <li>向旧master进程发送QUIT信号，关闭旧master，并删除Nginx.pid.oldbin文件</li>
 <li>如果发现升级有问题,可以回滚∶向旧master发送HUP，向新master发送QUIT</li>
 </ul>
-<h1 id="范例nginx1180版本升级到1202">范例：Nginx1.18.0版本升级到1.20.2<a hidden class="anchor" aria-hidden="true" href="#范例nginx1180版本升级到1202">#</a></h1>
+<h2 id="范例nginx1180版本升级到1202">范例：Nginx1.18.0版本升级到1.20.2<a hidden class="anchor" aria-hidden="true" href="#范例nginx1180版本升级到1202">#</a></h2>
 <h2 id="nginx1180编译安装">Nginx1.18.0编译安装<a hidden class="anchor" aria-hidden="true" href="#nginx1180编译安装">#</a></h2>
 <p>官方源码包下载地址：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>https://nginx.org/en/download.html

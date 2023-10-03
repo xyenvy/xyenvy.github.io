@@ -118,8 +118,8 @@ var _hmt = _hmt || [];
   "keywords": [
     "Linux"
   ],
-  "articleBody": "名字解析介绍和DNS DNS服务工作原理 DNS查询类型 递归查询： 是指DNS服务器在收到用户发起的请求时，必须向用户返回一个准确的查询结果。如果DNS服务器 本地没有存储与之对应的信息，则该服务器需要询问其他服务器，并将返回的查询结构提交给用 户。 一般客户机和本地DNS服务器之间属于递归查询，即当客户机向DNS服务器发出请求后,若DNS服 务器本身不能解析，则会向另外的DNS服务器发出查询请求，得到最终的肯定或否定的结果后转交 给客户机。此查询的源和目标保持不变,为了查询结果只需要发起一次查询 递归算法:客户端向LocalDNS发起域名查询–\u003elocalDNS不知道域名对应的IP–\u003e但它知道谁知道-\u003e他 代为帮客户端去查找–\u003e最后再返回最终结果 迭代查询： 是指DNS服务器在收到用户发起的请求时，并不直接回复查询结果，而是告诉另一台DNS服务器的 地址，用户再向这台DNS服务器提交请求，这样依次反复，直到返回查询结果。 一般情况下(有例外)本地的DNS服务器向其它DNS服务器的查询属于迭代查询,如：若对方不能返回 权威的结果，则它会向下一个DNS服务器(参考前一个DNS服务器返回的结果)再次发起进行查询， 直到返回查询的结果为止。此查询的源不变,但查询的目标不断变化,为查询结果一般需要发起多次 查询 迭代算法︰\n客户端向LocalDNS发起域名查询–\u003elocalDNS不知道域名对应的IP–\u003e但它知道谁知道并 推荐客户端应该找谁–\u003e客户端自己去找它 DNS缓存: DNS缓存是将解析数据存储在靠近发起请求的客户端的位置，也可以说DNS数据是可以缓存在任意 位置，最终目的是以此减少递归查询过程，可以更快的让用户获得请求结果。 解析类型 FQDN –\u003e IP 正向解析 IP –\u003e FQDN 反向解析\n注意：正反向解析是两个不同的名称空间，是两棵不同的解析树 完整查询流程 Client --\u003ehosts文件 --\u003e Client DNS Service Local Cache --\u003e DNS Server (recursion递 归) --\u003e DNS Server Cache --\u003eDNS iteration(迭代) --\u003e 根--\u003e 顶级域名DNS--\u003e二级域名DNS… DNS服务相关概念和技术 各种资源记录 区域解析库：由众多资源记录RR(Resource Record)组成 记录类型：A, AAAA, PTR, SOA, NS, CNAME, MX\nSOA：Start Of Authority，起始授权记录；一个区域解析库有且仅能有一个SOA记录，必须位于解析库的第一条记录 A：internet Address，作用，FQDN –\u003e IP AAAA：FQDN –\u003e IPv6 PTR：PoinTeR，IP –\u003e FQDN NS：Name Server，专用于标明当前区域的DNS服务器 CNAME ： Canonical Name，别名记录 MX：Mail eXchanger，邮件交换器 TXT：对域名进行标识和说明的一种方式，一般做验证记录时会使用此项，如：SPF（反垃圾邮 件）记录，https验证等，如下示例： _dnsauth TXT 2012011200000051qgs69bwoh4h6nht4n1h0lr038x SOA记录 name: 当前区域的名字，例如\"magedu.org.\" value: 有多部分组成 注意：\n当前区域的主DNS服务器的FQDN，也可以使用当前区域的名字，只是注释功能，可以不需要配置 对应的NS记录和A记录 当前区域管理员的邮箱地址；但地址中不能使用@符号，一般用.替换，例如：admin.magedu.org 主从服务区域传输相关定义以及否定的答案的统一的TTL 范例\nmagedu.org. 86400 IN SOA ns.magedu.org. nsadmin.magedu.org. ( 2015042201 ;序列号 2H ;刷新时间 10M ;重试时间 1W ;过期时间 1D ;否定答案的TTL值 ) NS记录 name: 当前区域的名字 value: 当前区域的某DNS服务器的名字，例如: ns.magedu.org. 注意：\n相邻的两个资源记录的name相同时，后续的可省略 对NS记录而言，任何一个ns记录后面的服务器名字，都应该在后续有一个A记录 一个区域可以有多个NS记录 范例： magedu.org. IN NS ns1.magedu.org. magedu.org. IN NS ns2.magedu.org. MX记录 name: 当前区域的名字\nvalue: 当前区域的某邮件服务器(smtp服务器)的主机名\n注意：\n一个区域内，MX记录可有多个；但每个记录的value之前应该有一个数字(0-99)，表示此服务器的优先级；数字越小优先级越高 对MX记录而言，任何一个MX记录后面的服务器名字，都应该在后续有一个A记录\n范例： magedu.org. IN MX 10 mx1.magedu.org. IN MX 20 mx2.magedu.org. mx1 A 10.0.0.100 mx2 A 10.0.0.200 A记录 name: 某主机的FQDN，例如：www.magedu.org.\nvalue: 主机名对应主机的IP地址\n避免用户写错名称时给错误答案，可通过泛域名解析进行解析至某特定地址\n范例：\nwww.magedu.org. IN A 1.1.1.1 www.magedu.org. IN A 2.2.2.2 mx1.magedu.org. IN A 3.3.3.3 mx2.magedu.org. IN A 4.4.4.4 $GENERATE 1-254 HOST$ IN A 1.2.3.$ *.magedu.org. IN A 5.5.5.5 magedu.org. IN A 6.6.6.6 #注意：如果有和DNS的IP相同的多个同名的A记录，优先返回DNS的本机IP AAAA记录 name: FQDN value: IPv6 PTR记录 name: IP，有特定格式，把IP地址反过来写，1.2.3.4，要写作4.3.2.1；而有特定后缀：in- addr.arpa.，所以完整写法为：4.3.2.1.in-addr.arpa. value: FQDN 注意：网络地址及后缀可省略；主机地址依然需要反着写 例如：\n4.3.2.1.in-addr.arpa. IN PTR www.magedu.org. #如1.2.3为网络地址，可简写成： 4 IN PTR www.magedu.org. CNAME别名记录 name: 别名的FQDN value: 真正名字的FQDN 例如\nwww.magedu.org. IN CNAME websrv.magedu.org. DNS软件bind DNS服务器软件：bind，powerdns，dnsmasq，unbound，coredns\nbind相关程序包 yum list all bind*\nbind：服务器 bind-utils: 客户端 bind-libs：相关库,依赖关系自动安装 bind-chroot: 安全包，将dns相关文件放至 /var/named/chroot/\n范例：安装bind软件\n[root@centos8 ~]#dnf -y install bind bind-utils [root@ubuntu2004 ~]#apt -y install bind9 bind9-utils bind包相关文件 BIND主程序：/usr/sbin/named 服务脚本和Unit名称：/etc/rc.d/init.d/named，/usr/lib/systemd/system/named.service 主配置文件：/etc/named.conf, /etc/named.rfc1912.zones, /etc/rndc.key 管理工具：/usr/sbin/rndc：remote name domain controller，默认与bind安装在同一主机，且 只能通过127.0.0.1连接named进程，提供辅助性的管理功能；953/tcp 解析库文件：/var/named/ZONE_NAME.ZONE 注意： (1) 一台物理服务器可同时为多个区域提供解析 (2) 必须要有根区域文件；named.ca (3) 应该有两个（如果包括ipv6的，应该更多）实现localhost和本地回环地址的解析库\n主配置文件 全局配置：options {}; 日志子系统配置：logging {}; 区域定义：本机能够为哪些zone进行解析，就要定义哪些zone zone “ZONE_NAME” IN {}; 注意： 任何服务程序如果期望其能够通过网络被其它主机访问，至少应该监听在一个能与外部主机通信的 IP地址上 缓存名称服务器的配置：监听外部地址即可 dnssec: 建议关闭dnssec，设为no ",
-  "wordCount" : "2682",
+  "articleBody": "名字解析介绍和DNS DNS服务工作原理 DNS查询类型 递归查询： 是指DNS服务器在收到用户发起的请求时，必须向用户返回一个准确的查询结果。如果DNS服务器 本地没有存储与之对应的信息，则该服务器需要询问其他服务器，并将返回的查询结构提交给用 户。 一般客户机和本地DNS服务器之间属于递归查询，即当客户机向DNS服务器发出请求后,若DNS服 务器本身不能解析，则会向另外的DNS服务器发出查询请求，得到最终的肯定或否定的结果后转交 给客户机。此查询的源和目标保持不变,为了查询结果只需要发起一次查询 递归算法:客户端向LocalDNS发起域名查询–\u003elocalDNS不知道域名对应的IP–\u003e但它知道谁知道-\u003e他 代为帮客户端去查找–\u003e最后再返回最终结果 迭代查询： 是指DNS服务器在收到用户发起的请求时，并不直接回复查询结果，而是告诉另一台DNS服务器的 地址，用户再向这台DNS服务器提交请求，这样依次反复，直到返回查询结果。 一般情况下(有例外)本地的DNS服务器向其它DNS服务器的查询属于迭代查询,如：若对方不能返回 权威的结果，则它会向下一个DNS服务器(参考前一个DNS服务器返回的结果)再次发起进行查询， 直到返回查询的结果为止。此查询的源不变,但查询的目标不断变化,为查询结果一般需要发起多次 查询 迭代算法︰\n客户端向LocalDNS发起域名查询–\u003elocalDNS不知道域名对应的IP–\u003e但它知道谁知道并 推荐客户端应该找谁–\u003e客户端自己去找它 DNS缓存: DNS缓存是将解析数据存储在靠近发起请求的客户端的位置，也可以说DNS数据是可以缓存在任意 位置，最终目的是以此减少递归查询过程，可以更快的让用户获得请求结果。 解析类型 FQDN –\u003e IP 正向解析 IP –\u003e FQDN 反向解析\n注意：正反向解析是两个不同的名称空间，是两棵不同的解析树 完整查询流程 Client --\u003ehosts文件 --\u003e Client DNS Service Local Cache --\u003e DNS Server (recursion递 归) --\u003e DNS Server Cache --\u003eDNS iteration(迭代) --\u003e 根--\u003e 顶级域名DNS--\u003e二级域名DNS… DNS服务相关概念和技术 各种资源记录 区域解析库：由众多资源记录RR(Resource Record)组成 记录类型：A, AAAA, PTR, SOA, NS, CNAME, MX\nSOA：Start Of Authority，起始授权记录；一个区域解析库有且仅能有一个SOA记录，必须位于解析库的第一条记录 A：internet Address，作用，FQDN –\u003e IP AAAA：FQDN –\u003e IPv6 PTR：PoinTeR，IP –\u003e FQDN NS：Name Server，专用于标明当前区域的DNS服务器 CNAME ： Canonical Name，别名记录 MX：Mail eXchanger，邮件交换器 TXT：对域名进行标识和说明的一种方式，一般做验证记录时会使用此项，如：SPF（反垃圾邮件）记录，https验证等，如下示例 _dnsauth TXT 2012011200000051qgs69bwoh4h6nht4n1h0lr038x SOA记录 name: 当前区域的名字，例如\"magedu.org.\" value: 有多部分组成 注意：\n当前区域的主DNS服务器的FQDN，也可以使用当前区域的名字，只是注释功能，可以不需要配置 对应的NS记录和A记录 当前区域管理员的邮箱地址；但地址中不能使用@符号，一般用.替换，例如：admin.magedu.org 主从服务区域传输相关定义以及否定的答案的统一的TTL 范例\nmagedu.org. 86400 IN SOA ns.magedu.org. nsadmin.magedu.org. ( 2015042201 ;序列号 2H ;刷新时间 10M ;重试时间 1W ;过期时间 1D ;否定答案的TTL值 ) NS记录 name: 当前区域的名字 value: 当前区域的某DNS服务器的名字，例如: ns.magedu.org. 注意：\n相邻的两个资源记录的name相同时，后续的可省略\n对NS记录而言，任何一个ns记录后面的服务器名字，都应该在后续有一个A记录\n一个区域可以有多个NS记录\n范例：\nmagedu.org. IN NS ns1.magedu.org. magedu.org. IN NS ns2.magedu.org. MX记录 name: 当前区域的名字\nvalue: 当前区域的某邮件服务器(smtp服务器)的主机名\n注意：\n一个区域内，MX记录可有多个；但每个记录的value之前应该有一个数字(0-99)，表示此服务器的优先级；数字越小优先级越高\n对MX记录而言，任何一个MX记录后面的服务器名字，都应该在后续有一个A记录\n范例：\nmagedu.org. IN MX 10 mx1.magedu.org. IN MX 20 mx2.magedu.org. mx1 A 10.0.0.100 mx2 A 10.0.0.200 A记录 name: 某主机的FQDN，例如：www.magedu.org.\nvalue: 主机名对应主机的IP地址\n避免用户写错名称时给错误答案，可通过泛域名解析进行解析至某特定地址\n范例：\nwww.magedu.org. IN A 1.1.1.1 www.magedu.org. IN A 2.2.2.2 mx1.magedu.org. IN A 3.3.3.3 mx2.magedu.org. IN A 4.4.4.4 $GENERATE 1-254 HOST$ IN A 1.2.3.$ *.magedu.org. IN A 5.5.5.5 magedu.org. IN A 6.6.6.6 #注意：如果有和DNS的IP相同的多个同名的A记录，优先返回DNS的本机IP AAAA记录 name: FQDN value: IPv6 PTR记录 name: IP，有特定格式，把IP地址反过来写，1.2.3.4，要写作4.3.2.1；而有特定后缀：in- addr.arpa.，所以完整写法为：4.3.2.1.in-addr.arpa. value: FQDN 注意：网络地址及后缀可省略；主机地址依然需要反着写 例如：\n4.3.2.1.in-addr.arpa. IN PTR www.magedu.org. #如1.2.3为网络地址，可简写成： 4 IN PTR www.magedu.org. CNAME别名记录 name: 别名的FQDN value: 真正名字的FQDN 例如\nwww.magedu.org. IN CNAME websrv.magedu.org. DNS软件bind DNS服务器软件：bind，powerdns，dnsmasq，unbound，coredns\nbind相关程序包 yum list all bind*\nbind：服务器 bind-utils: 客户端 bind-libs：相关库,依赖关系自动安装 bind-chroot: 安全包，将dns相关文件放至 /var/named/chroot/\n范例：安装bind软件\n[root@centos8 ~]#dnf -y install bind bind-utils [root@ubuntu2004 ~]#apt -y install bind9 bind9-utils bind包相关文件 BIND主程序：/usr/sbin/named 服务脚本和Unit名称：/etc/rc.d/init.d/named，/usr/lib/systemd/system/named.service 主配置文件：/etc/named.conf, /etc/named.rfc1912.zones, /etc/rndc.key 管理工具：/usr/sbin/rndc：remote name domain controller，默认与bind安装在同一主机，且 只能通过127.0.0.1连接named进程，提供辅助性的管理功能；953/tcp 解析库文件：/var/named/ZONE_NAME.ZONE 注意： (1) 一台物理服务器可同时为多个区域提供解析 (2) 必须要有根区域文件；named.ca (3) 应该有两个（如果包括ipv6的，应该更多）实现localhost和本地回环地址的解析库\n主配置文件 全局配置：options {}; 日志子系统配置：logging {}; 区域定义：本机能够为哪些zone进行解析，就要定义哪些zone zone “ZONE_NAME” IN {}; 注意： 任何服务程序如果期望其能够通过网络被其它主机访问，至少应该监听在一个能与外部主机通信的 IP地址上 缓存名称服务器的配置：监听外部地址即可 dnssec: 建议关闭dnssec，设为no ",
+  "wordCount" : "2681",
   "inLanguage": "en",
   "image":"https://xyenvy.github.io/posts.images/banner/11.jpg","datePublished": "2022-09-22T22:01:44Z",
   "dateModified": "2022-09-22T22:01:44Z",
@@ -282,7 +282,7 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>2682字
+        <span>2681字
             &nbsp;&nbsp;
         </span>
     </span>
@@ -365,7 +365,7 @@ var _hmt = _hmt || [];
             <span class="details">文章目录</span>
         </summary>
 
-        <div class="inner"><ul><ul>
+        <div class="inner"><ul>
                 <li>
                     <a href="#%e5%90%8d%e5%ad%97%e8%a7%a3%e6%9e%90%e4%bb%8b%e7%bb%8d%e5%92%8cdns" aria-label="名字解析介绍和DNS">名字解析介绍和DNS</a></li>
                 <li>
@@ -375,11 +375,9 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#%e8%a7%a3%e6%9e%90%e7%b1%bb%e5%9e%8b" aria-label="解析类型">解析类型</a></li>
                 <li>
-                    <a href="#%e5%ae%8c%e6%95%b4%e6%9f%a5%e8%af%a2%e6%b5%81%e7%a8%8b" aria-label="完整查询流程">完整查询流程</a></li></ul>
-                    
+                    <a href="#%e5%ae%8c%e6%95%b4%e6%9f%a5%e8%af%a2%e6%b5%81%e7%a8%8b" aria-label="完整查询流程">完整查询流程</a></li>
                 <li>
-                    <a href="#dns%e6%9c%8d%e5%8a%a1%e7%9b%b8%e5%85%b3%e6%a6%82%e5%bf%b5%e5%92%8c%e6%8a%80%e6%9c%af" aria-label="DNS服务相关概念和技术">DNS服务相关概念和技术</a><ul>
-                        
+                    <a href="#dns%e6%9c%8d%e5%8a%a1%e7%9b%b8%e5%85%b3%e6%a6%82%e5%bf%b5%e5%92%8c%e6%8a%80%e6%9c%af" aria-label="DNS服务相关概念和技术">DNS服务相关概念和技术</a></li>
                 <li>
                     <a href="#%e5%90%84%e7%a7%8d%e8%b5%84%e6%ba%90%e8%ae%b0%e5%bd%95" aria-label="各种资源记录">各种资源记录</a><ul>
                         
@@ -408,8 +406,6 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#%e4%b8%bb%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="主配置文件">主配置文件</a>
                 </li>
-            </ul>
-            </li>
             </ul>
             </li>
             </ul>
@@ -515,7 +511,7 @@ DNS缓存是将解析数据存储在靠近发起请求的客户端的位置，�
 <h2 id="完整查询流程">完整查询流程<a hidden class="anchor" aria-hidden="true" href="#完整查询流程">#</a></h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>Client --&gt;hosts文件 --&gt; Client DNS Service Local Cache --&gt; DNS Server (recursion递
 </span></span><span style="display:flex;"><span>归) --&gt; DNS Server Cache --&gt;DNS iteration(迭代) --&gt; 根--&gt; 顶级域名DNS--&gt;二级域名DNS…
-</span></span></code></pre></div><h1 id="dns服务相关概念和技术">DNS服务相关概念和技术<a hidden class="anchor" aria-hidden="true" href="#dns服务相关概念和技术">#</a></h1>
+</span></span></code></pre></div><h2 id="dns服务相关概念和技术">DNS服务相关概念和技术<a hidden class="anchor" aria-hidden="true" href="#dns服务相关概念和技术">#</a></h2>
 <h2 id="各种资源记录">各种资源记录<a hidden class="anchor" aria-hidden="true" href="#各种资源记录">#</a></h2>
 <p>区域解析库：由众多资源记录RR(Resource Record)组成
 记录类型：A, AAAA, PTR, SOA, NS, CNAME, MX</p>
@@ -527,8 +523,7 @@ DNS缓存是将解析数据存储在靠近发起请求的客户端的位置，�
 <li>NS：Name Server，专用于标明当前区域的DNS服务器</li>
 <li>CNAME ： Canonical Name，别名记录</li>
 <li>MX：Mail eXchanger，邮件交换器</li>
-<li>TXT：对域名进行标识和说明的一种方式，一般做验证记录时会使用此项，如：SPF（反垃圾邮
-件）记录，https验证等，如下示例：</li>
+<li>TXT：对域名进行标识和说明的一种方式，一般做验证记录时会使用此项，如：SPF（反垃圾邮件）记录，https验证等，如下示例</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>_dnsauth TXT 2012011200000051qgs69bwoh4h6nht4n1h0lr038x
 </span></span></code></pre></div><h3 id="soa记录">SOA记录<a hidden class="anchor" aria-hidden="true" href="#soa记录">#</a></h3>
@@ -541,7 +536,7 @@ value: 有多部分组成
 <li>当前区域管理员的邮箱地址；但地址中不能使用@符号，一般用.替换，例如：admin.magedu.org</li>
 <li>主从服务区域传输相关定义以及否定的答案的统一的TTL</li>
 </ol>
-<p><strong>范例</strong></p>
+<p>范例</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>magedu.org. 86400 IN SOA ns.magedu.org. nsadmin.magedu.org. (
 </span></span><span style="display:flex;"><span>2015042201 ;序列号
 </span></span><span style="display:flex;"><span>2H ;刷新时间
@@ -554,22 +549,32 @@ value: 有多部分组成
 value: 当前区域的某DNS服务器的名字，例如: ns.magedu.org.
 注意：</p>
 <ol>
-<li>相邻的两个资源记录的name相同时，后续的可省略</li>
-<li>对NS记录而言，任何一个ns记录后面的服务器名字，都应该在后续有一个A记录</li>
-<li>一个区域可以有多个NS记录
-范例：</li>
+<li>
+<p>相邻的两个资源记录的name相同时，后续的可省略</p>
+</li>
+<li>
+<p>对NS记录而言，任何一个ns记录后面的服务器名字，都应该在后续有一个A记录</p>
+</li>
+<li>
+<p>一个区域可以有多个NS记录</p>
+</li>
 </ol>
+<p>范例：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>magedu.org. IN NS ns1.magedu.org.
 </span></span><span style="display:flex;"><span>magedu.org. IN NS ns2.magedu.org.
 </span></span></code></pre></div><h3 id="mx记录">MX记录<a hidden class="anchor" aria-hidden="true" href="#mx记录">#</a></h3>
 <p>name: 当前区域的名字<br>
 value: 当前区域的某邮件服务器(smtp服务器)的主机名<br>
-<strong>注意：</strong></p>
+注意：</p>
 <ol>
-<li>一个区域内，MX记录可有多个；但每个记录的value之前应该有一个数字(0-99)，表示此服务器的优先级；数字越小优先级越高</li>
-<li>对MX记录而言，任何一个MX记录后面的服务器名字，都应该在后续有一个A记录<br>
-范例：</li>
+<li>
+<p>一个区域内，MX记录可有多个；但每个记录的value之前应该有一个数字(0-99)，表示此服务器的优先级；数字越小优先级越高</p>
+</li>
+<li>
+<p>对MX记录而言，任何一个MX记录后面的服务器名字，都应该在后续有一个A记录</p>
+</li>
 </ol>
+<p>范例：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>magedu.org. IN MX 10 mx1.magedu.org.
 </span></span><span style="display:flex;"><span>IN MX 20 mx2.magedu.org.
 </span></span><span style="display:flex;"><span>mx1 A 10.0.0.100
@@ -602,7 +607,7 @@ value: 主机名对应主机的IP地址<br>
 </span></span></code></pre></div><h3 id="cname别名记录">CNAME别名记录<a hidden class="anchor" aria-hidden="true" href="#cname别名记录">#</a></h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>name: 别名的FQDN
 </span></span><span style="display:flex;"><span>value: 真正名字的FQDN  
-</span></span></code></pre></div><p><strong>例如</strong></p>
+</span></span></code></pre></div><p>例如</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>www.magedu.org. IN CNAME websrv.magedu.org.
 </span></span></code></pre></div><h2 id="dns软件bind">DNS软件bind<a hidden class="anchor" aria-hidden="true" href="#dns软件bind">#</a></h2>
 <p>DNS服务器软件：bind，powerdns，dnsmasq，unbound，coredns</p>
@@ -612,7 +617,7 @@ value: 主机名对应主机的IP地址<br>
 bind-utils: 客户端
 bind-libs：相关库,依赖关系自动安装
 bind-chroot: 安全包，将dns相关文件放至 /var/named/chroot/</p>
-<p><strong>范例：安装bind软件</strong></p>
+<p>范例：安装bind软件</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-TEXT" data-lang="TEXT"><span style="display:flex;"><span>[root@centos8 ~]#dnf -y install bind bind-utils
 </span></span><span style="display:flex;"><span>[root@ubuntu2004 ~]#apt -y install bind9 bind9-utils
 </span></span></code></pre></div><h3 id="bind包相关文件">bind包相关文件<a hidden class="anchor" aria-hidden="true" href="#bind包相关文件">#</a></h3>

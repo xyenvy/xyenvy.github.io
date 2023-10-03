@@ -118,8 +118,8 @@ var _hmt = _hmt || [];
   "keywords": [
     "Linux", "软件", "apt", "yum"
   ],
-  "articleBody": "1、软件管理简介 Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的\nRPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能\n2、软件包管理器简介 2.1 软件包管理器的职责 将二进制文件、库文件、配置文件、帮助文件打包成一个文件 安装软件时按需将二进制、库文件、配置文件、帮助文件放到相应的位置 生成数据库，追踪所安装的每一个文件 软件卸载时根据安装时生成的数据库将相应的文件删除 2.2 软件包管理器的核心功能 制作软件包 安装软件 卸载软件 升级软件 查询软件 校验软件 3、软件包简介 3.1 软件包组成 软件包的组成清单 文件清单 安装或卸载的运行脚本 数据库 程序包名称及版本 依赖关系 功能说明 安装生成的各个文件的路径及校验码信息 3.2 软件包分类 源码格式 特点：需要编译成二进制格式才能进行\n命名方式：name-VERSION.tar.gz VERSION：主版本号.次版本号.系统发行版本 二进制格式 特点：编译好的，安装之后可以直接运行\n软件的作者下载软件的源码，编译配置为二进制软件包 Redhat和Centos中使用的二进制包为rpm包 源码格式和二进制格式的区别\n源码格式的包编译为二进制包时可以选择需要的特性，如果未选择，则编译后安装后的软件就不会有相应的功能 源码包在编译成为二进制包时可以实现软件功能的定制 二进制包的本版落后于源码包。 4、rpm简介 Redhat和Centos中二进制包的扩展包为.rpm，这是由红帽公司最先发布的一种用来打包软件的文件格式，我们叫做rpm包；RPM软件包管理器就是管理rpm包\n4.1 rpm包命名规范\n5、软件包的获取途径 5.1 系统发行的光盘 Linux的IOS镜像文件自带了非常多的系统扩展RPM安装包，且这些软件版本最适合当前Linux系统 IOS镜像文件自带的扩展RPM安装包的存放目录为：Packages 使用IOS镜像文件自带的扩展RPM安装包前必须先挂载ISO镜像，挂在方法如下：\n# 创建挂载点，挂载光盘镜像到挂载点 [root@jlin ~]# mkdir /mnt/cdrom [root@jlin ~]# mount /dev/sr0 /mnt/cdrom/ # 复制挂载点里面所有的文件到/media/目录，避免光盘断开连接就读取不到扩展RPM安装包 [root@jlin ~]# cp -r /mnt/cdrom/ /media/ [root@jlin ~]# cd /media/cdrom/ [root@jlin cdrom]# ll 总用量 320 -rw-r--r-- 1 root root 14 7月 10 08:27 CentOS_BuildTag drwxr-xr-x 3 root root 35 7月 10 08:27 EFI -rw-r--r-- 1 root root 227 7月 10 08:27 EULA -rw-r--r-- 1 root root 18009 7月 10 08:27 GPL drwxr-xr-x 3 root root 57 7月 10 08:27 images drwxr-xr-x 2 root root 198 7月 10 08:27 isolinux drwxr-xr-x 2 root root 43 7月 10 08:27 LiveOS drwxr-xr-x 2 root root 221184 7月 10 08:29 Packages drwxr-xr-x 2 root root 4096 7月 10 08:29 repodata -rw-r--r-- 1 root root 1690 7月 10 08:29 RPM-GPG-KEY-CentOS-7 -rw-r--r-- 1 root root 1690 7月 10 08:29 RPM-GPG-KEY-CentOS-Testing-7 -r--r--r-- 1 root root 2883 7月 10 08:29 TRANS.TBL 5.2 开源镜像站 开源镜像站上会存放RPM安装包\n阿里巴巴开源镜像站 http://mirrors.aliyun.com\n网易开源镜像站 http://mirrors.163.com\n清华大学开源镜像站 https://mirrors.tuna.tsinghua.edu.cn\n5.3 搜索引擎 有一些搜索引擎直接提供rpm包搜索功能\nrpmfind http://rpmfind.net\nrpm pbone http://rpm.pbone.net\npkgs http://pkgs.org/\n6、rpm包管理 6.1 RPM包安装 // 语法：rpm -ivh /PATH/TO/PACKAGE_FILE ... // 选项： -i：安装 -v：显示详细信息 -h：显示安装进度条 --test：测试安装，但不真正执行安装过程 --nodeps：忽略依赖关系 --force：强行安装，可以实现重装或降级 --replacepkgs：重新安装，替换原有安装 --oldpackage：降级 --nodigest：不检查包的完整性 --nosignature：不检查报的来源合法性 --noscripts：不执行rpm包自带的四类脚本： --nopre：不执行rpm包自带的preinstall脚本 --nopost：不执行rpm包自带的postinstall脚本 --nopreun：不执行rpm包自带的preuninstall脚本 --nopostun：不执行rpm包自带的postuninstall脚本 --preinstall：安装过程开始之前运行的脚本，标记为%pre：--nopre --postinstall：安装过程完成之后运行的脚本，标记为%post：--nopost --preuninstall：卸载过程开始执行之前运行的脚本，标记为%preun：--nopreun --postunistall：写在过程完成之后运行的脚本，标记为%postrun：--nopostun // 安装软件包，需要指定软件包绝对路径 [root@jlin ~]# rpm -ivh /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm // 在软件包所在目录下可以不指定绝对路径 [root@jlin ~]# cd /mnt/cdrom/Packages/ [root@jlin Packages]# rpm -ivh tree-1.6.0-10.el7.x86_64.rpm // 测试一个软件包是否能在该系统上安装 [root@jlin ~]# rpm -ivh --test /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm // 如果软件包已经安装，强制再次安装 [root@jlin ~]# rpm -ivh --force /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm // 安装httpd服务需要依赖其他组件，使用--nodeps可忽略以来强制安装 [root@jlin ~]# rpm -ivh --nodeps /mnt/cdrom/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm 6.2 RPM包查询 // 查询httpd的rpm包是否安装 [root@jlin ~]# rpm -q httpd // 模糊查找系统已安装的rpm包 [root@jlin ~]# rpm -qa | grep ftp // 查询已安装的httpd软件包相关信息 [root@jlin ~]# rpm -qi httpd // 查询已安装的rpm包生成的文件 [root@jlin ~]# rpm -ql httpd // 查询已安装的rpm包生成的配置文件 所有 [root@jlin ~]# rpm -qc httpd // 查询配置文件或命令来自于哪个rpm包 [root@jlin ~]# rpm -qf /etc/httpd/httpd.conf [root@jlin ~]# rpm -qf /usr/sbin/httpd // 查询未安装的软件包会产生哪些文件 [root@jlin ~]# rpm -qpl / mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm // 查询未安装的软件包的说明信息 [root@jlin ~]# rpm -qpi /mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm 6.4 RPM包升级 // 升级tree软件包 [root@jlin ~]# rpm -Uvh /mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm 6.5 RPM包卸载 // 先查询，然后卸载 [root@jlin ~]# rpm -qa lgrep httpd [root@jlin ~]# rpm -e httpd 6.6 RPM包校验 // 校验已经安装的软件包的文件是否被修改；如果执行以下命令无内容输出说明安装的软件 [root@jlin ~]# rpm -v vsftpd S #文件的容量大小是否被改变 M #文件的类型或者文件的属性是否被修改 5 #MD5加密的内容已经不同 D #装置的主/次代码已经改变 L #路径已经被改变 U #文件的所属主已被修改 G #文件的所属组已被修改 T #文件的创建时间已被改变 6.7 RPM重建数据库 // 数据库信息在/var/lib/rpm目录 // 重建数据库，重建Packages数据库，一定会重建 rpm --rebuilddb // 初始化数据库，重建所有数据库，没有才建立，有就不建立 rpm --initdb 6.8 检查软件包来源合法性 加密类型: - 对称加密 #加密解密使用同一个密钥 - 公钥加密 #一对密钥，公钥和私钥。公钥隐含于私钥中，可以提取出来并公布出去 - 单向加密 #只能加密不能解密 // 红帽官方公钥存放位置 /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release // 检查指定rpm包合法性，出现oK字样表示包没问题 rpm -K PACKAGE_FILE // 导入密钥文件 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release1 Centos 7发行版光盘提供的密钥文件名为:RPM-GPG-KEY-Centos-7 7、yum和dnf CentOS 使用 yum, dnf 解决rpm的包依赖关系 YUM: Yellowdog Update Modifier，rpm的前端程序，可解决软件包相关依赖性，可在多个库之间定位 软件包，up2date的替代工具，CentOS 8 用dnf 代替了yum ,不过保留了和yum的兼容性，配置也是通 用的\n7.1 yum/dnf 工作原理 yum/dnf 是基于C/S 模式 yum 服务器存放rpm包和相关包的元数据库 yum 客户端访问yum服务器进行安装或查询等 yum 实现过程 先在yum服务器上创建 yum repository（仓库），在仓库中事先存储了众多rpm包，以及包的相关的 元数据文件（放置于特定目录repodata下），当yum客户端利用yum/dnf工具进行安装时包时，会自动 下载repodata中的元数据，查询远数据是否存在相关的包及依赖关系，自动从仓库中找到相关包下载并 安装。\n7.2 yum客户端配置 yum客户端配置文件\n/etc/yum.conf #为所有仓库提供公共配置 /etc/yum.repos.d/*.repo： #为每个仓库的提供配置文件 帮助参考： man 5 yum.conf repo仓库配置文件指向的定义：\n[repositoryID] name=Some name for this repository baseurl=url://path/to/repository/ enabled={1|0} gpgcheck={1|0} gpgkey=URL enablegroups={1|0} failovermethod={roundrobin|priority} roundrobin：意为随机挑选，默认值 priority:按顺序访问 cost= 默认为1000 yum服务器的baseurl形式\nfile:// 本地路径 http:// https:// ftp:// 注意：yum仓库指向的路径一定必须是repodata目录所在目录 相关变量\nyum的repo配置文件中可用的变量： $releasever: 当前OS的发行版的主版本号，如：8，7，6 $arch: CPU架构，如：aarch64, i586, i686，x86_64等 $basearch：系统基础平台；i386, x86_64 $contentdir：表示目录，比如：centos-8，centos-7 $YUM0-$YUM9:自定义变量 7.3 yum命令 yum命令的用法\nyum [options] [command] [package ...] yum的命令行选项\n-y #自动回答为\"yes\" -q #静默模式 --nogpgcheck #禁止进行gpg check --enablerepo=repoidglob #临时启用此处指定的repo，支持通配符，如：\"*\" --disablerepo=repoidglob #临时禁用此处指定的repo,和上面语句同时使用，放在后面的生效 7.3.1 显示仓库列表 yum repolist [all|enabled|disabled] 范例\n7.3.2 显示程序包 yum list yum list [all | glob_exp1] [glob_exp2] [...] yum list {available|installed|updates} [glob_exp1] [...] 范例\nyum list yum list [all | glob_exp1] [glob_exp2] [...] yum list {available|installed|updates} [glob_exp1] [...] 范例：只查看安装的包\n[root@rocky ~]# yum list installed|head Installed Packages NetworkManager.x86_64 1:1.32.10-4.el8 @anaconda NetworkManager-config-server.noarch 1:1.32.10-4.el8 @anaconda NetworkManager-libnm.x86_64 1:1.32.10-4.el8 @anaconda NetworkManager-team.x86_64 1:1.32.10-4.el8 @anaconda NetworkManager-tui.x86_64 1:1.32.10-4.el8 @anaconda acl.x86_64 2.2.53-1.el8.1 @anaconda adcli.x86_64 0.8.2-12.el8 @anaconda alsa-sof-firmware.noarch 1.8-1.el8 @anaconda at.x86_64 3.1.20-11.el8 @anaconda [root@rocky ~]# 范例：查看可以安装的包\n[root@rocky ~]# yum list available | head Last metadata expiration check: 2:21:04 ago on Tue 09 Aug 2022 09:50:19 AM CST. Available Packages CUnit.i686 2.1.3-17.el8 appstream CUnit.x86_64 2.1.3-17.el8 appstream GConf2.i686 3.2.6-22.el8 appstream GConf2.x86_64 3.2.6-22.el8 appstream HdrHistogram.noarch 2.1.11-3.module+el8.4.0+405+66dfe7da appstream HdrHistogram-javadoc.noarch 2.1.11-3.module+el8.4.0+405+66dfe7da appstream HdrHistogram_c.i686 0.9.13-2.el8 appstream HdrHistogram_c.x86_64 0.9.13-2.el8 appstream [root@rocky ~]# 范例：查看可以升级的包\nyum list updates 范例：查看指定的包\n[root@centos8 ~]#yum list exim ",
-  "wordCount" : "3483",
+  "articleBody": "1、软件管理简介 Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的\nRPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能\n2、软件包管理器简介 2.1 软件包管理器的职责 将二进制文件、库文件、配置文件、帮助文件打包成一个文件 安装软件时按需将二进制、库文件、配置文件、帮助文件放到相应的位置 生成数据库，追踪所安装的每一个文件 软件卸载时根据安装时生成的数据库将相应的文件删除 2.2 软件包管理器的核心功能 制作软件包 安装软件 卸载软件 升级软件 查询软件 校验软件 3、软件包简介 3.1 软件包组成 软件包的组成清单 文件清单 安装或卸载的运行脚本 数据库 程序包名称及版本 依赖关系 功能说明 安装生成的各个文件的路径及校验码信息 3.2 软件包分类 源码格式 特点：需要编译成二进制格式才能进行\n命名方式：name-VERSION.tar.gz VERSION：主版本号.次版本号.系统发行版本 二进制格式 特点：编译好的，安装之后可以直接运行\n软件的作者下载软件的源码，编译配置为二进制软件包 Redhat和Centos中使用的二进制包为rpm包 源码格式和二进制格式的区别\n源码格式的包编译为二进制包时可以选择需要的特性，如果未选择，则编译后安装后的软件就不会有相应的功能 源码包在编译成为二进制包时可以实现软件功能的定制 二进制包的本版落后于源码包。 4、rpm简介 Redhat和Centos中二进制包的扩展包为.rpm，这是由红帽公司最先发布的一种用来打包软件的文件格式，我们叫做rpm包；RPM软件包管理器就是管理rpm包\n4.1 rpm包命名规范\n5、软件包的获取途径 5.1 系统发行的光盘 Linux的IOS镜像文件自带了非常多的系统扩展RPM安装包，且这些软件版本最适合当前Linux系统 IOS镜像文件自带的扩展RPM安装包的存放目录为：Packages 使用IOS镜像文件自带的扩展RPM安装包前必须先挂载ISO镜像，挂在方法如下：\n# 创建挂载点，挂载光盘镜像到挂载点 [root@jlin ~]# mkdir /mnt/cdrom [root@jlin ~]# mount /dev/sr0 /mnt/cdrom/ # 复制挂载点里面所有的文件到/media/目录，避免光盘断开连接就读取不到扩展RPM安装包 [root@jlin ~]# cp -r /mnt/cdrom/ /media/ [root@jlin ~]# cd /media/cdrom/ [root@jlin cdrom]# ll 总用量 320 -rw-r--r-- 1 root root 14 7月 10 08:27 CentOS_BuildTag drwxr-xr-x 3 root root 35 7月 10 08:27 EFI -rw-r--r-- 1 root root 227 7月 10 08:27 EULA -rw-r--r-- 1 root root 18009 7月 10 08:27 GPL drwxr-xr-x 3 root root 57 7月 10 08:27 images drwxr-xr-x 2 root root 198 7月 10 08:27 isolinux drwxr-xr-x 2 root root 43 7月 10 08:27 LiveOS drwxr-xr-x 2 root root 221184 7月 10 08:29 Packages drwxr-xr-x 2 root root 4096 7月 10 08:29 repodata -rw-r--r-- 1 root root 1690 7月 10 08:29 RPM-GPG-KEY-CentOS-7 -rw-r--r-- 1 root root 1690 7月 10 08:29 RPM-GPG-KEY-CentOS-Testing-7 -r--r--r-- 1 root root 2883 7月 10 08:29 TRANS.TBL 5.2 开源镜像站 开源镜像站上会存放RPM安装包\n阿里巴巴开源镜像站 http://mirrors.aliyun.com 网易开源镜像站 http://mirrors.163.com 清华大学开源镜像站 https://mirrors.tuna.tsinghua.edu.cn 5.3 搜索引擎 有一些搜索引擎直接提供rpm包搜索功能\nrpmfind \u003e http://rpmfind.net rpm pbone \u003e http://rpm.pbone.net pkgs \u003e http://pkgs.org/ 6、rpm包管理 6.1 RPM包安装 // 语法：rpm -ivh /PATH/TO/PACKAGE_FILE ... // 选项： -i：安装 -v：显示详细信息 -h：显示安装进度条 --test：测试安装，但不真正执行安装过程 --nodeps：忽略依赖关系 --force：强行安装，可以实现重装或降级 --replacepkgs：重新安装，替换原有安装 --oldpackage：降级 --nodigest：不检查包的完整性 --nosignature：不检查报的来源合法性 --noscripts：不执行rpm包自带的四类脚本： --nopre：不执行rpm包自带的preinstall脚本 --nopost：不执行rpm包自带的postinstall脚本 --nopreun：不执行rpm包自带的preuninstall脚本 --nopostun：不执行rpm包自带的postuninstall脚本 --preinstall：安装过程开始之前运行的脚本，标记为%pre：--nopre --postinstall：安装过程完成之后运行的脚本，标记为%post：--nopost --preuninstall：卸载过程开始执行之前运行的脚本，标记为%preun：--nopreun --postunistall：写在过程完成之后运行的脚本，标记为%postrun：--nopostun // 安装软件包，需要指定软件包绝对路径 [root@jlin ~]# rpm -ivh /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm // 在软件包所在目录下可以不指定绝对路径 [root@jlin ~]# cd /mnt/cdrom/Packages/ [root@jlin Packages]# rpm -ivh tree-1.6.0-10.el7.x86_64.rpm // 测试一个软件包是否能在该系统上安装 [root@jlin ~]# rpm -ivh --test /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm // 如果软件包已经安装，强制再次安装 [root@jlin ~]# rpm -ivh --force /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm // 安装httpd服务需要依赖其他组件，使用--nodeps可忽略以来强制安装 [root@jlin ~]# rpm -ivh --nodeps /mnt/cdrom/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm 6.2 RPM包查询 // 查询httpd的rpm包是否安装 [root@jlin ~]# rpm -q httpd // 模糊查找系统已安装的rpm包 [root@jlin ~]# rpm -qa | grep ftp // 查询已安装的httpd软件包相关信息 [root@jlin ~]# rpm -qi httpd // 查询已安装的rpm包生成的文件 [root@jlin ~]# rpm -ql httpd // 查询已安装的rpm包生成的配置文件 所有 [root@jlin ~]# rpm -qc httpd // 查询配置文件或命令来自于哪个rpm包 [root@jlin ~]# rpm -qf /etc/httpd/httpd.conf [root@jlin ~]# rpm -qf /usr/sbin/httpd // 查询未安装的软件包会产生哪些文件 [root@jlin ~]# rpm -qpl / mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm // 查询未安装的软件包的说明信息 [root@jlin ~]# rpm -qpi /mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm 6.4 RPM包升级 // 升级tree软件包 [root@jlin ~]# rpm -Uvh /mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm 6.5 RPM包卸载 // 先查询，然后卸载 [root@jlin ~]# rpm -qa lgrep httpd [root@jlin ~]# rpm -e httpd 6.6 RPM包校验 // 校验已经安装的软件包的文件是否被修改；如果执行以下命令无内容输出说明安装的软件 [root@jlin ~]# rpm -v vsftpd S #文件的容量大小是否被改变 M #文件的类型或者文件的属性是否被修改 5 #MD5加密的内容已经不同 D #装置的主/次代码已经改变 L #路径已经被改变 U #文件的所属主已被修改 G #文件的所属组已被修改 T #文件的创建时间已被改变 6.7 RPM重建数据库 // 数据库信息在/var/lib/rpm目录 // 重建数据库，重建Packages数据库，一定会重建 rpm --rebuilddb // 初始化数据库，重建所有数据库，没有才建立，有就不建立 rpm --initdb 6.8 检查软件包来源合法性 加密类型: - 对称加密 #加密解密使用同一个密钥 - 公钥加密 #一对密钥，公钥和私钥。公钥隐含于私钥中，可以提取出来并公布出去 - 单向加密 #只能加密不能解密 // 红帽官方公钥存放位置 /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release // 检查指定rpm包合法性，出现oK字样表示包没问题 rpm -K PACKAGE_FILE // 导入密钥文件 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release1 Centos 7发行版光盘提供的密钥文件名为:RPM-GPG-KEY-Centos-7 7、yum和dnf CentOS 使用 yum, dnf 解决rpm的包依赖关系 YUM: Yellowdog Update Modifier，rpm的前端程序，可解决软件包相关依赖性，可在多个库之间定位 软件包，up2date的替代工具，CentOS 8 用dnf 代替了yum ,不过保留了和yum的兼容性，配置也是通 用的\n7.1 yum/dnf 工作原理 yum/dnf 是基于C/S 模式 yum 服务器存放rpm包和相关包的元数据库 yum 客户端访问yum服务器进行安装或查询等 yum 实现过程 先在yum服务器上创建 yum repository（仓库），在仓库中事先存储了众多rpm包，以及包的相关的 元数据文件（放置于特定目录repodata下），当yum客户端利用yum/dnf工具进行安装时包时，会自动 下载repodata中的元数据，查询远数据是否存在相关的包及依赖关系，自动从仓库中找到相关包下载并 安装。\n7.2 yum客户端配置 yum客户端配置文件\n/etc/yum.conf #为所有仓库提供公共配置 /etc/yum.repos.d/*.repo： #为每个仓库的提供配置文件 帮助参考： man 5 yum.conf repo仓库配置文件指向的定义：\n[repositoryID] name=Some name for this repository baseurl=url://path/to/repository/ enabled={1|0} gpgcheck={1|0} gpgkey=URL enablegroups={1|0} failovermethod={roundrobin|priority} roundrobin：意为随机挑选，默认值 priority:按顺序访问 cost= 默认为1000 yum服务器的baseurl形式\nfile:// 本地路径 http:// https:// ftp:// 注意：yum仓库指向的路径一定必须是repodata目录所在目录 相关变量\nyum的repo配置文件中可用的变量： $releasever: 当前OS的发行版的主版本号，如：8，7，6 $arch: CPU架构，如：aarch64, i586, i686，x86_64等 $basearch：系统基础平台；i386, x86_64 $contentdir：表示目录，比如：centos-8，centos-7 $YUM0-$YUM9:自定义变量 7.3 yum命令 yum命令的用法\nyum [options] [command] [package ...] yum的命令行选项\n-y #自动回答为\"yes\" -q #静默模式 --nogpgcheck #禁止进行gpg check --enablerepo=repoidglob #临时启用此处指定的repo，支持通配符，如：\"*\" --disablerepo=repoidglob #临时禁用此处指定的repo,和上面语句同时使用，放在后面的生效 7.3.1 显示仓库列表 yum repolist [all|enabled|disabled] 范例\n7.3.2 显示程序包 yum list yum list [all | glob_exp1] [glob_exp2] [...] yum list {available|installed|updates} [glob_exp1] [...] 范例\nyum list yum list [all | glob_exp1] [glob_exp2] [...] yum list {available|installed|updates} [glob_exp1] [...] 范例：只查看安装的包\n[root@rocky ~]# yum list installed|head Installed Packages NetworkManager.x86_64 1:1.32.10-4.el8 @anaconda NetworkManager-config-server.noarch 1:1.32.10-4.el8 @anaconda NetworkManager-libnm.x86_64 1:1.32.10-4.el8 @anaconda NetworkManager-team.x86_64 1:1.32.10-4.el8 @anaconda NetworkManager-tui.x86_64 1:1.32.10-4.el8 @anaconda acl.x86_64 2.2.53-1.el8.1 @anaconda adcli.x86_64 0.8.2-12.el8 @anaconda alsa-sof-firmware.noarch 1.8-1.el8 @anaconda at.x86_64 3.1.20-11.el8 @anaconda [root@rocky ~]# 范例：查看可以安装的包\n[root@rocky ~]# yum list available | head Last metadata expiration check: 2:21:04 ago on Tue 09 Aug 2022 09:50:19 AM CST. Available Packages CUnit.i686 2.1.3-17.el8 appstream CUnit.x86_64 2.1.3-17.el8 appstream GConf2.i686 3.2.6-22.el8 appstream GConf2.x86_64 3.2.6-22.el8 appstream HdrHistogram.noarch 2.1.11-3.module+el8.4.0+405+66dfe7da appstream HdrHistogram-javadoc.noarch 2.1.11-3.module+el8.4.0+405+66dfe7da appstream HdrHistogram_c.i686 0.9.13-2.el8 appstream HdrHistogram_c.x86_64 0.9.13-2.el8 appstream [root@rocky ~]# 范例：查看可以升级的包\nyum list updates 范例：查看指定的包\n[root@centos8 ~]#yum list exim ",
+  "wordCount" : "3486",
   "inLanguage": "en",
   "image":"https://xyenvy.github.io/posts.images/banner/1.jpg","datePublished": "2022-08-08T21:05:59Z",
   "dateModified": "2022-08-08T21:05:59Z",
@@ -282,7 +282,7 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>3483字
+        <span>3486字
             &nbsp;&nbsp;
         </span>
     </span>
@@ -539,7 +539,7 @@ var _hmt = _hmt || [];
 <li>软件的作者下载软件的源码，编译配置为二进制软件包</li>
 <li>Redhat和Centos中使用的二进制包为rpm包</li>
 </ul>
-<p><strong>源码格式和二进制格式的区别</strong></p>
+<p>源码格式和二进制格式的区别</p>
 <ul>
 <li>源码格式的包编译为二进制包时可以选择需要的特性，如果未选择，则编译后安装后的软件就不会有相应的功能</li>
 <li>源码包在编译成为二进制包时可以实现软件功能的定制</li>
@@ -553,70 +553,58 @@ var _hmt = _hmt || [];
 <p>Linux的IOS镜像文件自带了非常多的系统扩展RPM安装包，且这些软件版本最适合当前Linux系统
 IOS镜像文件自带的扩展RPM安装包的存放目录为：Packages
 使用IOS镜像文件自带的扩展RPM安装包前必须先挂载ISO镜像，挂在方法如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 创建挂载点，挂载光盘镜像到挂载点
-</span></span><span style="display:flex;"><span>[root@jlin ~]# mkdir /mnt/cdrom
-</span></span><span style="display:flex;"><span>[root@jlin ~]# mount /dev/sr0 /mnt/cdrom/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 创建挂载点，挂载光盘镜像到挂载点</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># mkdir /mnt/cdrom</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># mount /dev/sr0 /mnt/cdrom/</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># 复制挂载点里面所有的文件到/media/目录，避免光盘断开连接就读取不到扩展RPM安装包
-</span></span><span style="display:flex;"><span>[root@jlin ~]# cp -r /mnt/cdrom/ /media/
-</span></span><span style="display:flex;"><span>[root@jlin ~]# cd /media/cdrom/
-</span></span><span style="display:flex;"><span>[root@jlin cdrom]# ll
-</span></span><span style="display:flex;"><span>总用量 320
-</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root     14 7月  10 08:27 CentOS_BuildTag
-</span></span><span style="display:flex;"><span>drwxr-xr-x 3 root root     35 7月  10 08:27 EFI
-</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root    227 7月  10 08:27 EULA
-</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root  18009 7月  10 08:27 GPL
-</span></span><span style="display:flex;"><span>drwxr-xr-x 3 root root     57 7月  10 08:27 images
-</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root    198 7月  10 08:27 isolinux
-</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root     43 7月  10 08:27 LiveOS
-</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root 221184 7月  10 08:29 Packages
-</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root   4096 7月  10 08:29 repodata
-</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root   1690 7月  10 08:29 RPM-GPG-KEY-CentOS-7
-</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root root   1690 7月  10 08:29 RPM-GPG-KEY-CentOS-Testing-7
-</span></span><span style="display:flex;"><span>-r--r--r-- 1 root root   2883 7月  10 08:29 TRANS.TBL
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 复制挂载点里面所有的文件到/media/目录，避免光盘断开连接就读取不到扩展RPM安装包</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># cp -r /mnt/cdrom/ /media/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /media/cdrom/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin cdrom<span style="color:#f92672">]</span><span style="color:#75715e"># ll</span>
+</span></span><span style="display:flex;"><span>总用量 <span style="color:#ae81ff">320</span>
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root     <span style="color:#ae81ff">14</span> 7月  <span style="color:#ae81ff">10</span> 08:27 CentOS_BuildTag
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">3</span> root root     <span style="color:#ae81ff">35</span> 7月  <span style="color:#ae81ff">10</span> 08:27 EFI
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root    <span style="color:#ae81ff">227</span> 7月  <span style="color:#ae81ff">10</span> 08:27 EULA
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">18009</span> 7月  <span style="color:#ae81ff">10</span> 08:27 GPL
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">3</span> root root     <span style="color:#ae81ff">57</span> 7月  <span style="color:#ae81ff">10</span> 08:27 images
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">2</span> root root    <span style="color:#ae81ff">198</span> 7月  <span style="color:#ae81ff">10</span> 08:27 isolinux
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">2</span> root root     <span style="color:#ae81ff">43</span> 7月  <span style="color:#ae81ff">10</span> 08:27 LiveOS
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">221184</span> 7月  <span style="color:#ae81ff">10</span> 08:29 Packages
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">2</span> root root   <span style="color:#ae81ff">4096</span> 7月  <span style="color:#ae81ff">10</span> 08:29 repodata
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">1690</span> 7月  <span style="color:#ae81ff">10</span> 08:29 RPM-GPG-KEY-CentOS-7
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">1690</span> 7月  <span style="color:#ae81ff">10</span> 08:29 RPM-GPG-KEY-CentOS-Testing-7
+</span></span><span style="display:flex;"><span>-r--r--r-- <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">2883</span> 7月  <span style="color:#ae81ff">10</span> 08:29 TRANS.TBL
 </span></span></code></pre></div><h2 id="52-开源镜像站">5.2 开源镜像站<a hidden class="anchor" aria-hidden="true" href="#52-开源镜像站">#</a></h2>
 <p>开源镜像站上会存放RPM安装包</p>
 <ul>
 <li>阿里巴巴开源镜像站</li>
 </ul>
-<blockquote>
-<p><a href="http://mirrors.aliyun.com">http://mirrors.aliyun.com</a></p>
-</blockquote>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>http://mirrors.aliyun.com
+</span></span></code></pre></div><ul>
 <li>网易开源镜像站</li>
 </ul>
-<blockquote>
-<p><a href="http://mirrors.163.com">http://mirrors.163.com</a></p>
-</blockquote>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>http://mirrors.163.com
+</span></span></code></pre></div><ul>
 <li>清华大学开源镜像站</li>
 </ul>
-<blockquote>
-<p><a href="https://mirrors.tuna.tsinghua.edu.cn">https://mirrors.tuna.tsinghua.edu.cn</a></p>
-</blockquote>
-<h2 id="53-搜索引擎">5.3 搜索引擎<a hidden class="anchor" aria-hidden="true" href="#53-搜索引擎">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>https://mirrors.tuna.tsinghua.edu.cn
+</span></span></code></pre></div><h2 id="53-搜索引擎">5.3 搜索引擎<a hidden class="anchor" aria-hidden="true" href="#53-搜索引擎">#</a></h2>
 <p>有一些搜索引擎直接提供rpm包搜索功能</p>
 <ul>
 <li>rpmfind</li>
 </ul>
-<blockquote>
-<p><a href="http://rpmfind.net">http://rpmfind.net</a></p>
-</blockquote>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&gt; http://rpmfind.net
+</span></span></code></pre></div><ul>
 <li>rpm pbone</li>
 </ul>
-<blockquote>
-<p><a href="http://rpm.pbone.net">http://rpm.pbone.net</a></p>
-</blockquote>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&gt; http://rpm.pbone.net
+</span></span></code></pre></div><ul>
 <li>pkgs</li>
 </ul>
-<blockquote>
-<p><a href="http://pkgs.org/">http://pkgs.org/</a></p>
-</blockquote>
-<h2 id="6rpm包管理">6、rpm包管理<a hidden class="anchor" aria-hidden="true" href="#6rpm包管理">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&gt; http://pkgs.org/
+</span></span></code></pre></div><h2 id="6rpm包管理">6、rpm包管理<a hidden class="anchor" aria-hidden="true" href="#6rpm包管理">#</a></h2>
 <h2 id="61-rpm包安装">6.1 RPM包安装<a hidden class="anchor" aria-hidden="true" href="#61-rpm包安装">#</a></h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>// 语法：rpm -ivh /PATH/TO/PACKAGE_FILE ...
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>// 语法：rpm -ivh /PATH/TO/PACKAGE_FILE ...
 </span></span><span style="display:flex;"><span>// 选项：
 </span></span><span style="display:flex;"><span>-i：安装
 </span></span><span style="display:flex;"><span>-v：显示详细信息
@@ -639,20 +627,20 @@ IOS镜像文件自带的扩展RPM安装包的存放目录为：Packages
 </span></span><span style="display:flex;"><span>--postunistall：写在过程完成之后运行的脚本，标记为%postrun：--nopostun
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>// 安装软件包，需要指定软件包绝对路径
-</span></span><span style="display:flex;"><span>[root@jlin ~]# rpm -ivh /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -ivh /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>// 在软件包所在目录下可以不指定绝对路径
-</span></span><span style="display:flex;"><span>[root@jlin ~]# cd /mnt/cdrom/Packages/
-</span></span><span style="display:flex;"><span>[root@jlin Packages]# rpm -ivh tree-1.6.0-10.el7.x86_64.rpm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /mnt/cdrom/Packages/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin Packages<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -ivh tree-1.6.0-10.el7.x86_64.rpm</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>// 测试一个软件包是否能在该系统上安装
-</span></span><span style="display:flex;"><span>[root@jlin ~]# rpm -ivh --test /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -ivh --test /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>// 如果软件包已经安装，强制再次安装
-</span></span><span style="display:flex;"><span>[root@jlin ~]# rpm -ivh --force /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -ivh --force /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>// 安装httpd服务需要依赖其他组件，使用--nodeps可忽略以来强制安装
-</span></span><span style="display:flex;"><span>[root@jlin ~]# rpm -ivh --nodeps /mnt/cdrom/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -ivh --nodeps /mnt/cdrom/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm</span>
 </span></span></code></pre></div><h2 id="62-rpm包查询">6.2 RPM包查询<a hidden class="anchor" aria-hidden="true" href="#62-rpm包查询">#</a></h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>// 查询httpd的rpm包是否安装
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@jlin ~<span style="color:#f92672">]</span><span style="color:#75715e"># rpm -q httpd</span>
