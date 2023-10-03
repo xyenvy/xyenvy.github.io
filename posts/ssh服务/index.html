@@ -8,7 +8,7 @@
 <title>ssh服务 | Hopeful</title>
 <meta name="keywords" content="Linux, ssh">
 <meta name="description" content="ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议">
-<meta name="author" content="yuan kun">
+<meta name="author" content="Hopeful">
 <link rel="canonical" href="https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
@@ -77,12 +77,12 @@ var _hmt = _hmt || [];
 <meta property="og:description" content="ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/" />
-<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/4.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-09-12T22:01:08+00:00" />
 <meta property="article:modified_time" content="2022-09-12T22:01:08+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/4.jpg" />
 <meta name="twitter:title" content="ssh服务"/>
 <meta name="twitter:description" content="ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议"/>
 
@@ -121,11 +121,11 @@ var _hmt = _hmt || [];
   "articleBody": "ssh: secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议\nssh服务介绍 ssh: secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议 具体的软件实现：\nOpenSSH：ssh协议的开源实现，CentOS 默认安装 dropbear：另一个ssh协议的开源项目的实现 SSH 协议版本\nv1：基于CRC-32做MAC，不安全；man-in-middle v2：双方主机协议选择安全的MAC方式，基于DH算法做密钥交换，基于RSA或DSA实现身份认证 openssh 服务 OpenSSH是SSH （Secure SHell） 协议的免费开源实现，一般在各种Linux版本中会默认安装，基于C/S结构 Openssh软件相关包：\nopenssh openssh-clients openssh-server 客户端 ssh命令 ssh命令是ssh客户端，允许实现对远程系统经验证地加密安全访问\n当用户远程连接ssh服务器时，会复制ssh服务器/etc/ssh/ssh_host*key.pub文件中的公钥到客户机的~/.ssh/know_hosts中。下次连接时，会自动匹配相对应的私钥，不能匹配，将拒绝连接 **ssh客户端配置文件： /etc/ssh/ssh_config ** **主要配置: **\n#StrictHostKeyChecking ask #首次登录不显示检查提示 StrictHostKeyChecking no # IdentityFile ~/.ssh/id_rsa # IdentityFile ~/.ssh/id_dsa # IdentityFile ~/.ssh/id_ecdsa # IdentityFile ~/.ssh/id_ed25519 # Port 22 范例：禁止首次连接的询问过程\n[root@centos7 ~]#sed -i.bak '/StrictHostKeyChecking/s/.*/StrictHostKeyChecking no/' /etc/ssh/ssh_config 格式\nssh [user@]host [COMMAND] ssh [-l user] host [COMMAND] 常用选项\n-p port #远程服务器监听的端口 -b #指定连接的源IP -v #调试模式 -C #压缩方式 -X #支持x11转发 -t #强制伪tty分配，如：ssh -t remoteserver1 ssh -t remoteserver2 ssh remoteserver3 -o option 如：-o StrictHostKeyChecking=no -i #指定私钥文件路径，实现基于key验证，默认使用文件： ~/.ssh/id_dsa, ~/.ssh/id_ecdsa, ~/.ssh/id_ed25519，~/.ssh/id_rsa等 在远程主机执行本地脚本\n[root@rocky ~]# cat test.sh #!/bin/bash hostname -I [root@rocky ~]# ssh root@192.168.179.145 /bin/bash ",
   "wordCount" : "2454",
   "inLanguage": "en",
-  "image":"http://oss.itshare.work/itshare-work-images/2.jpg","datePublished": "2022-09-12T22:01:08Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/4.jpg","datePublished": "2022-09-12T22:01:08Z",
   "dateModified": "2022-09-12T22:01:08Z",
   "author":[{
     "@type": "Person",
-    "name": "yuan kun"
+    "name": "Hopeful"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>yuan kun
+        <span>Hopeful
             &nbsp;&nbsp;
         </span>
     </span>
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/2.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/4.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">

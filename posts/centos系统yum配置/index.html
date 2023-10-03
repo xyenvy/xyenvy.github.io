@@ -8,7 +8,7 @@
 <title>Centos系统yum源配置 | Hopeful</title>
 <meta name="keywords" content="Linux">
 <meta name="description" content="yum 的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题">
-<meta name="author" content="yuan kun">
+<meta name="author" content="Hopeful">
 <link rel="canonical" href="https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
@@ -77,12 +77,12 @@ var _hmt = _hmt || [];
 <meta property="og:description" content="yum 的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/" />
-<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/8.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/9.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-17T09:28:09+00:00" />
 <meta property="article:modified_time" content="2022-12-17T09:28:09+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/8.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/9.jpg" />
 <meta name="twitter:title" content="Centos系统yum源配置"/>
 <meta name="twitter:description" content="yum 的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题"/>
 
@@ -121,11 +121,11 @@ var _hmt = _hmt || [];
   "articleBody": " 系统 Centos7.9\n步骤\n1.备份\n[root@centos7-master ~]# mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 2.创建/etc/yum.repos.d/CentOS-Base.repo文件并复制如下内容\n[base] name=CentOS-$releasever - Base baseurl=http://mirrors.163.com/centos/$releasever/os/$basearch/ http://mirrors.aliyun.com/centos/$releasever/os/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/os/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/os/$basearch/ http://mirror.centos.org/centos/$releasever/os/$basearch/\tgpgcheck=0 #released updates [updates] name=CentOS-$releasever - Updates baseurl=http://mirrors.163.com/centos/$releasever/updates/$basearch/ http://mirrors.aliyun.com/centos/$releasever/updates/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/updates/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/updates/$basearch/ http://mirror.centos.org/centos/$releasever/updates/$basearch/\tgpgcheck=0 #additional packages that may be useful [extras] name=CentOS-$releasever - Extras baseurl=http://mirrors.163.com/centos/$releasever/extras/$basearch/ http://mirrors.aliyun.com/centos/$releasever/extras/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/extras/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/extras/$basearch/ http://mirror.centos.org/centos/$releasever/extras/$basearch/ gpgcheck=0 #additional packages that extend functionality of existing packages [centosplus] name=CentOS-$releasever - Plus baseurl=http://mirrors.163.com/centos/$releasever/centosplus/$basearch/ http://mirrors.aliyun.com/centos/$releasever/centosplus/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/centosplus/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/centosplus/$basearch/ http://mirror.centos.org/centos/$releasever/centosplus/$basearch/ gpgcheck=0 enabled=1 3.清除缓存\nyum clean all 4.重新生成缓存\nyum makecache ",
   "wordCount" : "140",
   "inLanguage": "en",
-  "image":"http://oss.itshare.work/itshare-work-images/8.jpg","datePublished": "2022-12-17T09:28:09Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/9.jpg","datePublished": "2022-12-17T09:28:09Z",
   "dateModified": "2022-12-17T09:28:09Z",
   "author":[{
     "@type": "Person",
-    "name": "yuan kun"
+    "name": "Hopeful"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>yuan kun
+        <span>Hopeful
             &nbsp;&nbsp;
         </span>
     </span>
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/8.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/9.jpg" alt="">
     
 </figure>
         <div class="post-content"><ul>

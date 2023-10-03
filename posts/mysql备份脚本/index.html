@@ -8,7 +8,7 @@
 <title>MySQL备份脚本 | Hopeful</title>
 <meta name="keywords" content="MySQL">
 <meta name="description" content="硬件故障、软件故障、自然灾害、黑客攻击、误操作测试等数据丢失场景">
-<meta name="author" content="yuan kun">
+<meta name="author" content="Hopeful">
 <link rel="canonical" href="https://xyenvy.github.io/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
@@ -77,12 +77,12 @@ var _hmt = _hmt || [];
 <meta property="og:description" content="硬件故障、软件故障、自然灾害、黑客攻击、误操作测试等数据丢失场景" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xyenvy.github.io/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/" />
-<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/20.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/21.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-11-21T22:28:03+00:00" />
 <meta property="article:modified_time" content="2022-11-21T22:28:03+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/20.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/21.jpg" />
 <meta name="twitter:title" content="MySQL备份脚本"/>
 <meta name="twitter:description" content="硬件故障、软件故障、自然灾害、黑客攻击、误操作测试等数据丢失场景"/>
 
@@ -121,11 +121,11 @@ var _hmt = _hmt || [];
   "articleBody": "实战案例：特定数据库的备份脚本 系统：centos8.5 MySQL版本：8.0 #!/bin/bash TIME=`date +%F_%H-%M-%S` # 备份目录 DIR=/mysql_backup # 备份数据库 DB=hellodb # 数据库密码 PASSWD=123456 # 判断备份数据库目录是否存在 [ -d $DIR ] || mkdir $DIR # 备份 mysqldump -uroot -p\"$PASSWD\" -F -E -R --triggers --single-transaction --master-data=2 --default-character-set=utf8mb4 -q -B $DB | gzip \u003e ${DIR}/${DB}_${TIME}.sql.gz 实战案例：分库备份的实战脚本 系统：centos8.5 MySQL版本：8.0 #!/bin/bash TIME=`date +%F_%H-%M-%S` DIR=/backup PASS=123456 [ -d \"$DIR\" ] || mkdir $DIR for DB in `mysql -uroot -p\"$PASS\" -e 'show databases' | grep -Ev \"^Database|.*schema$\"`;do mysqldump -uroot -p\"$PASS\" -F --single-transaction --master-data=2 --default-character-set=utf8mb4 -q -B $DB | gzip \u003e ${DIR}/${DB}_${TIME}.sql.gz done ",
   "wordCount" : "179",
   "inLanguage": "en",
-  "image":"http://oss.itshare.work/itshare-work-images/20.jpg","datePublished": "2022-11-21T22:28:03Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/21.jpg","datePublished": "2022-11-21T22:28:03Z",
   "dateModified": "2022-11-21T22:28:03Z",
   "author":[{
     "@type": "Person",
-    "name": "yuan kun"
+    "name": "Hopeful"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>yuan kun
+        <span>Hopeful
             &nbsp;&nbsp;
         </span>
     </span>
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/20.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/21.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">

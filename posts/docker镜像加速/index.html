@@ -8,7 +8,7 @@
 <title>Docker镜像加速 | Hopeful</title>
 <meta name="keywords" content="Docker">
 <meta name="description" content="国内从DockerHub拉取镜像有时会遇到困难，此时可以配置镜像加速器。Docker官方和国内很多云服务商都提供了国内加速器服务，建议根据运行docker的云平台选择对应的镜像加速服务。">
-<meta name="author" content="yuan kun">
+<meta name="author" content="Hopeful">
 <link rel="canonical" href="https://xyenvy.github.io/posts/docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
@@ -77,12 +77,12 @@ var _hmt = _hmt || [];
 <meta property="og:description" content="国内从DockerHub拉取镜像有时会遇到困难，此时可以配置镜像加速器。Docker官方和国内很多云服务商都提供了国内加速器服务，建议根据运行docker的云平台选择对应的镜像加速服务。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xyenvy.github.io/posts/docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/" />
-<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/14.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-03-07T18:45:45+00:00" />
 <meta property="article:modified_time" content="2023-03-07T18:45:45+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/14.jpg" />
 <meta name="twitter:title" content="Docker镜像加速"/>
 <meta name="twitter:description" content="国内从DockerHub拉取镜像有时会遇到困难，此时可以配置镜像加速器。Docker官方和国内很多云服务商都提供了国内加速器服务，建议根据运行docker的云平台选择对应的镜像加速服务。"/>
 
@@ -121,11 +121,11 @@ var _hmt = _hmt || [];
   "articleBody": "Docker 镜像加速配置 国内从DockerHub拉取镜像有时会遇到困难，此时可以配置镜像加速器。\nDocker官方和国内很多云服务商都提供了国内加速器服务，建议根据运行docker的云平台选择对应的镜像加速服务。\n下面列出国内常用的加速站点，排名不分先后,总体来说阿里云速度较稳定。\ndocker中国区官方镜像加速：\nhttps://registry.docker-cn.com 网易镜像加速：\nhttp://hub-mirror.c.163.com 中国科技大学镜像加速：\nhttps://docker.mirrors.ustc.edu.cn 腾讯云镜像加速：\nhttps://mirror.ccs.tencentyun.com 阿里云镜像加速：\nhttps://ung2thfc.mirror.aliyuncs.com 修改daemon配置文件/etc/docker/daemon.json来使用加速器\n/etc/docker/daemon.json 加入如下内容\n{ \"registry-mirrors\": [ \"https://ung2thfc.mirror.aliyuncs.com\", \"https://mirror.ccs.tencentyun.com\", \"https://registry.docker-cn.com\", \"http://hub-mirror.c.163.com\", \"https://docker.mirrors.ustc.edu.cn\"] } 加载重启docker\n在终端输入以下命令\nsystemctl daemon-reload systemctl restart docker 打开终端执行docker info命令，可见下面信息\n.... Labels: Experimental: false Insecure Registries: 127.0.0.0/8 Registry Mirrors: https://ung2thfc.mirror.aliyuncs.com/ https://mirror.ccs.tencentyun.com/ https://registry.docker-cn.com/ http://hub-mirror.c.163.com/ https://docker.mirrors.ustc.edu.cn/ Live Restore Enabled: false 还可以使用如下脚本进行设置，执行前检查自己的环境,下列脚本可以用于新装Docker环境的机器\n#!/bin/bash tee /etc/docker/daemon.json \u003c\u003c-'EOF' { \"registry-mirrors\": [ \"https://ung2thfc.mirror.aliyuncs.com\", \"https://mirror.ccs.tencentyun.com\", \"https://registry.docker-cn.com\", \"http://hub-mirror.c.163.com\", \"https://docker.mirrors.ustc.edu.cn\"] } EOF systemctl daemon-reload \u0026\u0026 systemctl restart docker ",
   "wordCount" : "379",
   "inLanguage": "en",
-  "image":"http://oss.itshare.work/itshare-work-images/2.jpg","datePublished": "2023-03-07T18:45:45Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/14.jpg","datePublished": "2023-03-07T18:45:45Z",
   "dateModified": "2023-03-07T18:45:45Z",
   "author":[{
     "@type": "Person",
-    "name": "yuan kun"
+    "name": "Hopeful"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>yuan kun
+        <span>Hopeful
             &nbsp;&nbsp;
         </span>
     </span>
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/2.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/14.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -432,7 +432,7 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><h1 id="docker-镜像加速配置">Docker 镜像加速配置<a hidden class="anchor" aria-hidden="true" href="#docker-镜像加速配置">#</a></h1>
+        <div class="post-content"><h2 id="docker-镜像加速配置">Docker 镜像加速配置<a hidden class="anchor" aria-hidden="true" href="#docker-镜像加速配置">#</a></h2>
 <p>国内从DockerHub拉取镜像有时会遇到困难，此时可以配置镜像加速器。</p>
 <p>Docker官方和国内很多云服务商都提供了国内加速器服务，建议根据运行docker的云平台选择对应的镜像加速服务。</p>
 <p>下面列出国内常用的加速站点，排名不分先后,总体来说阿里云速度较稳定。</p>

@@ -8,7 +8,7 @@
 <title>Zookeeper离线安装脚本 | Hopeful</title>
 <meta name="keywords" content="Zookeeper">
 <meta name="description" content="Zookeeper离线安装脚本">
-<meta name="author" content="yuan kun">
+<meta name="author" content="Hopeful">
 <link rel="canonical" href="https://xyenvy.github.io/posts/zookeeper%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
@@ -77,12 +77,12 @@ var _hmt = _hmt || [];
 <meta property="og:description" content="Zookeeper离线安装脚本" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xyenvy.github.io/posts/zookeeper%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/" />
-<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/26.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/7.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-03-18T22:15:13+00:00" />
 <meta property="article:modified_time" content="2023-03-18T22:15:13+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/26.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/7.jpg" />
 <meta name="twitter:title" content="Zookeeper离线安装脚本"/>
 <meta name="twitter:description" content="Zookeeper离线安装脚本"/>
 
@@ -121,11 +121,11 @@ var _hmt = _hmt || [];
   "articleBody": "#!/bin/bash #******************************************************************** #Author: yuankun #Date: 2023-03-18 #FileName： install_zookeeper.sh #Description： The test script #Copyright (C): 2023 All rights reserved #******************************************************************** JDK_FILE=\"jdk-8u321-linux-x64.tar.gz\" #JDK_FILE=\"jdk-11.0.12_linux-x64_bin.tar.gz\" ZOOKEEPER_FILE=apache-zookeeper-3.7.1-bin TAR=tar.gz ZOOKEEPER_DIR=/usr/local/src DIR=`pwd` JDK_DIR=\"/usr/local\" color () { RES_COL=60 MOVE_TO_COL=\"echo -en \\\\033[${RES_COL}G\" SETCOLOR_SUCCESS=\"echo -en \\\\033[1;32m\" SETCOLOR_FAILURE=\"echo -en \\\\033[1;31m\" SETCOLOR_WARNING=\"echo -en \\\\033[1;33m\" SETCOLOR_NORMAL=\"echo -en \\E[0m\" echo -n \"$2\" \u0026\u0026 $MOVE_TO_COL echo -n \"[\" if [ $1 = \"success\" -o $1 = \"0\" ] ;then ${SETCOLOR_SUCCESS} echo -n $\" OK \" elif [ $1 = \"failure\" -o $1 = \"1\" ] ;then ${SETCOLOR_FAILURE} echo -n $\"FAILED\" else ${SETCOLOR_WARNING} echo -n $\"WARNING\" fi ${SETCOLOR_NORMAL} echo -n \"]\" echo } install_jdk(){ if ! [ -f \"$DIR/$JDK_FILE\" ];then color 1 \"$JDK_FILE 文件不存在\" exit; elif [ -d $JDK_DIR/jdk ];then color 1 \"JDK 已经安装\" exit else [ -d \"$JDK_DIR\" ] || mkdir -pv $JDK_DIR fi tar xvf $DIR/$JDK_FILE -C $JDK_DIR cd $JDK_DIR \u0026\u0026 ln -s jdk* jdk cat \u003e /etc/profile.d/jdk.sh \u003c",
   "wordCount" : "416",
   "inLanguage": "en",
-  "image":"http://oss.itshare.work/itshare-work-images/26.jpg","datePublished": "2023-03-18T22:15:13Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/7.jpg","datePublished": "2023-03-18T22:15:13Z",
   "dateModified": "2023-03-18T22:15:13Z",
   "author":[{
     "@type": "Person",
-    "name": "yuan kun"
+    "name": "Hopeful"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>yuan kun
+        <span>Hopeful
             &nbsp;&nbsp;
         </span>
     </span>
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/26.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/7.jpg" alt="">
     
 </figure>
         <div class="post-content"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash

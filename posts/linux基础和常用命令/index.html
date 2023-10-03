@@ -8,7 +8,7 @@
 <title>linux基础和常用命令 | Hopeful</title>
 <meta name="keywords" content="Linux">
 <meta name="description" content="Linux 是一套免费使用、开源的类 Unix 操作系统。 Linux 存在着许多不同的发行版本，但它们都使用了 Linux 内核 。">
-<meta name="author" content="yuan kun">
+<meta name="author" content="Hopeful">
 <link rel="canonical" href="https://xyenvy.github.io/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
@@ -77,12 +77,12 @@ var _hmt = _hmt || [];
 <meta property="og:description" content="Linux 是一套免费使用、开源的类 Unix 操作系统。 Linux 存在着许多不同的发行版本，但它们都使用了 Linux 内核 。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xyenvy.github.io/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" />
-<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/19.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-07-18T21:12:03+00:00" />
 <meta property="article:modified_time" content="2022-07-18T21:12:03+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/19.jpg" />
 <meta name="twitter:title" content="linux基础和常用命令"/>
 <meta name="twitter:description" content="Linux 是一套免费使用、开源的类 Unix 操作系统。 Linux 存在着许多不同的发行版本，但它们都使用了 Linux 内核 。"/>
 
@@ -121,11 +121,11 @@ var _hmt = _hmt || [];
   "articleBody": "1.冯诺依曼体系 1946年美籍匈牙利数学家冯·诺依曼于提出存储程序原理，把程序本身当作数据来对待，程序和该程序处 理的数据用同样的方式储存。 冯·诺依曼体系的要点是：\n数字计算机的数制采用二进制，bit 位, byte 字节 1 byte =8 bit\n计算机应该按照程序顺序执行\n计算机硬件由运算器、控制器、存储器、输入设备和输出设备五大部分组成\n计算机的硬件五个组件\n控制器: 指挥系统\n运算器: 数学和逻辑运算\n存储器: 存储信息\n输入设备: 接收外部信息\n输出设备: 输出计算机内部信息到外部设备\n2.服务器按外观类型分类 PC服务器常见的三种外观\n塔式服务器\n刀片式服务器\n机架式服务器\n3.操作系统和Linux安装 操作系统的作用\n主要作用\n硬件驱动\n进程管理\n内存管理\n网络管理\n安全管理\n文件管理\nunix哲学思想\n一切都是一个文件(包括硬件) 小型，单一用途的程序 链接程序，共同完成复杂的任务(shell脚本) 避免令人困惑的用户界面 配置数据存储在文本中 4.常见面试题 5 .基础使用命令 5.1 查看网络ip地址 ip a 5.2 重启 reboot 5.3 ubuntu roo账户进行远程登录修改方法 切换到root账户 sudo -i 设置密码 passwd 用户名 修改/etc/ssh/sshd_config ,PermitRootlogin yes\n重启sshd systemctl restart sshd 5.4 查看当前所在终端 tty 5.5 查看当前账户 whoami who am i who 5.6 查看当前时间 date 5.7 修改时区 ,修改为北京时间 timedatectl set-timezone Asia/Shanghai date # 查看当前时间 5.8 查看当前系统使用的shell 5.9 查看当前主机名 hostname 5.10修改当前主机名称，永久修改 hostnamectl set-hostname 名称 # 临时修改，重启后变为修改前的主机名称 hostname 主机名 5.11 查看所有内部命令 help 5.12 查看命令为内部还是外部命令 type 命令名称 # 示例 type cd 5.13 查看系统中所有别名 alias 5.14 设置别名 alias 别名名称 = '被设置别名的行为' # 示例 alias cdnt = 'cd /root' 5.15 删除别名 unalisa 别名名称 命令种类\nalias(优先级最高) 内部命令(优先级低于alias) 外部命令(优先级最低) whatis\nwhatis使用数据库来显示命令的简短描述\n此工具在系统刚安装后不可立即使用，需要制作数据库后才可使用\n执行下面的命令生成数据库\n# centos7版本以后 mandb # centos6版本之前 makewhatis 5.16 内部命令查看帮助 # 使用type命令查看是否为内部命令，不是内部命令不能使用该命令 help history 范例\n5.17 外部命令使用帮助 COMMAND –help 或者 COMMAND -h\n范例\ndate --help 5.18 man man date man 1 date 6.查看硬件信息 6.1查看CPU信息 lscpu # 该命令也可以 cat /proc/cpuinfo 6.2 查看内存信息 free -h # 或者 cat /proc/meminfo 6.3 查看硬盘信息和分区情况 lsblk 7.查看系统信息 7.1 查看系统架构 arch 7.2 查看内核版本 uname -r 7.3 查看操作系统发行版本 cat /etc/os-releases cat /etc/issue 7.4 修改登录后显示的内容 # 修改/etc/motd文件内容 vi /etc/motd 7.5 查看硬件时间 clock 7.6重启和关机 7.6.1重启 halt\nreboot\n7.6.2 关机或重启 shutdown - r :重启 - h :关机 指定时间关机或重启 shutdown -r 15:00 # 15:00重启 shutdown -h 15:00 # 15:00关机 shutdown -c # 取消 ",
   "wordCount" : "1104",
   "inLanguage": "en",
-  "image":"http://oss.itshare.work/itshare-work-images/2.jpg","datePublished": "2022-07-18T21:12:03Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/19.jpg","datePublished": "2022-07-18T21:12:03Z",
   "dateModified": "2022-07-18T21:12:03Z",
   "author":[{
     "@type": "Person",
-    "name": "yuan kun"
+    "name": "Hopeful"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>yuan kun
+        <span>Hopeful
             &nbsp;&nbsp;
         </span>
     </span>
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/2.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/19.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">

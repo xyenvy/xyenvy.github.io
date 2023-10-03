@@ -8,7 +8,7 @@
 <title>docker-compose部署MySQL | Hopeful</title>
 <meta name="keywords" content="Docker">
 <meta name="description" content="docker-compose部署MySql">
-<meta name="author" content="yuan kun">
+<meta name="author" content="Hopeful">
 <link rel="canonical" href="https://xyenvy.github.io/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
@@ -77,12 +77,12 @@ var _hmt = _hmt || [];
 <meta property="og:description" content="docker-compose部署MySql" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xyenvy.github.io/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/" />
-<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/12.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-06T14:00:26+00:00" />
 <meta property="article:modified_time" content="2023-01-06T14:00:26+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/2.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/12.jpg" />
 <meta name="twitter:title" content="docker-compose部署MySQL"/>
 <meta name="twitter:description" content="docker-compose部署MySql"/>
 
@@ -121,11 +121,11 @@ var _hmt = _hmt || [];
   "articleBody": "CentOS Docker 安装 Docker 支持以下的 64 位 CentOS 版本：\nCentOS 7 CentOS 8 更高版本… 官方安装脚本自动安装 安装命令如下：\ncurl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun 也可以使用国内 daocloud 一键安装命令：\ncurl -sSL https://get.daocloud.io/docker | sh 安装docker-compose Compose 简介 Compose 是用于定义和运行多容器 Docker 应用程序的工具。通过 Compose，您可以使用 YML 文件来配置应用程序需要的所有服务。然后，使用一个命令，就可以从 YML 文件配置中创建并启动所有服务。 Compose 安装 Linux 上我们可以从 Github 上下载它的二进制包来使用，最新发行的版本地址：https://github.com/docker/compose/releases。\n运行以下命令以下载 Docker Compose 的当前稳定版本：\ncurl -L \"https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose 要安装其他版本的 Compose，请替换 v2.2.2。\nDocker Compose 存放在 GitHub，不太稳定。\n你可以也通过执行下面的命令，高速安装 Docker Compose。\ncurl -L https://get.daocloud.io/docker/compose/releases/download/v2.4.1/docker-compose-`uname -s`-`uname -m` \u003e /usr/local/bin/docker-compose 将可执行权限应用于二进制文件：\nchmod +x /usr/local/bin/docker-compose 创建软链：\nln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 测试是否安装成功：\n[root@centos7 ~]# docker-compose version Docker Compose version v2.4.1 docker-compose一键部署mysql 创建安装目录,根据实际情况修改 mkdr mysql cd mysql mkdir -p data/db mkdir etc 编写docker-compose.yml cd mysql vim docker-compose.yml docker-compose.yml内容如下\nversion: '3.1' services: mysql: image: mysql:5.7 #mysql版本 container_name: ${MYSQL_NAME} volumes: - ./data/db:/var/lib/mysql - ./etc/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf restart: always ports: - ${MYSQL_PORT}:3306 environment: MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWD} #访问密码 secure_file_priv: 创建MySQL配置文件 cd mysql/etc vim my.cnf my.cnf文件内容如下\n[mysqld] character-set-server=utf8 log-bin=mysql-bin server-id=1 pid-file = /var/run/mysqld/mysqld.pid socket = /var/run/mysqld/mysqld.sock datadir = /var/lib/mysql sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION symbolic-links=0 secure_file_priv = wait_timeout=120 interactive_timeout=120 default-time_zone = '+8:00' skip-external-locking skip-name-resolve open_files_limit = 10240 max_connections = 1000 max_connect_errors = 6000 table_open_cache = 800 max_allowed_packet = 40m sort_buffer_size = 2M join_buffer_size = 1M thread_cache_size = 32 query_cache_size = 64M transaction_isolation = READ-COMMITTED tmp_table_size = 128M max_heap_table_size = 128M log-bin = mysql-bin sync-binlog = 1 binlog_format = ROW binlog_cache_size = 1M key_buffer_size = 128M read_buffer_size = 2M read_rnd_buffer_size = 4M bulk_insert_buffer_size = 64M lower_case_table_names = 1 explicit_defaults_for_timestamp=true skip_name_resolve = ON event_scheduler = ON log_bin_trust_function_creators = 1 innodb_buffer_pool_size = 512M innodb_flush_log_at_trx_commit = 1 innodb_file_per_table = 1 innodb_log_buffer_size = 4M innodb_log_file_size = 256M innodb_max_dirty_pages_pct = 90 innodb_read_io_threads = 4 innodb_write_io_threads = 4 编写重启脚本 cd mysql vim restart.sh restart.sh文件内容\n#!/bin/bash docker-compose stop docker-compose rm -f docker-compose up -d 编写.env文件 vim .env # 容器名称 MYSQL_NAME=docker-mysql # 启用端口 MYSQL_PORT=3306 # root密码 MYSQL_ROOT_PASSWD=123456 验证 # 执行启动脚本 bash restart.sh # 查看运行的容器 docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 36d09017f331 mysql:5.7 \"docker-entrypoint.s…\" 2 minutes ago Up 2 minutes 0.0.0.0:3306-\u003e3306/tcp, :::3306-\u003e3306/tcp, 33060/tcp docker-mysql ",
   "wordCount" : "815",
   "inLanguage": "en",
-  "image":"http://oss.itshare.work/itshare-work-images/2.jpg","datePublished": "2023-01-06T14:00:26Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/12.jpg","datePublished": "2023-01-06T14:00:26Z",
   "dateModified": "2023-01-06T14:00:26Z",
   "author":[{
     "@type": "Person",
-    "name": "yuan kun"
+    "name": "Hopeful"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>yuan kun
+        <span>Hopeful
             &nbsp;&nbsp;
         </span>
     </span>
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/2.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/12.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -365,13 +365,12 @@ var _hmt = _hmt || [];
             <span class="details">文章目录</span>
         </summary>
 
-        <div class="inner"><ul>
+        <div class="inner"><ul><ul>
                 <li>
-                    <a href="#centos-docker-%e5%ae%89%e8%a3%85" aria-label="CentOS Docker 安装">CentOS Docker 安装</a><ul>
-                        
+                    <a href="#centos-docker-%e5%ae%89%e8%a3%85" aria-label="CentOS Docker 安装">CentOS Docker 安装</a></li>
                 <li>
                     <a href="#%e5%ae%98%e6%96%b9%e5%ae%89%e8%a3%85%e8%84%9a%e6%9c%ac%e8%87%aa%e5%8a%a8%e5%ae%89%e8%a3%85" aria-label="官方安装脚本自动安装">官方安装脚本自动安装</a></li></ul>
-                </li>
+                    
                 <li>
                     <a href="#%e5%ae%89%e8%a3%85docker-compose" aria-label="安装docker-compose">安装docker-compose</a></li>
                 <li>
@@ -440,7 +439,7 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><h1 id="centos-docker-安装">CentOS Docker 安装<a hidden class="anchor" aria-hidden="true" href="#centos-docker-安装">#</a></h1>
+        <div class="post-content"><h2 id="centos-docker-安装">CentOS Docker 安装<a hidden class="anchor" aria-hidden="true" href="#centos-docker-安装">#</a></h2>
 <p>Docker 支持以下的 64 位 CentOS 版本：</p>
 <ul>
 <li>CentOS 7</li>

@@ -8,7 +8,7 @@
 <title>防火墙 | Hopeful</title>
 <meta name="keywords" content="Linux, 防火墙, firewall">
 <meta name="description" content="firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术">
-<meta name="author" content="yuan kun">
+<meta name="author" content="Hopeful">
 <link rel="canonical" href="https://xyenvy.github.io/posts/firewall/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
@@ -77,12 +77,12 @@ var _hmt = _hmt || [];
 <meta property="og:description" content="firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xyenvy.github.io/posts/firewall/" />
-<meta property="og:image" content="http://oss.itshare.work/itshare-work-images/22.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/15.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-09-25T21:28:11+00:00" />
 <meta property="article:modified_time" content="2022-09-25T21:28:11+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://oss.itshare.work/itshare-work-images/22.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/15.jpg" />
 <meta name="twitter:title" content="防火墙"/>
 <meta name="twitter:description" content="firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术"/>
 
@@ -121,11 +121,11 @@ var _hmt = _hmt || [];
   "articleBody": "防火墙基本认识 Netfilter Linux防火墙是由Netfilter组件提供的，Netfilter工作在内核空间，集成在linux内核中。 Netfilter 是Linux 2.4.x之后新一代的Linux防火墙机制，是linux内核的一个子系统。Netfilter采用模块 化设计，具有良好的可扩充性，提供扩展各种网络服务的结构化底层框架。Netfilter与IP协议栈是无缝 契合，并允许对数据报进行过滤、地址转换、处理等操作。\nNetfilter官网文档\n[root@centos7 ~]# grep -m 10 NETFILTER /boot/config-3.10.0-1160.el7.x86_64 CONFIG_NETFILTER=y # CONFIG_NETFILTER_DEBUG is not set CONFIG_NETFILTER_ADVANCED=y CONFIG_BRIDGE_NETFILTER=m CONFIG_NETFILTER_NETLINK=m CONFIG_NETFILTER_NETLINK_ACCT=m CONFIG_NETFILTER_NETLINK_QUEUE=m CONFIG_NETFILTER_NETLINK_LOG=m CONFIG_NETFILTER_NETLINK_QUEUE_CT=y CONFIG_NETFILTER_SYNPROXY=m [root@centos7 ~]# 防火墙工具介绍 iptables 由软件包iptables提供的命令行工具，工作在用户空间，用来编写规则，写好的规则被送往netfilter，告 诉内核如何去处理信息包。\n查看iptables信息 [root@centos7 ~]# rpm -qi iptables Name : iptables Version : 1.4.21 Release : 35.el7 Architecture: x86_64 Install Date: Sat 17 Sep 2022 10:31:09 AM CST Group : System Environment/Base Size : 1556976 License : GPLv2 Signature : RSA/SHA256, Thu 15 Oct 2020 02:51:02 AM CST, Key ID 24c6a8a7f4a80eb5 Source RPM : iptables-1.4.21-35.el7.src.rpm Build Date : Fri 02 Oct 2020 12:52:54 AM CST Build Host : x86-01.bsys.centos.org Relocations : (not relocatable) Packager : CentOS BuildSystem Vendor : CentOS URL : http://www.netfilter.org/ Summary : Tools for managing Linux kernel packet filtering capabilities Description : The iptables utility controls the network packet filtering code in the Linux kernel. If you need to set up firewalls and/or IP masquerading, you should install this package. [root@centos7 ~]# 范例：安装iptables的server包\n# 安装dnf [root@centos7 ~]# yum install dnf # 安装iptables-services [root@centos7 ~]# dnf -y install iptables-services # 查看iptables-services文件列表 [root@centos7 ~]# rpm -ql iptables-services /etc/sysconfig/ip6tables /etc/sysconfig/iptables /usr/lib/systemd/system/ip6tables.service /usr/lib/systemd/system/iptables.service /usr/libexec/initscripts/legacy-actions/ip6tables /usr/libexec/initscripts/legacy-actions/ip6tables/panic /usr/libexec/initscripts/legacy-actions/ip6tables/save /usr/libexec/initscripts/legacy-actions/iptables /usr/libexec/initscripts/legacy-actions/iptables/panic /usr/libexec/initscripts/legacy-actions/iptables/save /usr/libexec/iptables /usr/libexec/iptables/ip6tables.init /usr/libexec/iptables/iptables.init [root@centos7 ~]# firewalld 从CentOS 7 版开始引入了新的前端管理工具 软件包：\nfirewalld firewalld-config 管理工具：\nfirewall-cmd 命令行工具 firewall-config 图形工作 nftables 它重用了netfilter框架的许多部分，例如连接跟踪和NAT功能。它还保留了命名法和基本iptables设计的几个部分，例如表，链和规则。就像iptables一样，表充当链的容器，并且链包含单独的规则，这些规则可以执行操作，例如丢弃数据包，移至下一个规则或跳至新链。 从用户的角度来看，nftables添加了一个名为nft的新工具，该工具替代了iptables，arptables和 ebtables中的所有其他工具。从体系结构的角度来看，它还替换了内核中处理数据包过滤规则集运行时评估的那些部分。\n查看软件信息 [root@centos7 ~]# rpm -qi nftables Name : nftables Epoch : 1 Version : 0.8 Release : 14.el7 Architecture: x86_64 Install Date: Wed 28 Sep 2022 11:36:55 AM CST Group : Unspecified Size : 500068 License : GPLv2 Signature : RSA/SHA256, Fri 23 Aug 2019 05:36:19 AM CST, Key ID 24c6a8a7f4a80eb5 Source RPM : nftables-0.8-14.el7.src.rpm Build Date : Fri 09 Aug 2019 09:13:15 AM CST Build Host : x86-01.bsys.centos.org Relocations : (not relocatable) Packager : CentOS BuildSystem Vendor : CentOS URL : http://netfilter.org/projects/nftables/ Summary : Netfilter Tables userspace utillites Description : Netfilter Tables userspace utilities. [root@centos7 ~]# 范例：centos8支持三种防火墙服务\n[root@rocky ~]# systemctl status iptables.service ● iptables.service - IPv4 firewall with iptables Loaded: loaded (/usr/lib/systemd/system/iptables.service; disabled; vendor preset: disabled) Active: inactive (dead) [root@rocky ~]# systemctl status firewalld.service ● firewalld.service - firewalld - dynamic firewall daemon Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled) Active: inactive (dead) Docs: man:firewalld(1) [root@rocky ~]# systemctl status nftables.service ● nftables.service - Netfilter Tables Loaded: loaded (/usr/lib/systemd/system/nftables.service; disabled; vendor preset: disabled) Active: inactive (dead) Docs: man:nft(8) [root@rocky ~]# netfilter中五个勾子函数和报文流向 Netfilter在内核中选取五个位置放了五个hook(勾子) function(INPUT、OUTPUT、FORWARD、 PREROUTING、POSTROUTING)，而这五个hook function向用户开放，用户可以通过一个命令工具 （iptables）向其写入规则。\n由信息过滤表（table）组成，包含控制IP包处理的规则集（rules），规则被分组放在链（chain）上。\n提示：从 Linux kernel 4.2 版以后，Netfilter 在prerouting 前加了一个 ingress 勾子函数。可以使用这 个新的入口挂钩来过滤来自第2层的流量，这个新挂钩比预路由要早，基本上是 tc 命令（流量控制工 具）的替代品。 三种报文流向\n流入本机：PREROUTING –\u003e INPUT–\u003e用户空间进程 流出本机：用户空间进程 –\u003eOUTPUT–\u003e POSTROUTING 转发：PREROUTING –\u003e FORWARD –\u003e POSTROUTING iptables组成 iptables由五个表table和五个链chain以及一些规则组成\n链 chain：\n内置链：每个内置链对应于一个钩子函数 自定义链：用于对内置链进行扩展或补充，可实现更灵活的规则组织管理机制；只有Hook钩子调 用自定义链时，才生效 五个内置链chain:\nINPUT,OUTPUT,FORWARD,PREROUTING,POSTROUTING 五个表：filter、nat、mangle、raw、security\nfilter：过滤规则表，根据预定义的规则过滤符合条件的数据包,默认表 nat：network address translation 地址转换规则表 mangle：修改数据标记位规则表 raw：关闭启用的连接跟踪机制，加快封包穿越防火墙速度 security：用于强制访问控制（MAC）网络规则，由Linux安全模块（如SELinux）实现 优先级由高到低的顺序为： 优先级由高到低的顺序为\nsecurity --\u003eraw--\u003emangle--\u003enat--\u003efilter 表和链对应关系\n数据包过滤匹配流程\n内核中数据包的传输过程\n当一个数据包进入网卡时，数据包首先进入PREROUTING链，内核根据数据包目的IP判断是否需要 转送出去 如果数据包是进入本机的，数据包就会沿着图向下移动，到达INPUT链。数据包到达INPUT链后， 任何进程都会收到它。本机上运行的程序可以发送数据包，这些数据包经过OUTPUT链，然后到达 POSTROUTING链输出 如果数据包是要转发出去的，且内核允许转发，数据包就会向右移动，经过FORWARD链，然后到 达POSTROUTING链输出 范例\n[root@rocky ~]# iptables -vnL -t filter Chain INPUT (policy ACCEPT 0 packets, 0 bytes) pkts bytes target prot opt in out source destination 168 10248 ACCEPT all -- * * 0.0.0.0/0 0.0.0.0/0 state RELATED,ESTABLISHED 0 0 ACCEPT icmp -- * * 0.0.0.0/0 0.0.0.0/0 0 0 ACCEPT all -- lo * 0.0.0.0/0 0.0.0.0/0 0 0 ACCEPT tcp -- * * 0.0.0.0/0 0.0.0.0/0 state NEW tcp dpt:22 0 0 REJECT all -- * * 0.0.0.0/0 0.0.0.0/0 reject-with icmp-host-prohibited Chain FORWARD (policy ACCEPT 0 packets, 0 bytes) pkts bytes target prot opt in out source destination 0 0 REJECT all -- * * 0.0.0.0/0 0.0.0.0/0 reject-with icmp-host-prohibited Chain OUTPUT (policy ACCEPT 101 packets, 11034 bytes) pkts bytes target prot opt in out source destination [root@rocky ~]# CentOS 6 nat表不支持INPUT链\niptables iptables规则说明 iptables规则组成 规则rule：根据规则的匹配条件尝试匹配报文，对匹配成功的报文根据规则定义的处理动作作出处理， 规则在链接上的次序即为其检查时的生效次序 匹配条件：默认为与条件，同时满足 基本匹配：IP，端口，TCP的Flags（SYN,ACK等） 扩展匹配：通过复杂高级功能匹配 处理动作：称为target，跳转目标\n内建处理动作：ACCEPT,DROP,REJECT,SNAT,DNAT,MASQUERADE,MARK,LOG… 自定义处理动作：自定义chain，利用分类管理复杂情形 规则要添加在链上，才生效；添加在自定义链上不会自动生效 白名单:只有指定的特定主机可以访问,其它全拒绝 黑名单:只有指定的特定主机拒绝访问,其它全允许,默认方式\niptables规则添加时考量点 要实现哪种功能：判断添加在哪张表上 报文流经的路径：判断添加在哪个链上 报文的流向：判断源和目的 匹配规则：业务需要 iptables用法说明 帮助：man 8 iptables 格式：\niptables [-t table] {-A|-C|-D} chain rule-specification 范例：filter表中INPUT规则\niptables命令格式详解\niptables [-t table] SUBCOMMAND chain [-m matchname [per-match-options]] -j targetname [per-target-options] 1、-t table：指定表 raw, mangle, nat, [filter]默认 2、SUBCOMMAND：子命令 链管理类：\n-N：new, 自定义一条新的规则链 -E：重命名自定义链；引用计数不为0的自定义链不能够被重命名，也不能被删除 -X：delete，删除自定义的空的规则链 -P：Policy，设置默认策略；对filter表中的链而言，其默认策略有：ACCEPT：接受, DROP：丢弃 范例\n# 定义新的规则链 [root@rocky ~]# iptables -N web_chain ",
   "wordCount" : "2815",
   "inLanguage": "en",
-  "image":"http://oss.itshare.work/itshare-work-images/22.jpg","datePublished": "2022-09-25T21:28:11Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/15.jpg","datePublished": "2022-09-25T21:28:11Z",
   "dateModified": "2022-09-25T21:28:11Z",
   "author":[{
     "@type": "Person",
-    "name": "yuan kun"
+    "name": "Hopeful"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>yuan kun
+        <span>Hopeful
             &nbsp;&nbsp;
         </span>
     </span>
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://oss.itshare.work/itshare-work-images/22.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/15.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
