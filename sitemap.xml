@@ -3,12 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://xyenvy.github.io/posts/</loc>
-    <lastmod>2023-06-23T13:24:16+08:00</lastmod>
-  </url><url>
-    <loc>https://xyenvy.github.io/categories/</loc>
-    <lastmod>2023-06-23T13:24:16+08:00</lastmod>
+    <lastmod>2023-10-09T22:45:06+08:00</lastmod>
   </url><url>
     <loc>https://xyenvy.github.io/</loc>
+    <lastmod>2023-10-09T22:45:06+08:00</lastmod>
+  </url><url>
+    <loc>https://xyenvy.github.io/tags/linux/</loc>
+    <lastmod>2023-10-09T22:45:06+08:00</lastmod>
+  </url><url>
+    <loc>https://xyenvy.github.io/tags/lvs/</loc>
+    <lastmod>2023-10-09T22:45:06+08:00</lastmod>
+  </url><url>
+    <loc>https://xyenvy.github.io/posts/lvs-%E5%89%AF%E6%9C%AC/</loc>
+    <lastmod>2023-10-09T22:45:06+08:00</lastmod>
+  </url><url>
+    <loc>https://xyenvy.github.io/posts/lvs/</loc>
+    <lastmod>2023-10-09T22:45:06+08:00</lastmod>
+  </url><url>
+    <loc>https://xyenvy.github.io/tags/</loc>
+    <lastmod>2023-10-09T22:45:06+08:00</lastmod>
+  </url><url>
+    <loc>https://xyenvy.github.io/categories/</loc>
     <lastmod>2023-06-23T13:24:16+08:00</lastmod>
   </url><url>
     <loc>https://xyenvy.github.io/tags/kubernetes/</loc>
@@ -18,9 +33,6 @@
     <lastmod>2023-06-23T13:24:16+08:00</lastmod>
   </url><url>
     <loc>https://xyenvy.github.io/posts/k8sactualcombat/</loc>
-    <lastmod>2023-06-23T13:24:16+08:00</lastmod>
-  </url><url>
-    <loc>https://xyenvy.github.io/tags/</loc>
     <lastmod>2023-06-23T13:24:16+08:00</lastmod>
   </url><url>
     <loc>https://xyenvy.github.io/posts/k8srresourceddetails/</loc>
@@ -126,9 +138,6 @@
     <lastmod>2022-12-17T11:56:02+00:00</lastmod>
   </url><url>
     <loc>https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2022-12-17T09:28:09+00:00</lastmod>
-  </url><url>
-    <loc>https://xyenvy.github.io/tags/linux/</loc>
     <lastmod>2022-12-17T09:28:09+00:00</lastmod>
   </url><url>
     <loc>https://xyenvy.github.io/categories/linux/</loc>

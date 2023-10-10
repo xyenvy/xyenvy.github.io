@@ -6,7 +6,25 @@
     <description>Recent content on Hopeful</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 23 Jun 2023 13:24:16 +0800</lastBuildDate><atom:link href="https://xyenvy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Oct 2023 22:45:06 +0800</lastBuildDate><atom:link href="https://xyenvy.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Lvs调度算法</title>
+      <link>https://xyenvy.github.io/posts/lvs-%E5%89%AF%E6%9C%AC/</link>
+      <pubDate>Mon, 09 Oct 2023 22:45:06 +0800</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/lvs-%E5%89%AF%E6%9C%AC/</guid>
+      <description>LVS是Linux Virtual Server的缩写，是一个负载均衡的集群系统。它主要使用了IP层的技术，也就是基于IP的负载均衡。LVS能很好的处理大量并发连接，有效的提高了系统的吞吐量</description>
+    </item>
+    
+    <item>
+      <title>Lvs调度算法</title>
+      <link>https://xyenvy.github.io/posts/lvs/</link>
+      <pubDate>Mon, 09 Oct 2023 22:45:06 +0800</pubDate>
+      
+      <guid>https://xyenvy.github.io/posts/lvs/</guid>
+      <description>LVS是Linux Virtual Server的缩写，是一个负载均衡的集群系统。它主要使用了IP层的技术，也就是基于IP的负载均衡。LVS能很好的处理大量并发连接，有效的提高了系统的吞吐量</description>
+    </item>
+    
     <item>
       <title>kubernetes实战</title>
       <link>https://xyenvy.github.io/posts/k8sactualcombat/</link>
