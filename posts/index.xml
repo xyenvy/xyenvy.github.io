@@ -6,16 +6,7 @@
     <description>Recent content in 📚文章 on Hopeful</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 10 Oct 2023 20:47:29 +0800</lastBuildDate><atom:link href="https://xyenvy.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>LVS实战案例</title>
-      <link>https://xyenvy.github.io/posts/lvs%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B/</link>
-      <pubDate>Tue, 10 Oct 2023 20:47:29 +0800</pubDate>
-      
-      <guid>https://xyenvy.github.io/posts/lvs%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B/</guid>
-      <description>LVS实战案例 LVS-NAT实战 环境</description>
-    </item>
-    
+    <lastBuildDate>Mon, 09 Oct 2023 22:45:06 +0800</lastBuildDate><atom:link href="https://xyenvy.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Lvs调度算法</title>
       <link>https://xyenvy.github.io/posts/lvs/</link>
