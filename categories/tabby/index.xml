@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>tabby on Hopeful</title>
-    <link>https://xyenvy.github.io/categories/tabby/</link>
-    <description>Recent content in tabby on Hopeful</description>
+    <title>tabby on DevOpsHub</title>
+    <link>http://colorfulgz.com/categories/tabby/</link>
+    <description>Recent content in tabby on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 11 Jun 2023 19:40:22 +0800</lastBuildDate><atom:link href="https://xyenvy.github.io/categories/tabby/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Jun 2023 19:40:22 +0800</lastBuildDate><atom:link href="http://colorfulgz.com/categories/tabby/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tabby 一款强大而美观的跨平台终端神器</title>
-      <link>https://xyenvy.github.io/posts/tabby/</link>
+      <link>http://colorfulgz.com/posts/tabby/</link>
       <pubDate>Sun, 11 Jun 2023 19:40:22 +0800</pubDate>
       
-      <guid>https://xyenvy.github.io/posts/tabby/</guid>
+      <guid>http://colorfulgz.com/posts/tabby/</guid>
       <description>Tabby是一个基于 TypeScript 开发的终端模拟器，适用于 Windows，macOS 和 Linux。 该模拟器可高度配置，包括但不限于：主题、快捷键以及配色方案</description>
     </item>
     

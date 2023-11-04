@@ -5,18 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Zabbix | Hopeful</title>
+<title>Zabbix | DevOpsHub</title>
 <meta name="keywords" content="Zabbix">
 <meta name="description" content="Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案">
-<meta name="author" content="Hopeful">
-<link rel="canonical" href="https://xyenvy.github.io/posts/zabbix/">
+<meta name="author" content="">
+<link rel="canonical" href="http://colorfulgz.com/posts/zabbix/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="Zabbix" />
 <meta property="og:description" content="Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/zabbix/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/6.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/zabbix/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/6.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-03-02T15:07:46+00:00" />
 <meta property="article:modified_time" content="2023-03-02T15:07:46+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/6.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/6.jpg" />
 <meta name="twitter:title" content="Zabbix"/>
 <meta name="twitter:description" content="Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案"/>
 
@@ -97,13 +97,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "Zabbix",
-      "item": "https://xyenvy.github.io/posts/zabbix/"
+      "item": "http://colorfulgz.com/posts/zabbix/"
     }
   ]
 }
@@ -121,22 +121,22 @@ var _hmt = _hmt || [];
   "articleBody": "常见监控方案 开源监控软件：cacti、nagios、zabbix、smokeping、open-falcon等\nZabbix使用场景及系统概述 Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案。\nzabbix使用场景 zabbix系统概述 数据采集：\n周期性时序数据\n主机/对象：服务器、路由器、交换机、存储、防火墙、IP、PORT、URL、自定义监控对象... 采集目标：监控项，指标数据（metrics data） 数据存储：\n监控数据存储系统\nSQL: MySQL/MariaDB(Zabbix) NoSQL：Redis(Open-falcon) rrd: Round Robin Database(Cacti) 数据类型：\n历史数据: 每个监控项采集到的每个监控值 趋势数据: 趋势表里主要保留某个监控项一个小时内历史数据的最大值、最小值和平均值以及该监控项一个小时内所采 集到的数据个数。 阈值： 可按照预定义的阈值等级实现分层报警 告警机制： email,短信,微信,语音,故障自治愈\nzabbix 核心任务 数据采集：\n数据采集方式：zabbix-server，zabbix-proxy，zabbix-agent\nAgentless：SNMP,Telnet,ssh, IPMI, JMX, Agent：zabbix agent 数据存储： zabbix database 数据展示： zabbix web\ngraph -\u003e screen -\u003e slideshow(将多个screen以幻灯片的方式进行轮流展示) grafana:\n以zabbix为数据源展示更绚丽的界面 告警通知：\nhost (host groups) \u003c- templates #从模板继承告警配置 host -\u003e items -\u003e triggers -\u003e action (条件-conditions, 操作-operations) #自定义告警配置 规划部署 部署环境 服务器系统：centos7.9，ubuntu20.04 yum安装zabbix 安装说明\n# Install Zabbix repository wget https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm yum install zabbix-release-5.0-1.el7.noarch.rpm yum clean all # 安装Zabbix server，Web前端，agent yum install zabbix-server-mysql zabbix-agent # Install Zabbix frontend # Enable Red Hat Software Collections yum install centos-release-scl # 编辑配置文件 /etc/yum.repos.d/zabbix.repo and enable zabbix-frontend repository. [zabbix-frontend] ... enabled=1 ... # Install Zabbix frontend packages. yum install zabbix-web-mysql-scl zabbix-nginx-conf-scl # 安装数据库 # 在线一键安装脚本地址 https://itshare.work/2022/09/30/MySQLinstallScript/ # 创建初始数据库 # Make sure you have database server up and running. # 在数据库主机上运行以下代码 mysql -uroot -p mysql\u003e create database zabbix character set utf8 collate utf8_bin; Query OK, 1 row affected (0.01 sec) mysql\u003e create user zabbix@localhost identified by '123456'; Query OK, 0 rows affected (0.00 sec) mysql\u003e grant all privileges on zabbix.* to zabbix@localhost; Query OK, 0 rows affected (0.00 sec) mysql\u003e set global log_bin_trust_function_creators = 1; Query OK, 0 rows affected (0.00 sec) mysql\u003e quit; # 导入初始架构和数据，系统将提示您输入新创建的密码。 [root@centos7 ~]# zcat /usr/share/doc/zabbix-server-mysql-5.0.31/create.sql.gz | mysql -uzabbix -p123456 zabbix #Disable log_bin_trust_function_creators option after importing database schema. # mysql -uroot -p password mysql\u003e set global log_bin_trust_function_creators = 0; mysql\u003e quit; #为Zabbix server配置数据库 #编辑配置文件 /etc/zabbix/zabbix_server.conf DBPassword=12456 # 为 Zabbix前端配置PHP # 编辑配置文件 /etc/opt/rh/rh-nginx116/nginx/conf.d/zabbix.conf uncomment and set 'listen' and 'server_name' directives. # listen 80; # server_name example.com; # 编辑配置文件 /etc/opt/rh/rh-php72/php-fpm.d/zabbix.conf add nginx to listen.acl_users directive. listen.acl_users = apache,nginx # Then uncomment and set the right timezone for you.(取消注释，设置时区) php_value[date.timezone] = Asia/Shanghai # 启动Zabbix server和agent进程 # 启动Zabbix server和agent进程，并为它们设置开机自启： # systemctl restart zabbix-server zabbix-agent rh-nginx116-nginx rh-php72-php-fpm # systemctl enable zabbix-server zabbix-agent rh-nginx116-nginx rh-php72-php-fpm 开始使用 http://ip:port apt安装 Zabbix 5.0 LTS for Ubuntu 20.04 (Focal), MySQL, Apache\n# Install and configure Zabbix for your platform # a. Install Zabbix repository wget https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1%2Bfocal_all.deb dpkg -i zabbix-release_5.0-1+focal_all.deb apt update # 安装Zabbix server，Web前端，agent apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent # 安装数据库 apt install mysql-server -y # 创建初始数据库 # Make sure you have database server up and running. # 在数据库主机上运行以下代码。 # mysql -uroot -p password mysql\u003e create database zabbix character set utf8 collate utf8_bin; mysql\u003e create user zabbix@localhost identified by '123456'; mysql\u003e grant all privileges on zabbix.* to zabbix@localhost; mysql\u003e set global log_bin_trust_function_creators = 1; mysql\u003e quit; # 导入初始架构和数据，系统将提示您输入新创建的密码。 zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p123456 zabbix # Disable log_bin_trust_function_creators option after importing database schema. # mysql -uroot -p password mysql\u003e set global log_bin_trust_function_creators = 0; mysql\u003e quit; # 为Zabbix server配置数据库 # 编辑配置文件 /etc/zabbix/zabbix_server.conf DBPassword=123456 # 为Zabbix前端配置PHP # 编辑配置文件 /etc/zabbix/apache.conf uncomment and set the right timezone for you. php_value date.timezone Asia/Shanghai # 动Zabbix server和agent进程 # 启动Zabbix server和agent进程，并为它们设置开机自启： systemctl restart zabbix-server zabbix-agent apache2 systemctl enable zabbix-server zabbix-agent apache2 ",
   "wordCount" : "1469",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/6.jpg","datePublished": "2023-03-02T15:07:46Z",
+  "image":"http://colorfulgz.com/posts.images/banner/6.jpg","datePublished": "2023-03-02T15:07:46Z",
   "dateModified": "2023-03-02T15:07:46Z",
   "author":[{
     "@type": "Person",
-    "name": "Hopeful"
+    "name": ""
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/zabbix/"
+    "@id": "http://colorfulgz.com/posts/zabbix/"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Hopeful",
+    "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,9 +171,9 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
-                 height="35">Hopeful</a>
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 Zabbix
             </h1>
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>Hopeful
+        <span>
             &nbsp;&nbsp;
         </span>
     </span>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/zabbix/" style="color: var(--secondary)!important;">Zabbix</a>
+                <a href="http://colorfulgz.com/tags/zabbix/" style="color: var(--secondary)!important;">Zabbix</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/6.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/6.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -651,12 +651,12 @@ zabbix web</p>
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/">
+  <a class="prev" href="http://colorfulgz.com/posts/docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/">
     <span class="title">« 上一页</span>
     <br>
     <span>Docker镜像加速</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/ansible2/">
+  <a class="next" href="http://colorfulgz.com/posts/ansible2/">
     <span class="title">下一页 »</span>
     <br>
     <span>运维自动化工具Ansible(二)</span>
@@ -673,7 +673,7 @@ zabbix web</p>
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2022006994号-2</a>&nbsp;
@@ -772,11 +772,11 @@ zabbix web</p>
                 e.preventDefault();
                 let htmlData = window.getSelection().toString() +
                     '\r\n\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 let textData = window.getSelection().toString() +
                     '\r\n\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 clipboardData.setData('text/html', htmlData);
                 clipboardData.setData('text/plain', textData);
@@ -802,7 +802,7 @@ zabbix web</p>
             if ('clipboard' in navigator) {
                 let text = codeblock.textContent +
                     '\r\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 navigator.clipboard.writeText(text);
                 copyingDone();

@@ -5,18 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Nginx基础 | Hopeful</title>
+<title>Nginx基础 | DevOpsHub</title>
 <meta name="keywords" content="Nginx">
 <meta name="description" content="Nginx是免费的、开源的、高性能的HTTP和反向代理服务器、邮件代理服务器、以及TCP/UDP代理服务器">
-<meta name="author" content="Hopeful">
-<link rel="canonical" href="https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/">
+<meta name="author" content="">
+<link rel="canonical" href="http://colorfulgz.com/posts/nginx%E5%9F%BA%E7%A1%80/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="Nginx基础" />
 <meta property="og:description" content="Nginx是免费的、开源的、高性能的HTTP和反向代理服务器、邮件代理服务器、以及TCP/UDP代理服务器" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/26.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/nginx%E5%9F%BA%E7%A1%80/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/26.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-01T12:08:32+00:00" />
 <meta property="article:modified_time" content="2023-01-01T12:08:32+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/26.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/26.jpg" />
 <meta name="twitter:title" content="Nginx基础"/>
 <meta name="twitter:description" content="Nginx是免费的、开源的、高性能的HTTP和反向代理服务器、邮件代理服务器、以及TCP/UDP代理服务器"/>
 
@@ -97,13 +97,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "Nginx基础",
-      "item": "https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/"
+      "item": "http://colorfulgz.com/posts/nginx%E5%9F%BA%E7%A1%80/"
     }
   ]
 }
@@ -121,22 +121,22 @@ var _hmt = _hmt || [];
   "articleBody": "Nginx安装 Nginx版本和安装方式 Nginx版本\nMainline version 主要开发版本,一般为奇数版本号,比如1.19 Stable version 当前最新稳定版,一般为偶数版本,如:1.20 Legacy versions 旧的稳定版,一般为偶数版本,如:1.18 Nginx安装可以使用yum或源码安装，但是推荐使用源码编译安装\nyum的版本比较旧 编译安装可以更方便自定义相关路径 使用源码编译可以自定义相关功能，更方便业务的上的使用 基于yum安装Nginx 查看系统和EPEL的nginx版本\n# centos和rocky系统 [root@centos8 ~]# yum list nginx Repository extras is listed more than once in the configuration Last metadata expiration check: 0:28:13 ago on Wed 04 Jan 2023 11:51:31 AM CST. Available Packages nginx.x86_64 1:1.14.1-9.module_el8.0.0+184+e34fea82 AppStream nginx.x86_64 1:1.14.1-9.module_el8.0.0+184+e34fea82 appstream [root@centos8 ~]# [root@centos8 ~]# dnf list nginx Repository extras is listed more than once in the configuration Last metadata expiration check: 0:28:55 ago on Wed 04 Jan 2023 11:51:31 AM CST. Available Packages nginx.x86_64 1:1.14.1-9.module_el8.0.0+184+e34fea82 AppStream nginx.x86_64 1:1.14.1-9.module_el8.0.0+184+e34fea82 appstream [root@centos8 ~]# # ubuntu系统 root@ubuntu2004:~# apt list nginx Listing... Done nginx/focal-updates,focal-security 1.18.0-0ubuntu1.4 all N: There is 1 additional version. Please use the '-a' switch to see it root@ubuntu2004:~# centos、rocky系统yum安装\nyum install nginx # centos、rocky系统安装nginx后未启动，使用如下命令启动 systemctl start nginx ubuntu系统安装\napt update;apt install nginx 官方包源安装Nginx 系统和EPEL源的中 nignx版本较旧,可以安装官方源的最新版本 官方包链接:\nhttp://nginx.org/en/linux_packages.html 官方 yum 源链接:\nhttp://nginx.org/en/linux_packages.html #RHEL-CentOS 通过官方 yum 源安装nginx\n[root@centos8 ~]# vim /etc/yum.repos.d/nginx.repo [nginx-stable] name=nginx stable repo baseurl=http://nginx.org/packages/centos/$releasever/$basearch/ gpgcheck=1 enabled=1 gpgkey=https://nginx.org/keys/nginx_signing.key module_hotfixes=true [root@centos8 ~]# yum clean all 42 files removed [root@centos8 ~]# yum makecache # 查看所有的版本 [root@centos8]# yum list nginx --showduplicates nginx stable repo 462 B/s | 47 kB 01:44 Available Packages nginx.x86_64 1.16.0-1.el8.ngx nginx-stable nginx.x86_64 1:1.14.1-9.module+el8.4.0+542+81547229 appstream nginx.x86_64 1:1.16.1-1.el8.ngx nginx-stable nginx.x86_64 1:1.18.0-1.el8.ngx nginx-stable nginx.x86_64 1:1.18.0-2.el8.ngx nginx-stable nginx.x86_64 1:1.20.0-1.el8.ngx nginx-stable nginx.x86_64 1:1.20.1-1.el8.ngx nginx-stable nginx.x86_64 1:1.20.2-1.el8.ngx nginx-stable nginx.x86_64 1:1.22.0-1.el8.ngx nginx-stable nginx.x86_64 1:1.22.1-1.el8.ngx nginx-stable #安装指定版本 [root@centos8 ~]#yum -y install nginx-1.18.0 检查安装 rpm -ql nginx 查看帮助 [root@centos8 ~]# nginx -h ···· ···· ···· Options: -?,-h : this help -v : show version and exit -V : show version and configure options then exit #显示版本和编译参数 -t : test configuration and exit #测试配置文件是否异常 -T : test configuration, dump it and exit #测试并打印 -q : suppress non-error messages during configuration testing #静默模式 -s signal : send signal to a master process: stop, quit, reopen, reload #发送信号,reload信号 会生成新的worker,但master不会重新生成 -p prefix : set prefix path (default: /etc/nginx/)#指定Nginx 目录 -c filename : set configuration file (default: /etc/nginx/nginx.conf)#配置文件路径 -g directives : set global directives out of configuration file#设置全局指令,注意和配置文件不要同时配置,否则冲突 验证配置文件 [root@centos8 ~]# nginx -t nginx: the configuration file /etc/nginx/nginx.conf syntax is ok nginx: configuration file /etc/nginx/nginx.conf test is successful [root@centos8 ~]# 启动文件 [root@centos8 ~]# cat /lib/systemd/system/nginx.service [Unit] Description=The nginx HTTP and reverse proxy server After=network.target remote-fs.target nss-lookup.target [Service] Type=forking PIDFile=/run/nginx.pid # Nginx will fail to start if /run/nginx.pid already exists but has the wrong # SELinux context. This might happen when running `nginx -t` from the cmdline. # https://bugzilla.redhat.com/show_bug.cgi?id=1268621 ExecStartPre=/usr/bin/rm -f /run/nginx.pid ExecStartPre=/usr/sbin/nginx -t ExecStart=/usr/sbin/nginx ExecReload=/bin/kill -s HUP $MAINPID KillSignal=SIGQUIT TimeoutStopSec=5 KillMode=mixed PrivateTmp=true [Install] WantedBy=multi-user.target [root@centos8 ~]# 启动Nginx systemctl enable --now nginx Nginx编译安装 官方源码包下载地址：\nhttps://nginx.org/en/download.html 范例：编译安装\n系统centos8.5\nNginx版本：1.18.0\n安装扩展依赖\n[root@centos8 ~]# yum -y install gcc pcre-devel openssl-devel zlib-devel 创建用户和组 groupadd nginx useradd -s /sbin/nologin -g nginx nginx 下载安装包并解压 [root@centos8 ~]# cd /usr/local/src/ [root@centos8 ~]# wget https://nginx.org/download/nginx-1.18.0.tar.gz [root@centos8 src]# tar xf nginx-1.18.0.tar.gz [root@centos8 src]# cd nginx-1.18.0 安装 [root@centos8 nginx-1.18.0]# ./configure --prefix=/usr/local/src/nginx/ \\ # 安装位置 --user=nginx \\ # 运行的用户 --group=nginx \\ --with-http_ssl_module \\ --with-http_v2_module \\ --with-http_realip_module \\ --with-http_stub_status_module \\ --with-http_gzip_static_module \\ --with-pcre \\ --with-stream \\ --with-stream_ssl_module [root@centos8 nginx-1.18.0]#make \u0026\u0026 make install 修改权限 [root@centos8 /]# chown -R nginx.nginx /usr/local/src/nginx/ nginx安装完成后有四个主要的目录 [root@centos8 /]# ll /usr/local/src/nginx/ total 4 drwxr-xr-x. 2 nginx nginx 4096 Jan 4 15:17 conf drwxr-xr-x. 2 nginx nginx 40 Jan 4 15:17 html drwxr-xr-x. 2 nginx nginx 6 Jan 4 15:17 logs drwxr-xr-x. 2 nginx nginx 19 Jan 4 15:17 sbin [root@centos8 /]# conf：保存nginx所有的配置文件，其中nginx.conf是nginx服务器的最核心最主要的配置文件，其他 的.conf则是用来配置nginx相关的功能的，例如fastcgi功能使用的是fastcgi.conf和 fastcgi_params两个文件，配置文件一般都有一个样板配置文件，是以.default为后缀，使用时可将其复 制并将default后缀去掉即可。 html目录中保存了nginx服务器的web文件，但是可以更改为其他目录保存web文件,另外还有一个50x的web 文件是默认的错误页面提示页面。 logs：用来保存nginx服务器的访问日志错误日志等日志，logs目录可以放在其他 验证版本及编译参数 [root@centos8 /]# ln -s /usr/local/src/nginx/sbin/nginx /usr/bin/ [root@centos8 /]# nginx -V nginx version: nginx/1.18.0 built by gcc 8.5.0 20210514 (Red Hat 8.5.0-4) (GCC) built with OpenSSL 1.1.1k FIPS 25 Mar 2021 TLS SNI support enabled configure arguments: --prefix=/usr/local/src/nginx --user=nginx --group=nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre --with-stream --with-stream_ssl_module [root@centos8 /]# 创建Nginx启动文件 #复制同一版本的nginx的yum安装生成的service文件 [root@centos8 ~]# vim /lib/systemd/system/nginx.service [Unit] Description=nginx - high performance web server Documentation=http://nginx.org/en/docs/ After=network.target [Service] Type=forking PIDFile=/usr/local/src/nginx/logs/nginx.pid ExecStartPre=/usr/local/src//nginx/sbin/nginx -t -c /usr/local/src/nginx/conf/nginx.conf ExecStart=/usr/local/src/nginx/sbin/nginx -c /usr/local/src/nginx/conf/nginx.conf ExecReload=/bin/kill -s HUP $MAINPID ExecStop=/bin/kill -s QUIT $MAINPID PrivateTmp=true [Install] WantedBy=multi-user.target 验证启动文件 [root@centos8 ~]#systemctl daemon-reload [root@centos8 ~]#systemctl enable --now nginx Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /usr/lib/systemd/system/nginx.service. [root@centos8 ~]# Nginx命令和信号 nginx 命令支持向其发送信号,实现不同功能 nginx 格式\nnginx [-?hvVtTq] [-s signal] [-c filename] [-p prefix] [-g directives] 选项说明\n帮助: -? -h 使用指定的配置文件: -c 指定配置指令:-g 指定运行目录:-p 测试配置文件是否有语法错误:-t -T 打印nginx的版本信息、编译信息等:-v -V 发送信号: -s 示例: nginx -s reload 信号说明\n立刻停止服务:stop,相当于信号SIGTERM,SIGINT 优雅的停止服务:quit,相当于信号SIGQUIT 平滑重启，重新加载配置文件: reload,相当于信号SIGHUP 重新开始记录日志文件:reopen,相当于信号SIGUSR1,在切割日志时用途较大 平滑升级可执行程序:发送信号SIGUSR2,在升级版本时使用 优雅的停止工作进程:发送信号SIGWINCH,在升级版本时使用 ",
   "wordCount" : "1930",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/26.jpg","datePublished": "2023-01-01T12:08:32Z",
+  "image":"http://colorfulgz.com/posts.images/banner/26.jpg","datePublished": "2023-01-01T12:08:32Z",
   "dateModified": "2023-01-01T12:08:32Z",
   "author":[{
     "@type": "Person",
-    "name": "Hopeful"
+    "name": ""
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/"
+    "@id": "http://colorfulgz.com/posts/nginx%E5%9F%BA%E7%A1%80/"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Hopeful",
+    "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,9 +171,9 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
-                 height="35">Hopeful</a>
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 Nginx基础
             </h1>
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>Hopeful
+        <span>
             &nbsp;&nbsp;
         </span>
     </span>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/nginx/" style="color: var(--secondary)!important;">Nginx</a>
+                <a href="http://colorfulgz.com/tags/nginx/" style="color: var(--secondary)!important;">Nginx</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/26.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/26.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -713,12 +713,12 @@ nginx 格式</p>
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/">
+  <a class="prev" href="http://colorfulgz.com/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/">
     <span class="title">« 上一页</span>
     <br>
     <span>在线一键安装Nginx脚本</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/">
+  <a class="next" href="http://colorfulgz.com/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/">
     <span class="title">下一页 »</span>
     <br>
     <span>Redis一键安装脚本</span>
@@ -735,7 +735,7 @@ nginx 格式</p>
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2022006994号-2</a>&nbsp;
@@ -834,11 +834,11 @@ nginx 格式</p>
                 e.preventDefault();
                 let htmlData = window.getSelection().toString() +
                     '\r\n\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 let textData = window.getSelection().toString() +
                     '\r\n\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 clipboardData.setData('text/html', htmlData);
                 clipboardData.setData('text/plain', textData);
@@ -864,7 +864,7 @@ nginx 格式</p>
             if ('clipboard' in navigator) {
                 let text = codeblock.textContent +
                     '\r\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 navigator.clipboard.writeText(text);
                 copyingDone();

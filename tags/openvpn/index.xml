@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>OpenVPN on Hopeful</title>
-    <link>https://xyenvy.github.io/tags/openvpn/</link>
-    <description>Recent content in OpenVPN on Hopeful</description>
+    <title>OpenVPN on DevOpsHub</title>
+    <link>http://colorfulgz.com/tags/openvpn/</link>
+    <description>Recent content in OpenVPN on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 17 Mar 2023 21:51:21 +0000</lastBuildDate><atom:link href="https://xyenvy.github.io/tags/openvpn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Mar 2023 21:51:21 +0000</lastBuildDate><atom:link href="http://colorfulgz.com/tags/openvpn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenVPN安装和使用</title>
-      <link>https://xyenvy.github.io/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</link>
+      <link>http://colorfulgz.com/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Fri, 17 Mar 2023 21:51:21 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</guid>
+      <guid>http://colorfulgz.com/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</guid>
       <description>OpenVPN 是Linux下开源VPN的应用，提供了良好的性能和友好的用户GUI;OpenVPN 是一个基于 OpenSSL 库的应用层 VPN 实现。和传统 VPN 相比，它的优点是简单易用</description>
     </item>
     

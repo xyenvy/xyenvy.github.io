@@ -5,18 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>在线一键安装Nginx脚本 | Hopeful</title>
+<title>在线一键安装Nginx脚本 | DevOpsHub</title>
 <meta name="keywords" content="Nginx">
 <meta name="description" content="一键安装Nginx 脚本">
-<meta name="author" content="Hopeful">
-<link rel="canonical" href="https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/">
+<meta name="author" content="">
+<link rel="canonical" href="http://colorfulgz.com/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="在线一键安装Nginx脚本" />
 <meta property="og:description" content="一键安装Nginx 脚本" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/7.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/7.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-04T22:46:26+00:00" />
 <meta property="article:modified_time" content="2023-01-04T22:46:26+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/7.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/7.jpg" />
 <meta name="twitter:title" content="在线一键安装Nginx脚本"/>
 <meta name="twitter:description" content="一键安装Nginx 脚本"/>
 
@@ -97,13 +97,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "在线一键安装Nginx脚本",
-      "item": "https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/"
+      "item": "http://colorfulgz.com/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/"
     }
   ]
 }
@@ -121,22 +121,22 @@ var _hmt = _hmt || [];
   "articleBody": "#!/bin/bash # #******************************************************************** #Author:yuankun #Date: 2023-01-04 #FileName：install_nginx.sh #Description：The test script #******************************************************************** # 安装资源下载路径 SRC_DIR=/usr/local/src/ # 下载地址 NGINX_URL=http://nginx.org/download/ # 安装版本 NGINX_FILE=nginx-1.20.2 TAR=.tar.gz # 安装路径 NGINX_INSTALL_DIR=/usr/local/src/nginx # 查看CPU核心数 CPUS=`lscpu |awk '/^CPU\\(s\\)/{print $2}'` . /etc/os-release # 颜色 color () { RES_COL=60 MOVE_TO_COL=\"echo -en \\\\033[${RES_COL}G\" SETCOLOR_SUCCESS=\"echo -en \\\\033[1;32m\" SETCOLOR_FAILURE=\"echo -en \\\\033[1;31m\" SETCOLOR_WARNING=\"echo -en \\\\033[1;33m\" SETCOLOR_NORMAL=\"echo -en \\E[0m\" echo -n \"$1\" \u0026\u0026 $MOVE_TO_COL echo -n \"[\" if [ $2 = \"success\" -o $2 = \"0\" ] ;then ${SETCOLOR_SUCCESS} echo -n $\" OK \" elif [ $2 = \"failure\" -o $2 = \"1\" ] ;then ${SETCOLOR_FAILURE} echo -n $\"FAILED\" else ${SETCOLOR_WARNING} echo -n $\"WARNING\" fi ${SETCOLOR_NORMAL} echo -n \"]\" echo } os_type () { awk -F'[ \"]' '/^NAME/{print $2}' /etc/os-release } os_version () { awk -F'\"' '/^VERSION_ID/{print $2}' /etc/os-release } check () { [ -e ${NGINX_INSTALL_DIR} ] \u0026\u0026 { color \"nginx 已安装,请卸载后再安装\" 1; exit; } cd ${SRC_DIR} if [ -e ${NGINX_FILE}${TAR} ];then color \"相关文件已准备好\" 0 else color '开始下载 nginx 源码包' 0 wget ${NGINX_URL}${NGINX_FILE}${TAR} [ $? -ne 0 ] \u0026\u0026 { color \"下载 ${NGINX_FILE}${TAR}文件失败\" 1; exit; } fi } install () { color \"开始安装 nginx\" 0 if id nginx \u0026\u003e /dev/null;then color \"nginx 用户已存在\" 1 else useradd -s /sbin/nologin -r nginx color \"创建 nginx 用户\" 0 fi color \"开始安装 nginx 依赖包\" 0 if [ $ID == \"centos\" ] ;then if [[ $VERSION_ID =~ ^7 ]];then yum -y -q install make gcc pcre-devel openssl-devel zlib-devel perl-ExtUtils-Embed elif [[ $VERSION_ID =~ ^8 ]];then yum -y -q install make gcc-c++ libtool pcre pcre-devel zlib zlib-devel openssl openssl-devel perl-ExtUtils-Embed else color '不支持此系统!' 1 exit fi elif [ $ID == \"rocky\" ];then yum -y -q install make gcc-c++ libtool pcre pcre-devel zlib zlib-devel openssl openssl-devel perl-ExtUtils-Embed else apt update \u0026\u003e /dev/null apt -y install make gcc libpcre3 libpcre3-dev openssl libssl-dev zlib1g-dev \u0026\u003e /dev/null fi cd $SRC_DIR tar xf ${NGINX_FILE}${TAR} NGINX_DIR=`echo ${NGINX_FILE}${TAR}| sed -nr 's/^(.*[0-9]).*/\\1/p'` cd ${NGINX_DIR} \u0026\u0026 pwd ./configure --prefix=${NGINX_INSTALL_DIR} --user=nginx --group=nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_gzip_static_module --with-pcre --with-stream --with-stream_ssl_module make -j $CPUS \u0026\u0026 make install [ $? -eq 0 ] \u0026\u0026 color \"nginx 编译安装成功\" 0 || { color \"nginx 编译安装失败,退出!\" 1 ;exit; } echo \"PATH=${NGINX_INSTALL_DIR}/sbin:${PATH}\" \u003e /etc/profile.d/nginx.sh cat \u003e /lib/systemd/system/nginx.service \u003c",
   "wordCount" : "659",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/7.jpg","datePublished": "2023-01-04T22:46:26Z",
+  "image":"http://colorfulgz.com/posts.images/banner/7.jpg","datePublished": "2023-01-04T22:46:26Z",
   "dateModified": "2023-01-04T22:46:26Z",
   "author":[{
     "@type": "Person",
-    "name": "Hopeful"
+    "name": ""
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/"
+    "@id": "http://colorfulgz.com/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Hopeful",
+    "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,9 +171,9 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
-                 height="35">Hopeful</a>
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 在线一键安装Nginx脚本
             </h1>
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>Hopeful
+        <span>
             &nbsp;&nbsp;
         </span>
     </span>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/nginx/" style="color: var(--secondary)!important;">Nginx</a>
+                <a href="http://colorfulgz.com/tags/nginx/" style="color: var(--secondary)!important;">Nginx</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/7.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/7.jpg" alt="">
     
 </figure>
         <div class="post-content"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
@@ -498,12 +498,12 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/">
+  <a class="prev" href="http://colorfulgz.com/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/">
     <span class="title">« 上一页</span>
     <br>
     <span>docker-compose部署MySQL</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/">
+  <a class="next" href="http://colorfulgz.com/posts/nginx%E5%9F%BA%E7%A1%80/">
     <span class="title">下一页 »</span>
     <br>
     <span>Nginx基础</span>
@@ -520,7 +520,7 @@ var _hmt = _hmt || [];
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2022006994号-2</a>&nbsp;
@@ -619,11 +619,11 @@ var _hmt = _hmt || [];
                 e.preventDefault();
                 let htmlData = window.getSelection().toString() +
                     '\r\n\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 let textData = window.getSelection().toString() +
                     '\r\n\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 clipboardData.setData('text/html', htmlData);
                 clipboardData.setData('text/plain', textData);
@@ -649,7 +649,7 @@ var _hmt = _hmt || [];
             if ('clipboard' in navigator) {
                 let text = codeblock.textContent +
                     '\r\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 navigator.clipboard.writeText(text);
                 copyingDone();

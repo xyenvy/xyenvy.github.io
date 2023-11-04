@@ -5,18 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Redis学习笔记 | Hopeful</title>
+<title>Redis学习笔记 | DevOpsHub</title>
 <meta name="keywords" content="redis">
 <meta name="description" content="Redis 是完全开源免费的，遵守BSD协议，是一个高性能(NOSQL)的key-value数据库，Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存可持久化的日志型，Key-Value数据库，并提供多种语言的API">
-<meta name="author" content="Hopeful">
-<link rel="canonical" href="https://xyenvy.github.io/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+<meta name="author" content="">
+<link rel="canonical" href="http://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="Redis学习笔记" />
 <meta property="og:description" content="Redis 是完全开源免费的，遵守BSD协议，是一个高性能(NOSQL)的key-value数据库，Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存可持久化的日志型，Key-Value数据库，并提供多种语言的API" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/30.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/30.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-02-09T14:59:00+00:00" />
 <meta property="article:modified_time" content="2023-02-09T15:59:00+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/30.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/30.jpg" />
 <meta name="twitter:title" content="Redis学习笔记"/>
 <meta name="twitter:description" content="Redis 是完全开源免费的，遵守BSD协议，是一个高性能(NOSQL)的key-value数据库，Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存可持久化的日志型，Key-Value数据库，并提供多种语言的API"/>
 
@@ -97,13 +97,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "Redis学习笔记",
-      "item": "https://xyenvy.github.io/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+      "item": "http://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
     }
   ]
 }
@@ -121,22 +121,22 @@ var _hmt = _hmt || [];
   "articleBody": "Redis学习笔记 一 、Redis简介 1.1 什么是Redis Redis 是完全开源免费的，遵守BSD协议，是一个高性能(NOSQL)的key-value数据库*，Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存可持久化的日志型，Key-Value数据库，并提供多种语言的API。\nBSD是\"Berkeley Software Distribution\"的缩写，意思是“伯克利软件发型版本”。 BSD开源协议是一个给予使用者很大自由的协议。可以自由的使用，修改源代码，也可以将修改后的代码作为开源或者专有软件在发布。BSD代码鼓励代码共享，但需要尊重代码作者的著作权。 BSD由于允许使用者修改和重新发布代码，也允许使用或在BSD代码上开发商业软件发布和销售，一次是对商业集成很友好的协议。 1.2 NoSQL NoSQL,泛指非关系型的数据库，NoSQL即Not-only SQL,它可以作为关系型数据库的良好补充。随着互谅网web2.0网站的兴起，非关系型的数据库现在成为了一个及其热门的新领域，非关系型数据库产品的发展非常迅速。 传统数据库暴露很多难以克服的问题，如下问题：\n1、High performance - 对数据库高并发读写的需求。 2、Huge Storage - 对海量数据的高效存储和访问的需求。 3、High Scalability \u0026\u0026 High Availability - 对数据库的高可扩展性和高课用性的需求。 1.3 NoSQL的类别 键值（Key-Value）存储数据库\n这一类数据库主要会使用到一个哈希表，这个表中有一个特定的键和一个指针指向特定的数据。 key/value模型对于IT系统涞水的优势在于简单，已部署。但是如果DBA只对部分值进行查询或者更新的时候，key/value显示的效率低下。 相关产品 ： Redis，Tokyo Cabinet 典型应用 ： 内存缓存，主要用于处理大量数据的高访问负载。 数据模型 ： 一系列键值对 优势 ： 快速查询 劣势 ： 存储的数据缺少结构化 列存储数据库\n这部分数据库通常是用来对分布式存储的海量数据。键仍然存在，但是他们的特点是指向了多个列。这些列是由列家族来安排的。 相关产品 : HBase 、Riak 典型应用 ： 分布式的文件系统 数据模型 ： 以列簇式存储，将同一列数据存在一起 优势 ： 查找速度快，可扩展性强，更容易进行分布式扩展 劣势 ： 功能相对于局限 文档型数据库\n文档型数据库：该类型的数据库模型是版本化的文档，半结构化的文档一特定的格式存储，比如JSON。文档数据库可以看做键值数据库的升级版，允许之间嵌套键值。而且文档型数据库比键值数据库的查询效率更高。 相关产品：MOngoDB 典型应用 ： web应用 数据模型 ： 一系列键值对 优势 ： 数据结构要求不严格 劣势 ： 查询性能不高，而且缺乏统一的查询语言 1.4 总结 NoSQL 数据库在一下的这几种情况下比较适用 ：\n1、数据模型比较简单；\n2、需要灵活更前的IT系统；\n3、对数据库性能要求较高；\n4、不需要高度的数据一致性；\n5、对于给定key，比较容易映射复杂的环境；\n1.5 Redis 描述 ​Redis是完全开源免费的，遵守BSD协议，是一个高性能(NoSQL)的（key-value）数据库，Redis是一个开源的使用ANSI C语言编写，支持网络，可基于内存亦可持久化的日志型，Key-Value数据库，并提供多种语言的API。\n1.6 Redis的特点 性能极高 - Redis读写的熟读110000次/s，写的速度是81000次/s。 丰富的数据类型 - Redis支持的类型String， Hash 、List 、Set 及 Ordered Set数据类型操作。 原子性 - Redis的所有操作都是原子性的，意思就是要么成功，要么失败。单个操作时原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来。 丰富的特性 - Redis还支持publis/subscribe，通知，key过期等等特性。 高速读写 ，redis使用自己实现的分离器，代码量很短，没有使用lock(MySQL),因此效率非常高。 Redis是一个简单的，高效的，分布式的，基于内存的缓存工具。\n架设好服务器后，通过网络连接(类似数据库)，提供Key-Value缓存服务。\n简单，是Redis突出的特色。\n简单可以保证核心功能的稳定和优异。\n1.7 Redis的应用场景 可以作为数据库，缓存，热点数据(经常别查询，但是不经常被修改或者删除的数据)和消息中间件等大部分功能。\nRedis常用的场景示例如下：\n1、缓存 缓存现在几乎是所有大中型网站都在用的必杀技，合理利用缓存提升网站的访问速度，还能大大降低数据库的访问压力。Redis提供了键过期功能，也提供了灵活的键淘汰策略，所以，现在Redis用在缓存的场合非常多。 2、排行榜 Redis提供的有序集合数据类结构能够实现葛洪复杂的排行榜应用。 3、计数器 什么是计数器，，视频网站的播放量等等，每次浏览+1，并发量高时如果每次都请求数据库操作无疑是中挑战和压力。Redis提供的incr命令来实现计数器功能，内存操作，性能非常好，非常是用于这些技术场景。 4、分布式会话 集群模式下，在应用不多的情况下一般使用容日自带的session复制功能就能够满足，当应用相对复杂的系统中，一般都会搭建Redis等内存数据库为中心的session服务，session不在由容器管理，而是有session服务及内存数据管理。 5、分布式锁 在很多互联网公司中都是用来分布式技术，分布式技术带来的技术挑战是对同一个资源的并发访问，如全局ID，减库存，秒杀等场景，并发量不发的场景可以使用数据库的悲观锁，乐观锁来实现，但是在并发高的场合中，利用数据库锁来控制资源的并发访问是不太理想的，大大影响了数据库的性能。可以利用Redis的setnx功能来编写分布式的锁，如果设置返回1，说明获取所成功，否则获取锁失败，实际应用中药考虑的细节要更多。 6、社交网络 点赞、踩、关注/被关注，共同好友等是社交网站的基本功能，社交网站的访问量通常老说比较大，而且传统的关系数据库不适合这种类型的数据，Redis提供的哈希，集合等数据结构能很方便的实现这些功能。 7、最新列表 Redis列表结构，LPUSH可以在列表头部插入一个内容ID作为关键字，LTRIM可以用来限制列表的数量，这样列表永远为N个ID。无需查询最新的列表，直接根据ID 去到对应的内容也即可。 8、消息系统 消息对队列是网站比用中间件，如ActiveMQ，RabbitMQ，Kafaka等流行的消息队列中间件，主要用于业务解耦，流量削峰及异步处理试试性低的业务。Redis提供了发布/订阅及阻塞队列功能，能实现一个简单的消息队列系统。另外，这个不能喝专业的消息中间件相比。 1.8 Redis总结 优势\n性能极高 - Redis读写的熟读110000次/s，写的速度是81000次/s。 丰富的数据类型 - Redis支持的类型String， Hash 、List 、Set 及 Ordered Set数据类型操作。 原子性 - Redis的所有操作都是原子性的，意思就是要么成功，要么失败。单个操作时原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来。 丰富的特性 - Redis还支持publis/subscribe，通知，key过期等等特性。 高速读写 ，redis使用自己实现的分离器，代码量很短，没有使用lock(MySQL),因此效率非常高。 缺点\n持久化。 Redis直接将数据存储到内存中，要将数据保存到磁盘上，Redis可以使用两种方式实现持久化过程。定时快照(snapshot)：每个一端时间将整个数据库写到磁盘上，每次均是写全部数据，代价非常高。第二种方式基于语句追加（aof）：只追踪变化的数据，但是追加的log可能过大，同时所有的操作均重新执行一遍，回复速度慢。 耗内存 、占用内存过高。 二、Redis安装 2.1 Redis官网 官方网站\n官方下载 可以根据需要下载不同版本\n2.2 Redis 安装 Redis是C语言开发，安装Redis需要先将官网下载的源码进行编译。编译依赖gcc环境，如果没有gcc环境，需要安装gcc\n2.3 安装gcc gcc的安装很简单，首先要确保root登录，其次就是Linux要能连外网\nyum -y install gcc automake autoconf libtool make 注意： 运行yum是出现/var/run/yum.pid已被锁定，PID为xxxx的另外一个程序正在运行的问题解决。\nrm -f /var/run/yum.pid 2.4 安装Redis 下载redis二进制安装包\nwget http://download.redis.io/release/redis-6.0.5.tar.gz 解压/apps目录下\ntar zxvf redis-6.0.5.tar.gz -C /apps #Linux 中剪切命令 mv redis-6.0.5.tar.gz 安装包 #Linux中复制命令: cp Files path cp redis-6.0.5.tar.gz /root/apps 进入redis中使用make命令进行编译\n[root@centos redis-5.0.8]# make MALLOC=libc LINK redis-cli CC redis-benchmark.o LINK redis-benchmark INSTALL redis-check-rdb INSTALL redis-check-aof Hint: It's a good idea to run 'make test' ;) make[1]: 离开目录“/root/apps/redis-5.0.8/src” [root@centos redis-5.0.8]# ll 安装成功如上\n2.5 安装到指定的位置 make PREFIX=/root/apps/redis install （安装编译后的文件）安装到指定目录；\n注意：PREFIX必须为大写，同时会自动为我们创建redis目录，并将结果安装此目录；\n三 、Redis启动 3.1 启动Redis服务端，进入到Redis的安装目录 cd /usr/local/redis 3.2 执行命令 ./bin/redis-server 3.3 Redis的客户端进行启动 ./bin/redis-cli 3.4 启动Redis客户端命令语法 redis-cli -h IP地址 -p 端口 //默认IP本机 端口号6379 3.5 检测是否服务端启动 启动redis客户端，打开终端并输入命令redis-cli。该命令连接本地的redis服务。\n127.0.0.1:6379\u003e 127.0.0.1:6379\u003e ping PONG 127.0.0.1:6379\u003e 在以上实例中我们连接到本地的redis服务并执行PING 命令，该命令用于检测redis服务是否启动\n3.6 检查redis的进程 #执行 ps -ef | grep -i redis 来查看进程 ps -ef | grep -i redis root 10050 5728 0 23:03 pts/0 00:00:03 ./bin/redis-server *:6379 root 10077 10056 0 23:10 pts/1 00:00:00 ./bin/redis-cli root 10100 10081 0 23:22 pts/2 00:00:00 grep --color=auto -i redis [root@centos ~]# 四、Redis配置详细 Redis默认定义了很多默认配置。但在实际开发中，一般我们都会通过手动配置完成。回到安装目录下找到解压文件中的redis.conf。\nRedis的配置文件位于Redis安装目录下，文件名称为redis.conf\n4.1 配置Redis 命令：解压目录下的redis.conf配置文件复制到安装文件的目录下\n#把编译的redis.conf文件放 ，安装的redis文件目录下 [root@centos redis-5.0.8]# pwd /root/apps/redis-5.0.8 [root@centos redis-5.0.8]# cp redis.conf /root/apps/redis [root@centos redis-5.0.8]# cd .. [root@centos apps]# ll 4.2 Redis.conf 1、Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程 daemonize no 2、当Redis以守护进程方式运行时，Redis默认会把pid写入/var/run/redis.pid文件，可以通过pidfile指定 pidfile /var/run/redis.pid 3、指定Redis监听端口，默认端口为6379；’ port 6379 4、绑定的主机地址 bind 127.0.0.1 5、当客户端限制多长时间后关闭连接，如果指定为0，表示关闭该功能 timeout 300 6、指定日志记录几倍，Redis总共支持四个级别：debug，verbose，notice，warning，默认为verbose loglevel verbos 7、日志记录方式，默认为标准输出，如果配置Redis为守护进程方式运行，而这里又配置日志记录方式标准输出，则日志将会发送给/dev/null logfile stdout 8、设置数据库的数量，默认数据库为0，可以使用SELECT\u003cdbid\u003e命令在连接上指定数据库id databases 16 9、指定在多长时间内，有多少次更新操作，就将数据同步到数据文件，可以多个条件配合 save\u003cseconds\u003e\u003cchanges\u003e Redis默认配置文件中提供了三个条件 save 900 1 save 300 10 save 60 10000 分别表示900秒(15分钟)内有1个更改，300秒(5分钟)内有10个更改以及60秒内有10000个更改。 10、指定存储至本地数据库时是否压缩数据，默认为yes，Redis采用LZF(压缩算法)压缩，如果为了节省CPU时间，可以关闭该选项，但会导致数据库文件变的巨大 rdbcompression yes 中间10个\n11、指定本地数据库文件名，默认为dump.rdb dbfilename dump.rdb 12、指定本地数据库存放目录 dir ./ 13、设置当本机为slav服务时，设置master服务的IP地址及端口，在Redis启动时，它会自动从master进行数据同步slaveof\u003cmasterip\u003e \u003cmasterport\u003e 14、当master服务设置了密码保护时，slav服务连接master的密码 masterauth\u003cmaster-password\u003e 15、设置Redis连接密码，如果配置了连接密码，客户端在连接Redis是需要通过AUTH \u003cpassword\u003e命令提供密码，默认关闭 requirepass foobared 16、设置同一时间最大客户端连接数，默认是无限制，Redis可以同时打开的客户端连接数为Redis进程可以打开的最大文件描述符数，如果设置maxclients 0，表示不作限制。当客户端连接数到达限制是，Redis会关闭新的连接并向客户端返回max number of clients reached错误信息 maxclients 128 17、指定Redis最大内存限制，Redis在启动时会把数据加载到内存中，达到最大内存后，Redis会先尝试清除已到期或即将到期的Key，档次方法处理后，仍然达最大内存设置，将无法再进行写入操作，但仍然可以静心读取操作。Rdis新的vm机制，会把key存放内存，Value会存放在swap区 maxmemory \u003cbytes\u003e 18、指定是否每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可能会在断电时导致一端时间内的数据丢失。因为 redis 本省同步数据文件是按上面save条件来同步的，所有的数据会在一端时间内只存在于内存中。默认为no appendonly no 19、指定更新日志文件名，默认为appendonly.aof appendfulename appendonly.aof 20、指定更新日志条件，共有3个可选值： no: 表示等操作系统进行数据缓存同步到磁盘(快) always: 表示每次更新操作后活动调用fsync()将数据写到磁盘(慢，安全) everysec: 表示每秒同步一个(折中，默认值) appendfsync everysec maxmemory-policy noeviction # 内存达到上限之后的处理策略 1、volatile-lru ： 只对设置了过期时间的key进行LRU（默认值） 2、allkeys-lru ： 产出lru算法的key 3、volatile-random ： 随机删除即将过期key 4、allkey -random : 随机删除 5、volatile-ttl : 删除即将过期的 6、noeviction ： 永不过期，返回错误 结尾10个\n21、指定是否启用虚拟内存机制，默认为no，简单的介绍一下，vm机制将数据分页存放，有Redis将访问量较少的页即冷数据swap到磁盘上，访问多的页面由磁盘自动换出到内存中(在后面的文章会仔细分析Redis的vm机制) vm-enabled no 22、虚拟内存文件路径，默认值为/tmp/redis.swap，不可多个Redis实例共享 vm-swap-file /tmp/redis.swap 23、将所有大于vm-max-memory的数据存入虚拟内存，无论vm-max-memory设置多小，所有索引数据都是内存存储的(Redis的索引数据 就是keys)，也就是说，当vm-max-memory设置为0的时候，其实是所有value都存在于磁盘。默认值为0 vm-page-size 32 24、Redis swap文件分成了很多的page，一个对象可以保存咱几多个page上面，但一个page上不能被多个对象共享，vm-page-size是要根据存储的 数据大小来设定的，作者建议如果村粗很多小对象，page大小最好设置为32或者64bytes；如果存储很大大对象，则可以使用更大的page，如果不确定，就是用默认值 vm-page-size 32 25、设置swap文件中的page数量，由于页表(一种表示页面空闲或是欧诺个的bitmap)是放在内存中的，在磁盘上每8个pages将消耗1byte的内存 vm-pages 134217728 26、设置访问swap文件的线程数，最好不要超过机器的核数，如果设置为0，那么所有对swap文件的操作都是串行的，可能会造成比较长时间的延迟。默认值为 4 vm-max-threads 4 27、设置在向客户端应答时，是否把较小的包含并未一个包发送，默认为开启 glueoutputbuf yes 28、指定在超过一定的数量或者最大的元素超过某一临界值时，采用一种特殊的哈希算法 hash-max-zipmap-entries 64 hash-max-zipmap-value 512 29、指定是否激活重置哈希。默认为开启(后面在介绍Redis的哈希算法时具体介绍) activerehasing yes 30、指定包含其他的配置文件，可以在同一主机上多个redis实例之间使用同一份配置文件，而同时各个实例又拥有自己的特定配置文件 include /path/to/local.conf 4.2、内存中的维护策略 redis作为优秀的中间缓存件，时常会存储大量的数据，即使采取了集群部署来动态扩容，也应该即使的整理内存，维持系统性能。\n4.2.1 在redis中有两种解决方案 为数据设置超时时间 //设置过期时间 expire key time(以秒为单位)--这是最常用的方式 setex(String key, int seconds, String value) --字符串独有的方式 1、除了字符串自己独有设置过期时间的方法外，其他方法都需要依靠expire方法来设置时间 2、如果没有设置时间，那缓存就是永不过期 3、如果设置了过期时间，之后又想让缓存永不过期没使用persist key 采用LRU算法动态将不用的数据删除 内存管理的一种页面置换算法，对于在内存中但又不用的数据块(内存块)叫做LRU， 操作系统会根据哪些数据属于LRU而将其移除内存而腾出空间来加载另外的数据。 1.volatile-lru：设定超时时间的数据中，删除最不常使用的数据\n2.allkeys-lru：查询所有的key只能怪最近最不常使用的数据进行删除，这是应用最广泛的策略。\n3.volatile-random：在已经设定了超时的数据中随机删除。\n4.allkeys-random：查询所有的key，之后随机删除。\n5.volatile-ttl：查询全部设定超时时间的数据，之后排序，将马上要过期的数据进行删除操作。\n6.noeviction：如果设置为该属性，则不会进行删除操作，如果内存溢出则报错返回。\n7.volatile-lfu：从所有配置了过去时间的键中驱逐使用频率最少的键\n8.allkeys-lfu：从所有键中驱逐使用频率最少的键\n4.2.2 自定义配置redis 进入对应的安装目录：\n/root/apps/redis 修改redis.conf配置文件 vim redis.conf（进入命令模式 通过/内容 查找相应字符串）\ndaemonize no 修改为 daemonize yes 守护进程启动 bind 127.0.0.1 注释掉 允许除本机 外的机器访问redis服务 requirepass 设置密码 设定数据库密码 (保证服务安全/有些情况下不设定密码是无法进行远程连接访问的) Redis采用的是单进程多线程的模式。当redis.conf中选项daemonize设置成为yes时，代表开启守护进程模式。在该模式下，redis会在后台运行，并将进程pid号写入值redis.conf选项pidfile设置的文件中，此时redis将一直运行，除非手动kill该进程。但当daemonize选项设置为no时，当前界面将进入redis的命令行界面，exit强制退出或者关闭连接工具（putty,xshell等）都会呆滞redis进程退出。\n服务端开发的大部分应用都是采用后台运行的模式\nrequirepass设置密码。因为redis速度相当快，所以一台比较好的服务器下，一个外部用户在一秒内可以进行15w密码尝试，这意味你需要设定非常强大的密码来防止暴力破解。\n可以通过redis的配置文件设置密码参数，这样客户端连接大redis服务就需要密码验证，这样可以让你的redis服务更加安全。\n五 、Redis启动 5.1 Redis以守护进程服务端进行启动 // 使用该命令进行启动：【./bin/redis-server ./redis.conf 】 [root@centos redis]# ./bin/redis-server ./redis.conf 11450:C 05 Jul 2020 12:23:34.257 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo 11450:C 05 Jul 2020 12:23:34.257 # Redis version=5.0.8, bits=64, commit=00000000, modified=0, pid=11450, just started 11450:C 05 Jul 2020 12:23:34.257 # Configuration loaded [root@centos redis]# 5.2 Redis客户端进行启动 //Redis 客户端启动命令：./redis-cli [root@centos bin]# ./redis-cli 127.0.0.1:6379\u003e keys * 1) \"name\" 127.0.0.1:6379\u003e 六、Redis关闭 6.1、第一种关闭方式 (断电、非正常关闭，容易数据丢失) 查询不到redis进程id\nPID ps -ef | grep -i redis kill 查询的id进行强制关闭\nkill -9 PID 6.2、第二种关闭方式 (正常关闭，数据保存)\n关闭redis服务，通过客户端进行shutdown\n如果redis设置了密码，需要先在客户端通过密码登录，在进行shutdown即可关闭服务端\n// 在客户端使用【shutdown】命令关闭Redis服务端 127.0.0.1:6379\u003e SHUTDOWN not connected\u003e y Could not connect to Redis at 127.0.0.1:6379: Connection refused not connected\u003e shutdown 七、远程连接 7.1 Redis远程连接比较流行的软件：RedisDesktoManager 默认不允许远程连接，需要修改一下信息才可以进行修改，\nbind 127.0.0.1 注释掉 允许除本机以外的机器访问Redis服务 requirepass 设置密码 设定数据库密码(有些情况系不设定密码是无法进行远程连接访问的) 7.2 Redis使用密码登录 // Redis客户端使用密码进行登录 【./bin/redis-cli -a redis】 [root@centos redis]# ./bin/redis-cli -a redis Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe. 127.0.0.1:6379\u003e keys * 1) \"name\" 127.0.0.1:6379\u003e Centos 防火墙端口 开放8080端口（如下命令只针对Centos7以上）\n查看已经开放的端口：\nfirewall-cmd --list-ports 开启端口：\nfirewall-cmd --zone=public --add-port-6379/tcp --permanent 重启防火墙：\nfirewall-cmd --reload #重启 Firewall systemctl stop firewalld.service #停止 firewall systemctl disable firewalld.service #禁止firewall 开机启动 八 、Docker安装Redis 8.1 搜索redis docker search redis 8.2 下载镜像 docker pull redis：4.0.1 8.3 创建并运行容器 docker run -d --name redis6379 -p 6379:6379 redis:4.0.1 --requirepass \"redis\" 8.4 测试进入Redis进入客户端 使用redis镜像执行redis-cli命令连接到刚启动的容器\n九、Redis常用命令 Redis 命令用于在redis服务上执行操作。要在redis服务上执行命令需要一个redis客户端。\nRedis 客户端在我们之前下载的Redis的安装包中。\nRedis支持的物种数据类型 ：string(字符串)，hash(哈希)，list(列表)，set(集合)及zset（sorted set : 有序集合）等\n9.1 常用命令key管理 1、 keys * :返回满足的所有键，可以模糊匹配，比如 keys abc* ：表示以 abc 开头的 key 2、 exists key ： 是否存在指定的key ，存在返回1.不存在返回0 3、 expire key second ：设置某个key的过期时间 时间为妙 4、 del key : 删除某个key 5、 ttl key ：查看剩余时间，当key不存在是，返回-2；存在但没有设置剩余生存时间时，返回 -1，否 则，以秒为单位，返回key 的剩余生存时间。 6、 persist key ：取消过去时间 7、 PEXPIRE key millisseconds 修改key 的过期时间为毫秒 8、 select ： 选择数据库 数据库为0-15（默认一共16个数据库） 9、 设计成多个数据库实际上是为了数据库安全和备份 10、 move key dbindex ： 将当前数据中的key转移到其他数据库 11、 randomkey ： 随机返回一个key 12、 rename key key2 : 种命名key 13、 echo ： 打印命令 14、 dbsize : 查看数据库的key数量 15、 info : 查看数据库信息 16、 config get * 实时存储收到的请求，返回相关的配置 17、 flushdb ： 清除当前数据库 18、 flushall ： 清空所有数据库 9.2 DEL key 该命令用于在key存在时删除key。 9.3 EXISTS key 检查给定key是否存在。 9.4 EXPIRE key seconds 为给定key设置过期时间(以秒计) 9.5 PEXPIRE key milliseconds 设置key的过期时间以毫秒计 9.6 TTL key 以秒为单位，返回给定key的剩余生存时间(TTL, time to live) 9.7 PTTL key 以秒为单位，返回 key 的剩余生存时间 9.8 KEYS pattern 查找所有服务给定模式(pattern)的key。 keys 通配符 获取所有与pattern匹配的key，返回所有与该匹配 通配符 ： * 代表所有 ? 表示代表一个字符 9.9 RENAME key newkey 修改key的名称 9.10 MOVE key db 将当前数据库的 key 移动到给定的数据库db当中 9.11 TYPE key 返回 key 所存储的值的类型 9.12 应用场景 EXPIPER key seconds\n1、限时的优惠活动信息 2、网站数据缓存(对于一些需要定时更新的数据，例如:积分排行榜) 3、手机验证码 4、限制网站访客访问频率(例如：1分钟最多访问10次) 9.13 key的命名建议 redis单个key允许存入512M大小\n1、key 不要太长，尽量不要超过1024字节，这不仅消耗内存，而且会降低查找的效率 2、key 也不要太短，太短的话，key的可读性会降低 3、在一个项目中，key最好使用提议的命名模式，例如user:12:password 4、key名称区分大小写 十 、Redis数据类型 10.1 String 类型 String类型是Redis最基本的数据类型，一个键最大能存储512MB。\nString 数据结构最贱但的key-value类型，value其不仅是string，也可以是数字，是包含很多种类型的特殊类型，\nString类型是二进制安全的。意思是redis的string可以包含任何数据。\n比如序列化的对象进行存储，比如一张图片进行二进制存储，比如一个简单的字符串，数值等等。\nString命令 1、复制语法： SET KEY_NAME VALUE : (说明：多次设置name会覆盖)(Redis SET 命令用于设置给定 key 的值。如果 key 已经存储值，SET 就要写旧值，且无视类型)。 2、命令： SETNX key1 value：(not exist) 如果key1不存在，则设置 并返回1。如果key1存在，则不设置并返回0;(解决分布式锁 方案之一，只有在key 不存在时设置 key 的值。setnx (SET if not exits)命令在指定的key不存在时，为key设置指定的值)。 SETEX key1 10 lx :(expired)设置key1的值为lx,过期时间为10秒，10秒后key1清除（key也清除） SETEX key1 10 lx :(expired) 设置key1的值为lx，过期时间为10秒，10秒后key1清除(key 也清除) SETRANG STRING range value : 替换字符串 3、取值语法： GET KEY_NAME : Redis GET 命令用于获取指定 key 的值。如果 key 不存在，返回 nil。如果key存储的值不是字符串类型，返回一个错误。 GETRANGE key start end : 用于获取存储在指定key中字符串的子字符串。字符串的截取范围由 start 和 end 两个偏移量来决定(包括 start 和 end 在内) GETBIT key offset ：对 key 所存储的字符串值，获取指定偏移量上的为(bit)； GETTEST语法 ： GETSET KEY_NAME VALUE : GETSET 命令用于设置指定 key 的值，并返回key的旧值。当key不存在是，返回 nil STRLEN key :返回 key 所存储的字符串值的长度 4、删除语法： DEL KEY_NAME : 删除指定的key，如果存在，返回数字类型。 5、批量写：MSET K1 V1 K2 V2 ... (一次性写入多个值) 6、批量读：MGET K1 K2 K3 7、GETSET NAME VALUE : 一次性设置和读取(返回旧值，写上新值) 8、自增/自减： INCR KEY_Name : Incr 命令将key中存储的数组值增1。如果 key 不存在，那么key的值会先被初始化为0，然后在执行INCR操作 自增: INCRBY KEY_Name : 增量值Incrby 命令将key中存储的数字加上指定的增量值 自减: DECR KEY_Name 或 DECYBY KEY_NAME 减值：DECR 命令将key中存储的数字减少1 ：(注意这些key对应的必须是数字类型字符串，否则会出错。) 字符串拼接：APPEND KEY_NAME VALUE :Append 命令用于为指定的key追加至末尾，如果不存在，为其赋值 字符串长度 ：STRLEN key ########################## setex (set with expire) #设置过期时间 setnx (set if not exist) #不存在设置 在分布式锁中会常常使用！ 10.2 应用场景 1、String通常用于保存单个字符串或JSON字符串数据\n2、因String是二进制安全的，所以你完全可以把一个图片文件的内容作为字符串来存储\n3、计数器(常规key-value缓存应用。常规计数：微博数，粉丝数)\nINCR 等指令本身就具有原子操作的特定，所以我们完全可以利用redis的INCR，INCRBY,DECR,DECRBY等指令来实现原子计数的效果。假如，在某种场景下有3个客户端同时读取了mynum的值(值为2)，然后对其同时进行了加1的操作，那么，最后mynum的值一定是5。 不少网站都利用redis的这个特性来实现业务上的统计计数需求。 10.3 Hash类型 Hash类型是String类型的field和value的映射表，或者说是一个String集合。hash特别适合用于存储对象，相比较而言，将一个对象类型存储在Hash类型要存储在String类型里占用更少的内存空间，并对整个对象的存取。可以看成具有KEY和VALUE的MAP容器，该类型非常适合于存储值对象的信息。\n如：uname，upass，age等。该类型的数据仅占用很少的磁盘空间(相比于JSON).\nRedis 中每一个hash 可以存储 2的32次方 -1 键值对(40 多亿)\n10.4 Hash命令 常用命令\n一、赋值语法： 1、 HSET KEY FIELD VALUE ： 为指定的KEY,设定FILD/VALUE 2、 HMSET KEY FIELD VALUE [FIELD1，VALUE]... : 同时将多个 field-value(域-值)对设置到哈希表key中。 二、取值语法： HGET KEY FIELD :获取存储在HASH中的值，根据FIELD得到VALUE HMGET KEY FIELD [FIELD1] :获取key所有给定字段的值 HGETALL KEY :返回HASH表中所有的字段和值 HKEYS KEY : 获取所有哈希表中的字段 HLEN KEY : 获取哈希表中字段的数量 三、删除语法： HDEL KEY FIELD[FIELD2] :删除一个或多个HASH表字段 四、其它语法： HSETNX KEY FIELD VALUE : 只有在字段field 不存在时，设置哈希表字段的值 HINCRBY KEY FIELD INCREMENT :为哈希key中的指定字段的整数值加上增量 increment。 HINCRBYFLOAT KEY FIELD INCREMENT :为哈希表key 中的指定字段的浮点数值加上增量 increment HEXISTS KEY FIELD : 查看哈希表中key中，指定的字段是否存在 10.5 应用场景 Hash的应用场景 ：(存储一个用户信息对象数据)\n常用于存储一个对象\n为什么不用string存储一个对象\nhash值最接近关系数据库结构的数据类型，可以将数据库一条记录或程序中一个对象转换成hashmap存放在redis中。\n用户ID为查找的key，存储的value用户对象包含姓名，年龄，生日等信息，如果用普通的key/value结构来存储，主要有一下2中村粗方式：\n​第一种方式将用户ID作为查找key，把其他信息封装成为一个对象以序列化的方式存储，这种方式的却但是，增加了序列化/反序列化的开销，并且在需要修改其中一项信息时，需要把整个对象取回，并且修改操作需要对并发进行保护，引入CAS等复杂问题。\n​ 第二种方法是这个用户信息对象有多少成员就存成多少个key-value对儿，用用户ID+对应属性的名称作为唯一标识来取的对应属性的值，虽然省去了序列化开销和并发问题，但是用户ID重复存储，如果存在大量这样的数据，内存浪费还是非常可观的。\n10.6 总结 Redis提供的Hash很好的解决了这个问题，Redis的Hash实际内部存储的Value为一个HashMap，\n10.6 List类型 简介：\n1、 List 类型是一个链表结构的集合，其主要功能有push、pop、获取元素等。更详细的说，List类型是一个双端链表的节后，我们可以通过相关的操作进行集合的头部或者尾部添加和删除元素，List的设计是非常简单精巧，即可以最为栈，有可以最为队列，满足绝大多数的需求。 常用命令\n1、赋值语法： LPUSH KEY VALUE1 [VALUE2] :将一个或多个值插入到列表头部（从左侧添加） RPUSH KEY VALUE1 [VALUE2] ：在列表中添加一个或多个值（从有侧添加） LPUSHX KEY VAKUE :将一个值插入到已存在的列表头部。如果列表不在，操作无效 RPUSHX KEY VALUE :一个值插入已经在的列表尾部（最右边）。如果列表不在，操作无效 2、取值语法： LLEN KEY :获取列表长度 LINDEX KEY INDEX:通过索引获取列表中的元素 LRANGE KEY START STOP:获取列表指定范围内的元素 描述：返回列表中指定区间的元素，区间以偏移量START和END指定。\n其中0表示列表的第一个元素，1表示列表的第二个元素，以此类推。。。\n也可以使用负数下标，以-1表示列表的最后一个元素，-2表示列表的倒数第二个元素，一次类推。。。\nstart：页大小（页数-1）\nstop：（页大小页数）-1\n3、删除语法： LPOP KEY :移除并获取列表的第一个元素（从左侧删除） RPOP KEY :移除列表的最后一个元素，返回值为移除的元素（从右侧删除） BLPOP key1 [key2]timeout :移除并获取列表的第一个元素，如果列表没有元素会阻塞列表知道等待超时或发现可弹出元素为止。 4、修改语法： LSET KEY INDEX VALUE :通过索引设置列表元素的值 LINSERT KEY BEFORE|AFTER WORIL VALUE :在列表的元素前或者后 插入元素 描述：将值 value 插入到列表key当中，位于值world之前或之后。 高级命令\n高级语法： RPOPLPUSH source destiation : 移除列表的最后一个元素，并将该元素添加到另外一个列表并返回 示例描述： RPOPLPUSH a1 a2 : a1的最后元素移到a2的左侧 RPOPLPUSH a1 a1 : 循环列表，将最后元素移到最左侧 BRPOPLPUSH source destination timeout :从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它；如果列表没有元素会阻塞列表知道等待超时或发现可弹出的元素为止。 List代码案例\npackage com.tyx.service.impl; import com.tyx.po.User; import lombok.extern.slf4j.Slf4j; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.data.redis.core.RedisTemplate; import org.springframework.stereotype.Service; import org.springframework.util.CollectionUtils; import java.io.Serializable; import java.util.Collections; import java.util.List; import java.util.concurrent.TimeUnit; / * @author papi * @data 2020/7/15 */ @Service @Slf4j public class UserServiceImpl { @Autowired private RedisTemplate\u003cString, Object\u003e redisTemplate; / * Redis有什么命令，Jedis有什么方法 * Lettuce-----》RedisTemplate进一步的封装 *RedisTemplate 方法和命令是肯定不一样的 * Redis 和 String类型 * 需求输入一个key * 先判断该key是否存在如果不存在则在mysql中进行查询，写入到redis中。并返回值。 */ public String getRedisValueByKey(String key){ if (redisTemplate.hasKey(key)) { //表示存在值，进行获取 log.info(\"-------\u003e redis中查询的数据\"); Object o = redisTemplate.opsForValue().get(key); return (String) o; }else { //不存在去mysql中查并且赋值给reids String val = \"redis中不存在的key\"; log.info(\"------\u003emysql中查询出来的：\"+val); redisTemplate.opsForValue().set(key,val); log.info(\"------\u003emysql中查出的数据存入redis中\"); return val; } } / * 测试String类型 * 需求：用户输入一个redis数据。该key的有效期为28小时 */ public void expireStr(String key, String val){ redisTemplate.opsForValue().set(key,val); redisTemplate.expire(key,2,TimeUnit.HOURS); } / * 根据ID查询用户对象信息 * 先判断redis中是否存在该key * 如果不存在，查询数据库中mysql中的值，并将结果添加到redis中。 * 如果存在，直接将结果在redis查询，并返回。 */ public User getHashKey(String id){ if (redisTemplate.opsForHash().hasKey(\"user\",id)){ log.info(\"-----\u003e查询redis数据库\"); return (User) redisTemplate.opsForHash().get(\"user\",id); }else { log.info(\"-----\u003e查询mysql数据库\"); User user = new User(); user.setId(id); user.setAge(18); user.setName(\"速速\"); /* @param h 用户的实体 @param hk 用户主键id @param hv 整个对象 */ redisTemplate.opsForHash().put(\"user\",id,user); return user; } } / * 将list放入缓存中 * @param key 值 * @param list 键 * @return true 成功 false 失败 */ public boolean lpushAll(String key, List\u003cObject\u003e list){ try { redisTemplate.opsForList().leftPush(key, list); return true; }catch (Exception e){ e.printStackTrace(); return false; } } / * 将list放入缓存中 * @param key 值 * @param list 键 * @param time 时间（秒） * @return true 成功 false 失败 */ public boolean lpushAll(String key, List\u003cObject\u003e list, long time){ try { redisTemplate.opsForList().leftPushAll(key, list); if (time \u003e0){ redisTemplate.expire(key,time,TimeUnit.SECONDS); } return true; }catch (Exception e){ e.printStackTrace(); return false; } } / * 在变量左边添加元素。 * @param key * @param obj * @return */ public boolean lpush(String key, Object obj){ try { redisTemplate.opsForList().leftPush(key,obj); return true; }catch (Exception e){ e.printStackTrace(); return false; } } / * 在变量左边添加元素。 * @param key 键 * @param prvot 中间参数 * @param object 要放的值 * @return 。 */ public boolean lpush(String key, Object prvot,Object object){ try { redisTemplate.opsForList().leftPush(key,prvot,object); return true; }catch (Exception e){ e.printStackTrace(); return false; } } / * 在变量左边添加元素。 * @param key 键 * @param prvot 中间参数 * @param object 要放的值 * @return 。 */ public boolean rpush(String key, Object prvot,Object object){ try { redisTemplate.opsForList().rightPush(key,prvot,object); return true; }catch (Exception e){ e.printStackTrace(); return false; } } / * 在变量左边添加元素。 * @param key 键 * @param object 要放的值 * @return 。 */ public boolean rpush(String key, Object object){ try { redisTemplate.opsForList().rightPush(key,object); return true; }catch (Exception e){ e.printStackTrace(); return false; } } / * 在变量左边添加元素。 * @param key 键 * @param object 要放的值 * @return 。 */ public boolean lpushIfPresent(String key, Object object){ try { redisTemplate.opsForList().leftPushIfPresent(key,object); return true; }catch (Exception e){ e.printStackTrace(); return false; } } / * 移除集合中的左边第一个集合 * @param key 键 * @return 返回右边第一个值 */ public Object lpop(String key) { return redisTemplate.opsForList().leftPop(key); } / * 移除集合中的右边的元素，一般用在队列取值 * @param key 键 * @return 返回右边的元素 */ public Object rpop(String key) { return redisTemplate.opsForList().leftPop(key); } / * 获取指定区间的值 * @param key 键 * @param start 开始位置 * @param end 结束位置 * @return 返回值 */ public List\u003cObject\u003e lrange(String key, long start, long end) { return redisTemplate.opsForList().range(key,start,end); } / * 返回当前位置上的值。 * @param key 键 * @param index 当前位置 * @return */ public Object lindex(String key, long index) { return redisTemplate.opsForList().index(key,index); } / * * @param key 键 * @param count 统计 * @param object 移除的对象 * @return */ public long remove(String key,long count, Object object){ return redisTemplate.opsForList().remove(key,count,object); } / * 获取集合长度 * @param key 键 * @return 长度 */ public long llen(String key){ return redisTemplate.opsForList().size(key); } / * 在集合的指定位置插入元素，如果指定的位置已有元素，则覆盖，没有则新增，超过集合的下标+n则会报错； * @param key 键 * @param index 位置 * @param value 值 */ public void set(String key,Long index, Object value) { } / * 截取集合元素，保留成都内地数据 * @param key 键 * @param start 开始位置 * @param end 结束位置 */ public void trim(String key,Long start, Long end) { redisTemplate.opsForList().trim(key,start,end); } / *出去集合右边的值，同时集合的左边添加一个值 * @param key 键 * @param str 入栈的值 * @return 返回对象 */ public Object rightPopAndleftPush(String key,String str) { return redisTemplate.opsForList().rightPopAndLeftPush(key,str); } / *出去集合右边的值，同时集合的左边添加一个值,如果超过等待的时间仍然没有元素则退出 * @param key 键 * @param str 左边新增的值 * @param time 超时时间 * @return 返回移除右边的值 */ public Object rightPopAndleftPush(String key,String str,long time) { return redisTemplate.opsForList().rightPopAndLeftPush(key,str,time,TimeUnit.MINUTES); } / * 删除. * @param keys */ public void del(String ... keys){ if (keys!=null || keys.length \u003e 0){ if (keys.length == 1) { redisTemplate.delete(keys[0]); }else { redisTemplate.delete(CollectionUtils.arrayToList(keys)); } } } / * 设置过期时间。 * @param key 键。 * @param seconds 过期时间。 */ public void expire(String key,long seconds){ redisTemplate.expire(key,seconds,TimeUnit.SECONDS); } } 10.7 List 的应用场景 项目应用于：1、对数据量大的集合数据删除；2、任务队列\n1、对数据量大的集合数据删减\n​列表数据显示，关注列表，粉丝列表，留言评论等…..分页，热点新闻等\n利用LRANG还可以很方便的实现分页的功能，在博客系统中，每片博文的评论也可以存入一个单独的list中。\n2、任务队列\n(list 通常用来实现一个消息队列，而且可以却表先后顺序，不必像MySQL那样还需要通过ORDER BY来进行排序)\n任务队列介绍(生产者和消费者模式：) 在处理web客户端发送的命令请求是，某些操作的执行时间可能会比我们预期的更长一些，通过将待执行任务的相关信息放入队列里面，并在之后队列进行处理，用户可以推迟执行那些需要一段时间才能完成的操作，这种将工作交个任务处理器来执行的做法被称为任务队列（task queue）。 RPOPLPUSH source destination 移除列表的最后一个元素，并将该元素添加到另一个列表并返回 3、List应用场景案例1\n10.8 Set类型 简介\n​Redis的Set是String类型的无需集合。集合成员是唯一的，这就意味着集合中不能出现重复的数据。Redis中集合是通过哈希表实现的，set是通过hashtable实现的\n集合中最大的成员数为2^32 -1,类似于JAVA中的Hashtable集合。\n命令\n1、复制语法： SADD KEY member1 [member2]:向集合添加一个或多个成员 2、取值语法： SCARD KEY :获取集合的成员数 SMEMBERS KEY ：返回集合中的所有成员 SISMEMBER KEY MEMBER :判断member元素是否是集合key的成员(开发中：验证是否存在判断) SRANDMEMBER KEY [COUNT] :返回集合中一个或对个随机数 3、删除语法： SREM key member1 [member2] : 移除集合中一个或多个成员 SPOP key [count] : 移除并返回集合中的一个随机元素 SMOVE source destination member :将member 元素从Source集合移动到destination集合中 4、差集语言： SDIFF key1 [key2] :返回给定所有集合的差集 SDIFFSTORE destination key1 [key2] :返回给定所有集合的茶几并存储在destination中 5、交集语言： SUNION key1 [key2] : 返回所有给定集合的并集 SUNIONSTORE destination key1 [key2] :所有给定集合的并集存储在 destinatiion集合中 10.9 ZSet类型 有序集合(sorted set)\n简介\n1、Redis有序集合和集合一样也是string类型元素的集合，且不允许重复的成员。\n2、不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。\n3、有序集合的成员是唯一的，但分数（score）却可以重复。\n4、集合是通过哈希表实现的。集合中最大的成员数为2^32 -1。Redis的ZSet是有序，且不重复。\n（很多时候，我们都将redis中的有序结合叫做zsets，这是因为在redis中，有序集合相关的操作指令都是以z开头的）\n命令\n1、复制语法： ZADD KEY score1 member1 【score2 member2】 ：向有序集合添加一个或多个成员，或者更新已经存在成员的分数 2、取值语法： ZCARD key ：获取有序结合的成员数 ZCOUNT key min max :计算在有序结合中指定区间分数的成员数 127.0.0.1:6379\u003e ZADD kim 1 tian (integer) 0 127.0.0.1:6379\u003e zadd kim 2 yuan 3 xing (integer) 2 127.0.0.1:6379\u003e zcount kim 1 2 (integer) 2 127.0.0.1:6379\u003e ZRANK key member :返回有序集合中指定成员的所有 ZRANGE KEY START STOP [WITHSCORES]:通过索引区间返回有序集合成指定区间内的成员(低到高) ZRANGEBYSCORE KEY MIN MAX [WITHSCORES] [LIMIT] :通过分数返回有序集合指定区间内的成员 ZREVRANGE KEY START STOP [WITHSCORES] :返回有序集中是定区间内的成员，通过索引，分数从高到底 ZREVERANGEBYSCORE KEY MAX MIN [WITHSCORES] :返回有序集中指定分数区间的成员，分数从高到低排序 删除语法： DEL KEY : 移除集合 ZREM key member [member...] 移除有序集合中的一个或多个成员 ZREMRANGEBYSCORE KEY MIN MAX :移除有序集合中给定的分数区间的所有成员。 ZREMRANGEBYSCORE KEY MIN MAX :移除有序集合中给定的分数区间的所有成员。 ZINCRBY KEY INCREMENT MEMBER :增加member元素的分数increment，返回值是更改后的分数 10.10 HyperLogLog 常用命令\nPFADD key element [element ...] : 添加指定元素到HyperLoglog中 PFCOUNT KEY [key ...] :返回给定 HyperLogLog的基数估算值 PFMERGE destkey sourcekey [sourcekey ...] :将过个HyperLogLog 合并为一个HyperLoglog 应用场景\n基数不大，数据量不大就用不上，会有点大材小用浪费空间\n有局限性，就是指能统计基数数量，而没办法去知道具体的内容是什么\n统计注册 IP 数 统计每日访问 IP 数 统计页面实时 UV 数 统计在线用户数 统计用户每天搜索不同词条的个数 统计真实文章阅读数 10.11 geospatial 地理位置 GEORANDIUSBYMEMBER 找出指定元素周围的其他元素\n十一、SpringBoot整合Jedis 11.1 简介 ​我们在使用springboot搭建微服务的时候，在很多时候还是需要redis的高速缓存来缓存一些数据，存储一些高品率访问的数据，如果直接使用redis的话由比较麻烦，在这里，我们使用jedis来实现redis缓存达到高效缓存的目的。\n11.2 引入Jedis依赖 redis.clients jedis 3.2.0 因为SpringBoot内默认引用了jedis版本。\n所以我们直接引入jedis依赖无需配置jedis的版本号了。\n11.3 application.yml 例如 在application.yml中配置如下信息：\n十二、SpringBoot2.x中redis使用（lettuce） java代码操作Redis，需要使用Jedis，也就是redis支持java的第三方类库 注意：Jedis2.7以上的版本才支持集群操作 12.1 maven配置 新建SpringBoot2.0.3的WEB工程，在MAVEN的pom.xml文件中加入如下依赖\n\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e ",
   "wordCount" : "31304",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/30.jpg","datePublished": "2023-02-09T14:59:00Z",
+  "image":"http://colorfulgz.com/posts.images/banner/30.jpg","datePublished": "2023-02-09T14:59:00Z",
   "dateModified": "2023-02-09T15:59:00Z",
   "author":[{
     "@type": "Person",
-    "name": "Hopeful"
+    "name": ""
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+    "@id": "http://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Hopeful",
+    "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,9 +171,9 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io" accesskey="h" title="Hopeful (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
-                 height="35">Hopeful</a>
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+                 height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 Redis学习笔记
             </h1>
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
     </span>
     <span id="post_meta_style_5">
         <span class="fa fa-user-o"></span>
-        <span>Hopeful
+        <span>
             &nbsp;&nbsp;
         </span>
     </span>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/redis/" style="color: var(--secondary)!important;">Redis</a>
+                <a href="http://colorfulgz.com/tags/redis/" style="color: var(--secondary)!important;">Redis</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/30.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/30.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -3390,12 +3390,12 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/ansible/">
+  <a class="prev" href="http://colorfulgz.com/posts/ansible/">
     <span class="title">« 上一页</span>
     <br>
     <span>运维自动化工具Ansible(一)</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">
+  <a class="next" href="http://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">
     <span class="title">下一页 »</span>
     <br>
     <span>Nginx核心配置文件</span>
@@ -3412,7 +3412,7 @@ var _hmt = _hmt || [];
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io" style="color:#939393;">Hopeful</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2022006994号-2</a>&nbsp;
@@ -3511,11 +3511,11 @@ var _hmt = _hmt || [];
                 e.preventDefault();
                 let htmlData = window.getSelection().toString() +
                     '\r\n\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 let textData = window.getSelection().toString() +
                     '\r\n\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 clipboardData.setData('text/html', htmlData);
                 clipboardData.setData('text/plain', textData);
@@ -3541,7 +3541,7 @@ var _hmt = _hmt || [];
             if ('clipboard' in navigator) {
                 let text = codeblock.textContent +
                     '\r\n————————————————\r\n' +
-                    '版权声明：本文为「'+"Hopeful"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                    '版权声明：本文为「'+"DevOpsHub"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
                 '\r\n原文链接：' + location.href;
                 navigator.clipboard.writeText(text);
                 copyingDone();
