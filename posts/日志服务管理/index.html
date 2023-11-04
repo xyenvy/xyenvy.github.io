@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, 日志, log, 日志服务管理">
 <meta name="description" content="在现实生活中，记录日志非常重要">
 <meta name="author" content="">
-<link rel="canonical" href="http://colorfulgz.com/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
+<link rel="canonical" href="https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="日志服务管理" />
 <meta property="og:description" content="在现实生活中，记录日志非常重要" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://colorfulgz.com/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/" />
-<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-03T10:55:19+00:00" />
 <meta property="article:modified_time" content="2022-12-03T10:55:19+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" />
 <meta name="twitter:title" content="日志服务管理"/>
 <meta name="twitter:description" content="在现实生活中，记录日志非常重要"/>
 
@@ -95,15 +95,15 @@ var _hmt = _hmt || [];
 
         {
           "@type": "ListItem",
-          "position":  2 ,
+          "position":  1 ,
           "name": "📚文章",
-          "item": "http://colorfulgz.com/posts/"
+          "item": "https://xyenvy.github.io/posts/"
         }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "日志服务管理",
-      "item": "http://colorfulgz.com/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/"
+      "item": "https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "系统日志管理 系统日志介绍 在现实生活中，记录日志非常重要﹐比如:银行转账时会有转账记录﹔飞机飞行过程中的黑盒子（飞行数据记录器）记录着飞机的飞行过程. 那么将系统和应用发生的事件记录至日志中，也很意义,常可以助于排错和分析使用\n日志记录的内容包括：\n历史事件：时间，地点，人物，事件 日志级别：事件的关键性程度，Loglevel sysklogd 系统日志服务 CentOS 5 之前版本采用的日志管理系统服务 klogd: linux kernel 记录内核日志 syslogd: system application 记录应用日志 事件记录格式： 日期时间 主机 进程[pid]: 事件内容 C/S架构：通过TCP或UDP协议的服务完成日志记录传送，将分布在不同主机的日志实现集中管理\nrsyslog 系统日志服务 rsyslog是CentOS 6 以后版本的系统管理服务.它提供了高性能，出色的安全性和模块化设计。 尽管rsyslog最初是常规的syslogd，但已发展成为一种瑞士军刀式的记录工具，能够接受来自各种来源的输入，并将其转换，然后输出到不同的目的地。当应用有限的处理时，RSYSLOG每秒可以将超过一百万的消息传递到本地目的地。 即使在远程的目的地和更精细的处理中，性能通常也被认为是“惊人的”。\n官网网站\nhttps://www.rsyslog.com/ rsyslog 特性\n多线程 UDP, TCP, SSL, TLS, RELP MySQL, PGSQL, Oracle实现日志存储 强大的过滤器，可实现过滤记录日志信息中任意部分 自定义输出格式 适用于企业级中继链 rsyslog 管理 系统日志术语 facility：设施，从功能或程序上对日志进行归类\n#内置分类 auth, authpriv, cron, daemon,ftp,kern, lpr, mail, news, security(auth), user, uucp, syslog #自定义的分类 local0-local7 Priority 优先级别，从低到高排序\ndebug,info, notice, warn(warning), err(error), crit(critical), alert, emerg(panic) 参看帮助： man 3 syslog，man logger\n[root@centos8 ~]#yum -y install man-pages [root@centos8 ~]#man 3 syslog rsyslog 相关文件 程序包：rsyslog 主程序：/usr/sbin/rsyslogd CentOS 6：/etc/rc.d/init.d/rsyslog {start|stop|restart|status} CentOS 7,8：/usr/lib/systemd/system/rsyslog.service 配置文件：/etc/rsyslog.conf，/etc/rsyslog.d/.conf 库文件： /lib64/rsyslog/.so rsyslog配置文件 /etc/rsyslog.conf 配置文件格式：由三部分组成\nMODULES：相关模块配置 GLOBAL DIRECTIVES：全局配置 RULES：日志记录相关的规则配置 RULES配置格式：\nfacility.priority; facility.priority… target facility格式：\n* #所有的facility facility1,facility2,facility3,... #指定的facility列表 priority格式：\n*: 所有级别 none：没有级别，即不记录 PRIORITY：指定级别（含）以上的所有级别 =PRIORITY：仅记录指定级别的日志信息 target格式：\n文件路径：通常在/var/log/，文件路径前的-表示异步写入 用户：将日志事件通知给指定的用户，* 表示登录的所有用户 日志服务器：@host，把日志送往至指定的远程UDP日志服务器 @@host 将日志发送到远程TCP日志服务器 管道： | COMMAND，转发给其它命令处理 通常的日志文件的格式：\n日志文件有很多，如： /var/log/messages,cron,secure等，基本格式都是类似的。格式如下\n事件产生的日期时间 主机 进程(pid)：事件内容 范例：日志文件格式\n[root@centos7 ~]# tail -f /var/log/messages Dec 3 16:58:40 centos7 dbus[653]: [system] Activating via systemd: service name='org.freedesktop.nm_dispatcher' unit='dbus-org.freedesktop.nm-dispatcher.service' Dec 3 16:58:40 centos7 systemd: Starting Network Manager Script Dispatcher Service... Dec 3 16:58:40 centos7 dhclient[51210]: bound to 192.168.179.170 -- renewal in 745 seconds. Dec 3 16:58:40 centos7 dbus[653]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher' Dec 3 16:58:40 centos7 systemd: Started Network Manager Script Dispatcher Service. Dec 3 16:58:40 centos7 nm-dispatcher: req:1 'dhcp4-change' [ens33]: new request (2 scripts) Dec 3 16:58:40 centos7 nm-dispatcher: req:1 'dhcp4-change' [ens33]: start running ordered scripts... Dec 3 17:01:01 centos7 systemd: Started Session 95 of user root. Dec 3 17:11:05 centos7 dhclient[51210]: DHCPREQUEST on ens33 to 192.168.179.254 port 67 (xid=0x1f435c38) Dec 3 17:11:11 centos7 dhclient[51210]: DHCPREQUEST on ens33 to 192.168.179.254 port 67 (xid=0x1f435c38) Dec 3 17:11:26 centos7 dhclient[51210]: DHCPREQUEST on ens33 to 192.168.179.254 port 67 (xid=0x1f435c38) [root@centos7 ~]# tail -f /var/log/secure Nov 29 22:58:18 centos7 sshd[49904]: pam_unix(sshd:session): session closed for user root Nov 30 19:58:03 centos7 sshd[50030]: Accepted password for root from 192.168.179.1 port 51814 ssh2 Nov 30 19:58:03 centos7 sshd[50030]: pam_unix(sshd:session): session opened for user root by (uid=0) Nov 30 21:15:17 centos7 sshd[48764]: pam_unix(sshd:session): session closed for user root Dec 2 21:22:51 centos7 sshd[51123]: Accepted password for root from 192.168.179.1 port 53924 ssh2 Dec 2 21:22:51 centos7 sshd[51123]: pam_unix(sshd:session): session opened for user root by (uid=0) Dec 3 09:08:03 centos7 sshd[50030]: pam_unix(sshd:session): session closed for user root Dec 3 09:53:40 centos7 sshd[51295]: Accepted password for root from 192.168.179.1 port 56421 ssh2 Dec 3 09:53:40 centos7 sshd[51295]: pam_unix(sshd:session): session opened for user root by (uid=0) Dec 3 11:14:12 centos7 sshd[51123]: pam_unix(sshd:session): session closed for user root 范例：将ssh服务的日志记录至自定义的local的日志设备 修改sshd服务的配置 [root@centos7 ~]# vim /etc/ssh/sshd_config # 配置文件修改内容如下所示 SyslogFacility local2 # 重新加载sshd服务配置文件 [root@centos7 ~]# service sshd reload 修改rsyslog配置 [root@centos7 ~]# vim /etc/rsyslog.conf # 加入如下内容 local2.* /var/log/sshd.log # 重启服务 [root@centos7 ~]# systemctl restart rsyslog 测试验证 # ssh 登入该服务器 # 查看日志文件内容 tail -f /var/log/sshd.log [root@centos7 ~]# tail -f /var/log/sshd.log Dec 3 20:06:35 centos7 sshd[49356]: Server listening on 0.0.0.0 port 22. Dec 3 20:06:35 centos7 sshd[49356]: Server listening on :: port 22. Dec 3 20:07:06 centos7 sshd[52189]: Accepted publickey for root from 192.168.179.171 port 33434 ssh2: RSA SHA256:HohSbRRS/oP0nLbEZTqgSJ6WQ5Mjp3f9DxM+spRO+SI 日志中可以看到192.168.179.171的IP地址通过root用户ssh登入该设备\n启用网络日志服务 启用网络日志服务功能，可以将多个远程主机的日志，发送到集中的日志服务器，方便统一管理。\n范例：CentOS 7 和6 启用网络日志功能\n日志服务器：centos7.9，主机名称：centos7,ip:192.168.179.157 客户端1：centos7.9，主机名称：centos7-master,ip:192.168.179.170 客户端2：centos7.9，主机名称：centos7-slave,ip:192.168.179.171 修改日志服务器配置文件 # 192.168.179.157上操作 [root@centos7 ~]# vim /etc/rsyslog.conf 重启日志服务器rsyslog服务 [root@centos7 ~]# systemctl restart rsyslog 修改客户端配置文件 # 修改192.168.179.170配置文件 [root@centos7-master ~]# vim /etc/rsyslog.conf # 修改内容如下 *.info;mail.none;authpriv.none;cron.none /var/log/messages *.info;mail.none;authpriv.none;cron.none @@192.168.179.157:514 #TCP *.info;mail.none;authpriv.none;cron.none @192.168.179.157:514 #udp # 重启服务 systemctl restart rsyslog # 192.168.179.171客户端使用上面方法操作修改配置文件 测试验证 # 在日志服务器上查看日志 [root@centos7 ~]# tail -f /var/log/messages 可以看到主机名称centos7-master、centos7-slave上的日志说明实验成功\n范例：CentOS 8 启用网络日志功能\n## MODULES #### ...省略... # Provides UDP syslog reception # for parameters see http://www.rsyslog.com/doc/imudp.html module(load=\"imudp\") # needs to be done just once input(type=\"imudp\" port=\"514\") # Provides TCP syslog reception # for parameters see http://www.rsyslog.com/doc/imtcp.html module(load=\"imtcp\") # needs to be done just once input(type=\"imtcp\" port=\"514\") 常见日志文件 /var/log/secure：系统安全日志，文本格式，应周期性分析 /var/log/btmp：当前系统上，用户的失败尝试登录相关的日志信息，二进制格式，lastb命令进行查看 /var/log/wtmp：当前系统上，用户正常登录系统的相关日志信息，二进制格式，last命令可以查看 /var/log/lastlog:每一个用户最近一次的登录信息，二进制格式，lastlog命令可以查看 /var/log/dmesg：CentOS7 之前版本系统引导过程中的日志信息，文本格式，开机后的硬件变化 将不再记录，也可以通过专用命令dmesg查看，可持续记录硬件变化的情况 /var/log/boot.log 系统服务启动的相关信息，文本格式 /var/log/messages ：系统中大部分的信息 /var/log/anaconda : anaconda的日志 实战案例：利用 MySQL 存储日志信息 目标 利用rsyslog日志服务，将收集的日志记录于MySQL中\n环境准备 两台主机 一台：rsyslog日志服务器，IP：192.168.179.157 一台：mariadb数据库服务器，IP：192.168.179.178 实现步骤 # 在rsyslog服务器上安装连接mysql模块相关的程序包 [root@centos7 ~]# yum install rsyslog-mysql [root@centos7 ~]# rpm -ql rsyslog-mysql /usr/lib64/rsyslog/ommysql.so /usr/share/doc/rsyslog-8.24.0/mysql-createDB.sql [root@centos7 ~]# #将sql脚本复制到数据库服务器上 [root@centos7 ~]# scp /usr/share/doc/rsyslog-8.24.0/mysql-createDB.sql 192.168.179.148:/root/ # 在192.168.179.148上安装mysql yum install mysql-server -y # #在mysql数据库服务器上创建相关数据库和表，并授权rsyslog能连接至当前服务器 root@ubuntu1804:~# mysql mysql\u003e source /root/mysql-createDB.sql; Query OK, 1 row affected (0.00 sec) mysql\u003e create user 'rsyslog'@'192.168.179.%' identified by '123456'; Query OK, 0 rows affected (0.04 sec) mysql\u003e grant all on Syslog.* to 'rsyslog'@'192.168.179.%'; Query OK, 0 rows affected (0.00 sec) mysql\u003e flush privileges; Query OK, 0 rows affected (0.00 sec) mysql\u003e # 配置日志服务器将日志发送至指定数据库 vim /etc/rsyslog.conf ####MODULES#### #在 MODULES 语言下面，如果是 CentOS 8 加下面行 module(load=\"ommysql\") #在 MODULES 语言下面，如果是 CentOS 7，6 加下面行 $ModLoad ommysql #在RULES语句块加下面行的格式 #facility.priority :ommysql:DBHOST,DBNAME,DBUSER, PASSWORD *.info :ommysql:192.168.179.148,Syslog,rsyslog,123456 # 重启服务 测试 # 在日志服务器上生成日志 logger 'this is test log' #在数据库上查询到上面的测试日志 mysql\u003e select count(*) from SystemEvents; +----------+ | count(*) | +----------+ | 66 | +----------+ 1 row in set (0.00 sec) mysql\u003e logrotate 日志转储 logrotate 介绍 logrotate 程序是一个日志文件管理工具。用来把旧的日志文件删除，并创建新的日志文件，称为日志转 储或滚动。可以根据日志文件的大小，也可以根据其天数来转储，这个过程一般通过 cron 程序来执行\nlogrotate 配置 软件包：logrotate 相关文件\n计划任务：/etc/cron.daily/logrotate\n程序文件：/usr/sbin/logrotate\n配置文件： /etc/logrotate.conf\n日志文件：/var/lib/logrotate/logrotate.status\n配置文件主要参数如下：\n范例：对指定日志手动执行日志转储\n# 生成测试日志 [root@centos7-master ~]# dd if=/dev/zero of=/var/log/test1.log bs=2M count=1 1+0 records in 1+0 records out 2097152 bytes (2.1 MB) copied, 0.0017554 s, 1.2 GB/s [root@centos7-master ~]# [root@centos7-master ~]# dd if=/dev/zero of=/var/log/test2.log bs=2M count=1 1+0 records in 1+0 records out 2097152 bytes (2.1 MB) copied, 0.00240458 s, 872 MB/s [root@centos7-master ~]# #针对不同的日志创建转储配置文件 [root@centos7-master ~]# vim /etc/logrotate.d/test1 /var/log/test1.log { daily rotate 5 compress delaycompress missingok size 1M notifempty create 640 bin nobody postrotate echo `date +%F_%T` \u003e\u003e /data/test1.log endscript } [root@centos7-master ~]# vim /etc/logrotate.d/test2 /var/log/test2.log { daily rotate 5 compress delaycompress missingok size 1M notifempty create 644 root root postrotate echo `date +%F_%T` \u003e\u003e /data/test2.log endscript } #针对一个测试日志，手动执行日志转储 [root@centos7-master ~]# logrotate /etc/logrotate.d/test1 [root@centos7-master ~]# ll /var/log/test* -rw-r----- 1 bin nobody 0 Dec 4 11:12 /var/log/test1.log -rw-r--r-- 1 root root 2097152 Dec 4 11:07 /var/log/test1.log.1 -rw-r--r-- 1 root root 2097152 Dec 4 11:07 /var/log/test2.log [root@centos7-master ~]# [root@centos7-master ~]# ll /data/ total 1800 -rw-r--r-- 1 root root 915255 Nov 27 17:22 1127.sql -rw-r--r-- 1 root root 914921 Nov 25 10:23 all.sql drwxr-xr-x 3 root root 18 Nov 29 22:45 mastermha drwxr-x--- 11 mysql mysql 4096 Dec 3 20:30 mysql -rw-r--r-- 1 root root 20 Dec 4 11:12 test1.log [root@centos7-master ~]# #对所有日志进行手动转储 [root@centos7-master ~]# logrotate /etc/logrotate.conf ",
   "wordCount" : "3523",
   "inLanguage": "en",
-  "image":"http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg","datePublished": "2022-12-03T10:55:19Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg","datePublished": "2022-12-03T10:55:19Z",
   "dateModified": "2022-12-03T10:55:19Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://colorfulgz.com/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/"
+    "@id": "https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://colorfulgz.com/img/Q.gif"
+      "url": "https://xyenvy.github.io/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://xyenvy.github.io/" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/" title="🏠 主页">
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io/">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
             <h1 class="post-title">
                 日志服务管理
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="http://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "http://colorfulgz.com"
+                                let dnsUrl = "https://xyenvy.github.io/"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -844,12 +844,12 @@ C/S架构：通过TCP或UDP协议的服务完成日志记录传送，将分布�
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="http://colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/">
+  <a class="prev" href="https://xyenvy.github.io/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/">
     <span class="title">« 上一页</span>
     <br>
     <span>网络文件共享服务</span>
   </a>
-  <a class="next" href="http://colorfulgz.com/posts/mysql%E9%9B%86%E7%BE%A4/">
+  <a class="next" href="https://xyenvy.github.io/posts/mysql%E9%9B%86%E7%BE%A4/">
     <span class="title">下一页 »</span>
     <br>
     <span>MySQL集群</span>
@@ -866,7 +866,7 @@ C/S架构：通过TCP或UDP协议的服务完成日志记录传送，将分布�
         Copyright
         &copy;
         2022-2023
-        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        <a href="https://xyenvy.github.io/" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2022006994号-2</a>&nbsp;

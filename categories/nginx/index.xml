@@ -2,44 +2,44 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Nginx on DevOpsHub</title>
-    <link>http://colorfulgz.com/categories/nginx/</link>
+    <link>https://xyenvy.github.io/categories/nginx/</link>
     <description>Recent content in Nginx on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 07 Jan 2023 13:34:33 +0000</lastBuildDate><atom:link href="http://colorfulgz.com/categories/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 07 Jan 2023 13:34:33 +0000</lastBuildDate><atom:link href="https://xyenvy.github.io/categories/nginx/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Nginx平滑升级</title>
-      <link>http://colorfulgz.com/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/</link>
+      <link>https://xyenvy.github.io/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/</link>
       <pubDate>Sat, 07 Jan 2023 13:34:33 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/</guid>
+      <guid>https://xyenvy.github.io/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/</guid>
       <description>有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级</description>
     </item>
     
     <item>
       <title>在线一键安装Nginx脚本</title>
-      <link>http://colorfulgz.com/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/</link>
+      <link>https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Wed, 04 Jan 2023 22:46:26 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/</guid>
+      <guid>https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/</guid>
       <description>一键安装Nginx 脚本</description>
     </item>
     
     <item>
       <title>Nginx基础</title>
-      <link>http://colorfulgz.com/posts/nginx%E5%9F%BA%E7%A1%80/</link>
+      <link>https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Sun, 01 Jan 2023 12:08:32 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/nginx%E5%9F%BA%E7%A1%80/</guid>
+      <guid>https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/</guid>
       <description>Nginx是免费的、开源的、高性能的HTTP和反向代理服务器、邮件代理服务器、以及TCP/UDP代理服务器</description>
     </item>
     
     <item>
       <title>Nginx</title>
-      <link>http://colorfulgz.com/posts/nginx/</link>
+      <link>https://xyenvy.github.io/posts/nginx/</link>
       <pubDate>Mon, 05 Dec 2022 00:18:06 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/posts/nginx/</guid>
+      <guid>https://xyenvy.github.io/posts/nginx/</guid>
       <description>Nginx是一个高性能的 HTTP /反向代理的服务器及电子邮件（IMAP/POP3)代理服务器。官方测试nginx能够支撑5万并发，并且cpu，内存等资源消耗却非常低，运行非常稳定。最重要的是开源，免费，可商用的</description>
     </item>
     

@@ -2,458 +2,458 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>📚文章 on DevOpsHub</title>
-    <link>http://colorfulgz.com/posts/</link>
+    <link>https://xyenvy.github.io/posts/</link>
     <description>Recent content in 📚文章 on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 09 Oct 2023 22:45:06 +0800</lastBuildDate><atom:link href="http://colorfulgz.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Oct 2023 22:45:06 +0800</lastBuildDate><atom:link href="https://xyenvy.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Lvs调度算法</title>
-      <link>http://colorfulgz.com/posts/lvs/</link>
+      <link>https://xyenvy.github.io/posts/lvs/</link>
       <pubDate>Mon, 09 Oct 2023 22:45:06 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/posts/lvs/</guid>
+      <guid>https://xyenvy.github.io/posts/lvs/</guid>
       <description>LVS是Linux Virtual Server的缩写，是一个负载均衡的集群系统。它主要使用了IP层的技术，也就是基于IP的负载均衡。LVS能很好的处理大量并发连接，有效的提高了系统的吞吐量</description>
     </item>
     
     <item>
       <title>kubernetes实战</title>
-      <link>http://colorfulgz.com/posts/k8sactualcombat/</link>
+      <link>https://xyenvy.github.io/posts/k8sactualcombat/</link>
       <pubDate>Fri, 23 Jun 2023 13:24:16 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/posts/k8sactualcombat/</guid>
+      <guid>https://xyenvy.github.io/posts/k8sactualcombat/</guid>
       <description>此教程基于kubernetes v1.23.17实践案例</description>
     </item>
     
     <item>
       <title>kubernetes常见yaml资源详解</title>
-      <link>http://colorfulgz.com/posts/k8srresourceddetails/</link>
+      <link>https://xyenvy.github.io/posts/k8srresourceddetails/</link>
       <pubDate>Fri, 16 Jun 2023 00:02:11 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/posts/k8srresourceddetails/</guid>
+      <guid>https://xyenvy.github.io/posts/k8srresourceddetails/</guid>
       <description>kubectl提供了各种命令，来管理集群中的pod，但是这些命令都是为了方便运维测试，实际生产部署还得用yaml文件来部署</description>
     </item>
     
     <item>
       <title>Tabby 一款强大而美观的跨平台终端神器</title>
-      <link>http://colorfulgz.com/posts/tabby/</link>
+      <link>https://xyenvy.github.io/posts/tabby/</link>
       <pubDate>Sun, 11 Jun 2023 19:40:22 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/posts/tabby/</guid>
+      <guid>https://xyenvy.github.io/posts/tabby/</guid>
       <description>Tabby是一个基于 TypeScript 开发的终端模拟器，适用于 Windows，macOS 和 Linux。 该模拟器可高度配置，包括但不限于：主题、快捷键以及配色方案</description>
     </item>
     
     <item>
       <title>Kubernetes详细教程</title>
-      <link>http://colorfulgz.com/posts/kubernetes/</link>
+      <link>https://xyenvy.github.io/posts/kubernetes/</link>
       <pubDate>Sat, 20 May 2023 00:23:06 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/posts/kubernetes/</guid>
+      <guid>https://xyenvy.github.io/posts/kubernetes/</guid>
       <description>Kubernetes 是一个开源的容器编排引擎，用来对容器化应用进行自动化部署、 扩缩和管理</description>
     </item>
     
     <item>
       <title>zabbix5部署安装</title>
-      <link>http://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/</link>
+      <link>https://xyenvy.github.io/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/</link>
       <pubDate>Tue, 02 May 2023 21:33:16 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/</guid>
+      <guid>https://xyenvy.github.io/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/</guid>
       <description>zabbix是一个监控软件，其可以监控各种网络参数，保证企业服务架构安全运营，同时支持灵活的告警机制，可以使得运维人员快速定位故障、解决问题zabbix是一个监控软件，其可以监控各种网络参数，保证企业服务架构安全运营，同时支持灵活的告警机制，可以使得运维人员快速定位故障、解决问题</description>
     </item>
     
     <item>
       <title>搭建Kubernetes集群</title>
-      <link>http://colorfulgz.com/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/</link>
+      <link>https://xyenvy.github.io/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/</link>
       <pubDate>Tue, 21 Mar 2023 00:17:58 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/</guid>
+      <guid>https://xyenvy.github.io/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/</guid>
       <description>Kubernetes 是一个开源的容器编排引擎，用来对容器化应用进行自动化部署、 扩缩和管理</description>
     </item>
     
     <item>
       <title>Zookeeper离线安装脚本</title>
-      <link>http://colorfulgz.com/posts/zookeeper%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</link>
+      <link>https://xyenvy.github.io/posts/zookeeper%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Sat, 18 Mar 2023 22:15:13 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/zookeeper%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</guid>
+      <guid>https://xyenvy.github.io/posts/zookeeper%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</guid>
       <description>Zookeeper离线安装脚本</description>
     </item>
     
     <item>
       <title>OpenVPN安装和使用</title>
-      <link>http://colorfulgz.com/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</link>
+      <link>https://xyenvy.github.io/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Fri, 17 Mar 2023 21:51:21 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</guid>
+      <guid>https://xyenvy.github.io/posts/openvpn%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</guid>
       <description>OpenVPN 是Linux下开源VPN的应用，提供了良好的性能和友好的用户GUI;OpenVPN 是一个基于 OpenSSL 库的应用层 VPN 实现。和传统 VPN 相比，它的优点是简单易用</description>
     </item>
     
     <item>
       <title>Docker镜像加速</title>
-      <link>http://colorfulgz.com/posts/docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/</link>
+      <link>https://xyenvy.github.io/posts/docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/</link>
       <pubDate>Tue, 07 Mar 2023 18:45:45 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/</guid>
+      <guid>https://xyenvy.github.io/posts/docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/</guid>
       <description>国内从DockerHub拉取镜像有时会遇到困难，此时可以配置镜像加速器。Docker官方和国内很多云服务商都提供了国内加速器服务，建议根据运行docker的云平台选择对应的镜像加速服务。</description>
     </item>
     
     <item>
       <title>Zabbix</title>
-      <link>http://colorfulgz.com/posts/zabbix/</link>
+      <link>https://xyenvy.github.io/posts/zabbix/</link>
       <pubDate>Thu, 02 Mar 2023 15:07:46 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/zabbix/</guid>
+      <guid>https://xyenvy.github.io/posts/zabbix/</guid>
       <description>Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案</description>
     </item>
     
     <item>
       <title>运维自动化工具Ansible(二)</title>
-      <link>http://colorfulgz.com/posts/ansible2/</link>
+      <link>https://xyenvy.github.io/posts/ansible2/</link>
       <pubDate>Sat, 25 Feb 2023 19:12:21 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/ansible2/</guid>
+      <guid>https://xyenvy.github.io/posts/ansible2/</guid>
       <description>Ansible 的名称来自科幻小说《安德的游戏》中跨越时空的即时通信工具，使用它可以在相距数光年的距离,远程实时控制前线的舰队战斗.</description>
     </item>
     
     <item>
       <title>运维自动化工具Ansible(一)</title>
-      <link>http://colorfulgz.com/posts/ansible/</link>
+      <link>https://xyenvy.github.io/posts/ansible/</link>
       <pubDate>Tue, 21 Feb 2023 19:12:21 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/ansible/</guid>
+      <guid>https://xyenvy.github.io/posts/ansible/</guid>
       <description>Ansible 的名称来自科幻小说《安德的游戏》中跨越时空的即时通信工具，使用它可以在相距数光年的距离,远程实时控制前线的舰队战斗</description>
     </item>
     
     <item>
       <title>Redis学习笔记</title>
-      <link>http://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <link>https://xyenvy.github.io/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Thu, 09 Feb 2023 14:59:00 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://xyenvy.github.io/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
       <description>Redis 是完全开源免费的，遵守BSD协议，是一个高性能(NOSQL)的key-value数据库，Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存可持久化的日志型，Key-Value数据库，并提供多种语言的API</description>
     </item>
     
     <item>
       <title>Nginx核心配置文件</title>
-      <link>http://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</link>
+      <link>https://xyenvy.github.io/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</link>
       <pubDate>Tue, 10 Jan 2023 09:58:09 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</guid>
+      <guid>https://xyenvy.github.io/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</guid>
       <description>nginx 官方帮助文档，http://nginx.org/en/docs/</description>
     </item>
     
     <item>
       <title>Nginx平滑升级</title>
-      <link>http://colorfulgz.com/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/</link>
+      <link>https://xyenvy.github.io/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/</link>
       <pubDate>Sat, 07 Jan 2023 13:34:33 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/</guid>
+      <guid>https://xyenvy.github.io/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/</guid>
       <description>有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级</description>
     </item>
     
     <item>
       <title>docker-compose部署MySQL</title>
-      <link>http://colorfulgz.com/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/</link>
+      <link>https://xyenvy.github.io/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/</link>
       <pubDate>Fri, 06 Jan 2023 14:00:26 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/</guid>
+      <guid>https://xyenvy.github.io/posts/docker-compose%E9%83%A8%E7%BD%B2mysql/</guid>
       <description>docker-compose部署MySql</description>
     </item>
     
     <item>
       <title>在线一键安装Nginx脚本</title>
-      <link>http://colorfulgz.com/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/</link>
+      <link>https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Wed, 04 Jan 2023 22:46:26 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/</guid>
+      <guid>https://xyenvy.github.io/posts/%E5%9C%A8%E7%BA%BF%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85nginx%E8%84%9A%E6%9C%AC/</guid>
       <description>一键安装Nginx 脚本</description>
     </item>
     
     <item>
       <title>Nginx基础</title>
-      <link>http://colorfulgz.com/posts/nginx%E5%9F%BA%E7%A1%80/</link>
+      <link>https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Sun, 01 Jan 2023 12:08:32 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/nginx%E5%9F%BA%E7%A1%80/</guid>
+      <guid>https://xyenvy.github.io/posts/nginx%E5%9F%BA%E7%A1%80/</guid>
       <description>Nginx是免费的、开源的、高性能的HTTP和反向代理服务器、邮件代理服务器、以及TCP/UDP代理服务器</description>
     </item>
     
     <item>
       <title>Redis一键安装脚本</title>
-      <link>http://colorfulgz.com/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</link>
+      <link>https://xyenvy.github.io/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Sat, 17 Dec 2022 11:56:02 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</guid>
+      <guid>https://xyenvy.github.io/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</guid>
       <description>centos、ubuntu、rockylinux系统Redis一键安装脚本</description>
     </item>
     
     <item>
       <title>Centos系统yum源配置</title>
-      <link>http://colorfulgz.com/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/</link>
+      <link>https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Sat, 17 Dec 2022 09:28:09 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/</guid>
       <description>yum 的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题</description>
     </item>
     
     <item>
       <title>Redis集群和高可用</title>
-      <link>http://colorfulgz.com/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/</link>
+      <link>https://xyenvy.github.io/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/</link>
       <pubDate>Tue, 13 Dec 2022 22:20:06 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/</guid>
+      <guid>https://xyenvy.github.io/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/</guid>
       <description>Redis单机服务存在数据和服务的单点问题,而且单机性能也存在着上限,可以利用Redis的集群相关技术来解决这些问题</description>
     </item>
     
     <item>
       <title>Redis部署和基础使用</title>
-      <link>http://colorfulgz.com/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</link>
+      <link>https://xyenvy.github.io/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Wed, 07 Dec 2022 21:16:33 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
+      <guid>https://xyenvy.github.io/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
       <description>Redis (Remote Dictionary Server远程字典服务)是一个遵循BSD MIT开源协议的高性能的NoSQL</description>
     </item>
     
     <item>
       <title>Nginx</title>
-      <link>http://colorfulgz.com/posts/nginx/</link>
+      <link>https://xyenvy.github.io/posts/nginx/</link>
       <pubDate>Mon, 05 Dec 2022 00:18:06 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/posts/nginx/</guid>
+      <guid>https://xyenvy.github.io/posts/nginx/</guid>
       <description>Nginx是一个高性能的 HTTP /反向代理的服务器及电子邮件（IMAP/POP3)代理服务器。官方测试nginx能够支撑5万并发，并且cpu，内存等资源消耗却非常低，运行非常稳定。最重要的是开源，免费，可商用的</description>
     </item>
     
     <item>
       <title>网络文件共享服务</title>
-      <link>http://colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/</link>
+      <link>https://xyenvy.github.io/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/</link>
       <pubDate>Sun, 04 Dec 2022 12:03:44 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/</guid>
+      <guid>https://xyenvy.github.io/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/</guid>
       <description>Network File System 网络文件系统，基于内核的文件系统。Sun 公司开发，通过使用 NFS，用户和程序可以像访问本地文件一样访问远端系统上的文件</description>
     </item>
     
     <item>
       <title>日志服务管理</title>
-      <link>http://colorfulgz.com/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/</link>
+      <link>https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/</link>
       <pubDate>Sat, 03 Dec 2022 10:55:19 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/</guid>
+      <guid>https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/</guid>
       <description>在现实生活中，记录日志非常重要</description>
     </item>
     
     <item>
       <title>MySQL集群</title>
-      <link>http://colorfulgz.com/posts/mysql%E9%9B%86%E7%BE%A4/</link>
+      <link>https://xyenvy.github.io/posts/mysql%E9%9B%86%E7%BE%A4/</link>
       <pubDate>Wed, 23 Nov 2022 13:38:00 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/mysql%E9%9B%86%E7%BE%A4/</guid>
+      <guid>https://xyenvy.github.io/posts/mysql%E9%9B%86%E7%BE%A4/</guid>
       <description>MySQL主从架构部署比较简单，常见架构根据主从节点个数不同分成 一主多从，多主一从，双主节点等</description>
     </item>
     
     <item>
       <title>MySQL备份脚本</title>
-      <link>http://colorfulgz.com/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</link>
+      <link>https://xyenvy.github.io/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Mon, 21 Nov 2022 22:28:03 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</guid>
+      <guid>https://xyenvy.github.io/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</guid>
       <description>硬件故障、软件故障、自然灾害、黑客攻击、误操作测试等数据丢失场景</description>
     </item>
     
     <item>
       <title>http</title>
-      <link>http://colorfulgz.com/posts/http/</link>
+      <link>https://xyenvy.github.io/posts/http/</link>
       <pubDate>Sat, 15 Oct 2022 14:10:20 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/http/</guid>
+      <guid>https://xyenvy.github.io/posts/http/</guid>
       <description>首先你听的最多的应该就是 HTTP 是一种 超文本传输协议(Hypertext Transfer Protocol)，这你一定能说出来，但是这样还不够，假如你是大厂面试官，这不可能是他想要的最终结果，我们在面试的时候往往把自己知道的尽可能多的说出来，才有和面试官谈价钱的资本。那么什么是超文本传输协议？</description>
     </item>
     
     <item>
       <title>MySQL一键安装脚本</title>
-      <link>http://colorfulgz.com/posts/mysqlinstallscript/</link>
+      <link>https://xyenvy.github.io/posts/mysqlinstallscript/</link>
       <pubDate>Fri, 30 Sep 2022 00:19:44 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/mysqlinstallscript/</guid>
+      <guid>https://xyenvy.github.io/posts/mysqlinstallscript/</guid>
       <description>Rocky8.5系统在线一键安装MySQL脚本</description>
     </item>
     
     <item>
       <title>MySQL</title>
-      <link>http://colorfulgz.com/posts/mysql/</link>
+      <link>https://xyenvy.github.io/posts/mysql/</link>
       <pubDate>Wed, 28 Sep 2022 22:42:41 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/mysql/</guid>
+      <guid>https://xyenvy.github.io/posts/mysql/</guid>
       <description>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件之一</description>
     </item>
     
     <item>
       <title>防火墙</title>
-      <link>http://colorfulgz.com/posts/firewall/</link>
+      <link>https://xyenvy.github.io/posts/firewall/</link>
       <pubDate>Sun, 25 Sep 2022 21:28:11 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/firewall/</guid>
+      <guid>https://xyenvy.github.io/posts/firewall/</guid>
       <description>firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术</description>
     </item>
     
     <item>
       <title>DNS服务</title>
-      <link>http://colorfulgz.com/posts/dns/</link>
+      <link>https://xyenvy.github.io/posts/dns/</link>
       <pubDate>Thu, 22 Sep 2022 22:01:44 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/dns/</guid>
+      <guid>https://xyenvy.github.io/posts/dns/</guid>
       <description>DNS一般指域名系统。 域名系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访问互联网。DNS使用UDP端口53</description>
     </item>
     
     <item>
       <title>时间同步服务</title>
-      <link>http://colorfulgz.com/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/</link>
+      <link>https://xyenvy.github.io/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/</link>
       <pubDate>Sat, 17 Sep 2022 18:32:45 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/</guid>
+      <guid>https://xyenvy.github.io/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/</guid>
       <description>多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一</description>
     </item>
     
     <item>
       <title>批量修改主机密码为随机字符</title>
-      <link>http://colorfulgz.com/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/</link>
+      <link>https://xyenvy.github.io/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/</link>
       <pubDate>Mon, 12 Sep 2022 23:35:13 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/</guid>
+      <guid>https://xyenvy.github.io/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/</guid>
       <description>centos、ubuntu批量修改多台主机的root密码为随机密码</description>
     </item>
     
     <item>
       <title>ssh服务</title>
-      <link>http://colorfulgz.com/posts/ssh%E6%9C%8D%E5%8A%A1/</link>
+      <link>https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/</link>
       <pubDate>Mon, 12 Sep 2022 22:01:08 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/ssh%E6%9C%8D%E5%8A%A1/</guid>
+      <guid>https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/</guid>
       <description>ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议</description>
     </item>
     
     <item>
       <title>Rocky上实现私有CA和证书申请</title>
-      <link>http://colorfulgz.com/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/</link>
+      <link>https://xyenvy.github.io/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/</link>
       <pubDate>Sun, 11 Sep 2022 21:56:35 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/</guid>
+      <guid>https://xyenvy.github.io/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/</guid>
       <description>OpenSSL计划在1998年开始，其目标是发明一套自由的加密工具，在互联网上使用。OpenSSL以Eric Young以及Tim Hudson两人开发的SSLeay为基础，随着两人前往RSA公司任职，SSLeay在1998年12月停止开发。因此在1998年12月，社群另外分支出OpenSSL，继续开发下去</description>
     </item>
     
     <item>
       <title>Linux定时执行任务</title>
-      <link>http://colorfulgz.com/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
+      <link>https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
       <pubDate>Mon, 05 Sep 2022 23:48:34 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
+      <guid>https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
       <description>定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。</description>
     </item>
     
     <item>
       <title>进程和线程相关概念</title>
-      <link>http://colorfulgz.com/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</link>
+      <link>https://xyenvy.github.io/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</link>
       <pubDate>Sun, 04 Sep 2022 14:18:58 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</guid>
+      <guid>https://xyenvy.github.io/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</guid>
       <description>Process运行中的程序的一个副本，是被载入内存的一个指令集合，是资源分配的单位</description>
     </item>
     
     <item>
       <title>计算机网络</title>
-      <link>http://colorfulgz.com/posts/network/</link>
+      <link>https://xyenvy.github.io/posts/network/</link>
       <pubDate>Sun, 21 Aug 2022 21:33:05 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/network/</guid>
+      <guid>https://xyenvy.github.io/posts/network/</guid>
       <description>计算机网络是一组计算机或网络设备通过有形的线缆或者无形的媒介如无线，按照一定的规则，进行通信的集合。</description>
     </item>
     
     <item>
       <title>软件管理</title>
-      <link>http://colorfulgz.com/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/</link>
+      <link>https://xyenvy.github.io/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/</link>
       <pubDate>Mon, 08 Aug 2022 21:05:59 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/</guid>
+      <guid>https://xyenvy.github.io/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/</guid>
       <description>Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。</description>
     </item>
     
     <item>
       <title>磁盘存储和文件系统管理</title>
-      <link>http://colorfulgz.com/posts/disk/</link>
+      <link>https://xyenvy.github.io/posts/disk/</link>
       <pubDate>Sun, 07 Aug 2022 08:40:59 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/disk/</guid>
+      <guid>https://xyenvy.github.io/posts/disk/</guid>
       <description>磁盘是计算机主要的存储介质，可以存储大量的二进制数据，并且断电后也能保持数据不丢失，使用磁盘存储数据的时候我们可以将磁盘划分成我们所需要的格式来进行使用</description>
     </item>
     
     <item>
       <title>Docker基础详细教程</title>
-      <link>http://colorfulgz.com/posts/docker/</link>
+      <link>https://xyenvy.github.io/posts/docker/</link>
       <pubDate>Fri, 05 Aug 2022 00:18:06 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/posts/docker/</guid>
+      <guid>https://xyenvy.github.io/posts/docker/</guid>
       <description>Docker是一个开源的容器化平台，用于构建、部署和运行应用程序。它通过使用容器来实现应用程序的隔离和自包含性。</description>
     </item>
     
     <item>
       <title>shell编程</title>
-      <link>http://colorfulgz.com/posts/shell%E7%BC%96%E7%A8%8B/</link>
+      <link>https://xyenvy.github.io/posts/shell%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Wed, 03 Aug 2022 22:23:02 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/shell%E7%BC%96%E7%A8%8B/</guid>
+      <guid>https://xyenvy.github.io/posts/shell%E7%BC%96%E7%A8%8B/</guid>
       <description>shell 是操作系统的最外层。shell 合并编程语言以控制进程和文件，以及启动和控制其它程序。shell 通过提示您输入，向操作系统解释该输入，然后处理来自操作系统的任何结果输出来管理您与操作系统之间的交互。</description>
     </item>
     
     <item>
       <title>文件查找和打包压缩</title>
-      <link>http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/</link>
+      <link>https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/</link>
       <pubDate>Mon, 01 Aug 2022 21:31:38 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/</guid>
+      <guid>https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/</guid>
       <description>Linux find 命令用来在指定目录下查找文件。任何位于参数之前的字符串都将被视为欲查找的目录名;tar命令是Unix/Linux系统中备份文件的可靠方法，几乎可以工作于任何环境中，它的使用权限是所有用户，建议针对目录。</description>
     </item>
     
     <item>
       <title>文本处理工具和正则表达式</title>
-      <link>http://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <link>https://xyenvy.github.io/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
       <pubDate>Tue, 26 Jul 2022 20:09:30 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <guid>https://xyenvy.github.io/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
       <description>本文将介绍Linux下使用Shell处理文本时最常用的工具并结合正则表达式处理文本。</description>
     </item>
     
     <item>
       <title>权限管理及文本编辑工具</title>
-      <link>http://colorfulgz.com/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/</link>
+      <link>https://xyenvy.github.io/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/</link>
       <pubDate>Mon, 25 Jul 2022 20:34:34 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/</guid>
+      <guid>https://xyenvy.github.io/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/</guid>
       <description>Linux中的三剑客是指三个经典的文本处理工具，它们分别是grep、sed和awk。这些工具经常用于处理文本文件，搜索、替换和提取数据等任务</description>
     </item>
     
     <item>
       <title>文件管理</title>
-      <link>http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/</link>
+      <link>https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/</link>
       <pubDate>Sat, 23 Jul 2022 16:37:00 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/</guid>
+      <guid>https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/</guid>
       <description>Linux中的所有数据都被保存在文件中，所有的文件被分配到不同的目录。目录是一种类似于树的结构，称为文件系统;当你使用Linux时，大部分时间都会和文件打交道，通过本节可以了解基本的文件操作，如创建文件、删除文件、复制文件、重命名文件以及为文件创建链接等。</description>
     </item>
     
     <item>
       <title>linux基础和常用命令</title>
-      <link>http://colorfulgz.com/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <link>https://xyenvy.github.io/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
       <pubDate>Mon, 18 Jul 2022 21:12:03 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <guid>https://xyenvy.github.io/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
       <description>Linux 是一套免费使用、开源的类 Unix 操作系统。 Linux 存在着许多不同的发行版本，但它们都使用了 Linux 内核 。</description>
     </item>
     
     <item>
       <title>git-ssh</title>
-      <link>http://colorfulgz.com/posts/git-ssh/</link>
+      <link>https://xyenvy.github.io/posts/git-ssh/</link>
       <pubDate>Wed, 13 Jul 2022 20:52:38 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/git-ssh/</guid>
+      <guid>https://xyenvy.github.io/posts/git-ssh/</guid>
       <description>Git生成密钥(ssh)</description>
     </item>
     

@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, File, 文件管理">
 <meta name="description" content="Linux中的所有数据都被保存在文件中，所有的文件被分配到不同的目录。目录是一种类似于树的结构，称为文件系统;当你使用Linux时，大部分时间都会和文件打交道，通过本节可以了解基本的文件操作，如创建文件、删除文件、复制文件、重命名文件以及为文件创建链接等。">
 <meta name="author" content="">
-<link rel="canonical" href="http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
+<link rel="canonical" href="https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="文件管理" />
 <meta property="og:description" content="Linux中的所有数据都被保存在文件中，所有的文件被分配到不同的目录。目录是一种类似于树的结构，称为文件系统;当你使用Linux时，大部分时间都会和文件打交道，通过本节可以了解基本的文件操作，如创建文件、删除文件、复制文件、重命名文件以及为文件创建链接等。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" />
-<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/6.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/6.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-07-23T16:37:00+00:00" />
 <meta property="article:modified_time" content="2022-07-23T16:37:00+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/6.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/6.jpg" />
 <meta name="twitter:title" content="文件管理"/>
 <meta name="twitter:description" content="Linux中的所有数据都被保存在文件中，所有的文件被分配到不同的目录。目录是一种类似于树的结构，称为文件系统;当你使用Linux时，大部分时间都会和文件打交道，通过本节可以了解基本的文件操作，如创建文件、删除文件、复制文件、重命名文件以及为文件创建链接等。"/>
 
@@ -95,15 +95,15 @@ var _hmt = _hmt || [];
 
         {
           "@type": "ListItem",
-          "position":  2 ,
+          "position":  1 ,
           "name": "📚文章",
-          "item": "http://colorfulgz.com/posts/"
+          "item": "https://xyenvy.github.io/posts/"
         }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "文件管理",
-      "item": "http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"
+      "item": "https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "1.文件系统目录结构 1.1常见的文件系统目录功能 /boot：引导文件存放目录，内核文件(vmlinuz)、引导加载器(bootloader, grub)都存放于此目录 /bin：所有用户使用的基本命令；不能关联至独立分区，OS启动即会用到的程序 /sbin：管理类的基本命令；不能关联至独立分区，OS启动即会用到的程序 /lib：启动时程序依赖的基本共享库文件以及内核模块文件(/lib/modules) /lib64：专用于x86_64系统上的辅助共享库文件存放位置 /etc：配置文件目录 /home/USERNAME：普通用户家目录 /root：管理员的家目录 /media：便携式移动设备挂载点 /mnt：临时文件系统挂载点 /dev：设备文件及特殊文件存储位置 b: block device，随机访问 c: character device，线性访问 /opt：第三方应用程序的安装位置 /srv：系统上运行的服务用到的数据 /tmp：临时文件存储位置 /usr: universal shared, read-only data bin: 保证系统拥有完整功能而提供的应用程序 sbin: lib：32位使用 lib64：只存在64位系统 include: C程序的头文件(header files) share：结构化独立的数据，例如doc, man等 local：第三方应用程序的安装位置 bin, sbin, lib, lib64, etc, share /var: variable data files cache: 应用程序缓存数据目录 lib: 应用程序状态信息数据 local：专用于为/usr/local下的应用程序存储可变数据 lock: 锁文件 log: 日志目录及文件 opt: 专用于为/opt下的应用程序存储可变数据 run: 运行中的进程相关数据,通常用于存储进程pid文件 spool: 应用程序数据池 tmp: 保存系统两次重启之间产生的临时数据 /proc: 用于输出内核与进程信息相关的虚拟文件系统 /sys：用于输出当前系统上硬件设备相关信息虚拟文件系统 /selinux: security enhanced Linux，selinux相关的安全策略等信息的存储位置 1.2Linux下的文件类型 -普通文件 d 目录文件directory I 符号链接文件link b 块设备block c 字符设备character p 管道文件pipe s 套接字文件socket 注意:面试题目容易出现\n2.文件操作命令 2.1相对路径和绝对路径 绝对路径 以正斜杠/ 即根目录开始 完整的文件的位置路径 可用于任何想指定一个文件名的时候 相对路径名 不以斜线开始 一般情况下，是指相对于当前工作目录的路径，特殊场景下，是相对于某目录的位置 可以作为一个简短的形式指定一个文件名 基名：basename，只取文件名而不要路径 目录名：dirname，只取路径，不要文件名 范例: 2.2更改目录 命令 cd ： change directory 改变目录 选项：-P 切换至物理路径，而非软链接目录 可以使用绝对或相对路径 切换至父目录： cd .. 切换至当前用户主目录： cd 切换至以前的工作目录： cd -\n2.3列出目录内容 ls 命令可以列出当前目录的内容或指定目录 用法：\nls [options] [files_or_dirs] 常见选项：\n-a 包含隐藏文件 -l 显示额外的信息 -R 目录递归 -ld 目录和符号链接信息 -1 文件分行显示 -S 按从大到小排序 -t 按mtime排序 -u 配合-t选项，显示并按atime从新到旧排序 -U 按目录存放顺序显示 -X 按文件后缀排序 -F 对不同类型文件显示时附加不同的符号：*/=\u003e@| -C 文件多时，以多列的方式显示文件，默认是一列（标准输出） 说明：\nls 查看不同后缀文件时的颜色由 /etc/DIR_COLORS 和@LS_COLORS变量定义 ls -l 看到文件的大小,不一定是实际文件真正占用空间的大小 2.4查看文件状态 用法：\nstat filename 每个文件有三个时间戳：\naccess time 访问时间，atime，读取文件内容 modify time 修改时间，mtime，改变文件内容（数据） change time 改变时间，ctime，元数据发生改变 2.5查看文件内容 用法：\nfile [options] filename 常用选项：\n-b 列出文件辨识结果时，不显示文件名称 -f filelist 列出文件filelist中文件名的文件类型 -F 使用指定分隔符号替换输出文件名后默认的”:”分隔符 -L 查看对应软链接对应文件的文件类型 –help 显示命令在线帮助 2.6文件通配符模式 常见的通配符如下\n* 匹配零个或多个字符，但不匹配 \".\" 开头的文件，即隐藏文件 ? 匹配任何单个字符,一个汉字也算一个字符 ~ 当前用户家目录 ~mage 用户mage家目录 [0-9] 匹配数字范围 [a-z] 一个字母 [A-Z] 一个字母 [wang] 匹配列表中的任何的一个字符 [^wang] 匹配列表中的所有字符以外的字符 [^a-z] 匹配列表中的所有字符以外的字符 . 和 ~+ 当前工作目录 ~- 前一个工作目录 2.7批量修改文件名 利用 rename 可以批量修改文件名 格式：\nrename [options] ... 范例：\n#为所有的f开头包含conf的文件加上.bak后缀： rename 'conf' 'conf.bak' f* #去掉所有的bak后缀： rename '.bak' '' *.bak 3.硬链接和软链接 3.1硬链接 硬链接本质上就给一个文件起一个新的名称，实质是同一个文件 硬链接特性\n创建硬链接会在对应的目录中增加额外的记录项以引用文件 对应于同一文件系统上一个物理文件 每个目录引用相同的inode号 创建时链接数递增 删除文件时：rm命令递减计数的链接，文件要存在，至少有一个链接数，当链接数为零时，该文件被删除 不能跨越驱动器或分区 不支持对目录创建硬链接 格式：\nln filename [linkname] 3.2软链接 一个符号链接指向另一个文件,就像 windows 中快捷方式，软链接文件和原文件本质上不是同一个文件 软链接特点\n一个符号链接的内容是它引用文件的名称 可以对目录创建软链接 可以跨分区的文件实现 指向的是另一个文件的路径；其大小为指向的路径字符串的长度；不增加或减少目标文件inode的引用计数 在创建软链接时, 如果源文件使用相对路径，是相对于软链接文件的路径，而非相对于当前工作目录,但是软链接的路径如果是相对路径,则是相对于当前工作目录 格式 ln -s filename [linkname] 范例： 查看软链接\nrm -rf /data/dirlink #只删除软链接本身,不会删除源目录内容 rm -rf /data/dirlink/ #删除源目录的文件,但不会删除链接文件,此方法非常危险 #注意: 删除此软链接务必不要加-r选项 4.硬链接和软链接区别 本质： 硬链接：本质是同一个文件 软链接：本质不是同一个文件 跨设备 硬链接：不支持 软链接：支持 inode 硬链接：相同 软链接：不同 链接数 硬链接：创建新的硬链接,链接数会增加,删除硬链接,链接数减少 软链接：创建或删除,链接数不会变化 文件夹 硬链接：不支持 软链接：支持 相对路径 硬链接：原始文件相对路径是相对于当前工作目录 软链接：原始文件的相对路径是相对于链接文件的相对路径 删除源文件 硬链接：只是链接数减一,但链接文件的访问不受影响 软链接：链接文件将无法访问 文件类型 硬链接：和源文件相同 软链接：链接文件,和源文件无关 文件大小 硬链接: 和源文件相同 软链接: 源文件的路径的长度 5.生产案例 案例1：提示空间满 No space left on device，但 df 可以看到空间很多，为什么 解决方法：节点编号用完了，增加节点编号增加不了，说明你的磁盘上的文件都是小文件； 1、删除不用的文件和文件夹释放inode 2、迁移数据到新磁盘然后格式化重新指定inode 知识点： 1.Linux下一个文件夹或者一个文件就会占用一个inode资源 2.inode资源数量是在格式化磁盘的时候就指定的（可以不指定，但也会有一个值），要更改这个 数量必须格式化磁盘 3.如果某个磁盘的inode资源用尽，即便磁盘有空间，也不能进行任何文件或者文件夹的新增 4.删除一个文件夹或者文件就能释放一个inode资源 案例2：提示空间快满，使用 rm 删除了很大的无用文件后，df仍然看到空间不足，为什么？如何解决 有其他程序在使用该文件，可以清空该文件内容。使用\u003e清空文件内容 \u003e filename # \u003e test.log 6.重定向和管道 6.1 标准输入和输出 程序：指令+数据 读入数据：Input 输出数据：Output 打开的文件都有一个fd: file descriptor (文件描述符) Linux给程序提供三种 I/O 设备\n标准输入（STDIN） －0 默认接受来自终端窗口的输入 标准输出（STDOUT）－1 默认输出到终端窗口 标准错误（STDERR） －2 默认输出到终端窗口 6.2标准的输出和错误重定向 格式：\n命令 操作符号 文件名 支持的操作符号包括：\n1\u003e 或 \u003e 把STDOUT重定向到文件 2\u003e 把STDERR重定向到文件 \u0026\u003e 把标准输出和错误都重定向 \u003e\u0026 和上面功能一样，建议使用上面方式 以上的文件如果已经存在，文件内容则会覆盖\n# \u003e\u003e 可以在原有的基础内容上追加内容 \u003e\u003e 追加标准输出重定向至文件 2\u003e\u003e 追加标准错误重定向至文件 6.3将标准输出和错误输出指定向不同的文件 格式：\nCOMMAND \u003e /path/to/file.log 2\u003e /path/to/error.log 6.4合并标准输出和错误输出为同一个数据流进行重定向 \u0026\u003e 覆盖重定向 \u0026\u003e\u003e 追加重定向 COMMAND \u003e /path/to/file.out 2\u003e\u00261 （顺序很重要） COMMAND \u003e\u003e /path/to/file.out 2\u003e\u00261 错误案例 6.5标准输入重定向 实现标准输入重定向的符号\nCOMMAND 0\u003c FILE COMMAND \u003c FILE 面试题： # 求1+2+···+10的和 seq -s+ 10 \u003e seq.log bc \u003c seq.log 扩展：求1*2*···*10的值： seq -s* 10 \u003eseq.log bc \u003c seq.log 6.5.1tr命令 tr 转换和删除字符\ntr [option] ··· SET1 [SET2] 选项：\n-d --delete：删除所有属于第一字符集的字符 -s --squeeze-repeats：把连续重复的字符以单独一个字符表示,即去重 -t --truncate-set1：将第一个字符集对应字符转化为第二字符集对应的字符 -c –C --complement：取字符集的补集 \\NNN character with octal value NNN (1 to 3 octal digits) \\\\ backslash \\a audible BEL \\b backspace \\f form feed \\n new line \\r return \\t horizontal tab \\v vertical tab [:alnum:]：字母和数字 [:alpha:]：字母 [:digit:]：数字 [:lower:]：小写字母 [:upper:]：大写字母 [:space:]：空白字符 [:print:]：可打印字符 [:punct:]：标点符号 [:graph:]：图形字符 [:cntrl:]：控制（非打印）字符 [:xdigit:]：十六进制字符 范例：\n删除字符,删除’abcd’中的’a' echo abcd | tr -d 'a' 将’aaabbbccc‘中字符去重 echo aaabbbccc |tr -s 'abc' 输入df将空格用\"+“替换 df | tr -s ' ' + 6.5.2多行重定向 使用 “«终止词” 命令从键盘把多行重导向给STDIN，直到终止词位置之前的所有文本都发送给 STDIN，有时被称为就地文本（here documents） 其中终止词可以是任何一个或多个符号，比如：!，@，$，EOF（End Of File），magedu等，其中EOF 比较常用\n范例：\n6.5.3高级重定向 6.5.3.1 cmd1 \u003c \u003c(cmd2) 名称为 Process substitution ,是由两个部分组成 \u003c(cmd2) 表示把cmd2的输出写入一个临时文件, 注意：\u003c和（之间无空格 cmd1 \u003c 这是一个标准的stdin重定向 把两个合起来，就是把cmd2的输出stdout传递给cmd1作为输入stdin, 中间通过临时文件做传递\n6.5.3.2cmd1«\u003c‘string’ 含义是 here-string ，表示传给给cmd的stdin的内容从这里开始是一个字符串。 范例：\nbc \u003c\u003c\u003c'2+4' 6.6 tee命令 tee命令用于读取标准输入的数据，并将其内容输出成文件。\ntee指令会从标准输入设备读取数据，将其内容输出到标准输出设备，同时保存成文件。\n选项：\n-a 追加 7.用户和组相关概念 7.1 用户 Linux中每个用户是通过 User Id （UID）来唯一标识的\n管理员：root, 0\n普通用户：1-60000 自动分配\n系统用户：1-499 （CentOS 6以前）, 1-999 （CentOS 7以后） 对守护进程获取资源进行权限分配 登录用户：500+ （CentOS6以前）, 1000+（CentOS7以后） 给用户进行交互式登录使用 7.2 用户组 Linux中可以将一个或多个用户加入用户组中，用户组是通过Group ID（GID） 来唯一标识的。\n管理员组：root, 0 普通组： 系统组：1-499（CentOS 6以前）, 1-999（CentOS7以后）, 对守护进程获取资源进行权限分配 普通组：500+（CentOS 6以前）, 1000+（CentOS7以后）, 给用户使用 7.3 用户和组的关系 用户的主要组(primary group)：用户必须属于一个且只有一个主组，默认创建用户时会自动创建和用户名同名的组，做为用户的主要组，由于此组中只有一个用户，又称为私有组 用户的附加组(supplementary group)： 一个用户可以属于零个或多个辅助组，附属组 范例：\n[root@rocky8 home]# id yuankun uid=1000(yuankun) gid=1000(yuankun) groups=1000(yuankun) 7.4用户和组的配置文件 7.4.1用户和组的主要配置文件 /etc/passwd：用户及其属性信息(名称、UID、主组ID等） /etc/shadow：用户密码及其相关属性 /etc/group：组及其属性信息 /etc/gshadow：组密码及其相关属性 7.4.2 passwd文件格式 login name：登录用名（yuankun） passwd：密码 (x) UID：用户身份编号 (1000) GID：登录默认所在组编号 (1000) GECOS：用户全名或注释 home directory：用户主目录 (/home/wang) shell：用户默认使用shell (/bin/bash) 7.4.3shadow文件格式 登录用名 用户密码:一般用sha512加密 从1970年1月1日起到密码最近一次被更改的时间 密码再过几天可以被变更（0表示随时可被变更） 密码再过几天必须被变更（99999表示永不过期） 密码过期前几天系统提醒用户（默认为一周） 密码过期几天后帐号会被锁定 从1970年1月1日算起，多少天后帐号失效 7.4.4group文件格式 群组名称：就是群组名称 群组密码：通常不需要设定，密码是被记录在 /etc/gshadow GID：就是群组的 ID 以当前组为附加组的用户列表(分隔符为逗号) 7.4.5gshadow文件格式 群组名称：就是群的名称 群组密码： 组管理员列表：组管理员的列表，更改组密码和成员 以当前组为附加组的用户列表：多个用户间用逗号分隔 7.5 用户和组管理命令 用户管理命令 useradd(添加用户) usermod(修改用户) userdel(删除用户) 组账号维护命令 groupadd groupmod groupdel 面试题：添加新用户后家目录下的文件来源什么地方？\n来源于/etc/skel,进入/etc/skel下查看文件和进入test用户的家目录下查看文件是一致的\n7.5.1用户创建 useradd命令可以创建新的linux用户\n格式：\nuseradd [options] login 常见的选项：\n-u UID -o 配合-u 选项，不检查UID的唯一性 -g GID 指明用户所属基本组，可为组名，也可以GID -c \"COMMENT“ 用户的注释信息 -d HOME_DIR 以指定的路径(不存在)为家目录 -s SHELL 指明用户的默认shell程序，可用列表在/etc/shells文件中 -G GROUP1[,GROUP2,...] 为用户指明附加组，组须事先存在 -N 不创建私用组做主组，使用users组做主组 -r 创建系统用户 CentOS 6之前: ID\u003c500，CentOS7 以后: ID\u003c1000 -m 创建家目录，用于系统用户 -M 不创建家目录，用于非系统用户 -p 指定加密的密码 范例:\n[root@rocky8 home]# groupadd apache [root@rocky8 home]# useradd -r -u 48 -g apache -s /sbin/nologin -d /var/www -c \"Apache\" apache useradd命令默认值设置由/etc/default/useradd定义\n[root@centos8 ~]#cat /etc/default/useradd # useradd defaults file GROUP=100 HOME=/home INACTIVE=-1 #对应/etc/shadow文件第7列，即用户密码过期后的帐号锁定的宽限期,-1表示不锁定 EXPIRE= #对应/etc/shadow文件第8列，即用户帐号的有效期 SHELL=/bin/bash SKEL=/etc/skel #用于生成新建用户家目录的模版文件 CREATE_MAIL_SPOOL=yes 7.5.2用户属性修改 usermod命令可以修改用户属性\n格式：\nusermod [options] login 常见选项：\n-u UID: 新UID -g GID: 新主组 -G GROUP1[,GROUP2,...[,GROUPN]]]：新附加组，原来的附加组将会被覆盖；若保留原有，则要同时使 用-a选项 -s SHELL：新的默认SHELL -c 'COMMENT'：新的注释信息 -d HOME: 新家目录不会自动创建；若要创建新家目录并移动原家数据，同时使用-m选项 -l login_name: 新的名字 -L: lock指定用户,在/etc/shadow 密码栏的增加 ! -U: unlock指定用户,将 /etc/shadow 密码栏的 ! 拿掉 -e YYYY-MM-DD: 指明用户账号过期日期 -f INACTIVE: 设定非活动期限，即宽限期 范例：创建test用户，使用id username查看用户的uid,然后修改其uid\n[root@rocky8 home]# useradd test #添加tes用户 [root@rocky8 home]# id test #查看用户信息 uid=1001(test) gid=1001(test) groups=1001(test) [root@rocky8 home]# usermod -u 1002 test # 将uid修改为1002 [root@rocky8 home]# id test #查看用户信息修改成功 uid=1002(test) gid=1001(test) groups=1001(test) 7.5.4删除用户 userdel可以删除用户\n格式：\nuserdel [options] login 常见的选项：\n-f, --force 强制 -r, --remove 删除用户家目录和邮箱 范例：\nuserdel -f test #强制删除 userdel -rf test # 删除家目录和邮箱 7.5.5查看用户相关ID id命令可以查看用户的UID、GID等信息\nid [options] [username] 常见选项：\n-u: 显示UID -g: 显示GID -G: 显示用户所属的组的ID -n: 显示名称，需配合ugG使用 范例：\n[root@rocky8 home]# id test uid=1002(test) gid=1001(test) groups=1001(test) [root@rocky8 home]# id -u test 1002 [root@rocky8 home]# id -g test 1001 [root@rocky8 home]# id -G test 1001 [root@rocky8 home]# 7.5.6查看linux所有用户 查看/etc/passwd getent passwd 7.5.7切换用户 su: 即 switch user，命令可以切换用户身份，并且以指定用户的身份执行命令 格式：\nsu [options...] [-] [user [args...]] 常见的选项\n-l --login su -l UserName 相当于 su - UserName -c, --command pass a single command to the shell with -c 切换用户的方式：\nsu UserName：非登录式切换，即不会读取目标用户的配置文件，不改变当前工作目录，即不完全切换 su - UserName：登录式切换，会读取目标用户的配置文件，切换至自已的家目录，即完全切换 说明：root su至其他用户无须密码；非root用户切换时需要密码 注意：su 切换新用户后，使用 exit 退回至旧的用户身份，而不要再用 su 切换至旧用户，否则会生成很多的bash子进程，环境可能会混乱。 换个身份执行命令：\nsu - username -c 'command' 范例：\n[root@rocky8 skel]# su - test -c 'touch test.log' [root@rocky8 skel]# su test [test@rocky8 skel]$ ll total 0 [test@rocky8 skel]$ ls -a . .. .bash_logout .bash_profile .bashrc [test@rocky8 skel]$ cd /home/ [test@rocky8 home]$ ll total 0 drwx------. 2 test test 99 Jul 24 11:38 test drwx------. 2 test1 test1 78 Jul 24 11:24 test1 drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun [test@rocky8 home]$ cd test [test@rocky8 ~]$ ll total 0 -rw-rw-r--. 1 test test 0 Jul 24 11:38 test.log [test@rocky8 ~]$ 7.5.8设置密码 passwd 可以修改用户密码\n格式：\npasswd [options] username 常见选项：\n-d：删除指定用户密码 -l：锁定指定用户 -u：解锁指定用户 -e：强制用户下次登录修改密码 -f：强制操作 -n mindays：指定最短使用期限 -x maxdays：最大使用期限 -w warndays：提前多少天开始警告 -i inactivedays：非活动期限 --stdin：从标准输入接收用户密码,Ubuntu无此选项 范例：非交互式修改用户密码\n#此方式更通用，适用于各种Linux版本，如:ubuntu root@ununtu2004:/home# echo -e '123456\\n123456' | passwd test New password: Retype new password: passwd: password updated successfully root@ununtu2004:/home# #适用于红帽系列的Linux版本 [root@rocky8 home]# echo -e '123456'| passwd --stdin test Changing password for user test. passwd: all authentication tokens updated successfully. [root@rocky8 home]# 7.6文件权限管理 7.6.1文件所有者和属组属性操作 7.6.1.1设置文件的所有者chown chown 命令可以修改文件的属主，也可以修改文件属组 格式：\nchown [OPTION]... [OWNER][:[GROUP]] FILE... chown [OPTION]... --reference=RFILE FILE... 用法说明：\nOWNER #只修改所有者 OWNER:GROUP #同时修改所有者和属组 :GROUP #只修改属组，冒号也可用 . 替换 --reference=RFILE #参考指定的的属性，来修改 -R #递归，此选项慎用，非常危险！ 范例：\n修改所有者 [root@rocky8 home]# touch data.log [root@rocky8 home]# ll # data.log所有者为root total 0 -rw-r--r--. 1 root root 0 Jul 24 13:16 data.log drwx------. 2 gentoo gentoo 62 Jul 24 12:39 gentoo drwx------. 2 test test 99 Jul 24 11:38 test drwx------. 2 test1 test1 78 Jul 24 11:24 test1 drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun [root@rocky8 home]# chown yuankun data.log # 修改所有者为yuankun [root@rocky8 home]# ll total 0 -rw-r--r--. 1 yuankun root 0 Jul 24 13:16 data.log drwx------. 2 gentoo gentoo 62 Jul 24 12:39 gentoo drwx------. 2 test test 99 Jul 24 11:38 test drwx------. 2 test1 test1 78 Jul 24 11:24 test1 drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun [root@rocky8 home]# 修改所属组 chown :bin data.log 同时修改所有者和所属组 [root@rocky8 home]# touch test.log [root@rocky8 home]# [root@rocky8 home]# [root@rocky8 home]# chown yuankun:bin test.log # 冒号用.替换也可以 [root@rocky8 home]# ll total 0 -rw-r--r--. 1 yuankun bin 0 Jul 24 13:16 data.log drwx------. 2 gentoo gentoo 62 Jul 24 12:39 gentoo drwx------. 2 test test 99 Jul 24 11:38 test drwx------. 2 test1 test1 78 Jul 24 11:24 test1 -rw-r--r--. 1 yuankun bin 0 Jul 24 13:22 test.log drwx------. 2 yuankun yuankun 114 Jul 23 08:24 yuankun [root@rocky8 home]# 修改为参考的所有者户所属组 chown --reference=root.log data.log 递归修改 chown -R yuankun:yuankun ./data/mysql/ 7.6.1.2设置文件的属组信息chgrp chgrp 命令可以只修改文件的属组 格式:\nchgrp [OPTION]... GROUP FILE... chgrp [OPTION]... --reference=RFILE FILE... -R 递归\n范例：\nchgrp yuankun data.log 7.6.2文件权限 每个文件针对每类访问者都定义了三种权限\nr Readable 4 w Writable 2 x eXcutable 1 对文件的权限\nr 可使用文件查看类工具，比如：cat，可以获取其内容 w 可修改其内容,文件的是否被删除和文件的权限无关 x 可以把此文件提请内核启动为一个进程，即可以执行（运行）此文件（此文件的内容必须是可执行） 文件权限常见组合 --- 0 r 4 r-x 5 rw 6 rwx 7 对目录的权限\nr 可以使用ls查看此目录中文件名列表,但无法看到文件的属性meta信息,包括inode号,不能查看文件的 内容 w 可在此目录中创建文件，也可删除此目录中的文件，而和此被删除的文件的权限无关 x 可以cd进入此目录，可以使用ls -l file或stat file 查看此目录中指定文件的元数据，当预先知 道文件名称时,也可以查看文件的内容,属于目录的可访问的最小权限 X 分配给目录或有部分x权限的文件的x权限，对无任意x权限的文件则不会分配x权限 目录权限常见组合 - 不能访问目录 r-x 只读目录 rwx 可读也可写目录 面试题：Linux中的目录和文件的权限区别？分别说明读，写和执行权限的区别?\n修改文件权限chmod\n面试题：执行 cp /etc/issue /data/dir/ 所需要的最小权限?\n",
   "wordCount" : "8036",
   "inLanguage": "en",
-  "image":"http://colorfulgz.com/posts.images/banner/6.jpg","datePublished": "2022-07-23T16:37:00Z",
+  "image":"https://xyenvy.github.io/posts.images/banner/6.jpg","datePublished": "2022-07-23T16:37:00Z",
   "dateModified": "2022-07-23T16:37:00Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"
+    "@id": "https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://colorfulgz.com/img/Q.gif"
+      "url": "https://xyenvy.github.io/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://xyenvy.github.io/" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/" title="🏠 主页">
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io/">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
             <h1 class="post-title">
                 文件管理
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="http://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "http://colorfulgz.com"
+                                let dnsUrl = "https://xyenvy.github.io/"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/6.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/6.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -1338,12 +1338,12 @@ cmd1 &lt; 这是一个标准的stdin重定向
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="http://colorfulgz.com/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/">
+  <a class="prev" href="https://xyenvy.github.io/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/">
     <span class="title">« 上一页</span>
     <br>
     <span>权限管理及文本编辑工具</span>
   </a>
-  <a class="next" href="http://colorfulgz.com/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+  <a class="next" href="https://xyenvy.github.io/posts/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
     <span class="title">下一页 »</span>
     <br>
     <span>linux基础和常用命令</span>
@@ -1360,7 +1360,7 @@ cmd1 &lt; 这是一个标准的stdin重定向
         Copyright
         &copy;
         2022-2023
-        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        <a href="https://xyenvy.github.io/" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2022006994号-2</a>&nbsp;

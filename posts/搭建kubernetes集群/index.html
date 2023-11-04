@@ -9,14 +9,14 @@
 <meta name="keywords" content="Kubernetes">
 <meta name="description" content="Kubernetes 是一个开源的容器编排引擎，用来对容器化应用进行自动化部署、 扩缩和管理">
 <meta name="author" content="">
-<link rel="canonical" href="http://colorfulgz.com/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/">
+<link rel="canonical" href="https://xyenvy.github.io/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="搭建Kubernetes集群" />
 <meta property="og:description" content="Kubernetes 是一个开源的容器编排引擎，用来对容器化应用进行自动化部署、 扩缩和管理" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://colorfulgz.com/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/" />
-<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://xyenvy.github.io/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/" />
+<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-03-21T00:17:58+08:00" />
 <meta property="article:modified_time" content="2023-03-21T00:17:58+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" />
+<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" />
 <meta name="twitter:title" content="搭建Kubernetes集群"/>
 <meta name="twitter:description" content="Kubernetes 是一个开源的容器编排引擎，用来对容器化应用进行自动化部署、 扩缩和管理"/>
 
@@ -95,15 +95,15 @@ var _hmt = _hmt || [];
 
         {
           "@type": "ListItem",
-          "position":  2 ,
+          "position":  1 ,
           "name": "📚文章",
-          "item": "http://colorfulgz.com/posts/"
+          "item": "https://xyenvy.github.io/posts/"
         }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "搭建Kubernetes集群",
-      "item": "http://colorfulgz.com/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/"
+      "item": "https://xyenvy.github.io/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "搭建Kubernetes集群 部署前提 使用kubeadm部署Kubernetes集群的前提条件 支持Kubernetes运行的Linux主机，例如Debian、RedHat及其变体等 每主机2GB以上的内存，以及2颗以上的CPU 各主机间能够通过网络无障碍通信 独占的hostname、MAC地址以及product_uuid，主机名能够正常解析 放行由Kubernetes使用到的各端口，或直接禁用iptables 禁用各主机的上的Swap设备 各主机时间同步 部署环境 OS: Ubuntu 20.04.2 LTS Docker：20.10.10，CGroup Driver: systemd Kubernetes：v1.26.3, CRI: containerd, CNI: Flannel 主机 主机IP 主机名称 角色 192.168.32.200 k8s-master01.org master 192.168.32.203 k8s-node01.org node01 192.168.32.204 k8s-node02.org node02 192.168.32.205 k8s-node03.org node03 修改主机名称 # 修改192.168.32.200的主机名称为k8s-master01.org # 修改192.168.32.203的主机名称为k8s-node01.org # 修改192.168.32.204的主机名称为k8s-node02.org # 修改192.168.32.205的主机名称为k8s-node03.org 主机时间同步 在所有主机上安装 chrony\n## 所有主机上执行 root@k8s-master01:~# apt install -y chrony 建议用户配置使用本地的的时间服务器，在节点数量众多时尤其如此。存在可用的本地时间服务器时，修改节点的/etc/chrony/chrony.conf配置文件，并将时间服务器指向相应的主机即可，配置格式如下：\nserver CHRONY-SERVER-NAME-OR-IP iburst 主机名称解析 出于简化配置步骤的目的，本测试环境使用hosts文件进行各节点名称解析，文件内容如下所示。其中，我们使用kubeapi主机名作为API Server在高可用环境中的专用接入名称，也为控制平面的高可用配置留下便于配置的余地。\n# 编辑/etc/hosts文件加入如下内容 root@k8s-master01:~# vim /etc/hosts 192.168.32.200 k8s-master01.org 192.168.32.203 k8s-node01.org 192.168.32.204 k8s-node02.org 192.168.32.205 k8s-node03.org 禁用Swap设备 部署集群时，kubeadm默认会预先检查当前主机是否禁用了Swap设备，并在未禁用时强制终止部署过程。因此，在主机内存资源充裕的条件下，需要禁用所有的Swap设备，否则，就需要在后文的kubeadm init及kubeadm join命令执行时额外使用相关的选项忽略检查错误。\n关闭Swap设备，需要分两步完成。首先是关闭当前已启用的所有Swap设备：\n# 临时关闭，所有机器执行 root@k8s-master01:~# swapoff -a 而后编辑/etc/fstab配置文件，注释用于挂载Swap设备的所有行\n# 所有机器执行 root@k8s-master01:~#vim /etc/fstab # 注释如下一行 #/swap.img none swap sw 0 0 禁用默认的防火墙服务 Ubuntu和Debian等Linux发行版默认使用ufw（Uncomplicated FireWall）作为前端来简化 iptables的使用，处于启用状态时，它默认会生成一些规则以加强系统安全。出于降低配置复杂度之目的，本文选择直接将其禁用。\nroot@k8s-master01:~# ufw disable Firewall stopped and disabled on system startup root@k8s-master01:~# ufw status Status: inactive root@k8s-master01:~# 安装程序包 提示：以下操作需要在本示例中的所有四台主机上分别进行\n安装并启动docker 首先，生成docker-ce相关程序包的仓库，这里以阿里云的镜像服务器为例进行说明\ndocker-ce镜像_docker-ce下载地址_docker-ce安装教程-阿里巴巴开源镜像站 (aliyun.com)\n# step 1: 安装必要的一些系统工具 sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common # step 2: 安装GPG证书 curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add - # Step 3: 写入软件源信息 sudo add-apt-repository \"deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable\" # Step 4: 更新并安装Docker-CE sudo apt-get -y update sudo apt-get -y install docker-ce # 安装指定版本的Docker-CE: # Step 1: 查找Docker-CE的版本: # apt-cache madison docker-ce # docker-ce | 17.03.1~ce-0~ubuntu-xenial | https://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages # docker-ce | 17.03.0~ce-0~ubuntu-xenial | https://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages # Step 2: 安装指定版本的Docker-CE: (VERSION例如上面的17.03.1~ce-0~ubuntu-xenial) # sudo apt-get -y install docker-ce=[VERSION] 本文以为20.10.10版本为例\nroot@k8s-node3:~# apt install docker-ce=5:20.10.10~3-0~ubuntu-focal docker-ce-cli=5:20.10.10~3-0~ubuntu-focal kubelet需要让docker容器引擎使用systemd作为CGroup的驱动，其默认值为cgroupfs，因而，我们还需要编辑docker的配置文件/etc/docker/daemon.json，添加如下内容，其中的registry-mirrors用于指明使用的镜像加速服务。\nvim /etc/docker/daemon.json { \"registry-mirrors\": [ \"https://ung2thfc.mirror.aliyuncs.com\", \"https://mirror.ccs.tencentyun.com\", \"https://registry.docker-cn.com\", \"http://hub-mirror.c.163.com\", \"https://docker.mirrors.ustc.edu.cn\"], \"exec-opts\": [\"native.cgroupdriver=systemd\"] } systemctl daemon-reload \u0026\u0026 systemctl restart docker 安装cri-dockerd Kubernetes自v1.24移除了对docker-shim的支持，而Docker Engine默认又不支持CRI规范，因而二者将无法直接完成整合。为此，Mirantis和Docker联合创建了cri-dockerd项目，用于为Docker Engine提供一个能够支持到CRI规范的垫片，从而能够让Kubernetes基于CRI控制Docker 。\n项目地址\ncri-dockerd项目提供了预制的二进制格式的程序包，用户按需下载相应的系统和对应平台的版本即可完成安装，这里以Ubuntu 2004 64bits系统环境，以及cri-dockerd目前最新的程序版本v0.3.0为例。\nwget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.0/cri-dockerd_0.3.0.3-0.ubuntu-focal_amd64.deb dpkg -i cri-dockerd_0.3.0.3-0.ubuntu-focal_amd64.deb 完成安装后，相应的服务cri-dockerd.service便会自动启动。我们也可以使用如下命令进行验证，若服务处于Running状态即可进行后续步骤 。\nroot@k8s-master01:~# systemctl status cri-docker.service ● cri-docker.service - CRI Interface for Docker Application Container Engine Loaded: loaded (/lib/systemd/system/cri-docker.service; enabled; vendor preset: enabled) Active: active (running) since Tue 2023-03-21 10:59:57 CST; 1min 20s ago TriggeredBy: ● cri-docker.socket Docs: https://docs.mirantis.com Main PID: 17591 (cri-dockerd) Tasks: 7 Memory: 11.9M CGroup: /system.slice/cri-docker.service └─17591 /usr/bin/cri-dockerd --container-runtime-endpoint fd:// Mar 21 10:59:57 k8s-master01.org cri-dockerd[17591]: time=\"2023-03-21T10:59:57+08:00\" level=info msg=\"Start docker client with request timeout 0s\" Mar 21 10:59:57 k8s-master01.org cri-dockerd[17591]: time=\"2023-03-21T10:59:57+08:00\" level=info msg=\"Hairpin mode is set to none\" Mar 21 10:59:57 k8s-master01.org cri-dockerd[17591]: time=\"2023-03-21T10:59:57+08:00\" level=info msg=\"Loaded network plugin cni\" Mar 21 10:59:57 k8s-master01.org cri-dockerd[17591]: time=\"2023-03-21T10:59:57+08:00\" level=info msg=\"Docker cri networking managed by network plugin cni\" Mar 21 10:59:57 k8s-master01.org systemd[1]: Started CRI Interface for Docker Application Container Engine. Mar 21 10:59:58 k8s-master01.org cri-dockerd[17591]: time=\"2023-03-21T10:59:57+08:00\" level=info msg=\"Docker Info: \u0026{ID:WQBA:P7R2:H6ZI:KWU3:FVFW:MHLC:QTT7:CJCX\u003e Mar 21 10:59:58 k8s-master01.org cri-dockerd[17591]: time=\"2023-03-21T10:59:57+08:00\" level=info msg=\"Setting cgroupDriver cgroupfs\" Mar 21 10:59:58 k8s-master01.org cri-dockerd[17591]: time=\"2023-03-21T10:59:57+08:00\" level=info msg=\"Docker cri received runtime config \u0026RuntimeConfig{Network\u003e Mar 21 10:59:58 k8s-master01.org cri-dockerd[17591]: time=\"2023-03-21T10:59:57+08:00\" level=info msg=\"Starting the GRPC backend for the Docker CRI interface.\" Mar 21 10:59:58 k8s-master01.org cri-dockerd[17591]: time=\"2023-03-21T10:59:57+08:00\" level=info msg=\"Start cri-dockerd grpc backend\" lines 1-21/21 (END) 安装kubelet、kubeadm和kubectl 首先，在各主机上生成kubelet和kubeadm等相关程序包的仓库，这里以阿里云的镜像服务为例\napt-get update \u0026\u0026 apt-get install -y apt-transport-https curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add - cat \u003c/etc/apt/sources.list.d/kubernetes.list deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main EOF apt-get update apt-get install -y kubelet kubeadm kubectl 安装完成后，要确保kubeadm等程序文件的版本，这将也是后面初始化Kubernetes集群时需要明确指定的版本号\n整合kubelet和cri-dockerd 仅支持CRI规范的kubelet需要经由遵循该规范的cri-dockerd完成与docker-ce的整合。\n配置cri-dockerd 配置cri-dockerd，确保其能够正确加载到CNI插件。编辑/usr/lib/systemd/system/cri-docker.service文件，确保其[Service]配置段中的ExecStart的值类似如下内容\nExecStart=/usr/bin/cri-dockerd --container-runtime-endpoint fd:// --network-plugin=cni --pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.7 --cni-bin-dir=/opt/cni/bin --cni-cache-dir=/var/lib/cni/cache --cni-conf-dir=/etc/cni/net.d 需要添加的各配置参数（各参数的值要与系统部署的CNI插件的实际路径相对应）：\n–network-plugin：指定网络插件规范的类型，这里要使用CNI； –cni-bin-dir：指定CNI插件二进制程序文件的搜索目录； –cni-cache-dir：CNI插件使用的缓存目录； –cni-conf-dir：CNI插件加载配置文件的目录； 配置完成后，重载并重启cri-docker.service服务。\nroot@k8s-master01:~# systemctl daemon-reload;systemctl restart cri-docker 配置kubelet 配置kubelet，为其指定cri-dockerd在本地打开的Unix Sock文件的路径，该路径一般默认为“/run/cri-dockerd.sock“。编辑文件/etc/sysconfig/kubelet，为其添加 如下指定参数。\n提示：若/etc/sysconfig目录不存在，则需要先创建该目录。\nKUBELET_KUBEADM_ARGS=\"--container-runtime=remote --container-runtime-endpoint=/run/cri-dockerd.sock\" 需要说明的是，该配置也可不进行，而是直接在后面的各kubeadm命令上使用“–cri-socket unix:///run/cri-dockerd.sock”选项。\n初始化第一个主节点 该步骤开始尝试构建Kubernetes集群的master节点，配置完成后，各worker节点直接加入到集群中的即可。需要特别说明的是，由kubeadm部署的Kubernetes集群上，集群核心组件kube-apiserver、kube-controller-manager、kube-scheduler和etcd等均会以静态Pod的形式运行，它们所依赖的镜像文件默认来自于registry.k8s.io这一Registry服务之上。但我们无法直接访问该服务，常用的解决办法有如下两种\n使用能够到达该服务的代理服务； 使用国内的镜像服务器上的服务，例如registry.aliyuncs.com/google_containers等。 初始化master节点（在k8s-master01上完成如下操作） 运行如下命令完成k8s-master01节点的初始化：\nkubeadm init --image-repository registry.aliyuncs.com/google_containers --kubernetes-version=v1.26.3 --pod-network-cidr=10.244.0.0/16 --service-cidr=10.96.0.0/12 --token-ttl=0 --cri-socket unix:///run/cri-dockerd.sock 命令中的各选项简单说明如下：\n–image-repository：指定要使用的镜像仓库，默认为registry.k8s.io； –kubernetes-version：kubernetes程序组件的版本号，它必须要与安装的kubelet程序包的版本号相同； –control-plane-endpoint：控制平面的固定访问端点，可以是IP地址或DNS名称，会被用于集群管理员及集群组件的kubeconfig配置文件的API Server的访问地址；单控制平面部署时可以不使用该选项； –pod-network-cidr：Pod网络的地址范围，其值为CIDR格式的网络地址，通常，Flannel网络插件的默认为10.244.0.0/16，Project Calico插件的默认值为192.168.0.0/16； –service-cidr：Service的网络地址范围，其值为CIDR格式的网络地址，默认为10.96.0.0/12；通常，仅Flannel一类的网络插件需要手动指定该地址； –apiserver-advertise-address：apiserver通告给其他组件的IP地址，一般应该为Master节点的用于集群内部通信的IP地址，0.0.0.0表示节点上所有可用地址； –token-ttl：共享令牌（token）的过期时长，默认为24小时，0表示永不过期；为防止不安全存储等原因导致的令牌泄露危及集群安全，建议为其设定过期时长。未设定该选项时，在token过期后，若期望再向集群中加入其它节点，可以使用如下命令重新创建token，并生成节点加入命令。 初始化完成后的操作步骤 对于Kubernetes系统的新用户来说，无论使用上述哪种方法，命令运行结束后，请记录最后的kubeadm join命令输出的最后提示的操作步骤。下面的内容是需要用户记录的一个命令输出示例，它提示了后续需要的操作步骤。\n# 下面是成功完成第一个控制平面节点初始化的提示信息及后续需要完成的步骤 Your Kubernetes control-plane has initialized successfully! # 为了完成初始化操作，管理员需要额外手动完成几个必要的步骤 To start using your cluster, you need to run the following as a regular user: # 第1个步骤提示， Kubernetes集群管理员认证到Kubernetes集群时使用的kubeconfig配置文件 mkdir -p $HOME/.kube sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config sudo chown $(id -u):$(id -g) $HOME/.kube/config # 我们也可以不做上述设定，而使用环境变量KUBECONFIG为kubectl等指定默认使用的kubeconfig； Alternatively, if you are the root user, you can run: export KUBECONFIG=/etc/kubernetes/admin.conf # 第2个步骤提示，为Kubernetes集群部署一个网络插件，具体选用的插件则取决于管理员； You should now deploy a pod network to the cluster. Run \"kubectl apply -f [podnetwork].yaml\" with one of the options listed at: https://kubernetes.io/docs/concepts/cluster-administration/addons/ # 第3个步骤提示，向集群添加额外的控制平面节点，但本文会略过该步骤，并将在其它文章介绍其实现方式。 You can now join any number of the control-plane node running the following command on each as root: # 第4个步骤提示，向集群添加工作节点 Then you can join any number of worker nodes by running the following on each as root: # 在部署好kubeadm等程序包的各工作节点上以root用户运行类似如下命令； # 提示：与cri-dockerd结合使用docker-ce作为container runtime时，通常需要为下面的命令 # 额外附加“--cri-socket unix:///run/cri-dockerd.sock”选项； kubeadm join 192.168.32.200:6443 --token ivu3t7.pogk70dd5pualoz2 \\ --discovery-token-ca-cert-hash sha256:3edb3c8e3e6c944afe65b2616d46b49305c1420e6967c1fab966ddf8f149502d 设定kubectl kubectl是kube-apiserver的命令行客户端程序，实现了除系统部署之外的几乎全部的管理操作，是kubernetes管理员使用最多的命令之一。kubectl需经由API server认证及授权后方能执行相应的管理操作，kubeadm部署的集群为其生成了一个具有管理员权限的认证配置文件/etc/kubernetes/admin.conf，它可由kubectl通过默认的“$HOME/.kube/config”的路径进行加载。当然，用户也可在kubectl命令上使用–kubeconfig选项指定一个别的位置。\n下面复制认证为Kubernetes系统管理员的配置文件至目标用户（例如当前用户root）的家目录下：\n~# mkdir ~/.kube\n~# cp /etc/kubernetes/admin.conf ~/.kube/config\n部署网络插件 Kubernetes系统上Pod网络的实现依赖于第三方插件进行，这类插件有近数十种之多，较为著名的有flannel、calico、canal和kube-router等，简单易用的实现是为CoreOS提供的flannel项目。下面的命令用于在线部署flannel至Kubernetes系统之上：\n首先，下载适配系统及硬件平台环境的flanneld至每个节点，并放置于/opt/bin/目录下。我们这里选用flanneld-amd64，目前最新的版本为v0.21.3，因而，我们需要在集群的每个节点上执行如下命令：\n~# mkdir /opt/cni/bin/ ~# curl -L https://github.com/flannel-io/flannel/releases/download/v0.20.2/flanneld-amd64 -o /opt/cni/bin/flanneld ~# chmod +x /opt/cni/bin/flanneld 提示：下载flanneld的地址为 https://github.com/flannel-io/flannel/releases 随后，在初始化的第一个master节点k8s-master01上运行如下命令，向Kubernetes部署kube-flannel\nkubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.21.3/Documentation/kube-flannel.yml 而后使用如下命令确认其输出结果中Pod的状态为“Running”，类似如下命令及其输入的结果所示：\nroot@k8s-master01:~# kubectl get pods -n kube-flannel NAME READY STATUS RESTARTS AGE kube-flannel-ds-jgkxd 1/1 Running 0 2m59s root@k8s-master01:~# 验证master节点已经就绪 kubectl get nodes\n上述命令应该会得到类似如下输出，这表示k8s-master01节点已经就绪\nroot@k8s-master01:~# kubectl get nodes NAME STATUS ROLES AGE VERSION k8s-master01.org Ready control-plane 62m v1.26.3 root@k8s-master01:~# 添加节点到集群中 下面的两个步骤，需要分别在k8s-node01、k8s-node02和k8s-node03上各自完成。\n1、若未禁用Swap设备，编辑kubelet的配置文件/etc/default/kubelet，设置其忽略Swap启用的状态错误，内容如下：KUBELET_EXTRA_ARGS=\"–fail-swap-on=false\"\n2、将节点加入第二步中创建的master的集群中，要使用主节点初始化过程中记录的kubeadm join命令；\nroot@k8s-node01:/opt/cni/bin# kubeadm join 192.168.32.200:6443 --token ivu3t7.pogk70dd5pualoz2 --discovery-token-ca-cert-hash sha256:3edb3c8e3e6c944afe65b2616d46b49305c1420e6967c1fab966ddf8f149502d --cri-socket unix:///run/cri-dockerd.sock 验证节点添加结果 在每个节点添加完成后，即可通过kubectl验证添加结果。下面的命令及其输出是在所有的三个节点均添加完成后运行的，其输出结果表明三个Worker Node已经准备就绪。\n~# kubectl get nodes\nroot@k8s-master01:~# kubectl get nodes NAME STATUS ROLES AGE VERSION k8s-master01.org Ready control-plane 80m v1.26.3 k8s-node01.org Ready 15m v1.26.3 k8s-node2.org Ready 114s v1.26.3 k8s-node3.org Ready 11m v1.26.3 root@k8s-master01:~# 测试应用编排及服务访问 到此为止，一个master，并附带有三个worker的kubernetes集群基础设施已经部署完成，用户随后即可测试其核心功能。\nroot@k8s-master01:~# kubectl create deployment test-nginx --image=nginx:latest --replicas=3 deployment.apps/test-nginx created root@k8s-master01:~# root@k8s-master01:~# kubectl create service nodeport test-nginx --tcp=80:80 service/test-nginx created root@k8s-master01:~# 而后，使用如下命令了解Service对象test-nginx使用的NodePort，以便于在集群外部进行访问：\nroot@k8s-master01:~# kubectl get svc -l app=test-nginx NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE test-nginx NodePort 10.100.229.239 80:31888/TCP 50s root@k8s-master01:~# 因此，用户可以于集群外部通过\"http://NodeIP:31888\"这个URL访问we应用，例如于集群外通过浏览器访问\"http://192.168.32.203:31888\" 小结 本文给出了部署Kubernetes分布式集群的具体步骤，并在最后测试了将应用部署并运行于Kubernetes系统上的结果。在读者朋友们自行测试时，cri-dockerd、docker-ce、flannel、kubeadm、kubectl和kubelet的版本均可能存在版本上的不同，也因此可能会存在一定程度上的配置差异，具体调整方式请大家自行参考相关的文档进行\n",
   "wordCount" : "6501",
   "inLanguage": "en",
-  "image":"http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg","datePublished": "2023-03-21T00:17:58+08:00",
+  "image":"https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg","datePublished": "2023-03-21T00:17:58+08:00",
   "dateModified": "2023-03-21T00:17:58+08:00",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://colorfulgz.com/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/"
+    "@id": "https://xyenvy.github.io/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://colorfulgz.com/img/Q.gif"
+      "url": "https://xyenvy.github.io/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://xyenvy.github.io/" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/" title="🏠 主页">
+                <a href="https://xyenvy.github.io/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://xyenvy.github.io/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://xyenvy.github.io/">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
             <h1 class="post-title">
                 搭建Kubernetes集群
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="http://colorfulgz.com/tags/kubernetes/" style="color: var(--secondary)!important;">kubernetes</a>
+                <a href="https://xyenvy.github.io/tags/kubernetes/" style="color: var(--secondary)!important;">kubernetes</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "http://colorfulgz.com"
+                                let dnsUrl = "https://xyenvy.github.io/"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -799,12 +799,12 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="http://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/">
+  <a class="prev" href="https://xyenvy.github.io/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/">
     <span class="title">« 上一页</span>
     <br>
     <span>zabbix5部署安装</span>
   </a>
-  <a class="next" href="http://colorfulgz.com/posts/zookeeper%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/">
+  <a class="next" href="https://xyenvy.github.io/posts/zookeeper%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/">
     <span class="title">下一页 »</span>
     <br>
     <span>Zookeeper离线安装脚本</span>
@@ -855,7 +855,7 @@ var _hmt = _hmt || [];
         Copyright
         &copy;
         2022-2023
-        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        <a href="https://xyenvy.github.io/" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2022006994号-2</a>&nbsp;
