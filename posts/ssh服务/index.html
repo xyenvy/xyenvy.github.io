@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, ssh">
 <meta name="description" content="ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议">
 <meta name="author" content="">
-<link rel="canonical" href="https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/">
+<link rel="canonical" href="http://colorfulgz.com/posts/ssh%E6%9C%8D%E5%8A%A1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="ssh服务" />
 <meta property="og:description" content="ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/4.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/ssh%E6%9C%8D%E5%8A%A1/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/4.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-09-12T22:01:08+00:00" />
 <meta property="article:modified_time" content="2022-09-12T22:01:08+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/4.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/4.jpg" />
 <meta name="twitter:title" content="ssh服务"/>
 <meta name="twitter:description" content="ssh secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议"/>
 
@@ -95,15 +95,15 @@ var _hmt = _hmt || [];
 
         {
           "@type": "ListItem",
-          "position":  1 ,
+          "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  3 ,
       "name": "ssh服务",
-      "item": "https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/"
+      "item": "http://colorfulgz.com/posts/ssh%E6%9C%8D%E5%8A%A1/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "ssh: secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议\nssh服务介绍 ssh: secure shell protocol, 22/tcp, 安全的远程登录，实现加密通信，代替传统的 telnet 协议 具体的软件实现：\nOpenSSH：ssh协议的开源实现，CentOS 默认安装 dropbear：另一个ssh协议的开源项目的实现 SSH 协议版本\nv1：基于CRC-32做MAC，不安全；man-in-middle v2：双方主机协议选择安全的MAC方式，基于DH算法做密钥交换，基于RSA或DSA实现身份认证 openssh 服务 OpenSSH是SSH （Secure SHell） 协议的免费开源实现，一般在各种Linux版本中会默认安装，基于C/S结构 Openssh软件相关包：\nopenssh openssh-clients openssh-server 客户端 ssh命令 ssh命令是ssh客户端，允许实现对远程系统经验证地加密安全访问\n当用户远程连接ssh服务器时，会复制ssh服务器/etc/ssh/ssh_host*key.pub文件中的公钥到客户机的~/.ssh/know_hosts中。下次连接时，会自动匹配相对应的私钥，不能匹配，将拒绝连接 ssh客户端配置文件： /etc/ssh/ssh_config 主要配置:\n#StrictHostKeyChecking ask #首次登录不显示检查提示 StrictHostKeyChecking no # IdentityFile ~/.ssh/id_rsa # IdentityFile ~/.ssh/id_dsa # IdentityFile ~/.ssh/id_ecdsa # IdentityFile ~/.ssh/id_ed25519 # Port 22 范例：禁止首次连接的询问过程\n[root@centos7 ~]#sed -i.bak '/StrictHostKeyChecking/s/.*/StrictHostKeyChecking no/' /etc/ssh/ssh_config 格式\nssh [user@]host [COMMAND] ssh [-l user] host [COMMAND] 常用选项\n-p port #远程服务器监听的端口 -b #指定连接的源IP -v #调试模式 -C #压缩方式 -X #支持x11转发 -t #强制伪tty分配，如：ssh -t remoteserver1 ssh -t remoteserver2 ssh remoteserver3 -o option 如：-o StrictHostKeyChecking=no -i #指定私钥文件路径，实现基于key验证，默认使用文件： ~/.ssh/id_dsa, ~/.ssh/id_ecdsa, ~/.ssh/id_ed25519，~/.ssh/id_rsa等 在远程主机执行本地脚本\n[root@rocky ~]# cat test.sh #!/bin/bash hostname -I [root@rocky ~]# ssh root@192.168.179.145 /bin/bash ",
   "wordCount" : "2451",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/4.jpg","datePublished": "2022-09-12T22:01:08Z",
+  "image":"http://colorfulgz.com/posts.images/banner/4.jpg","datePublished": "2022-09-12T22:01:08Z",
   "dateModified": "2022-09-12T22:01:08Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/ssh%E6%9C%8D%E5%8A%A1/"
+    "@id": "http://colorfulgz.com/posts/ssh%E6%9C%8D%E5%8A%A1/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io/" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io/">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 ssh服务
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="http://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io/"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/4.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/4.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -679,12 +679,12 @@ ssh客户端配置文件： /etc/ssh/ssh_config
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/">
+  <a class="prev" href="http://colorfulgz.com/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/">
     <span class="title">« 上一页</span>
     <br>
     <span>批量修改主机密码为随机字符</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/">
+  <a class="next" href="http://colorfulgz.com/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/">
     <span class="title">下一页 »</span>
     <br>
     <span>Rocky上实现私有CA和证书申请</span>
@@ -701,14 +701,14 @@ ssh客户端配置文件： /etc/ssh/ssh_config
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io/" style="color:#939393;">DevOpsHub</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
             
         </a>
     </span>

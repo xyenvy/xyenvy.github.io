@@ -9,14 +9,14 @@
 <meta name="keywords" content="MySQL">
 <meta name="description" content="MySQL主从架构部署比较简单，常见架构根据主从节点个数不同分成 一主多从，多主一从，双主节点等">
 <meta name="author" content="">
-<link rel="canonical" href="https://xyenvy.github.io/posts/mysql%E9%9B%86%E7%BE%A4/">
+<link rel="canonical" href="http://colorfulgz.com/posts/mysql%E9%9B%86%E7%BE%A4/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="MySQL集群" />
 <meta property="og:description" content="MySQL主从架构部署比较简单，常见架构根据主从节点个数不同分成 一主多从，多主一从，双主节点等" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/mysql%E9%9B%86%E7%BE%A4/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/22.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/mysql%E9%9B%86%E7%BE%A4/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/22.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-11-23T13:38:00+00:00" />
 <meta property="article:modified_time" content="2022-11-23T13:38:00+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/22.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/22.jpg" />
 <meta name="twitter:title" content="MySQL集群"/>
 <meta name="twitter:description" content="MySQL主从架构部署比较简单，常见架构根据主从节点个数不同分成 一主多从，多主一从，双主节点等"/>
 
@@ -95,15 +95,15 @@ var _hmt = _hmt || [];
 
         {
           "@type": "ListItem",
-          "position":  1 ,
+          "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  3 ,
       "name": "MySQL集群",
-      "item": "https://xyenvy.github.io/posts/mysql%E9%9B%86%E7%BE%A4/"
+      "item": "http://colorfulgz.com/posts/mysql%E9%9B%86%E7%BE%A4/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "MySQL集群 主从复制架构和原理 MySQL主从复制 读写分离 复制：每个节点都有相同的数据集，向外扩展，基于二进制日志的单向复制 复制的功用 负载均衡读操作 备份 高可用和故障切换 数据分布 MySQL升级 复制架构 一主一从复制架构\n一主多从复制架构\n主从复制原理 主从复制相关线程 主节点： dump Thread：为每个Slave的I/O Thread启动一个dump线程，用于向其发送binary log events 从节点： I/O Thread：向Master请求二进制日志事件，并保存于中继日志中 SQL Thread：从中继日志中读取日志事件，在本地完成重放 跟复制功能相关的文件 master.info：用于保存slave连接至master时的相关信息，例如账号、密码、服务器地址等 relay-log.info：保存在当前slave节点上已经复制的当前二进制日志和本地relay log日志的对应关 系 mysql-relay-bin.00000#: 中继日志,保存从主节点复制过来的二进制日志,本质就是二进制日志 说明:\n范例: 中继日志 MySQL8.0 取消 master.info 和 relay-log.info文件 实现主从复制配置 官网参考\nhttps://dev.mysql.com/doc/refman/8.0/en/replication-configuration.html https://dev.mysql.com/doc/refman/5.7/en/replication-configuration.html https://dev.mysql.com/doc/refman/5.5/en/replication-configuration.html https://mariadb.com/kb/en/library/setting-up-replication/ MySQL版本：5.7.38 centos7.9 主节点配置\n（1）启用二进制日志\nvim /etc/my.cnf [mysqld] log_bin (2)为当前节点设置一个全局唯一的ID号\n[mysqld] server-id=# log-basename=master #可选项，设置datadir中日志名称，确保不依赖主机名 说明\nserver-id的取值范围 1 to 4294967295 (\u003e= MariaDB 10.2.2)，默认值为1，MySQL8.0默认值为1 0 to 4294967295 (\u003c= MariaDB 10.2.1)，默认值为0，如果从节点为0，所有master都将拒绝此 slave的连接 注意：修改配置文件后重启mysql服务\n（3）创建有复制权限的用户账号\n#MySQL8.0 分成两步实现 # 创建用户 mysql\u003e create user test@'192.168.179.165' identified by'123456'; Query OK, 0 rows affected (0.02 sec) mysql\u003e # 赋予权限 mysql\u003e grant replication slave on *.* to test@'192.168.179.165'; Query OK, 0 rows affected (0.01 sec) mysql\u003e #其他 mysql\u003e GRANT REPLICATION SLAVE ON *.* TO 'test'@'HOST' IDENTIFIED BY '123456'; (4)完全备份数据库\n[root@centos7 ~]# mysqldum -A -F --master-data=1 --single-transaction \u003e /backup/all_`date +%F`.sql [root@centos7 backup]# ll /backup/ total 1216 -rw-r--r-- 1 root root 1244691 Nov 23 23:07 all_2022-11-23.sql [root@centos7 backup]# 从节点配置\n(1)修改从节点server-id,不能和主节点server-id一致\n[mysqld] server-id=2 #或者使用如下配置 [mysqld] server_id=# #为当前节点设置一个全局惟的ID号 log-bin read_only=ON #设置数据库只读，针对supper user无效 relay_log=relay-log #relay log的文件路径，默认值hostname-relay-bin relay_log_index=relay-log.index #默认值hostname-relay-bin.index （2）使用有复制权限的用户账号连接至主服务器，并启动复制线程\n从节点导入主节点完全备份的数据\n# 关闭二进制日志 mysql\u003e set sql_log_bin=0; Query OK, 0 rows affected (0.00 sec) mysql\u003e # 还原备份 mysql\u003e source all_2022-11-23.sql; # 开启二进制日志 mysql\u003e set sql_log_bin=1; Query OK, 0 rows affected (0.00 sec) mysql\u003e # 开启线程 mysql\u003e start slave; Query OK, 0 rows affected, 1 warning (0.03 sec) mysql\u003e mysql客户端命令行执行如下内容\nCHANGE MASTER TO MASTER_HOST='192.168.179.170', MASTER_USER='test',MASTER_PASSWORD='123456',MASTER_LOG_FILE='mysql-bin.000007', MASTER_LOG_POS=154; MASTER_LOG_FILE=‘mysql-bin.000007’, MASTER_LOG_POS=154;的值可以从备份sql文件中找到，如图所示：\n最后启动复制线程\nstart slave 扩展：\nshow slave status\\G # 查看相关状态信息 从节点更换主节点\n\u003emysql stop slave; #停止复制线程 \u003emysql reset slave all; # 清除信息 再次使用有复制权限的用户账号连接至主服务器，并启动复制线程 级联复制 案例：三台主机实现级联复制\n步骤\n# 192.168.179.170充当master # 192.168.179.171充当slave1 # 192.168.179.157充当slave2 # 操作系统：centos7.9 #MySQL版本：5.7.38 在master上实现，即192.168.179.170\n# 在master上实现，即192.168.179.170 vim /etc/my.cnf [mysqld] server-id=170 log-bin=/data/mysql/mysql-bin 重启服务\n[root@centos7 ~]# systemctl restart mysql [root@centos7 ~]# 创建具有复制权限的账号\nmysql\u003e grant replication slave on *.* to 'test'@'192.168.179.%' identified by '123456'; Query OK, 0 rows affected, 1 warning (0.00 sec) mysql\u003e 完全备份\n[root@centos7 ~]# mysqldump -uroot -p123456 -A -F --single-transaction --master-data=1 \u003e /data/all.sql; [root@centos7 ~]# scp /data/all.sql root@192.168.179.171:/data [root@centos7 ~]# scp /data/all.sql root@192.168.179.157:/data 在中间级联实现\n#在中间级联实现,即192.168.179.171 #修改配置文件 vim /etc/my.cnf [mysqld] server-id=171 log-bin=/data/mysql/slave1-bin read-only log_slave_updates #级联复制中间节点的必选项,MySQL8.0此为默认值,可以不要人为添加 #重启mysql service mysqld restart或者systemctl restart mysql # 还原数据库 vim /data/all.sql mysql\u003e set sql_log_bin=0; Query OK, 0 rows affected (0.00 sec) mysql\u003e mysql\u003e source /data/all.sql; mysql\u003e show master logs; +-------------------+-----------+ | Log_name | File_size | +-------------------+-----------+ | slave1-bin.000001 | 801 | | slave1-bin.000002 | 458 | +-------------------+-----------+ 2 rows in set (0.01 sec) mysql\u003e mysql\u003e set sql_log_bin=1; Query OK, 0 rows affected (0.00 sec) mysql\u003e mysql\u003e start slave; Query OK, 0 rows affected (0.01 sec) mysql\u003e 在第三个节点slave上实现\nvim /etc/my.cnf [mysqld] server-id=157 log-bin=/data/mysql/slave2-bin # 还原数据库 vim /data/all.sql mysql\u003e set sql_log_bin=0; mysql\u003e source /data/all.sql mysql\u003e set sql_log_bin=1; mysql\u003e start slave; 半同步复制 范例：centos7.9在MySQL5.7.38实现半同步复制\n# 主服务器配置，安装semisync_slave.so插件 mysql\u003e INSTALL PLUGIN rpl_semi_sync_master SONAME 'semisync_master.so'; Query OK, 0 rows affected (0.05 sec) mysql\u003e # 修改配置文件 vim /etc/my.cnf rpl_semi_sync_master_enabled=ON #修改此行,需要先安装semisync_master.so插件后,再重启,否则无法启动 rpl_semi_sync_master_timeout=3000 #设置3s内无法同步，也将返回成功信息给客户端 # 重启服务 systemctl restart mysql #slave服务器配置 #安装semisync_slave.so插件 mysql\u003e INSTALL PLUGIN rpl_semi_sync_master SONAME 'semisync_master.so'; Query OK, 0 rows affected (0.05 sec) #注意:如果已经实现主从复制,需要stop slave;start slave; mysql\u003e stop slave; Query OK, 0 rows affected (0.00 sec) mysql\u003e start slave -\u003e ; Query OK, 0 rows affected (0.00 sec) mysql\u003e # 重启mysql服务 systemctl restart mysql # 修改配置文件 vim /etc/my.cnf rpl_semi_sync_slave_enabled=ON # 重启mysql服务 systemctl restart mysql 测试半同步\n# 停止从库slave1 [root@centos7 ~]# systemctl stop mysql # 主库创建表 mysql\u003e create database hellodb; Query OK, 1 row affected (3.00 sec) mysql\u003e # 设置的是三秒内无法同步返回成功，所以看到是3S后返回成功 实战案例：利用Mycat实现MySQL的读写分离 所有主机系统环境\ncentos7.9 服务器三台\nmycat-server 192.168.179.157 #内存建议2G以上 mysql-master 192.168.179.170 MySQL 5.7 mysql-slave 192.168.179.171 MySQL 5.7 关闭SELinux和防火墙\nsystemctl stop firewalld setenforce 0 时间同步 注意：主从复制的过程省略，参考实现主从复制过程\n代理服务器上安装Mycat\n下载地址:\n# 安装jdk [root@centos7 ~]# yum install -y java # 验证 [root@centos7 ~]# java -version openjdk version \"1.8.0_352\" OpenJDK Runtime Environment (build 1.8.0_352-b08) OpenJDK 64-Bit Server VM (build 25.352-b08, mixed mode) [root@centos7 ~]# [root@centos7 ~]# mkdir /apps [root@centos7 ~]# tar xf Mycat-server-1.6.7.4-release-20200105164103-linux.tar.gz -C /apps/ [root@centos7 ~]# #配置环境变量 [root@centos7 ~]# echo 'PATH=/apps/mycat/bin:$PATH' \u003e /etc/profile.d/mycat.sh [root@centos7 ~]# source /etc/profile.d/mycat.sh #注意: 此步启动较慢,需要等一会儿,另外如果内存太小,会导致无法启动 [root@centos7 ~]# mycat start Starting Mycat-server... [root@centos7 ~]# # 查看日志是否启动成功 [root@centos7 ~]# tail -f /apps/mycat/logs/wrapper.log STATUS | wrapper | 2022/11/26 23:27:52 | --\u003e Wrapper Started as Daemon STATUS | wrapper | 2022/11/26 23:27:52 | Launching a JVM... INFO | jvm 1 | 2022/11/26 23:28:08 | Wrapper (Version 3.2.3) http://wrapper.tanukisoftware.org INFO | jvm 1 | 2022/11/26 23:28:08 | Copyright 1999-2006 Tanuki Software, Inc. All Rights Reserved. INFO | jvm 1 | 2022/11/26 23:28:08 | INFO | jvm 1 | 2022/11/26 23:28:10 | MyCAT Server startup successfully. see logs in logs/mycat.log #用默认密码123456来连接mycat [root@centos7 ~]# mysql -uroot -p123456 -h 192.168.179.157 -P8066 mysql: [Warning] Using a password on the command line interface can be insecure. Welcome to the MySQL monitor. Commands end with ; or \\g. Your MySQL connection id is 1 Server version: 5.6.29-mycat-1.6.7.4-release-20200105164103 MyCat Server (OpenCloudDB) Copyright (c) 2000, 2022, Oracle and/or its affiliates. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. mysql\u003e show databases; +----------+ | DATABASE | +----------+ | TESTDB | +----------+ 1 row in set (0.00 sec) mysql\u003e # 在主节点上创建账号用于mycat数据读写分离 mysql\u003ecreate user admin@'192.168.179.%' identified by'123456'; # 赋予权限 mysql\u003e grant all on *.* to 'admin'@'192.168.179.%' IDENTIFIED BY '123456'; Query OK, 0 rows affected, 1 warning (0.01 sec) # 刷新 # mysql\u003e flush privileges; Query OK, 0 rows affected (0.01 sec) mysql\u003e 修改schema.xml实现读写分离策略\n\u003c?xml version=\"1.0\"?\u003e \u003c!DOCTYPE mycat:schema SYSTEM \"schema.dtd\"\u003e ",
   "wordCount" : "4401",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/22.jpg","datePublished": "2022-11-23T13:38:00Z",
+  "image":"http://colorfulgz.com/posts.images/banner/22.jpg","datePublished": "2022-11-23T13:38:00Z",
   "dateModified": "2022-11-23T13:38:00Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/mysql%E9%9B%86%E7%BE%A4/"
+    "@id": "http://colorfulgz.com/posts/mysql%E9%9B%86%E7%BE%A4/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io/" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io/">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 MySQL集群
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/mysql/" style="color: var(--secondary)!important;">MySQL</a>
+                <a href="http://colorfulgz.com/tags/mysql/" style="color: var(--secondary)!important;">MySQL</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io/"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/22.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/22.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -1170,12 +1170,12 @@ password=123456</p>
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
+  <a class="prev" href="http://colorfulgz.com/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
     <span class="title">« 上一页</span>
     <br>
     <span>日志服务管理</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/">
+  <a class="next" href="http://colorfulgz.com/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/">
     <span class="title">下一页 »</span>
     <br>
     <span>MySQL备份脚本</span>
@@ -1192,14 +1192,14 @@ password=123456</p>
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io/" style="color:#939393;">DevOpsHub</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
             
         </a>
     </span>

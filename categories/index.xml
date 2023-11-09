@@ -2,107 +2,107 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Categories on DevOpsHub</title>
-    <link>https://xyenvy.github.io/categories/</link>
+    <link>http://colorfulgz.com/categories/</link>
     <description>Recent content in Categories on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 23 Jun 2023 13:24:16 +0800</lastBuildDate><atom:link href="https://xyenvy.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Jun 2023 13:24:16 +0800</lastBuildDate><atom:link href="http://colorfulgz.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>kubernetes</title>
-      <link>https://xyenvy.github.io/categories/kubernetes/</link>
+      <link>http://colorfulgz.com/categories/kubernetes/</link>
       <pubDate>Fri, 23 Jun 2023 13:24:16 +0800</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/kubernetes/</guid>
+      <guid>http://colorfulgz.com/categories/kubernetes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tabby</title>
-      <link>https://xyenvy.github.io/categories/tabby/</link>
+      <link>http://colorfulgz.com/categories/tabby/</link>
       <pubDate>Sun, 11 Jun 2023 19:40:22 +0800</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/tabby/</guid>
+      <guid>http://colorfulgz.com/categories/tabby/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Zabbix</title>
-      <link>https://xyenvy.github.io/categories/zabbix/</link>
+      <link>http://colorfulgz.com/categories/zabbix/</link>
       <pubDate>Tue, 02 May 2023 21:33:16 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/zabbix/</guid>
+      <guid>http://colorfulgz.com/categories/zabbix/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Zookeeper</title>
-      <link>https://xyenvy.github.io/categories/zookeeper/</link>
+      <link>http://colorfulgz.com/categories/zookeeper/</link>
       <pubDate>Sat, 18 Mar 2023 22:15:13 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/zookeeper/</guid>
+      <guid>http://colorfulgz.com/categories/zookeeper/</guid>
       <description></description>
     </item>
     
     <item>
       <title>OpenVPN</title>
-      <link>https://xyenvy.github.io/categories/openvpn/</link>
+      <link>http://colorfulgz.com/categories/openvpn/</link>
       <pubDate>Fri, 17 Mar 2023 21:51:21 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/openvpn/</guid>
+      <guid>http://colorfulgz.com/categories/openvpn/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Docker</title>
-      <link>https://xyenvy.github.io/categories/docker/</link>
+      <link>http://colorfulgz.com/categories/docker/</link>
       <pubDate>Tue, 07 Mar 2023 18:45:45 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/docker/</guid>
+      <guid>http://colorfulgz.com/categories/docker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ansible</title>
-      <link>https://xyenvy.github.io/categories/ansible/</link>
+      <link>http://colorfulgz.com/categories/ansible/</link>
       <pubDate>Sat, 25 Feb 2023 19:12:21 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/ansible/</guid>
+      <guid>http://colorfulgz.com/categories/ansible/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Redis</title>
-      <link>https://xyenvy.github.io/categories/redis/</link>
+      <link>http://colorfulgz.com/categories/redis/</link>
       <pubDate>Thu, 09 Feb 2023 14:59:00 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/redis/</guid>
+      <guid>http://colorfulgz.com/categories/redis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Nginx</title>
-      <link>https://xyenvy.github.io/categories/nginx/</link>
+      <link>http://colorfulgz.com/categories/nginx/</link>
       <pubDate>Sat, 07 Jan 2023 13:34:33 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/nginx/</guid>
+      <guid>http://colorfulgz.com/categories/nginx/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linux</title>
-      <link>https://xyenvy.github.io/categories/linux/</link>
+      <link>http://colorfulgz.com/categories/linux/</link>
       <pubDate>Sat, 17 Dec 2022 09:28:09 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/linux/</guid>
+      <guid>http://colorfulgz.com/categories/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>MySQL</title>
-      <link>https://xyenvy.github.io/categories/mysql/</link>
+      <link>http://colorfulgz.com/categories/mysql/</link>
       <pubDate>Wed, 23 Nov 2022 13:38:00 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/categories/mysql/</guid>
+      <guid>http://colorfulgz.com/categories/mysql/</guid>
       <description></description>
     </item>
     

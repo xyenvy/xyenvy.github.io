@@ -2,44 +2,44 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>kubernetes on DevOpsHub</title>
-    <link>https://xyenvy.github.io/tags/kubernetes/</link>
+    <link>http://colorfulgz.com/tags/kubernetes/</link>
     <description>Recent content in kubernetes on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 23 Jun 2023 13:24:16 +0800</lastBuildDate><atom:link href="https://xyenvy.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Jun 2023 13:24:16 +0800</lastBuildDate><atom:link href="http://colorfulgz.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>kubernetes实战</title>
-      <link>https://xyenvy.github.io/posts/k8sactualcombat/</link>
+      <link>http://colorfulgz.com/posts/k8sactualcombat/</link>
       <pubDate>Fri, 23 Jun 2023 13:24:16 +0800</pubDate>
       
-      <guid>https://xyenvy.github.io/posts/k8sactualcombat/</guid>
+      <guid>http://colorfulgz.com/posts/k8sactualcombat/</guid>
       <description>此教程基于kubernetes v1.23.17实践案例</description>
     </item>
     
     <item>
       <title>kubernetes常见yaml资源详解</title>
-      <link>https://xyenvy.github.io/posts/k8srresourceddetails/</link>
+      <link>http://colorfulgz.com/posts/k8srresourceddetails/</link>
       <pubDate>Fri, 16 Jun 2023 00:02:11 +0800</pubDate>
       
-      <guid>https://xyenvy.github.io/posts/k8srresourceddetails/</guid>
+      <guid>http://colorfulgz.com/posts/k8srresourceddetails/</guid>
       <description>kubectl提供了各种命令，来管理集群中的pod，但是这些命令都是为了方便运维测试，实际生产部署还得用yaml文件来部署</description>
     </item>
     
     <item>
       <title>Kubernetes详细教程</title>
-      <link>https://xyenvy.github.io/posts/kubernetes/</link>
+      <link>http://colorfulgz.com/posts/kubernetes/</link>
       <pubDate>Sat, 20 May 2023 00:23:06 +0800</pubDate>
       
-      <guid>https://xyenvy.github.io/posts/kubernetes/</guid>
+      <guid>http://colorfulgz.com/posts/kubernetes/</guid>
       <description>Kubernetes 是一个开源的容器编排引擎，用来对容器化应用进行自动化部署、 扩缩和管理</description>
     </item>
     
     <item>
       <title>搭建Kubernetes集群</title>
-      <link>https://xyenvy.github.io/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/</link>
+      <link>http://colorfulgz.com/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/</link>
       <pubDate>Tue, 21 Mar 2023 00:17:58 +0800</pubDate>
       
-      <guid>https://xyenvy.github.io/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/</guid>
+      <guid>http://colorfulgz.com/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/</guid>
       <description>Kubernetes 是一个开源的容器编排引擎，用来对容器化应用进行自动化部署、 扩缩和管理</description>
     </item>
     

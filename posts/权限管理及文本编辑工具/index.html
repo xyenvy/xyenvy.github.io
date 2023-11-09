@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, 文本编辑, vim, vi, awk, sed, gerp">
 <meta name="description" content="Linux中的三剑客是指三个经典的文本处理工具，它们分别是grep、sed和awk。这些工具经常用于处理文本文件，搜索、替换和提取数据等任务">
 <meta name="author" content="">
-<link rel="canonical" href="https://xyenvy.github.io/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/">
+<link rel="canonical" href="http://colorfulgz.com/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="权限管理及文本编辑工具" />
 <meta property="og:description" content="Linux中的三剑客是指三个经典的文本处理工具，它们分别是grep、sed和awk。这些工具经常用于处理文本文件，搜索、替换和提取数据等任务" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-07-25T20:34:34+00:00" />
 <meta property="article:modified_time" content="2022-07-25T20:34:34+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" />
 <meta name="twitter:title" content="权限管理及文本编辑工具"/>
 <meta name="twitter:description" content="Linux中的三剑客是指三个经典的文本处理工具，它们分别是grep、sed和awk。这些工具经常用于处理文本文件，搜索、替换和提取数据等任务"/>
 
@@ -95,15 +95,15 @@ var _hmt = _hmt || [];
 
         {
           "@type": "ListItem",
-          "position":  1 ,
+          "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  3 ,
       "name": "权限管理及文本编辑工具",
-      "item": "https://xyenvy.github.io/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/"
+      "item": "http://colorfulgz.com/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "1.新建文件和目录的默认权限 umask 的值可以用来保留在创建文件权限 实现方式：\n新建文件的默认权限: 666-umask，如果所得结果某位存在执行（奇数）权限，则将其权限+1,偶 数不变 新建目录的默认权限: 777-umask 非特权用户umask默认是002\nroot的umask默认是022\n查看umask\numask #模式方式显示 umask –S #输出可被调用 umask –p 修改umask\numask #bash 范例：\nbash umask 002 umask u=rw,g=r,o= 持久保存umask:\n全局设置：/etc/bashrc 用户设置：~/.bashrc 创建临时权限为000的文件三种方法：\n方法一 touch a.txt;chmod 000 a.txt 方法二 umask 777;touch a.txt;umask 022 方法三 (umask 777;touch a.txt) ",
   "wordCount" : "252",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg","datePublished": "2022-07-25T20:34:34Z",
+  "image":"http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg","datePublished": "2022-07-25T20:34:34Z",
   "dateModified": "2022-07-25T20:34:34Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/"
+    "@id": "http://colorfulgz.com/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io/" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io/">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 权限管理及文本编辑工具
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="http://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io/"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/pexels-pixabay-268533.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -479,12 +479,12 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+  <a class="prev" href="http://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
     <span class="title">« 上一页</span>
     <br>
     <span>文本处理工具和正则表达式</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
+  <a class="next" href="http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
     <span class="title">下一页 »</span>
     <br>
     <span>文件管理</span>
@@ -501,14 +501,14 @@ var _hmt = _hmt || [];
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io/" style="color:#939393;">DevOpsHub</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
             
         </a>
     </span>

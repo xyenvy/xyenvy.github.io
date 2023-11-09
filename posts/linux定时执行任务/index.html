@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, 定时, 任务, 定时任务">
 <meta name="description" content="定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。">
 <meta name="author" content="">
-<link rel="canonical" href="https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">
+<link rel="canonical" href="http://colorfulgz.com/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="Linux定时执行任务" />
 <meta property="og:description" content="定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/18.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/18.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-09-05T23:48:34+00:00" />
 <meta property="article:modified_time" content="2022-09-05T23:48:34+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/18.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/18.jpg" />
 <meta name="twitter:title" content="Linux定时执行任务"/>
 <meta name="twitter:description" content="定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。"/>
 
@@ -95,15 +95,15 @@ var _hmt = _hmt || [];
 
         {
           "@type": "ListItem",
-          "position":  1 ,
+          "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  3 ,
       "name": "Linux定时执行任务",
-      "item": "https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"
+      "item": "http://colorfulgz.com/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "一、at命令 1、at命令的准备工作 1）安装 at 软件包\n[root@centos7 ~]# yum install -y at 2）需要 atd 服务的支持。atd 服务是独立的服务\n查看atd服务状态：# systemctl status atd 开启atd服务：# systemctl start atd 关闭atd服务：# systemctl stop atd 3）查看是否开始开机启动服务：如果弹出enabled，说明开机启动此服务\n[root@rocky ~]# systemctl is-enabled atd enabled [root@rocky ~]# 4）安装好 at 软件包并开启 atd 服务之后，at 命令才可以正常使用。\n[root@rocky ~]# systemctl start atd [root@rocky ~]# systemctl status atd 2、at 命令的访问控制 访问控制：是指允许哪些用户使用 at 命令设定定时任务，或者不允许哪些用户使用 at 命令。可以将其想象成设定黑名单或白名单。at 命令的访问控制是依靠 /etc/at.allow（白名单）和 /etc/at.deny（黑名单）这两个文件来实现的，具体规则如下：\n1)如果系统中有 /etc/at.allow 文件，那么只有写入 /etc/at.allow 文件（白名单）中的用户可以使用 at 命令，其他用户不能使用 at 命令(（注意，/etc/at.allow 文件的优先级更高，也就是说，如果同一个用户既写入 /etc/at.allow 文件，又写入 /etc/at.deny 文件，那么这个用户是可以使用 at 命令的);\n2)如果系统中没有 /etc/at.allow 文件，只有 /etc/at.deny 文件，那么写入 /etc/at.deny 文件（黑名单）中的用户不能使用 at 命令，其他用户可以使用 at 命令。不过这个文件对 root 用户不生效;\n3)如果系统中这两个文件都不存在，那么只有 root 用户可以使用 at 命令;\n4)系统中默认只有 /etc/at.deny 文件，而且这个文件是空的，因此，系统中所有的用户都可以使用 at 命令。如果我们打算控制用户的 at 命令权限，那么只需把用户名写入 /etc/at.deny 文件即可。\n3、at 命令语法添加定时执行任务 基本格式\nat [选项] [时间] or at [option] TIME 选项\n-V 显示版本信息 -t time 时间格式 [[CC]YY]MMDDhhmm[.ss] -l 列出指定队列中等待运行的作业；相当于atq -d N 删除指定的N号作业；相当于atrm -c N 查看具体作业N号任务 -f file 指定的文件中读取任务 -m 当任务被完成之后，将给用户发送邮件，即使没有标准输出 注意：\n作业执行命令的结果中的标准输出和错误以执行任务的用户身份发邮件通知给 root 默认CentOS 8 最小化安装没有安装邮件服务,需要自行安装 TIME：定义出什么时候进行 at 这项任务的时间 此命令中关于时间参数可用的以下格式：\n格式 用法 HH:MM 比如 04:00 AM。 Midnight（midnight） 代表 12:00 AM Noon（noon） 代表 12:00 PM（相当于 12:00） Teatime（teatime） 代表 4:00 PM（相当于 16:00）。 英文月名 日期 年份 比如 January 15 2018 表示 2018 年 1 月 15 号，年份可有可无。 MMDDYY、MM/DD/YY、MM.DD.YY 比如 011518 表示 2018 年 1 月 15 号。 now+时间 以 minutes、hours、days 或 weeks 为单位，例如 now+5 days 表示命令在 5 天之后的此时此刻执行。 具体的使用方法： at命令后想要输入执行程序的确切时间，然后回车，接着在 \u003e 后输入想要执行的命令，最后用 Ctrl+d 组合键退出 at 命令。\n范例\n[root@centos7 ~]# at now+2 min at\u003e ls ./ \u003e a.log 范例: ubuntu at任务存放路径\nroot@ubuntu200404-1:~# ll /var/spool/cron/ total 20 drwxr-xr-x 5 root root 4096 Feb 23 2022 ./ drwxr-xr-x 4 root root 4096 Feb 23 2022 ../ drwxrwx--T 2 daemon daemon 4096 Sep 6 13:32 atjobs/ drwxrwx--T 2 daemon daemon 4096 Nov 12 2018 atspool/ drwx-wx--T 2 root crontab 4096 Feb 13 2020 crontabs/ root@ubuntu200404-1:~# ll /var/spool/cron/atjobs/ total 16 drwxrwx--T 2 daemon daemon 4096 Sep 6 13:32 ./ drwxr-xr-x 5 root root 4096 Feb 23 2022 ../ -rwx------ 1 root daemon 2838 Sep 6 13:33 a0000101a6c9d1* -rw------- 1 daemon daemon 6 Sep 6 13:32 .SEQ root@ubuntu200404-1:~# 范例：centos at任务存放路径\n[root@centos7 ~]# ll /var/spool/at/ total 4 -rwx------. 1 root root 2831 Sep 6 21:37 a0000501a6c9d5 drwx------. 2 root root 19 Sep 6 21:31 spool [root@centos7 ~]# 二、 crontab命令 at 命令：是在指定的时间只能执行一次任务。 crontab 命令：可以循环重复的执行定时任务。\n1、crontab 命令的准备工作 crontab 命令需要 crond 服务支持。crond 是 Linux 下用来周期地执行某种任务或等待处理某些事件的一个守护进程，在安装完成操作系统后，默认会安装 crond 服务工具，且 crond 服务默认就是自启动的。crond 进程每分钟会定期检查是否有要执行的任务，如果有，则会自动执行该任务。\ncrontab 命令和 at 命令类似，也是通过 /etc/cron.allow 和 /etc/cron.deny 文件来限制某些用户是否可以使用 crontab 命令的。\n启动crond服务之后才能使用crontab 命令：\n# systemctl start crond 或者 # systemctl enable crond 2、 crontab 命令语法 命令格式\ncrontab [-u user] [-l | -r | -e] [-i] 常用选项\n-l 列出所有任务 -e 编辑任务 -r 移除所有任务 -i 同-r一同使用，以交互式模式移除指定任务 -u user 指定用户管理cron任务,仅root可运行 crontab 定时任务非常简单，只需执“crontab -e”命令，然后输入想要定时执行的任务即可。注意文件格式如下：\n[root@centos7 ~]## crontab -e #进入 crontab 编辑界面。会打开Vim编辑你的任务 * * * * * 执行的任务 /etc/crontab 格式说明，详情参见 man 5 crontab 注释行以 # 开头\n[root@centos7 ~]# cat /etc/crontab SHELL=/bin/bash PATH=/sbin:/bin:/usr/sbin:/usr/bin MAILTO=root # For details see man 4 crontabs # Example of job definition: # .---------------- minute (0 - 59) # | .------------- hour (0 - 23) # | | .---------- day of month (1 - 31) # | | | .------- month (1 - 12) OR jan,feb,mar,apr ... # | | | | .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat # | | | | | # * * * * * user-name command to be executed You have mail in /var/spool/mail/root [root@centos7 ~]# 项目 含义 范围 第一个\"*\" 一小时当中的第几分钟（minute） 0~59 第二个\"*\" 一天当中的第几小时（hour） 0~23 第三个\"*\" 一个月当中的第几天（day） 1~31 第四个\"*\" 一年当中的第几个月（month） 1~12 第五个\"*\" 一周当中的星期几（week） 0~7（0和7都代表星期日） 在这个时间的表达式中，还有一些特殊符号如下：\n特殊符号 含义 *（星号） 代表任何时间。比如第一个\"*“就代表一小时种每分钟都执行一次的意思 ,（逗号） 代表不连续的时间。比如\"0 8，12，16*命令\"就代表在每天的 8 点 0 分、12 点 0 分、16 点 0 分都执行一次命令 -（中杠） 代表连续的时间范围。比如\"0 5 1-6命令”，代表在周一到周六的凌晨 5 点 0 分执行命令 /（正斜线） 代表每隔多久执行一次。比如\"*/10命令\"，代表每隔 10 分钟就执行一次命令 当“crontab -e”编辑完成之后，一旦保存退出，那么这个定时任务实际就会写入 /var/spool/cron/ 目录中，每个用户的定时任务用自己的用户名进行区分。而且 crontab 命令只要保存就会生效，只要 crond 服务是启动的。\n这里举几个时间的例子来熟悉一下时间字段（星期几和几日最好不要同时出现，非常容易让管理员混淆）\n1 2 * * * 在每天凌晨 2 点 1 分执行命令 0 17 * * 1| 在每周一的 17 点 0 分执行命令 0 5 1,15 * * | 在每月 1 日和 15 日的凌晨 5 点 0 分执行命令 40 4 * * 1-5| 在每周一到周五的凌晨 4 点 40 分执行命令 */10 4 * * *| 在每天的凌晨 4 点，每隔 10 分钟执行命令 3,15 8-11 */2 * *| 在每隔两天的上午 8 点到 11 点的第 3 和第 15 分钟执行命令 ",
   "wordCount" : "2534",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/18.jpg","datePublished": "2022-09-05T23:48:34Z",
+  "image":"http://colorfulgz.com/posts.images/banner/18.jpg","datePublished": "2022-09-05T23:48:34Z",
   "dateModified": "2022-09-05T23:48:34Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"
+    "@id": "http://colorfulgz.com/posts/linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io/" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io/">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 Linux定时执行任务
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="http://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io/"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/18.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/18.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -685,12 +685,12 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/">
+  <a class="prev" href="http://colorfulgz.com/posts/rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89ca%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/">
     <span class="title">« 上一页</span>
     <br>
     <span>Rocky上实现私有CA和证书申请</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+  <a class="next" href="http://colorfulgz.com/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
     <span class="title">下一页 »</span>
     <br>
     <span>进程和线程相关概念</span>
@@ -707,14 +707,14 @@ var _hmt = _hmt || [];
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io/" style="color:#939393;">DevOpsHub</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
             
         </a>
     </span>

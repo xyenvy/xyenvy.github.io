@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux">
 <meta name="description" content="yum 的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题">
 <meta name="author" content="">
-<link rel="canonical" href="https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/">
+<link rel="canonical" href="http://colorfulgz.com/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="Centos系统yum源配置" />
 <meta property="og:description" content="yum 的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/9.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/9.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-17T09:28:09+00:00" />
 <meta property="article:modified_time" content="2022-12-17T09:28:09+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/9.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/9.jpg" />
 <meta name="twitter:title" content="Centos系统yum源配置"/>
 <meta name="twitter:description" content="yum 的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题"/>
 
@@ -95,15 +95,15 @@ var _hmt = _hmt || [];
 
         {
           "@type": "ListItem",
-          "position":  1 ,
+          "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  3 ,
       "name": "Centos系统yum源配置",
-      "item": "https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/"
+      "item": "http://colorfulgz.com/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": " 系统 Centos7.9\n步骤\n1.备份\n[root@centos7-master ~]# mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 2.创建/etc/yum.repos.d/CentOS-Base.repo文件并复制如下内容\n[base] name=CentOS-$releasever - Base baseurl=http://mirrors.163.com/centos/$releasever/os/$basearch/ http://mirrors.aliyun.com/centos/$releasever/os/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/os/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/os/$basearch/ http://mirror.centos.org/centos/$releasever/os/$basearch/ gpgcheck=0 #released updates [updates] name=CentOS-$releasever - Updates baseurl=http://mirrors.163.com/centos/$releasever/updates/$basearch/ http://mirrors.aliyun.com/centos/$releasever/updates/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/updates/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/updates/$basearch/ http://mirror.centos.org/centos/$releasever/updates/$basearch/ gpgcheck=0 #additional packages that may be useful [extras] name=CentOS-$releasever - Extras baseurl=http://mirrors.163.com/centos/$releasever/extras/$basearch/ http://mirrors.aliyun.com/centos/$releasever/extras/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/extras/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/extras/$basearch/ http://mirror.centos.org/centos/$releasever/extras/$basearch/ gpgcheck=0 #additional packages that extend functionality of existing packages [centosplus] name=CentOS-$releasever - Plus baseurl=http://mirrors.163.com/centos/$releasever/centosplus/$basearch/ http://mirrors.aliyun.com/centos/$releasever/centosplus/$basearch/ http://mirrors.cloud.tencent.com/centos/$releasever/centosplus/$basearch/ http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/ http://mirrors.huaweicloud.com/centos/$releasever/centosplus/$basearch/ http://mirror.centos.org/centos/$releasever/centosplus/$basearch/ gpgcheck=0 enabled=1 3.清除缓存\nyum clean all 4.重新生成缓存\nyum makecache ",
   "wordCount" : "140",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/9.jpg","datePublished": "2022-12-17T09:28:09Z",
+  "image":"http://colorfulgz.com/posts.images/banner/9.jpg","datePublished": "2022-12-17T09:28:09Z",
   "dateModified": "2022-12-17T09:28:09Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/"
+    "@id": "http://colorfulgz.com/posts/centos%E7%B3%BB%E7%BB%9Fyum%E9%85%8D%E7%BD%AE/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io/" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io/">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 Centos系统yum源配置
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="http://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io/"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/9.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/9.jpg" alt="">
     
 </figure>
         <div class="post-content"><ul>
@@ -425,12 +425,12 @@ Centos7.9</p>
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/">
+  <a class="prev" href="http://colorfulgz.com/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/">
     <span class="title">« 上一页</span>
     <br>
     <span>Redis一键安装脚本</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/">
+  <a class="next" href="http://colorfulgz.com/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/">
     <span class="title">下一页 »</span>
     <br>
     <span>Redis集群和高可用</span>
@@ -481,14 +481,14 @@ Centos7.9</p>
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io/" style="color:#939393;">DevOpsHub</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
             
         </a>
     </span>

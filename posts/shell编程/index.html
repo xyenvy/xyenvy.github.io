@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, shell, shell编程">
 <meta name="description" content="shell 是操作系统的最外层。shell 合并编程语言以控制进程和文件，以及启动和控制其它程序。shell 通过提示您输入，向操作系统解释该输入，然后处理来自操作系统的任何结果输出来管理您与操作系统之间的交互。">
 <meta name="author" content="">
-<link rel="canonical" href="https://xyenvy.github.io/posts/shell%E7%BC%96%E7%A8%8B/">
+<link rel="canonical" href="http://colorfulgz.com/posts/shell%E7%BC%96%E7%A8%8B/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="shell编程" />
 <meta property="og:description" content="shell 是操作系统的最外层。shell 合并编程语言以控制进程和文件，以及启动和控制其它程序。shell 通过提示您输入，向操作系统解释该输入，然后处理来自操作系统的任何结果输出来管理您与操作系统之间的交互。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/shell%E7%BC%96%E7%A8%8B/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/3.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/shell%E7%BC%96%E7%A8%8B/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/3.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-08-03T22:23:02+00:00" />
 <meta property="article:modified_time" content="2022-08-03T22:23:02+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/3.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/3.jpg" />
 <meta name="twitter:title" content="shell编程"/>
 <meta name="twitter:description" content="shell 是操作系统的最外层。shell 合并编程语言以控制进程和文件，以及启动和控制其它程序。shell 通过提示您输入，向操作系统解释该输入，然后处理来自操作系统的任何结果输出来管理您与操作系统之间的交互。"/>
 
@@ -95,15 +95,15 @@ var _hmt = _hmt || [];
 
         {
           "@type": "ListItem",
-          "position":  1 ,
+          "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  3 ,
       "name": "shell编程",
-      "item": "https://xyenvy.github.io/posts/shell%E7%BC%96%E7%A8%8B/"
+      "item": "http://colorfulgz.com/posts/shell%E7%BC%96%E7%A8%8B/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "内容简述 shell 是操作系统的最外层。shell 合并编程语言以控制进程和文件，以及启动和控制其它程序。shell 通过提示您输入，向操作系统解释该输入，然后处理来自操作系统的任何结果输出来管理您与操作系统之间的交互。\n1.编程基础 Linus：Talk is cheap, show me the code\n1.1 程序组成 程序：算法+数据结构 算法：处理数据的方式 数据结构：数据在计算机中的类型和组织方式 数据：是程序的核心，程序为数据提供服务 1.2 程序编程风格 面向过程语言 做一件事情，排出个步骤，第一步干什么，第二步干什么，如果出现情况A，做什么处理，如果出现了情况B，做什么处理 问题规模小，可以步骤化，按部就班处理 以指令为中心，数据服务于指令 C，shell 面向对象语言 将编程看成是一个事物，对外界来说，事物是直接使用的,不用关心事物内部的情况。而编程就是设置事物能够完成功能。 一种认识世界、分析世界的方法论。将万事万物抽象为各种对象 类是抽象的概念，是万事万物的抽象，是一类事物的共同特征的集合 对象是类的具体实现，是一个实体 问题规模大，复杂系统 以数据为中心，指令服务于数据 java，C#，python，golang等 1.3 编程语言 编程语言排行榜链接\nhttps://www.tiobe.com/tiobe-index/ 计算机：运行二进制指令\n编程语言：人与计算机之间交互的语言。分为两种：低级语言和高级语言\n低级编程语言： 机器：二进制的0和1的序列，称为机器指令。与自然语言差异太大，难懂、难写 汇编：用一些助记符号替代机器指令，称为汇编语言\n如：ADD A,B 将寄存器A的数与寄存器B的数相加得到的数放到寄存器A中\n汇编语言写好的程序需要汇编程序转换成机器指令\n汇编语言稍微好理解，即机器指令对应的助记符，助记符更接近自然语言 高级编程语言： 编译：高级语言–\u003e编译器–\u003e机器代码文件–\u003e执行，如：C，C++ 解释：高级语言–\u003e执行–\u003e解释器–\u003e机器代码，如：shell，python，php，JavaScript，perl 编译和解释型语言 1.4 编程逻辑处理方式 三种处理逻辑\n顺序执行：程序按从上到下顺序执行 选择执行：程序执行过程中，根据条件的不同，进行选择不同分支继续执行 循环执行：程序执行过程中需要重复执行多次某段语句 2.shell 脚本语言的基本用法 2.1 shell 脚本的用途 将简单的命令组合完成复杂的工作,自动化执行命令,提高工作效率 减少手工命令的输入，一定程度上避免人为错误 将软件或应用的安装及配置实现标准化 用于实现日常性的,重复性的,非交互式的运维工作,如:文件打包压缩备份,监控系统运行状态并实现告警等 2.2 shell脚本基本结构 shell脚本编程：是基于过程式、解释执行的语言\n编程语言的基本结构：\n各种系统命令的组合 数据存储：变量、数组 表达式：a + b 控制语句：if shell脚本：包含一些命令或声明，并符合一定格式的文本文件 格式要求：首行shebang机制\n#!/bin/bash #!/usr/bin/python #!/usr/bin/perl #!/usr/bin/ruby #!/usr/bin/lua 2.3 shell脚本创建过程 第一步：使用文本编编辑器来创建文本文件\n第一行必须包括shell声明序列：#! 示例：\n#!/bin/bash # 使用bash，添加注释,注释以#开头 第二步：加执行权限 给予执行权限，在命令行上指定脚本的绝对或相对路径 第三步：运行脚本 直接运行解释器，将脚本作为解释器程序的参数运行\n扩展：查看当前使用的是何种shell，终端输入：echo $SHELL\nroot@ubuntu200404:~# echo $SHELL /bin/bash root@ubuntu200404:~# 2.4 shell脚本注释规范 第一行一般为调用使用的语言 程序名，避免更改文件名为无法找到正确的文件 版本号 更改后的时间 作者相关信息 该程序的作用，及注意事项 最后是各版本的更新简要说明 2.5 第一个shell脚本 范例：第一个shell脚本hello world\n参考文档：\nhttps://zh.wikipedia.org/wiki/Hello_World https://zh.wikipedia.org/wiki/Hello_World%E7%A8%8B%E5%BA%8F%E6%A0%B7%E4%BE%8B 程序样例\n第一步：vim创建hello.sh文本\nroot@ubuntu200404:~# vim hello.sh 第二步：声明序列和添加脚本名称、日期等\n#!/bin/bash #****************** #filename:hello.sh #Data:2022-08-06 #author:admin #****************** 第三步：编写代码\n#经典写法 echo \"hello, world\" #流行写法 echo 'Hello, world!' 第四步：执行shell脚本\n方法一：\nroot@ubuntu200404:~# bash hello.sh hello world! ****************** hello world! root@ubuntu200404:~# 方法二：\nroot@ubuntu200404:/data/scripts# cat /data/scripts/hello.sh | bash hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法三：\nroot@ubuntu200404:/data/scripts# bash \u003c /data/scripts/hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法四：添加执行权限使用绝对路径和相对路径\n# 绝对路径 root@ubuntu200404:/data/scripts# /data/scripts/hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# # 相对路径 root@ubuntu200404:/data/scripts# pwd /data/scripts root@ubuntu200404:/data/scripts# ./hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法五：将脚本添加到path变量中\n# 当前path位置 root@ubuntu200404:/data/scripts# echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin root@ubuntu200404:/data/scripts# # 给hello.sh文件创建软链接放到/usr/local/bin目录下 root@ubuntu200404:/data/scripts# ln -s /data/scripts/hello.sh /usr/local/bin/ root@ubuntu200404:/data/scripts# ls /usr/local/bin/ hello.sh root@ubuntu200404:/data/scripts# # 执行shell脚本 root@ubuntu200404:/data/scripts# hello.sh hello world! ****************** hello world! root@ubuntu200404:/data/scripts# 方法六：本方法可以实现执行远程主机的shell脚本\n# 扩展：curl加-s选项不显示下载信息 root@ubuntu200404:/data# curl -s http://wangxiaochun.com/testdir/hello.sh |bash hello, world Hello, world! root@ubuntu200404:/data# 案例：备份脚本\n# 脚本内容 root@ubuntu200404:/data/scripts# cat -n bacup.sh 1#!/bin/bash 2#------------------ 3#filename:bacup.sh 4#备份脚本 5#------------------ 6 7 8tar zcf /data/scripts-`date +%F_%s`.tar.gz /data/ \u0026\u003e /dev/null 9 10echo -e \"\\E[1;32mbacup is success!\\E[0m\" # 执行脚本 root@ubuntu200404:/data/scripts# bash bacup.sh bacup is success! root@ubuntu200404:/data/scripts# 2.6 shell脚本调试 只检测脚本中的语法错误，但无法检查出命令错误，但不真正执行脚本\nbash -n /path/to/some_script 调试并执行\nbash -x /path/to/some_script 案例1：\nroot@ubuntu200404:/data/scripts# bash -x hello.sh + echo 'hello world!' hello world! + echo '******************' ****************** + echo 'hello world!' hello world! root@ubuntu200404:/data/scripts# 案例2:多行重定向\n脚本内容：\n#!/bin/bash # 多行重定向 #data:2022-08-06 #author:admin #-------------------------------------------- echo start cat \u003e/data/demo.conf \u003c",
   "wordCount" : "14786",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/3.jpg","datePublished": "2022-08-03T22:23:02Z",
+  "image":"http://colorfulgz.com/posts.images/banner/3.jpg","datePublished": "2022-08-03T22:23:02Z",
   "dateModified": "2022-08-03T22:23:02Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/shell%E7%BC%96%E7%A8%8B/"
+    "@id": "http://colorfulgz.com/posts/shell%E7%BC%96%E7%A8%8B/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io/" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io/">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 shell编程
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="http://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io/"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/3.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/3.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -2171,12 +2171,12 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/docker/">
+  <a class="prev" href="http://colorfulgz.com/posts/docker/">
     <span class="title">« 上一页</span>
     <br>
     <span>Docker基础详细教程</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/">
+  <a class="next" href="http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/">
     <span class="title">下一页 »</span>
     <br>
     <span>文件查找和打包压缩</span>
@@ -2193,14 +2193,14 @@ H：history，H选项打开，可以展开历史列表中的命令，可以通�
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io/" style="color:#939393;">DevOpsHub</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
             
         </a>
     </span>

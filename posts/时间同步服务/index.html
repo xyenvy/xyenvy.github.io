@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, 时间同步, chrony">
 <meta name="description" content="多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一">
 <meta name="author" content="">
-<link rel="canonical" href="https://xyenvy.github.io/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/">
+<link rel="canonical" href="http://colorfulgz.com/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="apple-touch-icon" href="https://xyenvy.github.io/img/Q.gif">
-<link rel="mask-icon" href="https://xyenvy.github.io/img/Q.gif">
+<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="时间同步服务" />
 <meta property="og:description" content="多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xyenvy.github.io/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/" />
-<meta property="og:image" content="https://xyenvy.github.io/posts.images/banner/2.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://colorfulgz.com/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/" />
+<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/2.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-09-17T18:32:45+00:00" />
 <meta property="article:modified_time" content="2022-09-17T18:32:45+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://xyenvy.github.io/posts.images/banner/2.jpg" />
+<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/2.jpg" />
 <meta name="twitter:title" content="时间同步服务"/>
 <meta name="twitter:description" content="多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一"/>
 
@@ -95,15 +95,15 @@ var _hmt = _hmt || [];
 
         {
           "@type": "ListItem",
-          "position":  1 ,
+          "position":  2 ,
           "name": "📚文章",
-          "item": "https://xyenvy.github.io/posts/"
+          "item": "http://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  3 ,
       "name": "时间同步服务",
-      "item": "https://xyenvy.github.io/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/"
+      "item": "http://colorfulgz.com/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一\n时间同步服务 时间同步软件\nntpdate chrony ntp:\n将系统时钟和世界协调时钟UTC同步，精度在局域网内可达0.1ms，在互联网上绝大多数的地方精度可以 达到1-50ms 项目官网：\nhttp://www.ntp.org 范例：ubuntu同步时间\n安装ntpdate apt install ntpdate 同步时间 # ntp.aliyun.com阿里云时间同步服务器地址 ntpdate ntp.aliyun.com 扩展：\n阿里云公共NTP服务器 Unix/linux类：ntp.aliyun.com，ntp1-7.aliyun.com windows类： time.pool.aliyun.com 腾讯公共NTP time1-5.cloud.tencent.com 大学ntp服务 s1a.time.edu.cn 北京邮电大学 s1b.time.edu.cn 清华大学 s1c.time.edu.cn 北京大学 国家授时中心服务器：210.72.145.44 美国标准技术院: time.nist.gov 注意：CentOS 8上已经没有ntpdate命令，因此该种时间同步方式不建议使用\nchrony： 实现NTP协议的的自由软件。可使系统时钟与NTP服务器，参考时钟（例如GPS接收器）以及使用手表 和键盘的手动输入进行同步。还可以作为NTPv4（RFC 5905）服务器和对等体运行，为网络中的计算机 提供时间服务。设计用于在各种条件下良好运行，包括间歇性和高度拥挤的网络连接，温度变化（计算 机时钟对温度敏感），以及不能连续运行或在虚拟机上运行的系统。 通过Internet同步的两台机器之间的典型精度在几毫秒之内，在LAN上，精度通常为几十微秒。利用硬 件时间戳或硬件参考时钟，可实现亚微秒的精度\nchrony chrony介绍 chrony 的优势：\n更快的同步只需要数分钟而非数小时时间，从而最大程度减少了时间和频率误差，对于并非全天24 小时运行的虚拟计算机而言非常有用\n能够更好地响应时钟频率的快速变化，对于具备不稳定时钟的虚拟机或导致时钟频率发生变化的节 能技术而言非常有用\n在初始同步后，它不会停止时钟，以防对需要系统时间保持单调的应用程序造成影响\n在应对临时非对称延迟时（例如，在大规模下载造成链接饱和时）提供了更好的稳定性\n无需对服务器进行定期轮询，因此具备间歇性网络连接的系统仍然可以快速同步时钟\nchrony官网:\nhttps://chrony.tuxfamily.org chrony官方文档：https://chrony.tuxfamily.org/documentation.html chrony 文件组成 包：chrony\n两个主要程序：chronyd和chronyc\nchronyd：后台运行的守护进程，用于调整内核中运行的系统时钟和时钟服务器同步。它确定计算 机增减时间的比率，并对此进行补偿 chronyc：命令行用户工具，用于监控性能并进行多样化的配置。它可以在chronyd实例控制的计 算机上工作，也可在一台不同的远程计算机上工作\n服务unit 文件： /usr/lib/systemd/system/chronyd.service 监听端口： 服务端: 123/udp,客户端: 323/udp 配置文件： /etc/chrony.conf 配置文件chrony.conf 官网文档:\nhttps://chrony.tuxfamily.org/doc/3.5/chrony.conf.html server #可用于时钟服务器，iburst 选项当服务器可达时，发送一个八个数据包而不是通常的一个数据 包。 包间隔通常为2秒,可加快初始同步速度 pool #该指令的语法与server 指令的语法相似，不同之处在于它用于指定NTP服务器池而不是单个 NTP服务器。池名称应解析为随时间可能会变化的多个地址 driftfile #根据实际时间计算出计算机增减时间的比率，将它记录到一个文件中，会在重启后为系统时钟作 出补偿 rtcsync #启用内核模式，系统时间每11分钟会拷贝到实时时钟（RTC） allow / deny #指定一台主机、子网，或者网络以允许或拒绝访问本服务器 cmdallow / cmddeny #可以指定哪台主机可以通过chronyd使用控制命令 bindcmdaddress #允许chronyd监听哪个接口来接收由chronyc执行的命令 makestep # 通常chronyd将根据需求通过减慢或加速时钟，使得系统逐步纠正所有时间偏差。在某些特定 情况下，系统时钟可能会漂移过快，导致该调整过程消耗很长的时间来纠正系统时钟。该指令强制chronyd在 调整期大于某个阀值时调整系统时钟 local stratum 10 #即使server指令中时间服务器不可用，也允许将本地时间作为标准时间授时给其它 客户端 NTP 客户端工具 chronyc 可以运行在交互式和非交互式两种方式，支持以下子命令\nhelp 命令可以查看更多chronyc的交互命令 accheck 检查是否对特定主机可访问当前服务器 activity 显示有多少NTP源在线/离线 sources [-v] 显示当前时间源的同步信息 sourcestats [-v]显示当前时间源的同步统计信息 add server 手动添加一台新的NTP服务器 clients 报告已访问本服务器的客户端列表 delete 手动移除NTP服务器或对等服务器 settime 手动设置守护进程时间 tracking 显示系统时间信息 时间工具 timedatectl 时间和时区管理 查看日期时间和时区以及NTP状态\nroot@ubuntu2004:~# timedatectl Local time: Sat 2022-09-17 11:49:00 UTC Universal time: Sat 2022-09-17 11:49:00 UTC RTC time: Sat 2022-09-17 11:49:00 Time zone: Etc/UTC (UTC, +0000) System clock synchronized: yes NTP service: active RTC in local TZ: no root@ubuntu2004:~# 查看时区列表\nroot@ubuntu2004:~# root@ubuntu2004:~# timedatectl list-timezones Africa/Abidjan Africa/Accra Africa/Addis_Ababa Africa/Algiers Africa/Asmara Africa/Asmera Africa/Bamako Africa/Bangui Africa/Banjul Africa/Bissau Africa/Blantyre Africa/Brazzaville Africa/Bujumbura Africa/Cairo Africa/Casablanca Africa/Ceuta ......... ......... 修改时区\n# 修改时区亚洲上海 root@ubuntu2004:~# timedatectl set-timezone Asia/Shanghai root@ubuntu2004:~# 修改时区方式2\n#修改时区 root@ubuntu2004:~# rm -f /etc/localtime root@ubuntu2004:~# ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime #修改日期时间： timedatectl set-time \"2017-01-23 10:30:00\" #开启NTP： timedatectl set-ntp true/false 修改时间\n#修改日期时间： timedatectl set-time \"2017-01-23 10:30:00\" #需要修改时间为24小时，可以修改/etc/default/locale，默认没有LC_TIME这个变量，在文件中增加一行： LC_TIME=en_DK.UTF-8 #开启NTP： timedatectl set-ntp true/false 实战：实现私有的时间服务器 安装chrony # centos系统检查是否安装 rpm -q chrony # 安装 yum install chrony # 启动服务 systemctl start chronyd # ubuntu系统上安装,ubuntu系统上安装完成后已经启动 apt install chrony 服务器端配置 # IP:192.168.179.146作为时间同步服务器端，192.168.179.146的时间与阿里云时间同步器服务器同步 [root@centos7 ~]# hostname -I 192.168.179.146 [root@centos7 ~]# # 修改192.168.179.146配置文件 /etc/chrony.conf server ntp.aliyun.com iburst server ntp1.aliyun.com iburst server ntp2.aliyun.com iburst allow 0.0.0.0/0 #加此行,指定允许同步的网段\n删除此行注释,当互联网无法连接,仍然可以为客户端提供时间同步服务\n重启chrony服务\nsystemctl restart chronyd 服务启动后会打开端口123/udp\n显示当前的时间源同步信息\n[root@centos7 ~]# chronyc sources -V 210 Number of sources = 2 MS Name/IP address Stratum Poll Reach LastRx Last sample =============================================================================== ^* 203.107.6.88 2 6 37 58 -365us[-3079us] +/- 40ms ^? 120.25.115.20 2 7 110 123 -773us[-3488us] +/- 26ms [root@centos7 ~]# # *号表示当前同步的时间源地址 客户端配置\n# 客户端 root@ubuntu2004:~# hostname -I 192.168.179.147 root@ubuntu2004:~# #ubuntu系统配置文件与centos目录不一样 root@ubuntu2004:~# vim /etc/chrony/chrony.conf 重启chrony服务\nroot@ubuntu2004:~# systemctl restart chronyd 确认同步成功\nroot@ubuntu2004:~# chronyc sources -V 210 Number of sources = 1 MS Name/IP address Stratum Poll Reach LastRx Last sample =============================================================================== ^* 192.168.179.146 3 6 17 44 +64us[ +218us] +/- 38ms root@ubuntu2004:~# # ^* 192.168.179.146表示已经成功与192.168.179.146时间同步 ",
   "wordCount" : "2588",
   "inLanguage": "en",
-  "image":"https://xyenvy.github.io/posts.images/banner/2.jpg","datePublished": "2022-09-17T18:32:45Z",
+  "image":"http://colorfulgz.com/posts.images/banner/2.jpg","datePublished": "2022-09-17T18:32:45Z",
   "dateModified": "2022-09-17T18:32:45Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://xyenvy.github.io/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/"
+    "@id": "http://colorfulgz.com/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://xyenvy.github.io/img/Q.gif"
+      "url": "http://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://xyenvy.github.io/" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://xyenvy.github.io/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://xyenvy.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/" title="🏠 主页">
+                <a href="http://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/posts" title="📚 文章">
+                <a href="http://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/tags" title="🧩 标签">
+                <a href="http://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/archives/" title="⏱️ 时间轴">
+                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://xyenvy.github.io/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://xyenvy.github.io/">🏠 主页</a>&nbsp;»&nbsp;<a href="https://xyenvy.github.io/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 时间同步服务
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://xyenvy.github.io/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="http://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://xyenvy.github.io/"
+                                let dnsUrl = "http://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://xyenvy.github.io/posts.images/banner/2.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/2.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -690,12 +690,12 @@ chrony官网:</p>
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://xyenvy.github.io/posts/dns/">
+  <a class="prev" href="http://colorfulgz.com/posts/dns/">
     <span class="title">« 上一页</span>
     <br>
     <span>DNS服务</span>
   </a>
-  <a class="next" href="https://xyenvy.github.io/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/">
+  <a class="next" href="http://colorfulgz.com/posts/%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%BA%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6/">
     <span class="title">下一页 »</span>
     <br>
     <span>批量修改主机密码为随机字符</span>
@@ -712,14 +712,14 @@ chrony官网:</p>
         Copyright
         &copy;
         2022-2023
-        <a href="https://xyenvy.github.io/" style="color:#939393;">DevOpsHub</a>
+        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
             
         </a>
     </span>

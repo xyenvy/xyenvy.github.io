@@ -2,44 +2,44 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>MySQL on DevOpsHub</title>
-    <link>https://xyenvy.github.io/categories/mysql/</link>
+    <link>http://colorfulgz.com/categories/mysql/</link>
     <description>Recent content in MySQL on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 23 Nov 2022 13:38:00 +0000</lastBuildDate><atom:link href="https://xyenvy.github.io/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Nov 2022 13:38:00 +0000</lastBuildDate><atom:link href="http://colorfulgz.com/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL集群</title>
-      <link>https://xyenvy.github.io/posts/mysql%E9%9B%86%E7%BE%A4/</link>
+      <link>http://colorfulgz.com/posts/mysql%E9%9B%86%E7%BE%A4/</link>
       <pubDate>Wed, 23 Nov 2022 13:38:00 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/posts/mysql%E9%9B%86%E7%BE%A4/</guid>
+      <guid>http://colorfulgz.com/posts/mysql%E9%9B%86%E7%BE%A4/</guid>
       <description>MySQL主从架构部署比较简单，常见架构根据主从节点个数不同分成 一主多从，多主一从，双主节点等</description>
     </item>
     
     <item>
       <title>MySQL备份脚本</title>
-      <link>https://xyenvy.github.io/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</link>
+      <link>http://colorfulgz.com/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Mon, 21 Nov 2022 22:28:03 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</guid>
+      <guid>http://colorfulgz.com/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/</guid>
       <description>硬件故障、软件故障、自然灾害、黑客攻击、误操作测试等数据丢失场景</description>
     </item>
     
     <item>
       <title>MySQL一键安装脚本</title>
-      <link>https://xyenvy.github.io/posts/mysqlinstallscript/</link>
+      <link>http://colorfulgz.com/posts/mysqlinstallscript/</link>
       <pubDate>Fri, 30 Sep 2022 00:19:44 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/posts/mysqlinstallscript/</guid>
+      <guid>http://colorfulgz.com/posts/mysqlinstallscript/</guid>
       <description>Rocky8.5系统在线一键安装MySQL脚本</description>
     </item>
     
     <item>
       <title>MySQL</title>
-      <link>https://xyenvy.github.io/posts/mysql/</link>
+      <link>http://colorfulgz.com/posts/mysql/</link>
       <pubDate>Wed, 28 Sep 2022 22:42:41 +0000</pubDate>
       
-      <guid>https://xyenvy.github.io/posts/mysql/</guid>
+      <guid>http://colorfulgz.com/posts/mysql/</guid>
       <description>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件之一</description>
     </item>
     
