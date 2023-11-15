@@ -6,16 +6,7 @@
     <description>Recent content in 📚文章 on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 08 Nov 2023 22:48:34 +0800</lastBuildDate><atom:link href="http://colorfulgz.com/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>ikubernetes</title>
-      <link>http://colorfulgz.com/posts/ikubernetes/</link>
-      <pubDate>Wed, 08 Nov 2023 22:48:34 +0800</pubDate>
-      
-      <guid>http://colorfulgz.com/posts/ikubernetes/</guid>
-      <description>kubernetes 实践 配置POD环境变量和健康检查 环境变量 apiVersion: apps/v1 kind: Deployment metadata: creationTimestamp: null labels: app: mysql-env-pod name: mysql-env-pod namespace: app-dev spec: replicas: 1 selector: matchLabels: app: mysql-env-pod template: metadata: creationTimestamp: null labels: app: mysql-env-pod spec: containers: - image: images.io:5000/app/mysql name: mysql env: - name: MYSQL_ROOT_PASSWORD value: &amp;#34;123456&amp;#34; ports: - containerPort: 3306</description>
-    </item>
-    
+    <lastBuildDate>Mon, 09 Oct 2023 22:45:06 +0800</lastBuildDate><atom:link href="http://colorfulgz.com/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Lvs调度算法</title>
       <link>http://colorfulgz.com/posts/lvs/</link>
