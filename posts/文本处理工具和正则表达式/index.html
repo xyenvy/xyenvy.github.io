@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, 文本处理, adk, sed, grep, 正则表达式">
 <meta name="description" content="本文将介绍Linux下使用Shell处理文本时最常用的工具并结合正则表达式处理文本。">
 <meta name="author" content="">
-<link rel="canonical" href="http://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+<link rel="canonical" href="https://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="https://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="文本处理工具和正则表达式" />
 <meta property="og:description" content="本文将介绍Linux下使用Shell处理文本时最常用的工具并结合正则表达式处理文本。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" />
-<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/4.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" />
+<meta property="og:image" content="https://colorfulgz.com/posts.images/banner/4.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-07-26T20:09:30+00:00" />
 <meta property="article:modified_time" content="2022-07-26T20:09:30+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/4.jpg" />
+<meta name="twitter:image" content="https://colorfulgz.com/posts.images/banner/4.jpg" />
 <meta name="twitter:title" content="文本处理工具和正则表达式"/>
 <meta name="twitter:description" content="本文将介绍Linux下使用Shell处理文本时最常用的工具并结合正则表达式处理文本。"/>
 
@@ -97,13 +97,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "http://colorfulgz.com/posts/"
+          "item": "https://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "文本处理工具和正则表达式",
-      "item": "http://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
+      "item": "https://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "1.文本编辑工具之神VIM 1.1使用vim初步 1.1.1vim命令格式 vim [option]··· FILE ··· 常用选项：\n+# 打开文件后，让光标处于第#行的行首，+默认行尾 范例：\nvim +10 passwd +/PATTERN 让光标处于第一个被PATTERN匹配到的行行首 -b file 二进制方式打开文件 -d file1 file2… 比较多个文件，相当于 vimdiff -m file 只读打开文件 -e file 直接进入ex模式，相当于执行ex file -y file Easy mode (like \"evim\", modeless)，直接可以操作文件，ctrl+o:wq|q! 保存和不 保存退出 说明：\n如果该文件存在，文件被打开并显示内容 如果该文件不存在，当编辑后第一次存盘时创建它 1.1.2三种主要模式 三种常见模式：\n命令或普通(Normal)模式：默认模式，可以实现移动光标，剪切/粘贴文本\n插入(Insert)或编辑模式：用于修改文本\n扩展命令(extended command )或命令(末)行模式：保存，退出等\n命令模式–》插入模式\ni insert, 在光标所在处输入 I 在当前光标所在行的行首输入 a append, 在光标所在处后面输入 A 在当前光标所在行的行尾输入 o 在当前光标所在行的下方打开一个新行 O 在当前光标所在行的上方打开一个新行 插入模式 — ESC—–\u003e 命令模式 命令模式 —- : —-\u003e 扩展命令模式 扩展命令模式 —-ESC,enter—-\u003e 命令模式 范例: 插入颜色字符\n1 切换至插入模式 2 按ctrl+v+[ 三个键,显示^[ 3 后续输入颜色信息,如:^[[32mhello^[[0m 4 切换至扩展命令模式,保存退出 5 cat 文件可以看到下面显示 1.2扩展命令模式 按“:\"（冒号）进入Ex模式，创建一个命令提示符：处于底部的屏幕左侧\n1.2.1扩展模式基本命令 w 写（存）磁盘文件 wq 写入并退出 x 写入并退出 X 加密 q 退出 q！ 不存盘退出，即使更改都将丢失 读取文件内容到当前文件中 用法：\nr filename # 读文件内容到当前文件中 范例：\n# 将当前目录下的b文件的内容读取到当前文件中 vim a.txt :r b.txt 将当前文件内容写入另一个文件 用法：\nw filename # 将当前文件内容写入另一个文件 范例：\n# 将当前文件(a.txt文件)内容写入到b.txt中去 vim a.txt w c.txt 执行命令 用法：\n!command #执行命令 范例：\n读入命令的输入 用法：\nr!command #读入命令的输入 范例：执行hostname命令输入到当前文件中\n1.2.2地址定界 格式：\n:start_pos,end_pos CMD 1.2.2.1地址定界格式 # #具体第#行，例如2表示第2行 #,# #从左侧#表示起始行，到右侧#表示结尾行 #,+# #从左侧#表示的起始行，加上右侧#表示的行数，范例：2,+3 表示2到5行 . #当前行 $ #最后一行 .,$-1 #当前行到倒数第二行 % #全文, 相当于1,$ /pattern/ #从当前行向下查找，直到匹配pattern的第一行,即:正则表达式 /pat1/,/pat2/ #从第一次被pat1模式匹配到的行开始，一直到第一次被pat2匹配到的行结束 #,/pat/ #从指定行开始，一直找到第一个匹配pattern的行结束 /pat/,$ #向下找到第一个匹配patttern的行到整个文件的结尾的所有行 1.2.2.2地址定界后跟一个编辑命令 d #删除 y #复制 w file #将范围内的行另存至指定文件中 r file #在指定位置插入指定文件中的所有内容 t#行号 将前面指定的行复制到#行后 m#行号 将前面指定的行移动到#行后 范例：\n删除文件内容第几行到第几行 :1,3d #删除第一行到第三行 复制文件全部内容 :.,$y # 通过键盘上下键选择要复制在什么地方，选择后位置后按p键复制 删除文件全部内容 :%d 1.2.3查找和替换 格式：\ns/查找的内容/替换为内容/修饰符 说明：\n要查找的内容：可使用基本正则表达式模式 替换为的内容：不能使用模式，但可以使用\\1, \\2, ...等后向引用符号；还可以使用“\u0026”引用前面查找时查 找到的整个内容 修饰符：\ni #忽略大小写 g #全局替换，默认情况下，每一行只替换第一次出现 gc #全局替换，每次替换前询问 查找替换中的分隔符/可替换为其它字符，如：#,@ 范例：\ns@/etc@/var@g s#/boot#/#i 复制/etc/passwd到家目录下，将文件内的root全部替换为ROOT :%s/root/ROOT/g 1.2.4定制vim的工作特性 扩展命令模式的配置只是对当前vim进程有效，可将配置存放在文件中持久保存 配置文件：\n/etc/vimrc #全局 ~/.vimrc #个人 1.2.4.1行号 显示：set number，简写 set nu 取消显示：set nonumber, 简写 set nonu 1.2.4.2忽略字符的大小写 启用：set ignorecase，简写 set ic 不忽略：set noic 1.2.4.3自动缩进 启用：set autoindent，简写 set ai 禁用：set noai 1.2.4.4复制保留格式 启用：set paste 禁用：set nopaste 1.2.4.5显示Tab ^I和换行符 和$显示 启用：set list 禁用：set nolist 1.2.4.6高亮搜索 启用：set hlsearch 禁用：set nohlsearch 简写：nohl 1.2.4.7语法高亮 启用：syntax on 禁用：syntax off 1.2.4.8文件格式 启用windows格式：set fileformat=dos 启用unix格式：set fileformat=unix 简写 set ff=dos|unix 1.2.4.9Tab 用空格代替 启用：set expandtab 默认为8个空格代替Tab 禁用：set noexpandtab 简写：set et 1.2.4.10Tab用指定空格的个数代替 启用：set tabstop=# 指定#个空格代替Tab 简写：set ts=4 1.2.4.11设置缩进宽度 #向右缩进 命令模式\u003e\u003e #向左缩进 命令模式\u003c\u003c #设置缩进为4个字符 set shiftwidth=4 1.2.4.12设置文本宽度 set textwidth=65 (vim only) #从左向右计数 set wrapmargin=15 #从右到左计数 1.2.4.13 设置光标所在行的标识线 启用：set cursorline，简写 set cul 禁用：set nocursorline 1.2.4.14加密 启用： set key=password 禁用： set key= 1.2.4.15了解更多 set帮助\n:help option-list :set or :set all 1.3命令模式 1.3.1退出vim ZZ 保存退出 ZQ 不保存退出 1.3.2光标跳转 字符间跳转 h: 左 l: 右 j: 下 k: 上 #COMMAND：跳转由#指定的个数的字符 如：3l 单词间跳转 w：下一个单词的词首 e：当前或下一单词的词尾 b：当前或前一个单词的词首 #COMMAND：由#指定一次跳转的单词数 当前页跳转 H：页首 M：页中间行 L：页底 zt：将光标所在当前行移到屏幕顶端 zz：将光标所在当前行移到屏幕中间 zb：将光标所在当前行移到屏幕底端 行首行尾 ^ 跳转至行首的第一个非空白字符 0 跳转至行首 $ 跳转至行尾 行间移动 #G 或者扩展命令模式下 :# 跳转至由第#行 G 最后一行 1G, gg 第一行 句间移动 ) 下一句 ( 上一句 段落间移动 } 下一段 { 上一段 命令模式翻屏操作 Ctrl+f 向文件尾部翻一屏,相当于Pagedown Ctrl+b 向文件首部翻一屏,相当于Pageup Ctrl+d 向文件尾部翻半屏 Ctrl+u 向文件首部翻半屏 1.3.3字符编辑 x 剪切光标处的字符 # p键可复制剪切的字符 #x 剪切光标处起始的#个字符 xp 交换光标所在处的字符及其后面字符的位置 ~ 转换大小写 J 删除当前行后的换行符 1.3.4替换 r 只替换光标所在处的一个字符 R 切换成REPLACE模式（在末行出现-- REPLACE -- 提示）,按ESC回到命令模式 1.3.5删除命令 d 删除命令，可结合光标跳转字符，实现范围删除 d$ 删除到行尾 d^ 删除到非空行首 d0 删除到行首 dw de db #COMMAND dd： 剪切光标所在的行 #dd 多行删除 D：从当前光标位置一直删除到行尾，等同于d$ 1.3.6复制命令 y 复制，行为相似于d命令 y$ y0 y^ ye yw yb #COMMAND yy：复制行 #yy 复制多行 Y：复制整行 1.3.7粘贴命令 p 缓冲区存的如果为整行，则粘贴当前光标所在行的下方；否则，则粘贴至当前光标所在处的后面 P 缓冲区存的如果为整行，则粘贴当前光标所在行的上方；否则，则粘贴至当前光标所在处的前面 1.3.8查找 /PATTERN：从当前光标所在处向文件尾部查找 ?PATTERN：从当前光标所在处向文件首部查找 n：与命令同方向 N：与命令反方向 1.3.9撤销更改 u 撤销最近的更改，相当于windows中ctrl+z #u 撤销之前多次更改 U 撤消光标落在这行后所有此行的更改 Ctrl-r 重做最后的“撤消”更改，相当于windows中crtl+y . 重复前一个操作 #. 重复前一个操作#次 1.3.10高级用法 常见Command：y 复制、d 删除、gU 变大写、gu 变小写 范例：\n0y$ 命令 0 → 先到行头 y → 从这里开始拷贝 $ → 拷贝到本行最后一个字符 范例：粘贴“wang”100次\n100iwang [ESC] di\" 光标在” “之间，则删除” “之间的内容 yi( 光标在()之间，则复制()之间的内容 vi[ 光标在[]之间，则选中[]之间的内容 dtx 删除字符直到遇见光标之后的第一个 x 字符 ytx 复制字符直到遇见光标之后的第一个 x 字符 1.4可视化模式 在末行有”– VISUAL – “指示，表示在可视化模式 允许选择的文本块\nv 面向字符，– VISUAL – V 面向整行，– VISUAL LINE – ctrl-v 面向块，– VISUAL BLOCK – 可视化键可用于与移动键结合使用 w ) } 箭头等 突出显示的文字可被删除，复制，变更，过滤，搜索，替换等 范例：在文件指定行的行首插入# 1、先将光标移动到指定的第一行的行首 2、输入ctrl+v 进入可视化模式 3、向下移动光标，选中希望操作的每一行的第一个字符 4、输入大写字母 I 切换至插入模式 5、输入 # 6、按 ESC 键 范例：在指定的块位置插入相同的内容\n1、光标定位到要操作的地方 2、CTRL+v 进入“可视块”模式，选取这一列操作多少行 3、SHIFT+i(I) 4、输入要插入的内容 5、按 ESC 键 1.5多文件模式 vim FILE1 FILE2 FILE3 ... :next 下一个 :prev 前一个 :first 第一个 :last 最后一个 :wall 保存所有 :qall 不保存退出所有 :wqall保存退出所有 1.6多窗口模式 1.6.1多文件分割 vim -o|-O FILE1 FILE2 ... -o: 水平或上下分割 -O: 垂直或左右分割（vim only） 在窗口间切换：Ctrl+w, Arrow 1.6.2单文件窗口 Ctrl+w,s：split, 水平分割，上下分屏 Ctrl+w,v：vertical, 垂直分割，左右分屏 ctrl+w,q：取消相邻窗口 ctrl+w,o：取消全部窗口 :wqall 退出 1.7帮助 :help :help topic Use :q to exit help #vimtutor 2.常见文本处理工具 2.1文件内容查看命令 2.1.1查看文本文件内容 2.1.1.1 cat cat可以查看文本内容\n格式：\ncat [OPTION]... [FILE]... 常见选项：\n-E：显示行结束符$ -A：显示所有控制符 -n：对显示出的每一行进行编号 -b：非空行编号 -s：压缩连续的空行成一行 2.1.1.2 nl 显示行号，相当于cat -b\n[root@rocky8 ~]# nl data.txt 1 1 2 2 3 3 4 4 5 5 [root@rocky8 ~]# 2.1.1.3 tac 逆向显示文本内容\n[root@rocky8 ~]# cat data.txt 1 2 3 4 5 [root@rocky8 ~]# tac data.txt 5 4 3 2 1 [root@rocky8 ~]# 2.1.1.4 rev 将同一行的内容逆向显示\n[root@rocky8 ~]# cat readme.txt 1 2 3 4 5 6 a b c d e f [root@rocky8 ~]# rev readme.txt 6 5 4 3 2 1 f e d c b a [root@rocky8 ~]# 2.1.2查看非文本文件内容 范例：hexdump\nhexdump -C -n 512 /dev/sda 00000000 eb 63 90 10 8e d0 bc 00 b0 b8 00 00 8e d8 8e c0 |.c..............| echo {a..z} | tr -d ' '|hexdump -C 00000000 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70 |abcdefghijklmnop| 00000010 71 72 73 74 75 76 77 78 79 7a 0a |qrstuvwxyz.| 0000001b 2.2. 分页查看文件内容 2.2.1 more 可以实现分页查看文件，可以配合管道符实现输出信息的分页\n格式：\nmore [OPTIONS...] FILE... 选项：\n-d: 显示翻页及退出提示 范例：\nmore passwd 使用空格键往下查看，可显示进度百分比，“q\"退出\n2.2.2 less less 也可以实现分页查看文件或STDIN输出，less 命令是man命令使用的分页器 查看时有用的命令包括：\n/文本 搜索 文本 n/N 跳到下一个 或 上一个匹配 范例：#less 配合管道对其它命令的执行结果进行分页显示\ncat passwd |less 2.3显示文本前面的或后面的内容 2.3.1 head 可以显示文件或标准输入的前面行 格式：\nhead [OPTION]... [FILE]... 选项：\n-c # 指定获取前#字节 -n # 指定获取前#行,#如果为负数,表示从文件头取到倒数第#前 -# 同上 范例：查看passwd文件前三行\n[root@rocky8 ~]# head -n 3 passwd root❌0:0:root:/root:/bin/bash root❌0:0:root:/root:/bin/bash root❌0:0:root:/root:/bin/bash [root@rocky8 ~]# 范例：查看倒数三行\n[root@rocky8 ~]# head -3 passwd root❌0:0:root:/root:/bin/bash root❌0:0:root:/root:/bin/bash root❌0:0:root:/root:/bin/bash [root@rocky8 ~]# 范例：查看首行到倒数第三行内容\nhead -n -3 passwd 2.3.2 tail tail 和head 相反，查看文件或标准输入的倒数行 格式:\ntail [OPTION]... [FILE]... 常用选项：\n-c # 指定获取后#字节 -n # 指定获取后#行,如果#是负数,表示从第#行开始到文件结束 -# 同上 -f 跟踪显示文件fd新追加的内容,常用日志监控，相当于 --follow=descriptor,当文件删除再新 建同名文件,将无法继续跟踪文件 -F 跟踪文件名，相当于--follow=name --retry，当文件删除再新建同名文件,将可以继续跟踪文 件 tailf 类似 tail –f，当文件不增长时并不访问文件,节约资源,CentOS8已经无此工具 2.4按列抽取文本 cut cut 命令可以提取文本文件或STDIN数据的指定列 格式:\ncut [OPTION]... [FILE]... 常用选项\n-d DELIMITER: 指明分隔符，默认tab -f FILEDS: #: 第#个字段,例如:3 #,#[,#]：离散的多个字段，例如:1,3,6 #-#：连续的多个字段, 例如:1-6 混合使用：1-3,7 -c 按字符切割 --output-delimiter=STRING指定输出分隔符 2.5合并多个文件 paste paste 合并多个文件同行号的列到一行 格式\npaste [OPTION]... [FILE]... 常用选项：\n-d #分隔符：指定分隔符，默认用TAB -s #所有行合成一行显示 范例：\n[root@rocky8 ~]# echo {a..d}\u003ealpha.log [root@rocky8 ~]# cat alpha.log a b c d [root@rocky8 ~]# echo {1..4}\u003eseq.log [root@rocky8 ~]# cat seq.log 1 2 3 4 [root@rocky8 ~]# paste alpha.log seq.log a b c d 1 2 3 4 [root@rocky8 ~]# [root@rocky8 ~]# cat alpha.log a b c d [root@rocky8 ~]# echo {1..4} |tr \" \" \"\\n\"\u003eseq.log [root@rocky8 ~]# cat seq.log 1 2 3 4 [root@rocky8 ~]# paste -d: alpha.log seq.log a:1 b:2 c:3 d:4 [root@rocky8 ~]# 2.6分析文本的工具 文本数据统计：wc 整理文本：sort 比较文件：diff和patch\n2.6.1 收集文本统计数据 wc wc 命令可用于统计文件的行总数、单词总数、字节总数和字符总数 可以对文件或STDIN中的数据统计 常用选项\n-l 只计数行数 -w 只计数单词总数 -c 只计数字节总数 -m 只计数字符总数 -L 显示文件中最长行的长度 范例：\n[root@rocky8 ~]# wc /etc/passwd 30 58 1511 /etc/passwd 行数 单词数 字节数 [root@rocky8 ~]# wc -l /etc/passwd 30 /etc/passwd [root@rocky8 ~]# wc -w /etc/passwd 58 /etc/passwd [root@rocky8 ~]# wc -c /etc/passwd 1511 /etc/passwd [root@rocky8 ~]# wc -m /etc/passwd 1511 /etc/passwd [root@rocky8 ~]# wc -L /etc/passwd 85 /etc/passwd [root@rocky8 ~]# 2.6.2 文本排序 sort 把整理过的文本显示在STDOUT，不改变原始文件 格式：\nsort [options] file(s) 常用选项:\n-r 执行反方向（由上至下）整理 -R 随机排序 -n 执行按数字大小整理 -h 人类可读排序,如: 2K 1G -f 选项忽略（fold）字符串中的字符大小写 -u 选项（独特，unique），合并重复项，即去重 -t c 选项使用c做为字段界定符 -k # 选项按照使用c字符分隔的 # 列来整理能够使用多次 范例:\n#统计日志访问量 [root@centos8 data]#cut -d\" \" -f1 /var/log/nginx/access_log |sort -u|wc -l 201 范例：统计分区利用率\ndf| tr -s ' ' '%'|cut -d% -f5|sort -nr|head -n1 2.6.3 去重 uniq命令从输入中删除前后相接的重复的行 格式：\nuniq [OPTION]... [FILE]... 常见选项：\n-c: 显示每行重复出现的次数 -d: 仅显示重复过的行 -u: 仅显示不曾重复的行 uniq常和sort 命令一起配合使用： 范例：\nsort userlist.txt | uniq -c 范例：统计日志访问量最多的请求\n[root@centos8 data]#cut -d\" \" -f1 access_log |sort |uniq -c|sort -nr |head -3 4870 172.20.116.228 3429 172.20.116.208 2834 172.20.0.222 [root@centos8 data]#lastb -f btmp-34 | tr -s ' ' |cut -d ' ' -f3|sort |uniq -c |sort -nr | head -3 86294 58.218.92.37 43148 58.218.92.26 18036 112.85.42.201 范例：并发连接最多的远程主机IP\n[root@centos8 ~]#ss -nt|tail -n+2 |tr -s ' ' : |cut -d: -f6|sort|uniq -c|sort - nr |head -n2 7 10.0.0.1 2 10.0.0.7 范例：取两个文件的相同和不同的行\n[root@centos8 data]#cat test1.txt a b 1 c [root@centos8 data]#cat test2.txt b e f c 1 2 #取文件的共同行 [root@centos8 data]#cat test1.txt test2.txt | sort |uniq -d 1 b c #取文件的不同行 [root@centos8 data]#cat test1.txt test2.txt | sort |uniq -u 2 a e f 2.6.4 比较文件 2.6.4.1 diff diff命令比较两个文件之间的区别\n-u 选项来输出\"统一的(unified)\"diff格式文件，最适用于补丁文件 范例：\n[root@rocky8 data]# cat a.txt a b c d [root@rocky8 data]# cat b.txt a 2 c d [root@rocky8 data]# diff a.txt b.txt 2c2 \u003c b --- \u003e 2 [root@rocky8 data]# 2.6.4.2 patch patch 复制在其它文件中进行的改变（要谨慎使用\n-b 选项来自动备份改变了的文件 范例：\ndiff -u foo.conf foo2.conf \u003e foo.patch patch -b foo.conf foo.patch 2.6.4.3vimdiff 相当于 vim -d\n范例：\n[root@rocky8 data]# cat a.txt a 2 c d [root@rocky8 data]# cat b.txt a 2 c d [root@rocky8 data]# vimdiff a.txt b.txt 2 files to edit [root@rocky8 data]# 2.6.4.3cmp 范例：查看二进制文件的不同\n[root@centos8 data]#ll /usr/bin/dir /usr/bin/ls -rwxr-xr-x. 1 root root 166448 May 12 2019 /usr/bin/dir -rwxr-xr-x. 1 root root 166448 May 12 2019 /usr/bin/ls [root@centos8 data]#ll /usr/bin/dir /usr/bin/ls -i 201839444 -rwxr-xr-x. 1 root root 166448 May 12 2019 /usr/bin/dir 201839465 -rwxr-xr-x. 1 root root 166448 May 12 2019 /usr/bin/ls [root@centos8 data]#diff /usr/bin/dir /usr/bin/ls Binary files /usr/bin/dir and /usr/bin/ls differ [root@centos8 ~]#cmp /bin/dir /bin/ls /bin/dir /bin/ls differ: byte 737, line 2 #跳过前735个字节,观察后面30个字节 [root@centos8 ~]#hexdump -s 735 -Cn 30 /bin/ls 000002df 00 05 6d da 3f 1b 77 91 91 63 a7 de 55 63 a2 b9 |..m.?.w..c..Uc..| 000002ef d9 d2 45 55 4c 00 00 00 00 03 00 00 00 7d |..EUL........}| 000002fd [root@centos8 ~]#hexdump -s 735 -Cn 30 /bin/dir 000002df 00 f1 21 4e f2 19 7e ef 38 0d 9b 3e d7 54 08 39 |..!N..~.8..\u003e.T.9| 000002ef e4 74 4d 69 25 00 00 00 00 03 00 00 00 7d |.tMi%........}| 000002fd 练习 1、找出ifconfig “网卡名” 命令结果中本机的IPv4地址\n[root@rocky8 data]# ifconfig | tail -n +2 |head -n1|tr -s \" \"|cut -d \" \" -f3 192.168.37.13 2、查出分区空间使用率的最大百分比值\n[root@rocky8 data]# df |tr -s \" \" | cut -d \" \" -f5|sort -nr|head -n1 26% 3、查出用户UID最大值的用户名、UID及shell类型 4、查出/tmp的权限，以数字方式显示 5、统计当前连接本机的每个远程主机IP的连接数，并按从大到小排序\n3 正则表达式 REGEXP： Regular Expressions，由一类特殊字符及文本字符所编写的模式，其中有些字符（元字符） 不表示字符字面意义，而表示控制或通配的功能，类似于增强版的通配符功能，但与通配符不同，通配 符功能是用来处理文件名，而正则表达式是处理文本内容中字符 正则表达式被很多程序和开发语言所广泛支持：vim, less,grep,sed,awk, nginx,mysql 等 正则表达式分两类\n基本正则表达式：BRE Basic Regular Expressions\n扩展正则表达式：ERE Extended Regular Expressions\n正则表达式引擎： 采用不同算法，检查处理正则表达式的软件模块，如：PCRE（Perl Compatible Regular Expressions） 正则表达式的元字符分类：字符匹配、匹配次数、位置锚定、分组 帮助：man 7 regex\n3.1基本正则表达式元字符 3.1 .1字符匹配 . 匹配任意单个字符(除了\\n)，可以是一个汉字或其它国家的文字 [] 匹配指定范围内的任意单个字符，示例：[wang] [0-9] [a-z] [a-zA-Z] [^] 匹配指定范围外的任意单个字符,示例：[^wang] [:alnum:] 字母和数字 [:alpha:] 代表任何英文大小写字符，亦即 A-Z, a-z [:lower:] 小写字母,示例:[[:lower:]],相当于[a-z] [:upper:] 大写字母 [:blank:] 空白字符（空格和制表符） [:space:] 包括空格、制表符(水平和垂直)、换行符、回车符等各种类型的空白,比[:blank:]包含的范围 广 [:cntrl:] 不可打印的控制字符（退格、删除、警铃...） [:digit:] 十进制数字 [:xdigit:]十六进制数字 [:graph:] 可打印的非空白字符 [:print:] 可打印字符 [:punct:] 标点符号 ----------------- \\s #匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [\\f\\r\\t\\v]。注意 Unicode 正则表达式会匹配全角空格符 \\S #匹配任何非空白字符。等价于 [^\\f\\r\\t\\v] \\w #匹配一个字母,数字,下划线,汉字,其它国家文字的字符，等价于[_[:alnum:]字] \\W #匹配一个非字母,数字,下划线,汉字,其它国家文字的字符，等价于[^_[:alnum:]字] 案例：\n[root@rocky8 data]# ls /etc/ | grep 'rc[.0-6]' rc0.d rc1.d rc2.d rc3.d rc4.d rc5.d rc6.d rc.d rc.local [root@rocky8 data]# 3.1.2 匹配次数 用在要指定次数的字符后面，用于指定前面的字符要出现的次数\n* #匹配前面的字符任意次，包括0次，贪婪模式：尽可能长的匹配 .* #任意长度的任意字符 \\? #匹配其前面的字符出现0次或1次,即:可有可无 \\+ #匹配其前面的字符出现最少1次,即:肯定有且 \u003e=1 次 \\{n\\} #匹配前面的字符n次 \\{m,n\\} #匹配前面的字符至少m次，至多n次 \\{,n\\} #匹配前面的字符至多n次,\u003c=n \\{n,\\} #匹配前面的字符至少n次 范例: 取IP地址\n[root@rocky8 data]# ifconfig ens160 | grep -o \"[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\" | head -n1 192.168.37.130 3.1.3 位置锚定 ^ 行首 $ 行尾 \\\u003c或者\\b 语首 \\\u003e,或者\\b 语尾 案例： 行首\n[root@rocky8 data]# grep \"^root\" passwd root❌0:0:root:/root:/bin/bash [root@rocky8 data]# 案例： 行尾\n[root@rocky8 data]# grep \"bash$\" passwd root❌0:0:root:/root:/bin/bash yuankun❌1000:1000:yuankun:/home/yuankun:/bin/bash test❌1002:1001::/home/test:/bin/bash test1❌1003:1003::/home/test1:/bin/bash [root@rocky8 data]# 案例：语首\n[root@rocky8 data]# echo 'yuankunsir' | grep \"\\",
   "wordCount" : "9731",
   "inLanguage": "en",
-  "image":"http://colorfulgz.com/posts.images/banner/4.jpg","datePublished": "2022-07-26T20:09:30Z",
+  "image":"https://colorfulgz.com/posts.images/banner/4.jpg","datePublished": "2022-07-26T20:09:30Z",
   "dateModified": "2022-07-26T20:09:30Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
+    "@id": "https://colorfulgz.com/posts/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://colorfulgz.com/img/Q.gif"
+      "url": "https://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/" title="🏠 主页">
+                <a href="https://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 文本处理工具和正则表达式
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="http://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="https://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "http://colorfulgz.com"
+                                let dnsUrl = "https://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/4.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://colorfulgz.com/posts.images/banner/4.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -1795,12 +1795,12 @@ awk：Linux上的实现gawk，文本报告生成器</p>
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="http://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/">
+  <a class="prev" href="https://colorfulgz.com/posts/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/">
     <span class="title">« 上一页</span>
     <br>
     <span>文件查找和打包压缩</span>
   </a>
-  <a class="next" href="http://colorfulgz.com/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/">
+  <a class="next" href="https://colorfulgz.com/posts/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/">
     <span class="title">下一页 »</span>
     <br>
     <span>权限管理及文本编辑工具</span>
@@ -1817,7 +1817,7 @@ awk：Linux上的实现gawk，文本报告生成器</p>
         Copyright
         &copy;
         2022-2023
-        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        <a href="https://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;

@@ -9,14 +9,14 @@
 <meta name="keywords" content="Zabbix">
 <meta name="description" content="zabbix是一个监控软件，其可以监控各种网络参数，保证企业服务架构安全运营，同时支持灵活的告警机制，可以使得运维人员快速定位故障、解决问题zabbix是一个监控软件，其可以监控各种网络参数，保证企业服务架构安全运营，同时支持灵活的告警机制，可以使得运维人员快速定位故障、解决问题">
 <meta name="author" content="">
-<link rel="canonical" href="http://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/">
+<link rel="canonical" href="https://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="https://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="zabbix5部署安装" />
 <meta property="og:description" content="zabbix是一个监控软件，其可以监控各种网络参数，保证企业服务架构安全运营，同时支持灵活的告警机制，可以使得运维人员快速定位故障、解决问题zabbix是一个监控软件，其可以监控各种网络参数，保证企业服务架构安全运营，同时支持灵活的告警机制，可以使得运维人员快速定位故障、解决问题" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/" />
-<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/" />
+<meta property="og:image" content="https://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-05-02T21:33:16+00:00" />
 <meta property="article:modified_time" content="2023-05-02T21:33:16+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" />
+<meta name="twitter:image" content="https://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" />
 <meta name="twitter:title" content="zabbix5部署安装"/>
 <meta name="twitter:description" content="zabbix是一个监控软件，其可以监控各种网络参数，保证企业服务架构安全运营，同时支持灵活的告警机制，可以使得运维人员快速定位故障、解决问题zabbix是一个监控软件，其可以监控各种网络参数，保证企业服务架构安全运营，同时支持灵活的告警机制，可以使得运维人员快速定位故障、解决问题"/>
 
@@ -97,13 +97,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "http://colorfulgz.com/posts/"
+          "item": "https://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "zabbix5部署安装",
-      "item": "http://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/"
+      "item": "https://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "选择服务器平台 zabbix版本 OS分布 OS版本 zabbix component 数据库 web server 5.0LTS CentOS 7 Server,Forontend,Agent MySQL Nginx 安装和配置zabbix 安装zabbix仓库 # rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm # yum clean all 安装zabbix # 安装Zabbix server，Web前端，agent # yum install zabbix-server-mysql zabbix-agent 安装Zabbix frontend 启用红帽软件集合\n# yum install centos-release-scl 编辑配置文件\n/etc/yum.repos.d/zabbix.repo and enable zabbix-frontend repository. # 修改enable的值为1 [zabbix-frontend] ... enabled=1 ... 安装Zabbix frontend 包\n# yum install zabbix-web-mysql-scl zabbix-nginx-conf-scl 创建初始数据库 注意:MySQL数据库的安装这里不做说明 在数据库主机上运行以下代码\n# mysql -uroot -p password mysql\u003e create database zabbix character set utf8 collate utf8_bin; mysql\u003e create user zabbix@localhost identified by 'password'; mysql\u003e grant all privileges on zabbix.* to zabbix@localhost; mysql\u003e set global log_bin_trust_function_creators = 1; mysql\u003e quit; 导入初始架构和数据\n# zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p zabbix 在导入数据库后禁用log_bin_trust_function_creators选项\n# mysql -uroot -p password mysql\u003e set global log_bin_trust_function_creators = 0; mysql\u003e quit; zabbix server配置数据库 编辑配置文件 /etc/zabbix/zabbix_server.conf\nDBPassword=password zabbix前端配置PHP 编辑配置文件 /etc/opt/rh/rh-nginx116/nginx/conf.d/zabbix.conf uncomment and set ’listen’ and ‘server_name’ directives.\n# listen 80; # server_name example.com; 编辑配置文件 /etc/opt/rh/rh-php72/php-fpm.d/zabbix.conf add nginx to listen.acl_users directive.\nlisten.acl_users = apache,nginx 取消注释，设置正确的时区。\nphp_value[date.timezone] = Asia/Shanghai 启动Zabbix server和agent进程 # systemctl restart zabbix-server zabbix-agent rh-nginx116-nginx rh-php72-php-fpm # systemctl enable zabbix-server zabbix-agent rh-nginx116-nginx rh-php72-php-fpm 开始使用zabbix 注意：使用过程这里不叙述 ",
   "wordCount" : "460",
   "inLanguage": "en",
-  "image":"http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg","datePublished": "2023-05-02T21:33:16Z",
+  "image":"https://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg","datePublished": "2023-05-02T21:33:16Z",
   "dateModified": "2023-05-02T21:33:16Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/"
+    "@id": "https://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://colorfulgz.com/img/Q.gif"
+      "url": "https://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/" title="🏠 主页">
+                <a href="https://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 zabbix5部署安装
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="http://colorfulgz.com/tags/zabbix/" style="color: var(--secondary)!important;">Zabbix</a>
+                <a href="https://colorfulgz.com/tags/zabbix/" style="color: var(--secondary)!important;">Zabbix</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "http://colorfulgz.com"
+                                let dnsUrl = "https://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://colorfulgz.com/posts.images/banner/pexels-pixabay-268533.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -536,12 +536,12 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="http://colorfulgz.com/posts/kubernetes/">
+  <a class="prev" href="https://colorfulgz.com/posts/kubernetes/">
     <span class="title">« 上一页</span>
     <br>
     <span>Kubernetes详细教程</span>
   </a>
-  <a class="next" href="http://colorfulgz.com/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/">
+  <a class="next" href="https://colorfulgz.com/posts/%E6%90%AD%E5%BB%BAkubernetes%E9%9B%86%E7%BE%A4/">
     <span class="title">下一页 »</span>
     <br>
     <span>搭建Kubernetes集群</span>
@@ -592,7 +592,7 @@ var _hmt = _hmt || [];
         Copyright
         &copy;
         2022-2023
-        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        <a href="https://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;

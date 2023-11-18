@@ -2,116 +2,116 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>🧩 标签 on DevOpsHub</title>
-    <link>http://colorfulgz.com/tags/</link>
+    <link>https://colorfulgz.com/tags/</link>
     <description>Recent content in 🧩 标签 on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 09 Oct 2023 22:45:06 +0800</lastBuildDate><atom:link href="http://colorfulgz.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Oct 2023 22:45:06 +0800</lastBuildDate><atom:link href="https://colorfulgz.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux</title>
-      <link>http://colorfulgz.com/tags/linux/</link>
+      <link>https://colorfulgz.com/tags/linux/</link>
       <pubDate>Mon, 09 Oct 2023 22:45:06 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/tags/linux/</guid>
+      <guid>https://colorfulgz.com/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>lvs</title>
-      <link>http://colorfulgz.com/tags/lvs/</link>
+      <link>https://colorfulgz.com/tags/lvs/</link>
       <pubDate>Mon, 09 Oct 2023 22:45:06 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/tags/lvs/</guid>
+      <guid>https://colorfulgz.com/tags/lvs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>kubernetes</title>
-      <link>http://colorfulgz.com/tags/kubernetes/</link>
+      <link>https://colorfulgz.com/tags/kubernetes/</link>
       <pubDate>Fri, 23 Jun 2023 13:24:16 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/tags/kubernetes/</guid>
+      <guid>https://colorfulgz.com/tags/kubernetes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tabby</title>
-      <link>http://colorfulgz.com/tags/tabby/</link>
+      <link>https://colorfulgz.com/tags/tabby/</link>
       <pubDate>Sun, 11 Jun 2023 19:40:22 +0800</pubDate>
       
-      <guid>http://colorfulgz.com/tags/tabby/</guid>
+      <guid>https://colorfulgz.com/tags/tabby/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Zabbix</title>
-      <link>http://colorfulgz.com/tags/zabbix/</link>
+      <link>https://colorfulgz.com/tags/zabbix/</link>
       <pubDate>Tue, 02 May 2023 21:33:16 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/tags/zabbix/</guid>
+      <guid>https://colorfulgz.com/tags/zabbix/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Zookeeper</title>
-      <link>http://colorfulgz.com/tags/zookeeper/</link>
+      <link>https://colorfulgz.com/tags/zookeeper/</link>
       <pubDate>Sat, 18 Mar 2023 22:15:13 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/tags/zookeeper/</guid>
+      <guid>https://colorfulgz.com/tags/zookeeper/</guid>
       <description></description>
     </item>
     
     <item>
       <title>OpenVPN</title>
-      <link>http://colorfulgz.com/tags/openvpn/</link>
+      <link>https://colorfulgz.com/tags/openvpn/</link>
       <pubDate>Fri, 17 Mar 2023 21:51:21 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/tags/openvpn/</guid>
+      <guid>https://colorfulgz.com/tags/openvpn/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Docker</title>
-      <link>http://colorfulgz.com/tags/docker/</link>
+      <link>https://colorfulgz.com/tags/docker/</link>
       <pubDate>Tue, 07 Mar 2023 18:45:45 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/tags/docker/</guid>
+      <guid>https://colorfulgz.com/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ansible</title>
-      <link>http://colorfulgz.com/tags/ansible/</link>
+      <link>https://colorfulgz.com/tags/ansible/</link>
       <pubDate>Sat, 25 Feb 2023 19:12:21 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/tags/ansible/</guid>
+      <guid>https://colorfulgz.com/tags/ansible/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Redis</title>
-      <link>http://colorfulgz.com/tags/redis/</link>
+      <link>https://colorfulgz.com/tags/redis/</link>
       <pubDate>Thu, 09 Feb 2023 14:59:00 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/tags/redis/</guid>
+      <guid>https://colorfulgz.com/tags/redis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Nginx</title>
-      <link>http://colorfulgz.com/tags/nginx/</link>
+      <link>https://colorfulgz.com/tags/nginx/</link>
       <pubDate>Sat, 07 Jan 2023 13:34:33 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/tags/nginx/</guid>
+      <guid>https://colorfulgz.com/tags/nginx/</guid>
       <description></description>
     </item>
     
     <item>
       <title>MySQL</title>
-      <link>http://colorfulgz.com/tags/mysql/</link>
+      <link>https://colorfulgz.com/tags/mysql/</link>
       <pubDate>Wed, 23 Nov 2022 13:38:00 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/tags/mysql/</guid>
+      <guid>https://colorfulgz.com/tags/mysql/</guid>
       <description></description>
     </item>
     

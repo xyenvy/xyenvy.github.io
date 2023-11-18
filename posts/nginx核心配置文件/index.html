@@ -9,14 +9,14 @@
 <meta name="keywords" content="">
 <meta name="description" content="nginx 官方帮助文档，http://nginx.org/en/docs/">
 <meta name="author" content="">
-<link rel="canonical" href="http://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">
+<link rel="canonical" href="https://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="https://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="Nginx核心配置文件" />
 <meta property="og:description" content="nginx 官方帮助文档，http://nginx.org/en/docs/" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" />
-<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/25.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/" />
+<meta property="og:image" content="https://colorfulgz.com/posts.images/banner/25.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-10T09:58:09+00:00" />
 <meta property="article:modified_time" content="2023-01-10T09:58:09+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/25.jpg" />
+<meta name="twitter:image" content="https://colorfulgz.com/posts.images/banner/25.jpg" />
 <meta name="twitter:title" content="Nginx核心配置文件"/>
 <meta name="twitter:description" content="nginx 官方帮助文档，http://nginx.org/en/docs/"/>
 
@@ -97,13 +97,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "http://colorfulgz.com/posts/"
+          "item": "https://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "Nginx核心配置文件",
-      "item": "http://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+      "item": "https://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "Nginx核心配置文件 配置文件说明 nginx官网文档说明\nhttp://nginx.org/en/docs/ tengine帮助文档\nhttp://tengine.taobao.org/nginx_docs/cn/docs Nginx的配置文件的组成部分\n主配置文件：nginx.conf\n子配置文件: include conf.d/*.conf\nfastcgi， uwsgi，scgi 等协议相关的配置文件 mime.types：支持的mime类型，MIME(Multipurpose Internet Mail Extensions)多用途互联网邮 件扩展类型，MIME消息能包含文本、图像、音频、视频以及其他应用程序专用的数据，是设定某 种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动 使用指定应用程序来打开。多用于指定一些客户端自定义的文件名，以及一些媒体文件打开方式。 MIME参考文档： 参考文档\nnginx 配置文件格式说明\n配置文件由指令与指令块构成 每条指令以;分号结尾，指令与值之间以空格符号分隔 可以将多条指令放在同一行,用分号分隔即可,但可读性差,不推荐 指令块以{ }大括号将多条指令组织在一起,且可以嵌套指令块 include语句允许组合多个配置文件以提升可维护性 使用#符号添加注释，提高可读性 使用$符号使用变量 部分指令的参数支持正则表达式 Nginx主配置文件的配置指令方式\ndirective value [value2 ...]; 注意 (1) 指令必须以分号结尾 (2) 支持使用配置变量 内建变量：由Nginx模块引入，可直接引用 自定义变量：由用户使用set命令定义,格式: set variable_name value; 引用变量：$variable_name 主配置文件结构：四部分\nmain block：主配置段，即全局配置段，对http,mail都有效 #事件驱动相关的配置 event { ... } #http/https 协议相关配置段 http { ... } #默认配置文件不包括下面两个块 #mail 协议相关配置段 mail { ... } #stream 服务器相关配置段 stream { ... } 默认的nginx.conf配置文件格式说明\n#全局配置端，对全局生效，主要设置nginx的启动用户/组，启动的工作进程数量，工作模式，Nginx的PID 路径，日志路径等。 user nginx nginx; worker_processes 1; #启动工作进程数数量 events { #events设置快，主要影响nginx服务器与用户的网络连接，比如是否允许同时接受多个网络连 接，使用哪种事件驱动模型处理请求，每个工作进程可以同时支持的最大连接数，是否开启对多工作进程下的 网络连接进行序列化等。 worker_connections 1024; #设置单个nginx工作进程可以接受的最大并发，作为web服务器 的时候最大并发数为worker_connections * worker_processes，作为反向代理的时候为 (worker_connections * worker_processes)/2 } http { #http块是Nginx服务器配置中的重要部分，缓存、代理和日志格式定义等绝大多数功能和第三方模 块都可以在这设置，http块可以包含多个server块，而一个server块中又可以包含多个location块， server块可以配置文件引入、MIME-Type定义、日志自定义、是否启用sendfile、连接超时时间和单个链 接的请求上限等。 include mime.types; default_type application/octet-stream; sendfile on; #作为web服务器的时候打开sendfile加快静态文件传输，指定是否使用 sendfile系统调用来传输文件,sendfile系统调用在两个文件描述符之间直接传递数据(完全在内核中操 作)，从而避免了数据在内核缓冲区和用户缓冲区之间的拷贝，操作效率很高，被称之为零拷贝，硬盘 \u003e\u003e kernel buffer (快速拷贝到kernelsocket buffer) \u003e\u003e协议栈。 keepalive_timeout 65; #长连接超时时间，单位是秒 server { #设置一个虚拟机主机，可以包含自己的全局快，同时也可以包含多个location模块。比如 本虚拟机监听的端口、本虚拟机的名称和IP配置，多个server 可以使用一个端口，比如都使用80端口提供 web服务、 listen 80; #配置server监听的端口 server_name localhost; #本server的名称，当访问此名称的时候nginx会调用当前 serevr内部的配置进程匹配。 location / { #location其实是server的一个指令，为nginx服务器提供比较多而且灵活的指 令，都是在location中体现的，主要是基于nginx接受到的请求字符串，对用户请求的UIL进行匹配，并对特 定的指令进行处理，包括地址重定向、数据缓存和应答控制等功能都是在这部分实现，另外很多第三方模块的 配置也是在location模块中配置。 root html; #相当于默认页面的目录名称，默认是安装目录的相对路径，可以使用绝对路 径配置。 index index.html index.htm; #默认的页面文件名称 } error_page 500 502 503 504 /50x.html; #错误页面的文件名称 location = /50x.html { #location处理对应的不同错误码的页面定义到/50x.html，这个 跟对应其server中定义的目录下。 root html; #定义默认页面所在的目录 } } #和邮件相关的配置 #mail { # ... # } mail 协议相关配置段 #tcp代理配置，1.9版本以上支持 #stream { # ... # } stream 服务器相关配置段 #导入其他路径的配置文件 #include /apps/nginx/conf.d/*.conf } 全局配置 Main 全局配置段常见的配置指令分类\n正常运行必备的配置 优化性能相关的配置 用于调试及定位问题相关的配置 事件驱动相关的配置 全局配置说明:\nuser nginx nginx; #启动Nginx工作进程的用户和组 worker_processes [number | auto]; #启动Nginx工作进程的数量,一般设为和CPU核心数相同 worker_cpu_affinity 00000001 00000010 00000100 00001000 | auto ; #将Nginx工作进程绑 定到指定的CPU核心，默认Nginx是不进行进程绑定的，绑定并不是意味着当前nginx进程独占以一核心CPU， 但是可以保证此进程不会运行在其他核心上，这就极大减少了nginx的工作进程在不同的cpu核心上的来回跳 转，减少了CPU对进程的资源分配与回收以及内存管理等，因此可以有效的提升nginx服务器的性能。 CPU MASK: 00000001：0号CPU 00000010：1号CPU 10000000：7号CPU #示例: worker_cpu_affinity 0001 0010 0100 1000;第0号---第3号CPU worker_cpu_affinity 0101 1010; #示例 worker_processes 4; worker_cpu_affinity 00000010 00001000 00100000 10000000; [root@centos8 ~]# ps axo pid,cmd,psr | grep nginx 31093 nginx: master process /apps 1 34474 nginx: worker process 1 34475 nginx: worker process 3 34476 nginx: worker process 5 34477 nginx: worker process 7 35751 grep nginx #auto 绑定CPU #The special value auto (1.9.10) allows binding worker processes automatically to available CPUs: worker_processes auto; worker_cpu_affinity auto; #The optional mask parameter can be used to limit the CPUs available for automatic binding: worker_cpu_affinity auto 01010101; #错误日志记录配置，语法：error_log file [debug | info | notice | warn | error | crit | alert | emerg] #error_log logs/error.log; #error_log logs/error.log notice; error_log /usr/local/src/nginx/logs/error.log error; #pid文件保存路径 pid /usr/local/src/nginx/logs/nginx.pid; worker_priority 0; #工作进程优先级，-20~20(19) worker_rlimit_nofile 65536; #所有worker进程能打开的文件数量上限,包括:Nginx的所有连接（例 如与代理服务器的连接等），而不仅仅是与客户端的连接,另一个考虑因素是实际的并发连接数不能超过系统级 别的最大打开文件数的限制.最好与ulimit -n 或者limits.conf的值保持一致, daemon off; #前台运行Nginx服务用于测试、或者以容器运行时，需要设为off master_process off|on; #是否开启Nginx的master-worker工作模式，仅用于开发调试场景,默认为 on events { worker_connections 65536; #设置单个工作进程的最大并发连接数 use epoll; #使用epoll事件驱动，Nginx支持众多的事件驱动，比如:select、poll、epoll，只 能设置在events模块中设置。 accept_mutex on; #on为同一时刻一个请求轮流由worker进程处理,而防止被同时唤醒所有 worker,避免多个睡眠进程被唤醒的设置，默认为off，新请求会唤醒所有worker进程,此过程也称为\"惊 群\"，因此nginx刚安装完以后要进行适当的优化。建议设置为on multi_accept on; #on时Nginx服务器的每个工作进程可以同时接受多个新的网络连接，此指令默认 为off，即默认为一个工作进程只能一次接受一个新的网络连接，打开后几个同时接受多个。建议设置为on } 范例：实现nginx高并发配置\n[root@centos7 ~]#ulimit -n 102400 [root@centos7 ~]#while true;do ab -c 5000 -n 10000 http://10.0.0.8/;sleep 0.5;done #默认配置不支持高并发,会出现以下错误日志 [root@centos8 conf]#tail /usr/local/src/nginx/logs/error.log 2020/09/24 21:19:33 [crit] 41006#0: *1105860 open() \"/apps/nginx/html/50x.html\" failed (24: Too many open files), client: 10.0.0.7, server: localhost, request: \"GET / HTTP/1.0\", host: \"10.0.0.8\" 2020/09/24 21:19:33 [crit] 41006#0: accept4() failed (24: Too many open files) 2020/09/24 21:19:33 [crit] 41006#0: *1114177 open() \"/apps/nginx/html/index.html\" failed (24: Too many open files), client: 10.0.0.7, server: localhost, request: \"GET / HTTP/1.0\", host: \"10.0.0.8\" #如果systemd启动,则需要修改nginx.service文件中加LimitNOFILE=100000,才能有效 #如果非systemd启动,可以修改下面pam限制 [root@centos8 ~]#vim /etc/security/limits.conf * soft nofile 1000000 * hard nofile 1000000 [root@centos8 ~]#vim /apps/nginx/conf/nginx.conf worker_rlimit_nofile 100000; [root@centos8 ~]#systemctl restart nginx [root@centos8 ~]# watch -n1 'ps -axo pid,cmd,nice | grep nginx #验证进程优先级 http配置块 http { ... ... #各server的公共配置 server { #每个server用于定义一个虚拟主机,第一个server为默认虚拟服务器 ... } server { ... server_name #虚拟主机名 root #主目录 alias #路径别名 location [OPERATOR] URL { #指定URL的特性 ... if CONDITION { ... } } } } http配置协议说明\nhttp { include mime.types; #导入支持的文件类型,是相对于/usr/local/src/nginx/conf的目录 default_type application/octet-stream; #除mime.types中文件类型外,设置其它文件默认 类型，访问其它类型时会提示下载不匹配的类型文件 #日志配置部分 #log_format main '$remote_addr - $remote_user [$time_local] \"$request\" ' # '$status $body_bytes_sent \"$http_referer\" ' # '\"$http_user_agent\" \"$http_x_forwarded_for\"'; #access_log logs/access.log main; #自定义优化参数 sendfile on; #tcp_nopush on; #在开启了sendfile的情况下，合并请求后统一发送给客户端,必须开启 sendfile #tcp_nodelay off; #在开启了keepalived模式下的连接是否启用TCP_NODELAY选项，当为 off时，延迟0.2s发送，默认On时，不延迟发送，立即发送用户响应报文。 #keepalive_timeout 0; keepalive_timeout 65 65; #设置会话保持时间,第二个值为响应首部:keepAlived:timeout=65,可以和第一个值不同 #gzip on; #开启文件压缩 server { listen 80; #设置监听地址和端口 server_name localhost; #设置server name，可以以空格隔开写多个并支持正则表达式， 如:*.magedu.com www.magedu.* ~^www\\d+\\.magedu\\.com$ default_server #charset koi8-r; #设置编码格式，默认是俄语格式，建议改为utf-8 #access_log logs/host.access.log main; location / { root html; index index.html index.htm; } #error_page 404 /404.html; # redirect server error pages to the static page /50x.html # error_page 500 502 503 504 /50x.html; #定义错误页面 location = /50x.html { root html; } # proxy the PHP scripts to Apache listening on 127.0.0.1:80 # #location ~ \\.php$ { #以http的方式转发php请求到指定web服务器 # proxy_pass http://127.0.0.1; #} # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000 # #location ~ \\.php$ { #以fastcgi的方式转发php请求到php处理 # root html; # fastcgi_pass 127.0.0.1:9000; # fastcgi_index index.php; # fastcgi_param SCRIPT_FILENAME /scripts$fastcgi_script_name; # include fastcgi_params; #} # deny access to .htaccess files, if Apache's document root # concurs with nginx's one # #location ~ /\\.ht { #拒绝web形式访问指定文件，如很多的网站都是通过.htaccess文件来 改变自己的重定向等功能。 # deny all; #} location ~ /passwd.html { deny all; } } # another virtual host using mix of IP-, name-, and port-based configuration # #server { #自定义虚拟server # listen 8000; # listen somename:8080; # server_name somename alias another.alias; # location / { # root html; # index index.html index.htm; #指定默认网页文件，此指令由 ngx_http_index_module模块提供 # } #} # HTTPS server # #server { #https服务器配置 # listen 443 ssl; # server_name localhost; # ssl_certificate cert.pem; # ssl_certificate_key cert.key; # ssl_session_cache shared:SSL:1m; # ssl_session_timeout 5m; # ssl_ciphers HIGH:!aNULL:!MD5; # ssl_prefer_server_ciphers on; # location / { # root html; # index index.html index.htm; # } #} MIME #在响应报文中将指定的文件扩展名映射至MIME对应的类型 include /etc/nginx/mime.types; default_type application/octet-stream;#除mime.types中的类型外，指定其它文件的默认 MIME类型，浏览器一般会提示下载 types { text/html html; image/gif gif; image/jpeg jpg; } #MIME参考文档： https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_Types 范例：识别PHP为text\n[root@centos7 conf]# vim /usr/local/src/nginx/html/test.php \u003c?php phpinfo(); ?\u003e # 修改配置文件 [root@centos7 conf]# vim /usr/local/src/nginx/conf/nginx.conf http { include mime.types; default_type text/html; # 加入次行 ...... #或者修改为下面 include mime.types; default_type application/octet-stream; types{ text/plain php; #加此行 } 指定响应报文server首部 #是否在响应报文中的Content-Type显示指定的字符集，默认off不显示 charset charset | off; #示例 charset utf-8; #是否在响应报文的Server首部显示nginx版本 server_tokens on | off | build | string; 修改server字段\n如果想自定义响应报文的nginx版本信息，需要修改源码文件，重新编译 如果server_tokens on，修改 src/core/nginx.h 修改第13-14行，如下示例 #define NGINX_VERSION \"1.68.9\" #define NGINX_VER \"test/\" NGINX_VERSION 如果server_tokens off，修改 src/http/ngx_http_header_filter_module.c 第49行，如下示例： static char ngx_http_server_string[] = \"Server: nginx\" CRLF; 把其中的nginx改为自己想要的文字即可,如：test root 与 alias root：指定web的家目录，在定义location的时候，文件的绝对路径等于 root+location\nalias：定义路径别名，会把访问的路径重新定义到其指定的路径,文档映射的另一种机制;仅能用于 location上下文,此指令使用较少\n注意：location中使用root指令和alias指令的意义不同\nroot 给定的路径对应于location中的/uri 左侧的/ alias 给定的路径对应于location中的/uri 的完整路径 location 的详细使用 在一个server中location配置段可存在多个，用于实现从uri到文件系统的路径映射；ngnix会根据用户请 求的URI来检查定义的所有location，按一定的优先级找出一个最佳匹配，而后应用其配置\n在没有使用正则表达式的时候，nginx会先在server中的多个location选取匹配度最高的一个uri，uri是 用户请求的字符串，即域名后面的web文件路径，然后使用该location模块中的正则url和字符串，如果 匹配成功就结束搜索，并使用此location处理此请求。\nlocation 官方帮助:\nhttps://nginx.org/en/docs/http/ngx_http_core_module.html#location 语法规则\n#语法规则： location [ = | ~ | ~* | ^~ ] uri { ... } = #用于标准uri前，需要请求字串与uri精确匹配，大小敏感,如果匹配成功就停止向下匹配并立即处理请 求 ^~ #用于标准uri前，表示包含正则表达式,并且匹配以指定的正则表达式开头,对uri的最左边部分做匹配 检查，不区分字符大小写 ~ #用于标准uri前，表示包含正则表达式,并且区分大小写 ~* #用于标准uri前，表示包含正则表达式,并且不区分大写 不带符号 #匹配起始于此uri的所有的uri \\ #用于标准uri前，表示包含正则表达式并且转义字符。可以将 . * ?等转义为普通符号 #匹配优先级从高到低： =, ^~, ~/~*, 不带符号 官网案例\nlocation = / { [ configuration A ] } location / { [ configuration B ] } location /documents/ { [ configuration C ] } location ^~ /images/ { [ configuration D ] } location ~* \\.(gif|jpg|jpeg)$ { [ configuration E ] } The “/” request will match configuration A(?), the “/index.html” request will match configuration B, the “/documents/document.html” request will match configuration C, the “/images/1.gif” request will match configuration D, and the “/documents/1.jpg” request will match configuration E. 精确匹配图片 server{ listen 80; server_name localhost; root /data/web; index index.html *.html; location = /test.jpg { root /data/image; } } 匹配案例-文件名后缀 server{ listen 80; server_name localhost; root /data/web; index index.html *.html; location ~* \\.(gif|jpg|jpeg|bmp|png|tiff|tif|ico|wmf|js|css)$ { root /data/web1; } } 匹配案例-优先级 server{ listen 80; server_name localhost; root /data/web; index index.html *.html; location = /test2.jpg { root /data/web2; index index.html; } location ~* \\.(gif|jpg|jpeg|bmp|png|tiff|tif|ico|wmf|js|css)$ { root /data/web1; index index.html; } } #匹配优先级：=, ^~, ～/～*，/ location优先级：(location =) \u003e (location ^~ 路径) \u003e (location ~,~* 正则顺序) \u003e (location 完整路径) \u003e (location 部分起始路径) \u003e (/) Nginx 四层访问控制 访问控制基于模块ngx_http_access_module实现，可以通过匹配客户端源IP地址进行限制 注意: 如果能在防火墙设备控制,最好就不要在nginx上配置,可以更好的节约资源\n官方帮助:\nhttp://nginx.org/en/docs/http/ngx_http_access_module.html 范例：\nlocation = /login/ { root /data/nginx/html/pc; allow 10.0.0.0/24; deny all; } location /about { alias /data/nginx/html/pc; index index.html; deny 192.168.1.1; # 禁止该IP访问 allow 192.168.1.0/24; # 允许该网段访问 allow 10.1.1.0/16; allow 2001:0db8::/32; deny all; #按先小范围到大范围排序 } Nginx 账户认证功能 由 ngx_http_auth_basic_module 模块提供此功能\n官方帮助:\nhttps://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic 范例：\n#CentOS安装包 [root@centos7 ~]#yum -y install httpd-tools #Ubuntu安装包 [root@Ubuntu ~]#apt -y install apache2-utils #创建用户 #-b 非交互式方式提交密码 [root@centos7 ~]# htpasswd -cb /usr/local/src/nginx/conf.d/passwd admin 123456 Adding password for user admin [root@centos7 conf.d]# cat passwd admin:$apr1$/MugqAsJ$MbWcOmC5U9WTZlgK5MJeU. [root@centos7 conf.d]# #安全加固 [root@centos7 ~]# chown nginx.nginx /usr/local/src/nginx/conf.d/passwd [root@centos7 ~]# chmod 600 /usr/local/src/nginx/conf.d/passwd # 修改配置文件 server{ listen 80; server_name localhost; root /data/web; index index.html *.html; location /about { alias /data/web1; index index.html *.html; auth_basic \"login password\"; auth_basic_user_file /usr/local/src/nginx/conf.d/passwd; } } 检测文件是否存在 try_files 会按顺序检查文件是否存在，返回第一个找到的文件或文件夹（结尾加斜线表示为文件夹）， 如果所有文件或文件夹都找不到，会进行一个内部重定向到最后一个参数。只有最后一个参数可以引起 一个内部重定向，之前的参数只设置内部URI的指向。最后一个参数是回退URI且必须存在，否则会出现 内部500错误。\n语法格式\nSyntax: try_files file ... uri; try_files file ... =code; Default: — Context: server, location 范例： 如果不存在页面, 就转到default.html页面\nserver{ listen 80; server_name localhost; root /data/web; index index.html *.html; location / { #如果不存在页面, 就转到default.html页面 # try_files $uri $uri.html $uri/index.html /about/default.html; # 返回自定义状态码 489 try_files $uri $uri/index.html $uri.html =489; index index.html *.html; } } 长连接配置 keepalive_timeout timeout [header_timeout]; #设定保持连接超时时长，0表示禁止长连接，默 认为75s，通常配置在http字段作为站点全局配置 keepalive_requests number; #在一次长连接上所允许请求的资源的最大数量，默认为1000次,建议适 当调大,比如:500 范例：\nkeepalive_requests 3; keepalive_timeout 65 60; #开启长连接后，返回客户端的会话保持时间为60s，单次长连接累计请求达到指定次数请求或65秒就会被断 开，第二个数字60为发送给客户端应答报文头部中显示的超时时间设置为60s：如不设置客户端将不显示超时 时间。 Keep-Alive:timeout=60 #浏览器收到的服务器返回的报文 #如果设置为0表示关闭会话保持功能，将如下显示： Connection:close #浏览器收到的服务器返回的报文 作为下载服务器配置 nginx_http_autoindex_module 模块处理以斜杠字符 “/” 结尾的请求，并生成目录列表,可以做为下载服务 配置使用 官方文档:\nhttps://nginx.org/en/docs/http/ngx_http_autoindex_module.html#autoindex Syntax: autoindex on | off; Default: autoindex off; Context: http, server, location 相关指令\nautoindex on | off;#自动文件索引功能，默为off autoindex_exact_size on | off; #计算文件确切大小（单位bytes），off 显示大概大小（单位 K、M)，默认on autoindex_localtime on | off ; #显示本机时间而非GMT(格林威治)时间，默认off autoindex_format html | xml | json | jsonp; #显示索引的页面文件风格，默认html limit_rate rate; #限制响应客户端传输速率(除GET和HEAD以外的所有方法)，单位B/s,即 bytes/second，默认值0,表示无限制,此指令由ngx_http_core_module提供 set $limit_rate 4k; #也可以通变量限速,单位B/s,同时设置,此项优级高.Rate limit can also be set in the $limit_rate variable, however, since version 1.17.0, this method is not recommended: 范例：\n# 配置文件 location /download { autoindex on; #自动索引功能 autoindex_exact_size on; #计算文件确切大小（单位bytes），此为默认值,off只显示大概大 小（单位kb、mb、gb） autoindex_localtime on; #on表示显示本机时间而非GMT(格林威治)时间,默为为off显示GMT 时间 limit_rate 1024k; #限速,默认不限速 root /data/web/download; } 其他配置 keepalive_disable none | browser ...; #对哪种浏览器禁用长连接 limit_except method ... { ... }，仅用于location #禁止客户端使用除了指定的请求方法之外的其它方法,如果使用会出现403错误 method:GET, HEAD, POST, PUT, DELETE，MKCOL, COPY, MOVE, OPTIONS, PROPFIND, PROPPATCH, LOCK, UNLOCK, PATCH limit_except GET { allow 192.168.0.0/24; allow 10.0.0.1; deny all; } #除了GET和HEAD 之外其它方法仅允许192.168.1.0/24网段主机使用 location /upload { root /data/nginx/html/pc; index index.html; limit_except GET { allow 10.0.0.6; deny all; } } ",
   "wordCount" : "7021",
   "inLanguage": "en",
-  "image":"http://colorfulgz.com/posts.images/banner/25.jpg","datePublished": "2023-01-10T09:58:09Z",
+  "image":"https://colorfulgz.com/posts.images/banner/25.jpg","datePublished": "2023-01-10T09:58:09Z",
   "dateModified": "2023-01-10T09:58:09Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+    "@id": "https://colorfulgz.com/posts/nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://colorfulgz.com/img/Q.gif"
+      "url": "https://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/" title="🏠 主页">
+                <a href="https://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 Nginx核心配置文件
             </h1>
@@ -320,7 +320,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "http://colorfulgz.com"
+                                let dnsUrl = "https://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -353,7 +353,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/25.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://colorfulgz.com/posts.images/banner/25.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -1037,12 +1037,12 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="http://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+  <a class="prev" href="https://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
     <span class="title">« 上一页</span>
     <br>
     <span>Redis学习笔记</span>
   </a>
-  <a class="next" href="http://colorfulgz.com/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/">
+  <a class="next" href="https://colorfulgz.com/posts/nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/">
     <span class="title">下一页 »</span>
     <br>
     <span>Nginx平滑升级</span>
@@ -1059,7 +1059,7 @@ var _hmt = _hmt || [];
         Copyright
         &copy;
         2022-2023
-        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        <a href="https://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;

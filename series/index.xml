@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Series on DevOpsHub</title>
-    <link>http://colorfulgz.com/series/</link>
+    <link>https://colorfulgz.com/series/</link>
     <description>Recent content in Series on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language><atom:link href="http://colorfulgz.com/series/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language><atom:link href="https://colorfulgz.com/series/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

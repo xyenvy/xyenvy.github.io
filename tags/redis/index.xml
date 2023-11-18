@@ -2,44 +2,44 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Redis on DevOpsHub</title>
-    <link>http://colorfulgz.com/tags/redis/</link>
+    <link>https://colorfulgz.com/tags/redis/</link>
     <description>Recent content in Redis on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 09 Feb 2023 14:59:00 +0000</lastBuildDate><atom:link href="http://colorfulgz.com/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 09 Feb 2023 14:59:00 +0000</lastBuildDate><atom:link href="https://colorfulgz.com/tags/redis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Redis学习笔记</title>
-      <link>http://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <link>https://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Thu, 09 Feb 2023 14:59:00 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://colorfulgz.com/posts/redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
       <description>Redis 是完全开源免费的，遵守BSD协议，是一个高性能(NOSQL)的key-value数据库，Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存可持久化的日志型，Key-Value数据库，并提供多种语言的API</description>
     </item>
     
     <item>
       <title>Redis一键安装脚本</title>
-      <link>http://colorfulgz.com/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</link>
+      <link>https://colorfulgz.com/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Sat, 17 Dec 2022 11:56:02 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</guid>
+      <guid>https://colorfulgz.com/posts/redis%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC/</guid>
       <description>centos、ubuntu、rockylinux系统Redis一键安装脚本</description>
     </item>
     
     <item>
       <title>Redis集群和高可用</title>
-      <link>http://colorfulgz.com/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/</link>
+      <link>https://colorfulgz.com/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/</link>
       <pubDate>Tue, 13 Dec 2022 22:20:06 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/</guid>
+      <guid>https://colorfulgz.com/posts/redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/</guid>
       <description>Redis单机服务存在数据和服务的单点问题,而且单机性能也存在着上限,可以利用Redis的集群相关技术来解决这些问题</description>
     </item>
     
     <item>
       <title>Redis部署和基础使用</title>
-      <link>http://colorfulgz.com/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</link>
+      <link>https://colorfulgz.com/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Wed, 07 Dec 2022 21:16:33 +0000</pubDate>
       
-      <guid>http://colorfulgz.com/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
+      <guid>https://colorfulgz.com/posts/redis%E9%83%A8%E7%BD%B2%E5%92%8C%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
       <description>Redis (Remote Dictionary Server远程字典服务)是一个遵循BSD MIT开源协议的高性能的NoSQL</description>
     </item>
     

@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux">
 <meta name="description" content="DNS一般指域名系统。 域名系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访问互联网。DNS使用UDP端口53">
 <meta name="author" content="">
-<link rel="canonical" href="http://colorfulgz.com/posts/dns/">
+<link rel="canonical" href="https://colorfulgz.com/posts/dns/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="https://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="DNS服务" />
 <meta property="og:description" content="DNS一般指域名系统。 域名系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访问互联网。DNS使用UDP端口53" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://colorfulgz.com/posts/dns/" />
-<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/11.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://colorfulgz.com/posts/dns/" />
+<meta property="og:image" content="https://colorfulgz.com/posts.images/banner/11.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-09-22T22:01:44+00:00" />
 <meta property="article:modified_time" content="2022-09-22T22:01:44+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/11.jpg" />
+<meta name="twitter:image" content="https://colorfulgz.com/posts.images/banner/11.jpg" />
 <meta name="twitter:title" content="DNS服务"/>
 <meta name="twitter:description" content="DNS一般指域名系统。 域名系统（英文：Domain Name System，缩写：DNS）是互联网的一项服务。它作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访问互联网。DNS使用UDP端口53"/>
 
@@ -97,13 +97,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "http://colorfulgz.com/posts/"
+          "item": "https://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "DNS服务",
-      "item": "http://colorfulgz.com/posts/dns/"
+      "item": "https://colorfulgz.com/posts/dns/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "名字解析介绍和DNS DNS服务工作原理 DNS查询类型 递归查询： 是指DNS服务器在收到用户发起的请求时，必须向用户返回一个准确的查询结果。如果DNS服务器 本地没有存储与之对应的信息，则该服务器需要询问其他服务器，并将返回的查询结构提交给用 户。 一般客户机和本地DNS服务器之间属于递归查询，即当客户机向DNS服务器发出请求后,若DNS服 务器本身不能解析，则会向另外的DNS服务器发出查询请求，得到最终的肯定或否定的结果后转交 给客户机。此查询的源和目标保持不变,为了查询结果只需要发起一次查询 递归算法:客户端向LocalDNS发起域名查询–\u003elocalDNS不知道域名对应的IP–\u003e但它知道谁知道-\u003e他 代为帮客户端去查找–\u003e最后再返回最终结果 迭代查询： 是指DNS服务器在收到用户发起的请求时，并不直接回复查询结果，而是告诉另一台DNS服务器的 地址，用户再向这台DNS服务器提交请求，这样依次反复，直到返回查询结果。 一般情况下(有例外)本地的DNS服务器向其它DNS服务器的查询属于迭代查询,如：若对方不能返回 权威的结果，则它会向下一个DNS服务器(参考前一个DNS服务器返回的结果)再次发起进行查询， 直到返回查询的结果为止。此查询的源不变,但查询的目标不断变化,为查询结果一般需要发起多次 查询 迭代算法︰\n客户端向LocalDNS发起域名查询–\u003elocalDNS不知道域名对应的IP–\u003e但它知道谁知道并 推荐客户端应该找谁–\u003e客户端自己去找它 DNS缓存: DNS缓存是将解析数据存储在靠近发起请求的客户端的位置，也可以说DNS数据是可以缓存在任意 位置，最终目的是以此减少递归查询过程，可以更快的让用户获得请求结果。 解析类型 FQDN –\u003e IP 正向解析 IP –\u003e FQDN 反向解析\n注意：正反向解析是两个不同的名称空间，是两棵不同的解析树 完整查询流程 Client --\u003ehosts文件 --\u003e Client DNS Service Local Cache --\u003e DNS Server (recursion递 归) --\u003e DNS Server Cache --\u003eDNS iteration(迭代) --\u003e 根--\u003e 顶级域名DNS--\u003e二级域名DNS… DNS服务相关概念和技术 各种资源记录 区域解析库：由众多资源记录RR(Resource Record)组成 记录类型：A, AAAA, PTR, SOA, NS, CNAME, MX\nSOA：Start Of Authority，起始授权记录；一个区域解析库有且仅能有一个SOA记录，必须位于解析库的第一条记录 A：internet Address，作用，FQDN –\u003e IP AAAA：FQDN –\u003e IPv6 PTR：PoinTeR，IP –\u003e FQDN NS：Name Server，专用于标明当前区域的DNS服务器 CNAME ： Canonical Name，别名记录 MX：Mail eXchanger，邮件交换器 TXT：对域名进行标识和说明的一种方式，一般做验证记录时会使用此项，如：SPF（反垃圾邮件）记录，https验证等，如下示例 _dnsauth TXT 2012011200000051qgs69bwoh4h6nht4n1h0lr038x SOA记录 name: 当前区域的名字，例如\"magedu.org.\" value: 有多部分组成 注意：\n当前区域的主DNS服务器的FQDN，也可以使用当前区域的名字，只是注释功能，可以不需要配置 对应的NS记录和A记录 当前区域管理员的邮箱地址；但地址中不能使用@符号，一般用.替换，例如：admin.magedu.org 主从服务区域传输相关定义以及否定的答案的统一的TTL 范例\nmagedu.org. 86400 IN SOA ns.magedu.org. nsadmin.magedu.org. ( 2015042201 ;序列号 2H ;刷新时间 10M ;重试时间 1W ;过期时间 1D ;否定答案的TTL值 ) NS记录 name: 当前区域的名字 value: 当前区域的某DNS服务器的名字，例如: ns.magedu.org. 注意：\n相邻的两个资源记录的name相同时，后续的可省略\n对NS记录而言，任何一个ns记录后面的服务器名字，都应该在后续有一个A记录\n一个区域可以有多个NS记录\n范例：\nmagedu.org. IN NS ns1.magedu.org. magedu.org. IN NS ns2.magedu.org. MX记录 name: 当前区域的名字\nvalue: 当前区域的某邮件服务器(smtp服务器)的主机名\n注意：\n一个区域内，MX记录可有多个；但每个记录的value之前应该有一个数字(0-99)，表示此服务器的优先级；数字越小优先级越高\n对MX记录而言，任何一个MX记录后面的服务器名字，都应该在后续有一个A记录\n范例：\nmagedu.org. IN MX 10 mx1.magedu.org. IN MX 20 mx2.magedu.org. mx1 A 10.0.0.100 mx2 A 10.0.0.200 A记录 name: 某主机的FQDN，例如：www.magedu.org.\nvalue: 主机名对应主机的IP地址\n避免用户写错名称时给错误答案，可通过泛域名解析进行解析至某特定地址\n范例：\nwww.magedu.org. IN A 1.1.1.1 www.magedu.org. IN A 2.2.2.2 mx1.magedu.org. IN A 3.3.3.3 mx2.magedu.org. IN A 4.4.4.4 $GENERATE 1-254 HOST$ IN A 1.2.3.$ *.magedu.org. IN A 5.5.5.5 magedu.org. IN A 6.6.6.6 #注意：如果有和DNS的IP相同的多个同名的A记录，优先返回DNS的本机IP AAAA记录 name: FQDN value: IPv6 PTR记录 name: IP，有特定格式，把IP地址反过来写，1.2.3.4，要写作4.3.2.1；而有特定后缀：in- addr.arpa.，所以完整写法为：4.3.2.1.in-addr.arpa. value: FQDN 注意：网络地址及后缀可省略；主机地址依然需要反着写 例如：\n4.3.2.1.in-addr.arpa. IN PTR www.magedu.org. #如1.2.3为网络地址，可简写成： 4 IN PTR www.magedu.org. CNAME别名记录 name: 别名的FQDN value: 真正名字的FQDN 例如\nwww.magedu.org. IN CNAME websrv.magedu.org. DNS软件bind DNS服务器软件：bind，powerdns，dnsmasq，unbound，coredns\nbind相关程序包 yum list all bind*\nbind：服务器 bind-utils: 客户端 bind-libs：相关库,依赖关系自动安装 bind-chroot: 安全包，将dns相关文件放至 /var/named/chroot/\n范例：安装bind软件\n[root@centos8 ~]#dnf -y install bind bind-utils [root@ubuntu2004 ~]#apt -y install bind9 bind9-utils bind包相关文件 BIND主程序：/usr/sbin/named 服务脚本和Unit名称：/etc/rc.d/init.d/named，/usr/lib/systemd/system/named.service 主配置文件：/etc/named.conf, /etc/named.rfc1912.zones, /etc/rndc.key 管理工具：/usr/sbin/rndc：remote name domain controller，默认与bind安装在同一主机，且 只能通过127.0.0.1连接named进程，提供辅助性的管理功能；953/tcp 解析库文件：/var/named/ZONE_NAME.ZONE 注意： (1) 一台物理服务器可同时为多个区域提供解析 (2) 必须要有根区域文件；named.ca (3) 应该有两个（如果包括ipv6的，应该更多）实现localhost和本地回环地址的解析库\n主配置文件 全局配置：options {}; 日志子系统配置：logging {}; 区域定义：本机能够为哪些zone进行解析，就要定义哪些zone zone “ZONE_NAME” IN {}; 注意： 任何服务程序如果期望其能够通过网络被其它主机访问，至少应该监听在一个能与外部主机通信的 IP地址上 缓存名称服务器的配置：监听外部地址即可 dnssec: 建议关闭dnssec，设为no ",
   "wordCount" : "2681",
   "inLanguage": "en",
-  "image":"http://colorfulgz.com/posts.images/banner/11.jpg","datePublished": "2022-09-22T22:01:44Z",
+  "image":"https://colorfulgz.com/posts.images/banner/11.jpg","datePublished": "2022-09-22T22:01:44Z",
   "dateModified": "2022-09-22T22:01:44Z",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://colorfulgz.com/posts/dns/"
+    "@id": "https://colorfulgz.com/posts/dns/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://colorfulgz.com/img/Q.gif"
+      "url": "https://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/" title="🏠 主页">
+                <a href="https://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 DNS服务
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="http://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="https://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "http://colorfulgz.com"
+                                let dnsUrl = "https://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/11.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://colorfulgz.com/posts.images/banner/11.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -650,12 +650,12 @@ IP地址上</li>
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="http://colorfulgz.com/posts/firewall/">
+  <a class="prev" href="https://colorfulgz.com/posts/firewall/">
     <span class="title">« 上一页</span>
     <br>
     <span>防火墙</span>
   </a>
-  <a class="next" href="http://colorfulgz.com/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/">
+  <a class="next" href="https://colorfulgz.com/posts/%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1/">
     <span class="title">下一页 »</span>
     <br>
     <span>时间同步服务</span>
@@ -706,7 +706,7 @@ IP地址上</li>
         Copyright
         &copy;
         2022-2023
-        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        <a href="https://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;

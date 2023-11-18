@@ -9,14 +9,14 @@
 <meta name="keywords" content="kubernetes">
 <meta name="description" content="kubectl提供了各种命令，来管理集群中的pod，但是这些命令都是为了方便运维测试，实际生产部署还得用yaml文件来部署">
 <meta name="author" content="">
-<link rel="canonical" href="http://colorfulgz.com/posts/k8srresourceddetails/">
+<link rel="canonical" href="https://colorfulgz.com/posts/k8srresourceddetails/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="http://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="http://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="http://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="http://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="https://colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -76,13 +76,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="kubernetes常见yaml资源详解" />
 <meta property="og:description" content="kubectl提供了各种命令，来管理集群中的pod，但是这些命令都是为了方便运维测试，实际生产部署还得用yaml文件来部署" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://colorfulgz.com/posts/k8srresourceddetails/" />
-<meta property="og:image" content="http://colorfulgz.com/posts.images/banner/pexels-markus-spiske.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://colorfulgz.com/posts/k8srresourceddetails/" />
+<meta property="og:image" content="https://colorfulgz.com/posts.images/banner/pexels-markus-spiske.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-06-16T00:02:11+08:00" />
 <meta property="article:modified_time" content="2023-06-16T00:02:11+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="http://colorfulgz.com/posts.images/banner/pexels-markus-spiske.jpg" />
+<meta name="twitter:image" content="https://colorfulgz.com/posts.images/banner/pexels-markus-spiske.jpg" />
 <meta name="twitter:title" content="kubernetes常见yaml资源详解"/>
 <meta name="twitter:description" content="kubectl提供了各种命令，来管理集群中的pod，但是这些命令都是为了方便运维测试，实际生产部署还得用yaml文件来部署"/>
 
@@ -97,13 +97,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "http://colorfulgz.com/posts/"
+          "item": "https://colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "kubernetes常见yaml资源详解",
-      "item": "http://colorfulgz.com/posts/k8srresourceddetails/"
+      "item": "https://colorfulgz.com/posts/k8srresourceddetails/"
     }
   ]
 }
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
   "articleBody": "Pod资源对象yaml详解 apiVersion: apps/v1 #必选，版本号，例如v1 kind: Pod #必选，指定创建资源的角色/类型 metadata: #必选，资源的元数据/属性 name: string #必选，资源的名字，在同一个namespace中必须唯一 namespace: string #必选，Pod所属的命名空间 labels: #自定义标签,使这个标签在service网络中备案，以便被获知 - name: string #自定义标签名字 annotations: #设置自定义注解列表 - name: \"string\" #设置自定义注解名字 spec: #必选，设置该资源的详细定义 containers: #必选，Pod中容器列表 - name: string #必选，容器名称 image: string #必选，容器的镜像名称 imagePullPolicy: [Always | Never | IfNotPresent] #获取镜像的策略 Alawys表示下载镜像 IfnotPresent表示优先使用本地镜像，否则下载镜像，Nerver表示仅使用本地镜像 command: [string] #容器的启动命令列表，如不指定，使用打包时使用的启动命令 args: [string] #容器的启动命令参数列表 workingDir: string #容器的工作目录 volumeMounts: #挂载到容器内部的存储卷配置 - name: string #引用pod定义的共享存储卷的名称，需用volumes[]部分定义的的卷名 mountPath: string #存储卷在容器内mount的绝对路径，应少于512字符 readOnly: boolean #是否为只读模式 ports: #需要暴露的端口库号列表 - name: string #端口号名称 containerPort: int #容器需要监听的端口号 hostPort: int #容器所在主机需要监听的端口号，默认与Container相同 protocol: string #端口协议，支持TCP和UDP，默认TCP env: #容器运行前需设置的环境变量列表 - name: string #环境变量名称 value: string #环境变量的值 resources: #资源限制和请求的设置 limits: #资源限制的设置 cpu: string #Cpu的限制，单位为core数，将用于docker run --cpu-shares参数 memory: string #内存限制，单位可以为Mib/Gib，将用于docker run --memory参数 requests: #资源请求的设置 cpu: string #Cpu请求，容器启动的初始可用数量 memory: string #内存清楚，容器启动的初始可用数量 livenessProbe: #对Pod内个容器健康检查的设置，当探测无响应几次后将自动重启该容器，检查方法有exec、httpGet和tcpSocket，对一个容器只需设置其中一种方法即可 exec: #对Pod容器内检查方式设置为exec方式 command: [string] #exec方式需要制定的命令或脚本 httpGet: #对Pod内个容器健康检查方法设置为HttpGet，需要制定Path、port path: string port: number host: string scheme: string HttpHeaders: - name: string value: string tcpSocket: #对Pod内个容器健康检查方式设置为tcpSocket方式 port: number initialDelaySeconds: 0 #容器启动完成后首次探测的时间，单位为秒 timeoutSeconds: 0 #对容器健康检查探测等待响应的超时时间，单位秒，默认1秒 periodSeconds: 0 #对容器监控检查的定期探测时间设置，单位秒，默认10秒一次 successThreshold: 0 failureThreshold: 0 securityContext: privileged:false restartPolicy: [Always | Never | OnFailure]#Pod的重启策略，Always表示一旦不管以何种方式终止运行，kubelet都将重启，OnFailure表示只有Pod以非0退出码退出才重启，Nerver表示不再重启该Pod nodeSelector: obeject #设置NodeSelector表示将该Pod调度到包含这个label的node上，以key：value的格式指定 imagePullSecrets: #Pull镜像时使用的secret名称，以key：secretkey格式指定 - name: string hostNetwork: false #是否使用主机网络模式，默认为false，如果设置为true，表示使用宿主机网络 volumes: #在该pod上定义共享存储卷列表 - name: string #共享存储卷名称 （volumes类型有很多种） emptyDir: {} #类型为emtyDir的存储卷，与Pod同生命周期的一个临时目录。为空值 hostPath: string #类型为hostPath的存储卷，表示挂载Pod所在宿主机的目录 path: /root/data #Pod所在宿主机的目录，将被用于同期中mount的目录 secret: #类型为secret的存储卷，挂载集群与定义的secre对象到容器内部 scretname: string items: - key: string path: string configMap: #类型为configMap的存储卷，挂载预定义的configMap对象到容器内部 name: string items: - key: string path: string点 Deployment资源对象yaml详解 apiVersion: apps/v1 kind: Deployment metadata: #元数据 annotations: #注释信息 deployment.kubernetes.io/revision: '1' k8s.kuboard.cn/ingress: 'false' k8s.kuboard.cn/service: NodePort k8s.kuboard.cn/workload: nextcloud labels: #标签信息 k8s.kuboard.cn/layer: '' k8s.kuboard.cn/name: nextcloud name: nextcloud #名称 namespace: nextcloud #命名空间 spec: #定义容器模板，该模板可以包含多个容器 replicas: 3 #副本数量 selector: #标签选择器 matchLabels: k8s.kuboard.cn/layer: '' k8s.kuboard.cn/name: nextcloud strategy: #滚动升级策略 type: RollingUpdate #类型 rollingUpdate: #由于replicas为3,则整个升级,pod个数在2-4个之间 maxSurge: 25% #滚动升级时会先启动25%pod maxUnavailable: 25% #滚动升级时允许的最大Unavailable的pod个数 template: #镜像模板 metadata: #元数据 labels: #标签 k8s.kuboard.cn/layer: '' k8s.kuboard.cn/name: nextcloud spec: #定义容器模板，该模板可以包含多个容器 containers: #容器信息 - name: nextcloud #容器名称 image: '172.16.20.100/library/nextcloud:yan' #镜像名称 imagePullPolicy: Always #镜像下载策略 ports: - name: http containerPort: 80 protocol: TCP env: resources: #CPU内存限制 limits: #限制cpu内存 cpu: 200m memory: 200m requests: #请求cpu内存 cpu: 100m memory: 100m securityContext: #-------------------------#安全设定 privileged: true #-----------------------#开启享有特权 volumeMounts: #----------------------------#挂载volumes中定义的磁盘 - name: html #---------------------------#挂载容器1 mountPath: /var/www/html - name: session #------------------------#挂载容器1 mountPath: /var/lib/php/session volumes: #在该pod上定义共享存储卷列表 - name: html #-------------------------------#共享存储卷名称 （volumes类型有很多种） persistentVolumeClaim: #-------------------#volumes类型为pvc claimName: html #-----------------------#关联pvc名称 - name: session persistentVolumeClaim: claimName: session restartPolicy: Always #------------------------#Pod的重启策略 #Always表示一旦不管以何种方式终止运行，kubelet都将重启， #OnFailure表示只有Pod以非0退出码退出才重启， #Nerver表示不再重启该Pod schedulerName: default-scheduler #指定pod调度到节点 Service资源对象yaml详解 apiVersion: v1 kind: Service metadata: #---------------------------------#元数据 annotations: #-----------------------------#注释信息 k8s.kuboard.cn/workload: nextcloud labels: #----------------------------------#标签信息 k8s.kuboard.cn/layer: '' k8s.kuboard.cn/name: nextcloud name: nextcloud #--------------------------#名称 namespace: nextcloud #---------------------#命名空间 spec: #--------------------------------------#定义Service模板 clusterIP: 10.0.181.206 #------------------#指定svcip地址 不指定则随机 #NodePort类型：集群外网络 type: NodePort #---------------------------#类型为NodePort ports: - name: mnwwwp nodePort: 30001 #----------------------#当type = NodePort时，指定映射到物理机的端口号 port: 80 #-----------------------------#服务监听的端口号 protocol: TCP #------------------------#端口协议，支持TCP和UDP，默认TCP targetPort: 80 #-----------------------#需要转发到后端Pod的端口号 #ClusterIP类型：集群内网络 # type: ClusterIP # - name: mnwwwp # port: 80 # protocol: TCP # targetPort: 80 # - name: j5smwx # port: 22 # protocol: TCP # targetPort: 22 selector: #-------------------------------#label selector配置，将选择具有label标签的Pod作为管理 k8s.kuboard.cn/layer: '' k8s.kuboard.cn/name: nextcloud sessionAffinity: None #--------------------#是否支持session ",
   "wordCount" : "2944",
   "inLanguage": "en",
-  "image":"http://colorfulgz.com/posts.images/banner/pexels-markus-spiske.jpg","datePublished": "2023-06-16T00:02:11+08:00",
+  "image":"https://colorfulgz.com/posts.images/banner/pexels-markus-spiske.jpg","datePublished": "2023-06-16T00:02:11+08:00",
   "dateModified": "2023-06-16T00:02:11+08:00",
   "author":[{
     "@type": "Person",
@@ -129,14 +129,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://colorfulgz.com/posts/k8srresourceddetails/"
+    "@id": "https://colorfulgz.com/posts/k8srresourceddetails/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://colorfulgz.com/img/Q.gif"
+      "url": "https://colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -171,8 +171,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="http://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -199,32 +199,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="http://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/" title="🏠 主页">
+                <a href="https://colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -243,7 +243,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="http://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="http://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 kubernetes常见yaml资源详解
             </h1>
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="http://colorfulgz.com/tags/kubernetes/" style="color: var(--secondary)!important;">kubernetes</a>
+                <a href="https://colorfulgz.com/tags/kubernetes/" style="color: var(--secondary)!important;">kubernetes</a>
             </span>
         </span>
     </span>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "http://colorfulgz.com"
+                                let dnsUrl = "https://colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -356,7 +356,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="http://colorfulgz.com/posts.images/banner/pexels-markus-spiske.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://colorfulgz.com/posts.images/banner/pexels-markus-spiske.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -623,12 +623,12 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="http://colorfulgz.com/posts/k8sactualcombat/">
+  <a class="prev" href="https://colorfulgz.com/posts/k8sactualcombat/">
     <span class="title">« 上一页</span>
     <br>
     <span>kubernetes实战</span>
   </a>
-  <a class="next" href="http://colorfulgz.com/posts/tabby/">
+  <a class="next" href="https://colorfulgz.com/posts/tabby/">
     <span class="title">下一页 »</span>
     <br>
     <span>Tabby 一款强大而美观的跨平台终端神器</span>
@@ -645,7 +645,7 @@ var _hmt = _hmt || [];
         Copyright
         &copy;
         2022-2023
-        <a href="http://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        <a href="https://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
     <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
