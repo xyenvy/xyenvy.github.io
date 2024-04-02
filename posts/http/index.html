@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux">
 <meta name="description" content="首先你听的最多的应该就是 HTTP 是一种 超文本传输协议(Hypertext Transfer Protocol)，这你一定能说出来，但是这样还不够，假如你是大厂面试官，这不可能是他想要的最终结果，我们在面试的时候往往把自己知道的尽可能多的说出来，才有和面试官谈价钱的资本。那么什么是超文本传输协议？">
 <meta name="author" content="">
-<link rel="canonical" href="https://colorfulgz.com/posts/http/">
+<link rel="canonical" href="https://old.colorfulgz.com/posts/http/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="https://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="https://old.colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -78,13 +78,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="http" />
 <meta property="og:description" content="首先你听的最多的应该就是 HTTP 是一种 超文本传输协议(Hypertext Transfer Protocol)，这你一定能说出来，但是这样还不够，假如你是大厂面试官，这不可能是他想要的最终结果，我们在面试的时候往往把自己知道的尽可能多的说出来，才有和面试官谈价钱的资本。那么什么是超文本传输协议？" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://colorfulgz.com/posts/http/" />
-<meta property="og:image" content="https://colorfulgz.com/posts.images/banner/17.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://old.colorfulgz.com/posts/http/" />
+<meta property="og:image" content="https://old.colorfulgz.com/posts.images/banner/17.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-10-15T14:10:20+00:00" />
 <meta property="article:modified_time" content="2022-10-15T14:10:20+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://colorfulgz.com/posts.images/banner/17.jpg" />
+<meta name="twitter:image" content="https://old.colorfulgz.com/posts.images/banner/17.jpg" />
 <meta name="twitter:title" content="http"/>
 <meta name="twitter:description" content="首先你听的最多的应该就是 HTTP 是一种 超文本传输协议(Hypertext Transfer Protocol)，这你一定能说出来，但是这样还不够，假如你是大厂面试官，这不可能是他想要的最终结果，我们在面试的时候往往把自己知道的尽可能多的说出来，才有和面试官谈价钱的资本。那么什么是超文本传输协议？"/>
 
@@ -99,13 +99,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "https://colorfulgz.com/posts/"
+          "item": "https://old.colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "http",
-      "item": "https://colorfulgz.com/posts/http/"
+      "item": "https://old.colorfulgz.com/posts/http/"
     }
   ]
 }
@@ -123,7 +123,7 @@ var _hmt = _hmt || [];
   "articleBody": "OSI模型 名称 协议 7 应用层 DNS、http、ssh、FTP等 6 表示层 DNS、http、ssh、FTP等 5 会话层 DNS、http、ssh、FTP等 4 传输层 tcp、udp 3 网络层 IPV4、IPV6、ARP 2 数据链路层 以太网、无线LAN 1 物理层 光纤 http协议 http协议：超文本传输协议，基于TCP协议的应用层传输协议，一种 无状态的、以请求/应答方式的运行的协议（无状态：对于事物处理没有记忆功能）\n主要组成 http协议主要有三大部分组成\n起始行：描述请求或相应的文本 头部字段：使用key-value形式更加详细说明报文 消息正文：实际传输的数据，可以是文本、图片、视频等 http请求报文 请求行 请求头 请求体 http响应报文 响应行 响应头 响应体 TCP协议 tcp/ip协议：面向连接的、可靠的基于字节流的传输层协议。\n特点\n基于连接的：数据传输前需要建立连接\n全双工：双向传输\n字节流：不限制传输大小\n流量缓冲：解决双方处理能力的不匹配\n可靠的传输服务：保证可达、信息丢包时通过重发机制实施可靠性\n拥塞控制：防止网络出现恶性拥塞\n三次握手\n刚开始客户端处于 closed 的状态，服务端处于 listen 状态。然后 1、第一次握手：客户端给服务端发一个 SYN 报文，并指明客户端的初始化序列号 ISN（c）。此时客户端处于 SYN_Send 状态。\n2、第二次握手：服务器收到客户端的 SYN 报文之后，会以自己的 SYN 报文作为应答，并且也是指定了自己的初始化序列号 ISN(s)，同时会把客户端的 ISN + 1 作为 ACK 的值，表示自己已经收到了客户端的 SYN，此时服务器处于 SYN_REVD 的状态。\n3、第三次握手：客户端收到 ACK+SYN 报文之后，会发送一个 ACK 报文，当然，也是一样把服务器的 ISN + 1 作为 ACK 的值，表示已经收到了服务端的 SYN 报文，此时客户端处于 establised 状态。\n4、服务器收到 ACK 报文之后，也处于 establised 状态，此时，双方以建立起了链接。\nSYN是同步的缩写，SYN段是发送到另外一台计算机的TCP数据包，请求在她们之间建立连接 ACK是“确认”的缩写。ACK数据包是任何确认收到一条消息或一系列数据包的TCP数据包 四次挥手\n刚开始双方都处于 establised 状态，假如是客户端先发起关闭请求，则：\n1、第一次挥手：客户端发送一个 FIN 报文，报文中会指定一个序列号。此时客户端处于FIN_WAIT1状态。\n2、第二次握手：服务端收到 FIN 之后，会发送 ACK 报文，且把客户端的序列号值 + 1 作为 ACK 报文的序列号值，表明已经收到客户端的报文了，此时服务端处于 CLOSE_WAIT状态。\n3、第三次挥手：如果服务端也想断开连接了，和客户端的第一次挥手一样，发给 FIN 报文，且指定一个序列号。此时服务端处于 LAST_ACK 的状态。\n4、第四次挥手：客户端收到 FIN 之后，一样发送一个 ACK 报文作为应答，且把服务端的序列号值 + 1 作为自己 ACK 报文的序列号值，此时客户端处于 TIME_WAIT 状态。需要过一阵子以确保服务端收到自己的 ACK 报文之后才会进入 CLOSED 状态\n5、服务端收到 ACK 报文之后，就处于关闭连接了，处于 CLOSED 状态。\n为什么TIME-WAIT状态必须等待2MSL的时间？\n保证客户端最后一个ACK能够到达服务器端 防止失效的请求报文段出现在本次连接中 ",
   "wordCount" : "1242",
   "inLanguage": "en",
-  "image":"https://colorfulgz.com/posts.images/banner/17.jpg","datePublished": "2022-10-15T14:10:20Z",
+  "image":"https://old.colorfulgz.com/posts.images/banner/17.jpg","datePublished": "2022-10-15T14:10:20Z",
   "dateModified": "2022-10-15T14:10:20Z",
   "author":[{
     "@type": "Person",
@@ -131,14 +131,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://colorfulgz.com/posts/http/"
+    "@id": "https://old.colorfulgz.com/posts/http/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://colorfulgz.com/img/Q.gif"
+      "url": "https://old.colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -173,8 +173,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://old.colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://old.colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -201,32 +201,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://old.colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/" title="🏠 主页">
+                <a href="https://old.colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://old.colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://old.colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://old.colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://old.colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -245,7 +245,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://old.colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://old.colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 http
             </h1>
@@ -304,7 +304,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="https://old.colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -325,7 +325,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://colorfulgz.com"
+                                let dnsUrl = "https://old.colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -358,7 +358,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://colorfulgz.com/posts.images/banner/17.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://old.colorfulgz.com/posts.images/banner/17.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -546,12 +546,12 @@ ACK是“确认”的缩写。ACK数据包是任何确认收到一条消息或�
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://colorfulgz.com/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/">
+  <a class="prev" href="https://old.colorfulgz.com/posts/mysql%E5%A4%87%E4%BB%BD%E8%84%9A%E6%9C%AC/">
     <span class="title">« 上一页</span>
     <br>
     <span>MySQL备份脚本</span>
   </a>
-  <a class="next" href="https://colorfulgz.com/posts/mysqlinstallscript/">
+  <a class="next" href="https://old.colorfulgz.com/posts/mysqlinstallscript/">
     <span class="title">下一页 »</span>
     <br>
     <span>MySQL一键安装脚本</span>
@@ -567,16 +567,16 @@ ACK是“确认”的缩写。ACK数据包是任何确认收到一条消息或�
     <span>
         Copyright
         &copy;
-        2022-2023
-        <a href="https://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        -2024
+        <a href="https://old.colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
-            粤公网安备44030002001370号
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
         </a>
     </span>
     <span id="busuanzi_container">

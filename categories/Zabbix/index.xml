@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Zabbix on DevOpsHub</title>
-    <link>https://colorfulgz.com/categories/zabbix/</link>
+    <link>https://old.colorfulgz.com/categories/zabbix/</link>
     <description>Recent content in Zabbix on DevOpsHub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 02 May 2023 21:33:16 +0000</lastBuildDate><atom:link href="https://colorfulgz.com/categories/zabbix/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 May 2023 21:33:16 +0000</lastBuildDate><atom:link href="https://old.colorfulgz.com/categories/zabbix/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>zabbix5部署安装</title>
-      <link>https://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/</link>
+      <link>https://old.colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/</link>
       <pubDate>Tue, 02 May 2023 21:33:16 +0000</pubDate>
       
-      <guid>https://colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/</guid>
+      <guid>https://old.colorfulgz.com/posts/zabbix5%E9%83%A8%E7%BD%B2%E5%AE%89%E8%A3%85/</guid>
       <description>zabbix是一个监控软件，其可以监控各种网络参数，保证企业服务架构安全运营，同时支持灵活的告警机制，可以使得运维人员快速定位故障、解决问题zabbix是一个监控软件，其可以监控各种网络参数，保证企业服务架构安全运营，同时支持灵活的告警机制，可以使得运维人员快速定位故障、解决问题</description>
     </item>
     
     <item>
       <title>Zabbix</title>
-      <link>https://colorfulgz.com/posts/zabbix/</link>
+      <link>https://old.colorfulgz.com/posts/zabbix/</link>
       <pubDate>Thu, 02 Mar 2023 15:07:46 +0000</pubDate>
       
-      <guid>https://colorfulgz.com/posts/zabbix/</guid>
+      <guid>https://old.colorfulgz.com/posts/zabbix/</guid>
       <description>Zabbix是一个企业级解决方案，支持实时监控数千台服务器，虚拟机和网络设备，采集百万级监控指标，适用于任何IT基础架构、服务、应用程序和资源的解决方案</description>
     </item>
     

@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, lvs">
 <meta name="description" content="LVS是Linux Virtual Server的缩写，是一个负载均衡的集群系统。它主要使用了IP层的技术，也就是基于IP的负载均衡。LVS能很好的处理大量并发连接，有效的提高了系统的吞吐量">
 <meta name="author" content="">
-<link rel="canonical" href="https://colorfulgz.com/posts/lvs/">
+<link rel="canonical" href="https://old.colorfulgz.com/posts/lvs/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="https://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="https://old.colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -78,13 +78,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="Lvs调度算法" />
 <meta property="og:description" content="LVS是Linux Virtual Server的缩写，是一个负载均衡的集群系统。它主要使用了IP层的技术，也就是基于IP的负载均衡。LVS能很好的处理大量并发连接，有效的提高了系统的吞吐量" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://colorfulgz.com/posts/lvs/" />
-<meta property="og:image" content="https://colorfulgz.com/posts.images/banner/index.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://old.colorfulgz.com/posts/lvs/" />
+<meta property="og:image" content="https://old.colorfulgz.com/posts.images/banner/index.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-10-09T22:45:06+08:00" />
 <meta property="article:modified_time" content="2023-10-09T22:45:06+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://colorfulgz.com/posts.images/banner/index.jpg" />
+<meta name="twitter:image" content="https://old.colorfulgz.com/posts.images/banner/index.jpg" />
 <meta name="twitter:title" content="Lvs调度算法"/>
 <meta name="twitter:description" content="LVS是Linux Virtual Server的缩写，是一个负载均衡的集群系统。它主要使用了IP层的技术，也就是基于IP的负载均衡。LVS能很好的处理大量并发连接，有效的提高了系统的吞吐量"/>
 
@@ -99,13 +99,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "https://colorfulgz.com/posts/"
+          "item": "https://old.colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "Lvs调度算法",
-      "item": "https://colorfulgz.com/posts/lvs/"
+      "item": "https://old.colorfulgz.com/posts/lvs/"
     }
   ]
 }
@@ -123,7 +123,7 @@ var _hmt = _hmt || [];
   "articleBody": "lvs十种调度算法 1、静态调度：\n①rr（Round Robin）:轮询调度，轮叫调度\n轮询调度算法的原理是每一次把来自用户的请求轮流分配给内部中的服务器，从1开始，直到N(内部服务器个数)，然后重新开始循环。算法的优点是其简洁性，它无需记录当前所有连接的状态，所以它是一种无状态调度。【提示：这里是不考虑每台服务器的处理能力】\n②wrr：weight,加权（以权重之间的比例实现在各主机之间进行调度）\n由于每台服务器的配置、安装的业务应用等不同，其处理能力会不一样。所以，我们根据服务器的不同处理能力，给每个服务器分配不同的权值，使其能够接受相应权值数的服务请求。\n③sh:source hashing,源地址散列。主要实现会话绑定，能够将此前建立的session信息保留了\n源地址散列调度算法正好与目标地址散列调度算法相反，它根据请求的源IP地址，作为散列键（Hash Key）从静态分配的散列表找出对应的服务器，若该服务器是可用的并且没有超负荷，将请求发送到该服务器，否则返回空。它采用的散列函数与目标地址散列调度算法的相同。它的算法流程与目标地址散列调度算法的基本相似，除了将请求的目标IP地址换成请求的源IP地址，所以这里不一个一个叙述。\n④Dh:Destination hashing:目标地址散列。把同一个IP地址的请求，发送给同一个server。\n目标地址散列调度算法也是针对目标IP地址的负载均衡，它是一种静态映射算法，通过一个散列（Hash）函数将一个目标IP地址映射到一台服务器。目标地址散列调度算法先根据请求的目标IP地址，作为散列键（Hash Key）从静态分配的散列表找出对应的服务器，若该服务器是可用的且未超载，将请求发送到该服务器，否则返回空。\n2、动态调度\n①lc（Least-Connection）：最少连接\n最少连接调度算法是把新的连接请求分配到当前连接数最小的服务器，最小连接调度是一种动态调度短算法，它通过服务器当前所活跃的连接数来估计服务器的负载均衡，调度器需要记录各个服务器已建立连接的数目，当一个请求被调度到某台服务器，其连接数加1，当连接中止或超时，其连接数减一，在系统实现时，我们也引入当服务器的权值为0时，表示该服务器不可用而不被调度。\n简单算法：active*256+inactive(谁的小，挑谁)\n②wlc(Weighted Least-Connection Scheduling)：加权最少连接。\n加权最小连接调度算法是最小连接调度的超集，各个服务器用相应的权值表示其处理性能。服务器的缺省权值为1，系统管理员可以动态地设置服务器的权限，加权最小连接调度在调度新连接时尽可能使服务器的已建立连接数和其权值成比例。\n简单算法：（active*256+inactive）/weight【（活动的连接数+1）/除以权重】（谁的小，挑谁）\n③sed(Shortest Expected Delay)：最短期望延迟\n基于wlc算法\n简单算法：（active+1)*256/weight 【（活动的连接数+1）*256/除以权重】\n④nq（never queue）:永不排队（改进的sed）\n无需队列，如果有台realserver的连接数＝0就直接分配过去，不需要在进行sed运算。\n⑤LBLC（Locality-Based Least Connection）：基于局部性的最少连接\n基于局部性的最少连接算法是针对请求报文的目标IP地址的负载均衡调度，不签主要用于Cache集群系统，因为Cache集群中客户请求报文的布标IP地址是变化的，这里假设任何后端服务器都可以处理任何请求，算法的设计目标在服务器的负载基本平衡的情况下，将相同的目标IP地址的请求调度到同一个台服务器，来提高个太服务器的访问局部性和主存Cache命中率，从而调整整个集群系统的处理能力。\n基于局部性的最少连接调度算法根据请求的目标IP地址找出该目标IP地址最近使用的RealServer，若该Real Server是可用的且没有超载，将请求发送到该服务器；若服务器不存在，或者该服务器超载且有服务器处于一半的工作负载，则用“最少链接”的原则选出一个可用的服务器，将请求发送到该服务器。\n⑥LBLCR（Locality-Based Least Connections withReplication）：带复制的基于局部性最少链接\n带复制的基于局部性最少链接调度算法也是针对目标IP地址的负载均衡，该算法根据请求的目标IP地址找出该目标IP地址对应的服务器组，按“最小连接”原则从服务器组中选出一台服务器，若服务器没有超载，将请求发送到该服务器；若服务器超载，则按“最小连接”原则从这个集群中选出一台服务器，将该服务器加入到服务器组中，将请求发送到该服务器。同时，当该服务器组有一段时间没有被修改，将最忙的服务器从服务器组中删除，以降低复制的程度。\n",
   "wordCount" : "1952",
   "inLanguage": "en",
-  "image":"https://colorfulgz.com/posts.images/banner/index.jpg","datePublished": "2023-10-09T22:45:06+08:00",
+  "image":"https://old.colorfulgz.com/posts.images/banner/index.jpg","datePublished": "2023-10-09T22:45:06+08:00",
   "dateModified": "2023-10-09T22:45:06+08:00",
   "author":[{
     "@type": "Person",
@@ -131,14 +131,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://colorfulgz.com/posts/lvs/"
+    "@id": "https://old.colorfulgz.com/posts/lvs/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://colorfulgz.com/img/Q.gif"
+      "url": "https://old.colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -173,8 +173,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://old.colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://old.colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -201,32 +201,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://old.colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/" title="🏠 主页">
+                <a href="https://old.colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://old.colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://old.colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://old.colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://old.colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -245,7 +245,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://old.colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://old.colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 Lvs调度算法
             </h1>
@@ -304,8 +304,8 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
-                &nbsp;<a href="https://colorfulgz.com/tags/lvs/" style="color: var(--secondary)!important;">lvs</a>
+                <a href="https://old.colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                &nbsp;<a href="https://old.colorfulgz.com/tags/lvs/" style="color: var(--secondary)!important;">lvs</a>
             </span>
         </span>
     </span>
@@ -326,7 +326,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://colorfulgz.com"
+                                let dnsUrl = "https://old.colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -359,7 +359,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://colorfulgz.com/posts.images/banner/index.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://old.colorfulgz.com/posts.images/banner/index.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -469,7 +469,7 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="next" href="https://colorfulgz.com/posts/k8sactualcombat/">
+  <a class="next" href="https://old.colorfulgz.com/posts/k8sactualcombat/">
     <span class="title">下一页 »</span>
     <br>
     <span>kubernetes实战</span>
@@ -485,16 +485,16 @@ var _hmt = _hmt || [];
     <span>
         Copyright
         &copy;
-        2022-2023
-        <a href="https://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        -2024
+        <a href="https://old.colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
-            粤公网安备44030002001370号
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
         </a>
     </span>
     <span id="busuanzi_container">

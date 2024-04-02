@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, 网络, 计算机, ubuntu, centos">
 <meta name="description" content="计算机网络是一组计算机或网络设备通过有形的线缆或者无形的媒介如无线，按照一定的规则，进行通信的集合。">
 <meta name="author" content="">
-<link rel="canonical" href="https://colorfulgz.com/posts/network/">
+<link rel="canonical" href="https://old.colorfulgz.com/posts/network/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="https://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="https://old.colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -78,13 +78,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="计算机网络" />
 <meta property="og:description" content="计算机网络是一组计算机或网络设备通过有形的线缆或者无形的媒介如无线，按照一定的规则，进行通信的集合。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://colorfulgz.com/posts/network/" />
-<meta property="og:image" content="https://colorfulgz.com/posts.images/banner/24.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://old.colorfulgz.com/posts/network/" />
+<meta property="og:image" content="https://old.colorfulgz.com/posts.images/banner/24.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-08-21T21:33:05+00:00" />
 <meta property="article:modified_time" content="2022-08-21T21:33:05+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://colorfulgz.com/posts.images/banner/24.jpg" />
+<meta name="twitter:image" content="https://old.colorfulgz.com/posts.images/banner/24.jpg" />
 <meta name="twitter:title" content="计算机网络"/>
 <meta name="twitter:description" content="计算机网络是一组计算机或网络设备通过有形的线缆或者无形的媒介如无线，按照一定的规则，进行通信的集合。"/>
 
@@ -99,13 +99,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "https://colorfulgz.com/posts/"
+          "item": "https://old.colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "计算机网络",
-      "item": "https://colorfulgz.com/posts/network/"
+      "item": "https://old.colorfulgz.com/posts/network/"
     }
   ]
 }
@@ -123,7 +123,7 @@ var _hmt = _hmt || [];
   "articleBody": "1、网络配置 基本网络配置 将Linux主机接入到网络，需要配置网络相关设置 一般包括如下内容：\n主机名 IP/netmask 路由：默认网关 DNS服务器 主DNS服务器 次DNS服务器 第三个DNS服务器 1.1 修改主机名称 CentOs6 及之前的版本 # 修改 /etc/sysconfig/network文件HOSTNAME的值 [root@centos6 sysconfig]# cat /etc/sysconfig/network NETWORKING=yes HOSTNAME=centos6 [root@centos6 sysconfig]# # 修改hostname的值为centos6.mg.du [root@centos6 sysconfig]# vi /etc/sysconfig/network # 修改后不会马上生效,需要使用hostname命令重写一下 [root@centos6 sysconfig]# hostname centos6.mg.du # 重启一下看主机名称是否修改成功 [root@centos6 sysconfig]# reboot # hostname命令查看主机名称 [root@centos6 ~]# hostname centos6.mg.du [root@centos6 ~]# CentOs7 及之后的版本 # centos7 之后的版本主机名称文件 /etc/hostname [root@centos7 ~]# cat /etc/hostname centos7 [root@centos7 ~]# # centos7 之后的版本直接使用命令修改主机名称 [root@centos7 ~]# hostnamectl set-hostname centos7.mg [root@centos7 ~]# hostname centos7.mg [root@centos7 ~]# ubuntu修改主机名称 # 查看主机名称配置文件 root@ubuntu200404-1:~# cat /etc/hostname ubuntu200404-1 root@ubuntu200404-1:~# # 修改主机名称可以直接修改/etc/hostname文件，也可以直接使用命令修改 hostnamectl set-hostname 主机名 1.2 网卡名称 1.2.1 centos 6之前版本的网卡名称 接口命名方式：CentOS 6\n以太网： eth[0,1,2,···] ppp: ppp[0,1,2,···] 网络接口识别并命名相关的udev配置文件 /etc/udev/rules.d/70-persistent-net.rules 查看网卡 dmesg |grep –i eth ethtool -i eth0 卸载网卡驱动 modprobe -r e1000 rmmod e1000 装载网卡驱动 modprobe e1000 范例：临时修改网卡名称 [root@centos6 ~]#ip link set eth0 down [root@centos6 ~]#ip link set eth0 name abc [root@centos6 ~]#ip link set abc up 1.2.2 Centos7 版本之后的网卡配置 参考文档\nhttps://access.redhat.com/documentation/en- us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/consisten t-network-interface-device-naming_configuring-and-managing-networking CentOS 6之前，网络接口使用连续号码命名：eth0、eth1等,当增加或删除网卡时，名称可能会发生变化 CentOS 7 以上版使用基于硬件，设备拓扑和设置类型命名,可以保持网卡名称的稳定 CentOS 8 中已弃用network.service，采用NetworkManager（NM）为网卡启用命令。CentOS 8 仍可以安装network.service作为网卡服务，只是默认没有安装，具体方法为： dnf install network-scripts ，不过官方已明确在下一个大版本中，将彻底放弃network.service，不建议继续使用network.service管理网络。\nsystemd对网络设备的命名方式\n如果Firmware或BIOS为主板上集成的设备提供的索引信息可用，且可预测则根据此索引进行命 名，如：eno1\n如果Firmware或BIOS为PCI-E扩展槽所提供的索引信息可用，且可预测，则根据此索引进行命名， 如：ens1\n如果硬件接口的物理位置信息可用，则根据此信息命名，如：enp2s0\n如果用户显式启动，也可根据MAC地址进行命名，如：enx2387a1dc56\n上述均不可用时，则使用传统命名机制\n基于BIOS支持启用biosdevname软件\n内置网卡：em1,em2 pci卡：pYpX Y：slot ,X:port 网卡组成格式\nen: Ethernet 有线局域网 wl: wlan 无线局域网 ww: wwan无线广域网 o: 集成设备的设备索引号 s: 扩展槽的索引号 x: 基于MAC地址的命名 ps: enp2s1 使用传统方式命名\n（1）编辑/etc/default/grub配置文件\ncentos7 GRUB_CMDLINE_LINUX=\"net.ifnames=0 biosdevname=0\" ubuntu (2) 为grub2生成其配置文件\ncentos7 [root@centos7 ~]# grub2-mkconfig -o /boot/grub2/grub.cfg ubuntu grub-mkconfig -o /boot/grub/grub.cfg (3) 重启\nreboot 自定义网卡名称\n[root@centos8 ~]# vi /etc/default/grub GRUB_CMDLINE_LINUX=\"net.ifnames.prefix=yuankun\" [root@centos8 ~]# grub2-mkconfig -o /boot/grub2/grub.cfg [root@centos8 ~]# reboot 1.3 网络配置文件 网络基本配置文件\nIP、MASK、GW、DNS相关的配置文件：\n/etc/sysconfig/network-scripts/ifcfg-IFACE 配置参考文件\n/usr/share/doc/initcripts-*/sysconfig.txt 常用配置\n设置 说明 TYPE 接口类型；常见有的Ethernet, Bridge NAME 此配置文件应用到的设备 DEVICE 设备名 HWADDR 对应的设备的MAC地址 UUID 设备的唯一标识 BOOTPROTO 激活此设备时使用的地址配置协议，常用的dhcp，static, none, bootp IPADDR 指明IP地址 NETMASK 子网掩码,如:255.255.255.0 PREFIX 网络ID的位数, 如:24 GATEWAY 默认网关 DNS1 第一个DNS服务器地址 DNS2 第二个DNS服务器地址 DOMAIN 主机不完整时，自动搜索的域名后缀 ONBOOT 在系统引导时是否激活此设备 USERCTL 普通用户是否可控制此设备 PEERDNS 如果BOOTPROTO的值为“dhcp”，YES将允许dhcp server分配的dns服务器信息直接覆盖至/etc/resolv.conf文件，NO不允许修改resolv.conf NM_CONTROLLED NM是NetworkManager的简写，此网卡是否接受NM控制 **范例\n修改/etc/sysconfig/network-scripts/ifcfg-IFACE 必须以ifcfg-开头，为了规范一般后面跟网卡名 配置文件写入内容 # 动态获取ip地址 DEVICE=eth0 NAME=eth0 BOOTPROTO=dhcp # 静态获取IP地址 DEVICE=eth0 NAME=eth0 BOOTPROTO=static IPADDR=192.168.179.129 PREFIX=24 GATEWAY=192.168.179.1 DNS1=192.168.179.1 DNS2=180.76.76.76 centos8还需要执行以下两条命令才会生效\nCentOS8和rocky nmcli connnection reload nmcli connnettion up eth0 扩展：CentOS网卡配置文件生效方法\nCentOS6 service network restart CentOS7 systemctl restart network # 通用方法 重启 reboot 1.4 ifconfig命令 来自于net-tools包，建议使用 ip 代替\n#清除eth0上面的IP地址 [root@centos8 ~]#ifconfig eth0 0.0.0.0 #启用和禁用网卡 [root@centos8 ~]#ifconfig eth0 down [root@centos8 ~]#ifconfig eth0 up #对一个网卡设置多个IP地址 [root@centos8 ~]#ifconfig eth0:1 172.16.0.8/24 1.5 route命令 路由表管理命令 路由表主要构成:\nDestination: 目标网络ID,表示可以到达的目标网络ID,0.0.0.0/0 表示所有未知网络,又称为默认路由, 优先级最低 Genmask:目标网络对应的netmask Iface: 到达对应网络,应该从当前主机哪个网卡发送出来 Gateway: 到达非直连的网络,将数据发送到临近(下一个)路由器的临近本主机的接口的IP地址,如果 是直连网络,gateway是0.0.0.0 Metric: 开销cost,值越小,路由记录的优先级最高 查看路由表：\n[root@rocky ~]# route -n Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.179.1 0.0.0.0 UG 100 0 0 eth0 192.168.179.0 0.0.0.0 255.255.255.0 U 100 0 0 eth0 添加路由：route add\nroute add [-net|-host|default] target [netmask Nm] [gw GW] [[dev] If] 删除路由route del\nroute del [-net|-host] target [gw Gw] [netmask Nm] [[dev] If] 1.6 ubuntu网络配置 1.6.1 修改主机名 方法一 修改配置文件\n# /etc/hostname 方法二 hostnamectl set-hostname 主机名 1.6.2 网卡名称 默认ubuntu的网卡名称和 CentOS 7 类似，如：ens33，ens38等 修改网卡名称为传统命名方式：\n# 修改配置文件 /etc/default/grub GRUB_CMDLINE_LINUX=\"net.ifnames=0\" 生成新的grub.cfg文件\ngrub-mkconfig -o /boot/grub/grub.cfg #或者 update-grub grep net.ifnames /boot/grub/grub.cfg # 重启生效 reboot 1.6.3 ubuntu网卡配置 配置自动获取IP 网卡配置文件采用YAML格式,必须以 /etc/netplan/XXX.yaml 文件命名方式存放 可以每个网卡对应一个单独的配置文件,也可以将所有网卡都放在一个配置文件里\n范例\nroot@ubuntu200404-1:~# cat /etc/netplan/eth0.yaml # This is the network config written by 'subiquity' network: ethernets: eth0: dhcp4: true version: 2 # 修改网卡配置文件后需要执行命令生效 netplan apply 配置静态IP root@ubuntu200404-1:/etc/netplan# cat eth1.yaml # This is the network config written by 'subiquity' network: ethernets: eth1: addresses: - 192.168.179.139/24 gateway4: 192.168.179.2 nameservers: search: [] # DNS addresses: [180.76.76.76] version: 2 # 修改网卡配置文件后需要执行命令生效 netplan apply 查看ip和网关\n# 查看IP root@ubuntu200404-1:/etc/netplan# ip address 1: lo: mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 inet 127.0.0.1/8 scope host lo valid_lft forever preferred_lft forever inet6 ::1/128 scope host valid_lft forever preferred_lft forever 2: eth0: mtu 1500 qdisc fq_codel state UP group default qlen 1000 link/ether 00:0c:29:79:b0:80 brd ff:ff:ff:ff:ff:ff inet 192.168.179.138/24 brd 192.168.179.255 scope global dynamic eth0 valid_lft 1698sec preferred_lft 1698sec inet6 fe80::20c:29ff:fe79:b080/64 scope link valid_lft forever preferred_lft forever 3: eth1: mtu 1500 qdisc fq_codel state UP group default qlen 1000 link/ether 00:0c:29:79:b0:8a brd ff:ff:ff:ff:ff:ff inet 192.168.179.139/24 brd 192.168.179.255 scope global eth1 valid_lft forever preferred_lft forever inet6 fe80::20c:29ff:fe79:b08a/64 scope link valid_lft forever preferred_lft forever root@ubuntu200404-1:/etc/netplan# # 查看网关 root@ubuntu200404-1:/etc/netplan# route -n Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.179.2 0.0.0.0 UG 100 0 0 eth0 192.168.179.0 0.0.0.0 255.255.255.0 U 0 0 0 eth1 192.168.179.0 0.0.0.0 255.255.255.0 U 0 0 0 eth0 192.168.179.2 0.0.0.0 255.255.255.255 UH 100 0 0 eth0 root@ubuntu200404-1:/etc/netplan# 查看DNS\nroot@ubuntu2004:~# resolvectl status #Ubuntu 20.04新命令 root@ubuntu1804:~# systemd-resolve --status ",
   "wordCount" : "2649",
   "inLanguage": "en",
-  "image":"https://colorfulgz.com/posts.images/banner/24.jpg","datePublished": "2022-08-21T21:33:05Z",
+  "image":"https://old.colorfulgz.com/posts.images/banner/24.jpg","datePublished": "2022-08-21T21:33:05Z",
   "dateModified": "2022-08-21T21:33:05Z",
   "author":[{
     "@type": "Person",
@@ -131,14 +131,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://colorfulgz.com/posts/network/"
+    "@id": "https://old.colorfulgz.com/posts/network/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://colorfulgz.com/img/Q.gif"
+      "url": "https://old.colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -173,8 +173,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://old.colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://old.colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -201,32 +201,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://old.colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/" title="🏠 主页">
+                <a href="https://old.colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://old.colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://old.colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://old.colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://old.colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -245,7 +245,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://old.colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://old.colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 计算机网络
             </h1>
@@ -304,7 +304,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="https://old.colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -325,7 +325,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://colorfulgz.com"
+                                let dnsUrl = "https://old.colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -358,7 +358,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://colorfulgz.com/posts.images/banner/24.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://old.colorfulgz.com/posts.images/banner/24.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -877,12 +877,12 @@ CentOS 8 中已弃用network.service，采用NetworkManager（NM）为网卡启�
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://colorfulgz.com/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+  <a class="prev" href="https://old.colorfulgz.com/posts/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
     <span class="title">« 上一页</span>
     <br>
     <span>进程和线程相关概念</span>
   </a>
-  <a class="next" href="https://colorfulgz.com/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/">
+  <a class="next" href="https://old.colorfulgz.com/posts/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/">
     <span class="title">下一页 »</span>
     <br>
     <span>软件管理</span>
@@ -898,16 +898,16 @@ CentOS 8 中已弃用network.service，采用NetworkManager（NM）为网卡启�
     <span>
         Copyright
         &copy;
-        2022-2023
-        <a href="https://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        -2024
+        <a href="https://old.colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
-            粤公网安备44030002001370号
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
         </a>
     </span>
     <span id="busuanzi_container">

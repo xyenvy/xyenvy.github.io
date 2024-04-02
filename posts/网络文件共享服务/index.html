@@ -9,14 +9,14 @@
 <meta name="keywords" content="Linux, 网络, 文件, 共享, 服务, 网络文件共享服务">
 <meta name="description" content="Network File System 网络文件系统，基于内核的文件系统。Sun 公司开发，通过使用 NFS，用户和程序可以像访问本地文件一样访问远端系统上的文件">
 <meta name="author" content="">
-<link rel="canonical" href="https://colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/">
+<link rel="canonical" href="https://old.colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="16x16" href="https://colorfulgz.com/img/Q.gif">
-<link rel="icon" type="image/png" sizes="32x32" href="https://colorfulgz.com/img/Q.gif">
-<link rel="apple-touch-icon" href="https://colorfulgz.com/img/Q.gif">
-<link rel="mask-icon" href="https://colorfulgz.com/img/Q.gif">
+<link rel="icon" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="16x16" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="icon" type="image/png" sizes="32x32" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="apple-touch-icon" href="https://old.colorfulgz.com/img/Q.gif">
+<link rel="mask-icon" href="https://old.colorfulgz.com/img/Q.gif">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -78,13 +78,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="网络文件共享服务" />
 <meta property="og:description" content="Network File System 网络文件系统，基于内核的文件系统。Sun 公司开发，通过使用 NFS，用户和程序可以像访问本地文件一样访问远端系统上的文件" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/" />
-<meta property="og:image" content="https://colorfulgz.com/posts.images/banner/3.jpg" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://old.colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/" />
+<meta property="og:image" content="https://old.colorfulgz.com/posts.images/banner/3.jpg" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-12-04T12:03:44+00:00" />
 <meta property="article:modified_time" content="2022-12-04T12:03:44+00:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://colorfulgz.com/posts.images/banner/3.jpg" />
+<meta name="twitter:image" content="https://old.colorfulgz.com/posts.images/banner/3.jpg" />
 <meta name="twitter:title" content="网络文件共享服务"/>
 <meta name="twitter:description" content="Network File System 网络文件系统，基于内核的文件系统。Sun 公司开发，通过使用 NFS，用户和程序可以像访问本地文件一样访问远端系统上的文件"/>
 
@@ -99,13 +99,13 @@ var _hmt = _hmt || [];
           "@type": "ListItem",
           "position":  2 ,
           "name": "📚文章",
-          "item": "https://colorfulgz.com/posts/"
+          "item": "https://old.colorfulgz.com/posts/"
         }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "网络文件共享服务",
-      "item": "https://colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/"
+      "item": "https://old.colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/"
     }
   ]
 }
@@ -123,7 +123,7 @@ var _hmt = _hmt || [];
   "articleBody": "NFS服务 NFS工作原理 NFS：Network File System 网络文件系统，基于内核的文件系统。Sun 公司开发，通过使用 NFS，用户和程序可以像访问本地文件一样访问远端系统上的文件，基于RPC（Remote Procedure CallProtocol 远程过程调用）实现。 RPC采用C/S模式，客户机请求程序调用进程发送一个有进程参数的调用信息到服务进程，然后等待应答信息。在服务器端，进程保持睡眠状态直到调用信息到达为止。当一个调用信息到达，服务器获得进程参数，计算结果，发送答复信息，然后等待下一个调用信息，最后，客户端调用进程接收答复信息，获得进程结果，然后调用执行继续进行。\nNFS优势：节省本地存储空间，将常用的数据,如：/home目录，存放在NFS服务器上且可以通过网络访 问，本地终端将可减少自身存储空间的使用。\nNFS软件介绍 软件包：nfs-utils（包括服务器和客户端相关工具，CentOS8 最小化安装时默认没有安装），nfs-common(Ubuntu中包名)\n相关软件包：rpcbind（必须），tcp_wrappers\nKernel支持：nfs.ko\n端口：2049(nfsd), 其它端口由portmap(111)分配\nNFS服务主要进程：\nrpc.nfsd 最主要的NFS进程，管理客户端是否可登录 rpc.mountd 挂载和卸载NFS文件系统，包括权限管理 rpc.lockd 非必要，管理文件锁，避免同时写出错 rpc.statd 非必要，检查文件一致性，可修复文件 说明：CentOS 6 开始portmap进程由rpcbind代替 日志：/var/lib/nfs/ NFS配置文件\n/etc/exports /etc/exports.d/*.exports 常用选项\n默认选项：(ro,sync,root_squash,no_all_squash) ro,rw 只读和读写 async 异步，数据变化后不立即写磁盘，先写入到缓冲区中，过一段时间再写入磁盘，性能高,安全性低 sync（1.0.0后为默认）同步，数据在请求时立即写入共享存储磁盘,性能低,安全性高 root_squash （默认）远程root映射为nfsnobody,UID为65534，CentOS8 为nobody,CentOS 7以前的版本为nfsnobody no_root_squash 远程root映射成NFS服务器的root用户 all_squash 所有远程用户(包括root)都变成nfsnobody,CentOS8 为nobody no_all_squash （默认）保留共享文件的UID和GID anonuid和anongid 指明匿名用户映射为特定用户UID和组GID，而非nobody,可配合all_squash使 用 NFS工具 rpcinfo rpcinfo 工具可以查看RPC相关信息 查看注册在指定主机的RPC程序\nrpcinfo -p hostname 查看RPC注册程序\nrpcinfo -s hostname exportfs exportfs:可用于管理NFS导出的文件系统 常见选项\n-v #查看本机所有NFS共享 -r #重读配置文件，并共享目录 -a #输出本机所有共享 -au #停止本机所有共享 showmount 常见用法：\n#查看远程主机的NFS共享 showmount -e hostname mount.nfs 客户端NFS挂载 NFS相关的挂载选项：man 5 nfs\nfg #（默认）前台挂载 bg #后台挂载 hard #（默认）持续请求 soft #非持续请求 intr #和hard配合，请求可中断 rsize #和wsize 一次读和写数据最大字节数，rsize=32768 _netdev #无网络服务时不挂载NFS资源 vers #指定版本，客户端centos8默认4.2 ，centos7默认4.1 centos6默认4.0 提示：基于安全考虑，建议使用 nosuid,netdev,noexec 挂载选项\n实战案例 NFS服务器安装软件 yum install -y nfs-utils # 启动rpcbind systemctl start rpcbind # 启动nfs-server systemctl start nfs-server NFS服务器创建共享文件 # 共享根目录下的share目录 mkdir /share 添加uid和gid为300的用户nfs-upload [root@centos7-master ~]# groupadd -g 300 nfs-upload [root@centos7-master ~]# useradd -u 300 -g 300 nfs-upload [root@centos7-master ~]# #修改所属组权限 [root@centos7-master share]# chown -R 300:300 /share 修改NFS服务器配置文件 [root@centos7-master ~]# vim /etc/exports # 加入如下内容，*表示任何人，rw表示读写 /share/ 192.168.179.*(rw,anongid=300,anonuid=300) 重新加载配置 # 重新加载配置文件 [root@centos7-master ~]# exportfs -r [root@centos7-master ~]# exportfs -v /share 192.168.179.*(sync,wdelay,hide,no_subtree_check,anonuid=300,anongid=300,sec=sys,rw,secure,root_squash,no_all_squash) [root@centos7-master ~]# 客户端安装软件 yum install -y nfs-utils # 启动rpcbind systemctl start rpcbind # 启动nfs-server systemctl start nfs-server 添加用户和组 [root@centos7-slave /]# groupadd -g 300 nfs-upload [root@centos7-slave /]# useradd -u 300 -g 300 nfs-upload 在客户端挂载，挂载/nfsshare目录下 # 创建目录 mkdir /nfsshare # 查看服务器端可挂载点 [root@centos7-slave ~]# showmount -e 192.168.179.170 Export list for 192.168.179.170: /share * [root@centos7-slave nfsshare]# # 挂载方式1，关机重启会失效 [root@centos7-slave ~]# mount 192.168.179.170:/share/ /nfsshare # 方式二修改配置文件，关机重启不失效 [root@centos7-slave ~]# vim /etc/fstab # 加入如下内容 192.168.179.170:/share /nfsshare nfs defaults,_netdev 0 0 # 使配置文件生效 [root@centos7-slave nfsshare]# mount -a [root@centos7-slave nfsshare]# 测试 # 在客户端上查看/nfsshare的内容 [root@centos7-slave nfsshare]# ll total 8 -rw-r--r-- 1 nfs-upload nfs-upload 5 Dec 5 23:14 a.xtx drwxr-xr-x 2 nfs-upload nfs-upload 6 Dec 5 23:17 newfile -rw-r--r-- 1 nfs-upload nfs-upload 17 Dec 5 23:11 test.log [root@centos7-slave nfsshare]# # 在服务器端查看/share目录 [root@centos7-master share]# ll total 8 -rw-r--r-- 1 nfs-upload nfs-upload 5 Dec 5 23:14 a.xtx drwxr-xr-x 2 nfs-upload nfs-upload 6 Dec 5 23:17 newfile -rw-r--r-- 1 nfs-upload nfs-upload 17 Dec 5 23:11 test.log [root@centos7-master share]# 数据的实时同步 实时同步技术介绍 实现实时同步的方法\ninotify + rsync 方式实现数据同步 sersync ：前金山公司周洋（花椒直播）在 inotify 软件基础上进行开发的，功能更加强大 工作原理：\n要利用监控服务（inotify），监控同步数据服务器目录中信息的变化 发现目录中数据产生变化，就利用rsync服务推送到备份服务器上 inotify：\n异步的文件系统事件监控机制，利用事件驱动机制，而无须通过诸如cron等的轮询机制来获取事件，linux内核从2.6.13起支持 inotify，通过inotify可以监控文件系统中添加、删除，修改、移动等各种事件\n实现inotify软件：\ninotify-tools sersync lrsyncd inotify+rsync使用方式\ninotify 对同步数据目录信息的监控 rsync 完成对数据的同步 利用脚本进行结合 实现 inotify 内核是否支持inotify Linux支持inotify的内核最小版本为 2.6.13，参看man 7 inotify\ninotify 内核参数说明：\nmax_queued_events：inotify 事件队列最大长度，如值太小会出现 Event Queue Overflow 错 误，默认值：16384, 生产环境建议调大,比如:327679 max_user_instances：每个用户创建inotify实例最大值，默认值：128 max_user_watches：可以监视的文件的总数量（inotifywait 单进程），默认值：8192,建议调大 inotify-tools工具 inotify-tools参考文档：\nhttps://github.com/rvoicilas/inotify-tools/wiki 安装inotify-tools：基于epel源\nyum install epel-release yum -y install inotify-tools inotify-tools包主要工具：\ninotifywait： 在被监控的文件或目录上等待特定文件系统事件（open ，close，delete等）发生， 常用于实时同步的目录监控 inotifywatch：收集被监控的文件系统使用的统计数据，指文件系统事件发生的次数统计 inotifywait 命令 格式:\ninotifywait [ options ] file1 [ file2 ] [ file3 ] [ ... ] 常用选项\n-m, --monitor 始终保持事件监听 -d, --daemon 以守护进程方式执行，和-m相似，配合-o使用 -r, --recursive 递归监控目录数据信息变化 -q, --quiet 输出少量事件信息 --exclude 指定排除文件或目录，使用扩展的正则表达式匹配的模式实现 --excludei 和exclude相似，不区分大小写 -o, --outfile 打印事件到文件中，相当于标准正确输出，注意：使用绝对路径 -s, --syslogOutput 发送错误到syslog相当于标准错误输出 --timefmt 指定时间输出格式 --format 指定的输出格式；即实际监控输出内容 -e inotifywait 的–timefmt 时间格式 参考 man 3 strftime\n%Y #年份信息，包含世纪信息 %y #年份信息，不包括世纪信息 %m #显示月份，范围 01-12 %d #每月的第几天，范围是 01-31 %H #小时信息，使用 24小时制，范围 00-23 %M #分钟，范围 00-59 %S #秒，范例 0-60 范例：\n--timefmt \"%Y-%m-%d %H:%M:%S\" inotifywait 的 –format 格式定义\n%T #输出时间格式中定义的时间格式信息，通过 --timefmt option 语法格式指定时间信息 %w #事件出现时，监控文件或目录的名称信息，相当于dirname %f #事件出现时，将显示监控目录下触发事件的文件或目录信息，否则为空，相当于basename %e #显示发生的事件信息，不同的事件默认用逗号分隔 %Xe #显示发生的事件信息，不同的事件指定用X进行分隔 范例\n--format \"%T %w%f event: %;e\" --format '%T %w %f' inotifywait -e 选项指定的事件类型\ncreate #文件或目录创建 delete #文件或目录被删除 modify #文件或目录内容被写入 attrib #文件或目录属性改变 close_write #文件或目录关闭，在写入模式打开之后关闭的 close_nowrite #文件或目录关闭，在只读模式打开之后关闭的 close #文件或目录关闭，不管读或是写模式 open #文件或目录被打开 lsdir #浏览目录内容 moved_to #文件或目录被移动到监控的目录中 moved_from #文件或目录从监控的目录中被移动 move #文件或目录不管移动到或是移出监控目录都触发事件 access #文件或目录内容被读取 delete_self #文件或目录被删除，目录本身被删除 unmount #取消挂载 范例\n-e create,delete,moved_to,close_write,attrib 范例：使用inotifywait\n# 监控一次事件 [root@centos7 /]# inotifywait /data/www/ Setting up watches. Watches established. /data/www/ CREATE,ISDIR html [root@centos7 /]# # 持续前台监控 [root@centos7 /]# inotifywait -mrq /data/www --exclude=\".*\\.swx|\\.swp\" /data/www/ OPEN,ISDIR /data/www/ CLOSE_NOWRITE,CLOSE,ISDIR /data/www/ CREATE mysql.log /data/www/ OPEN mysql.log /data/www/ ATTRIB mysql.log /data/www/ CLOSE_WRITE,CLOSE mysql.log /data/www/ OPEN,ISDIR /data/www/ CLOSE_NOWRITE,CLOSE,ISDIR /data/www/ MODIFY mysql.log /data/www/ OPEN mysql.log /data/www/ MODIFY mysql.log /data/www/ CLOSE_WRITE,CLOSE mysql.log /data/www/ OPEN,ISDIR /data/www/ CLOSE_NOWRITE,CLOSE,ISDIR /data/www/ OPEN mysql.log /data/www/ ACCESS mysql.log /data/www/ CLOSE_NOWRITE,CLOSE mysql.log #持续后台监控，并记录日志 inotifywait -o /root/inotify.log -drq /data/www --timefmt \"%Y-%m-%d %H:%M:%S\" -- format \"%T %w%f event: %e\" #持续前台监控特定事件 inotifywait -mrq /data/www --timefmt \"%F %H:%M:%S\" --format \"%T %w%f event: %;e\" -e create,delete,moved_to,close_write,attrib rsync 服务 rsync 常用于做为 linux系统下的数据镜像备份工具，实现远程同步，支持本地复制，或者与其他SSH、 rsync主机同步数据，支持增量备份，配合任务计划，rsync能实现定时或间隔同步，配合inotify或 sersync，可以实现触发式的实时数据同步 官方网站:\nhttp://rsync.samba.org/ 软件包：rsync，rsync-daemon（CentOS 8） 服务文件：/usr/lib/systemd/system/rsyncd.service 配置文件：/etc/rsyncd.conf 端口：873/tcp\nrsync命令 rsync 格式\n#Local: rsync [OPTION...] SRC... [DEST] #Access via remote shell: Pull: rsync [OPTION...] [USER@]HOST:SRC... [DEST] Push: rsync [OPTION...] SRC... [USER@]HOST:DEST #Access via rsync daemon: Pull: rsync [OPTION...] [USER@]HOST::SRC... [DEST] rsync [OPTION...] rsync://[USER@]HOST[:PORT]/SRC... [DEST] Push: rsync [OPTION...] SRC... [USER@]HOST::DEST rsync [OPTION...] SRC... rsync://[USER@]HOST[:PORT]/DEST The ':' usages connect via remote shell, while '::' \u0026 'rsync://' usages connect to an rsync daemon, and require SRC or DEST to start with a module name. rsync有三种工作方式：\n本地文件系统上实现同步。命令行语法格式为上述\"Local\"段的格式。 本地主机使用远程shell和远程主机通信。命令行语法格式为上述\"Access via remote shell\"段的格 式。 本地主机通过网络套接字连接远程主机上的rsync daemon。命令行语法格式为上述\"Access via rsync daemon\"段的格式。 前两者的本质是通过本地或远程shell，而第3种方式则是让远程主机上运行rsyncd服务，使其监听在一 个端口上，等待客户端的连接。 常见选项： -v：显示rsync过程中详细信息。可以使用\"-vvvv\"获取更详细信息。 -P：显示文件传输的进度信息。(实际上\"-P\"=\"--partial --progress\"，其中的\"--progress\"才是显 示进度信息的)。 -n --dry-run ：仅测试传输，而不实际传输。常和\"-vvvv\"配合使用来查看rsync是如何工作的。 -a --archive ：归档模式，表示递归传输并保持文件属性。等同于\"-rtopgDl\"。 -r --recursive：递归到目录中去。 -t --times：保持mtime属性。强烈建议任何时候都加上\"-t\"，否则目标文件mtime会设置为系统时间，导 致下次更新 ：检查出mtime不同从而导致增量传输无效。 -o --owner：保持owner属性(属主)。 -g --group：保持group属性(属组)。 -p --perms：保持perms属性(权限，不包括特殊权限) -D ：是\"--device --specials\"选项的组合，即也拷贝设备文件和特殊文件。 -l --links：如果文件是软链接文件，则拷贝软链接本身而非软链接所指向的对象 -z ：传输时进行压缩提高效率 -R --relative：使用相对路径。意味着将命令行中指定的全路径而非路径最尾部的文件名发送给服务端， 包括它们的属性。用法见下文示例。 --size-only ：默认算法是检查文件大小和mtime不同的文件，使用此选项将只检查文件大小。 -u --update ：仅在源mtime比目标已存在文件的mtime新时才拷贝。注意，该选项是接收端判断的，不会 影响删除行为。 -d --dirs ：以不递归的方式拷贝目录本身。默认递归时，如果源为\"dir1/file1\"，则不会拷贝dir1 目录，使用该选项将拷贝dir1但不拷贝file1。 --max-size ：限制rsync传输的最大文件大小。可以使用单位后缀，还可以是一个小数值(例如：\"-- max-size=1.5m\") --min-size ：限制rsync传输的最小文件大小。这可以用于禁止传输小文件或那些垃圾文件。 --exclude ：指定排除规则来排除不需要传输的文件。 --delete ：以SRC为主，对DEST进行同步。多则删之，少则补之。注意\"--delete\"是在接收端执行 的，所以它是在 ：exclude/include规则生效之后才执行的。 -b --backup ：对目标上已存在的文件做一个备份，备份的文件名后默认使用\"~\"做后缀。 --backup-dir：指定备份文件的保存路径。不指定时默认和待备份文件保存在同一目录下。 -e ：指定所要使用的远程shell程序，默认为ssh。 --port ：连接daemon时使用的端口号，默认为873端口。 --password-file：daemon模式时的密码文件，可以从中读取密码实现非交互式。注意，这不是远程shell 认证的密码，而是rsync模块认证的密码。 -W --whole-file：rsync将不再使用增量传输，而是全量传输。在网络带宽高于磁盘带宽时，该选项比增 量传输更高效。 --existing ：要求只更新目标端已存在的文件，目标端还不存在的文件不传输。注意，使用相对路径时如 果上层目录不存在也不会传输。 --ignore-existing：要求只更新目标端不存在的文件。和\"--existing\"结合使用有特殊功能，见下文示 例。 --remove-source-files：要求删除源端已经成功传输的文件 范例：两种格式访问 rsync daemon 服务\n环境 data-server:192.168.179.171(数据服务器) backup-server:192.168.179.165(备份服务器) #在备份服务器启动 rsync 进程 [root@centos8-backup ~]#rsync --daemon Failed to parse config file: /etc/rsyncd.conf [root@centos8-backup ~]#touch /etc/rsyncd.conf [root@centos8-backup ~]#rsync --daemon [root@centos8-backup /]# cat /etc/rsyncd.conf [backup] path = /web/www/ read only = no [root@centos8-backup /]# #指定目录给nobody权限，默认用户以nobody访问此目录 [root@centos8-backup ~]#setfacl -m u:nobody:rwx /data/backup/ #查看rsync服务器的模块名称 [root@centos7-slave /]# rsync rsync://192.168.179.165 backup [root@centos7-slave /]# [root@centos7-slave /]# rsync 192.168.179.165:: backup #访问rsync服务器的共享目录 #推 [root@centos7-slave /]# rsync /xy.log 192.168.179.165::backup [root@centos7-slave /]# rsync /etc/shells rsync://root@192.168.179.165/backup [root@centos7-slave /]#rsync 192.168.179.165::backup/* /opt [root@centos7-slave /]#rsync rsync://192.168.179.165/backup/* /mnt 范例：以独立服务方式运行 rsync\n# 修改配置文件 [root@centos8-backup etc]# cat rsyncd.conf #uid = root #提定以哪个用户来访问共享目录，将之指定为生成的文件所有者，默认为nobody #gid = root #默认为nobody,Ubuntu中为nogroup #port = 874 可指定非标准端口,默认873/tcp #use chroot = no #max connections = 0 #ignore errors #exclude = lost+found/ #log file = /var/log/rsyncd.log #pid file = /var/run/rsyncd.pid #lock file = /var/run/rsyncd.lock #reverse lookup = no #hosts allow = 10.0.0.0/24 #[backup] #每个模块名对应一个不同的path目录，如果同名后面模块生效 #path = /data/backup/ #comment = backup dir #read only = no #默认是yes,即只读 #auth users = rsyncuser #默认anonymous可以访问rsync服务器 #secrets file = /etc/rsync.pas # /etc/rsyncd: configuration file for rsync daemon mode # See rsyncd.conf man page for more options. # configuration example: # uid = nobody # gid = nobody # use chroot = yes # max connections = 4 # pid file = /var/run/rsyncd.pid # exclude = lost+found/ # transfer logging = yes # timeout = 900 # ignore nonreadable = yes # dont compress = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2 # [ftp] # path = /home/ftp # comment = ftp export area uid = root gid = root max connections = 0 ignore errors exclude = lost+found/ log file = /var/log/rsyncd.log pid file = /var/run/rsyncd.pid lock file = /var/run/rsyncd.lock reverse lookup = no [backup] path = /web/backup/ comment = backup dir read only = no auth users = rsyncuser secrets file = /etc/rsync.pas [root@centos8-backup etc]# #服务器端生成验证文件 [root@centos8-backup ~]#echo \"rsyncuser:123456\" \u003e /etc/rsync.pas [root@centos8-backup ~]#chmod 600 /etc/rsync.pas #服务器端启动rsync服务 [root@centos8-backup ~]#rsync --daemon #可加入/etc/rc.d/rc.local实现开 机启动 #客户端配置密码文件 #也可将密码赋值给环境变量RSYNC_PASSWORD变量,但不安全 #export RSYNC_PASSWORD=123456 [root@centos7-slave ~]#echo \"123456\" \u003e /etc/rsync.pas [root@centos7-slave ~]#chmod 600 /etc/rsync.pas #此为必要项,权限必须修改 #查看远程rsync服务器的模块信息 [root@centos7-slave etc]# rsync rsync://192.168.179.165 backup backup dir [root@centos7-slave etc]# #交互式验证查看具体模块内的文件 [root@centos7-slave etc]# rsync rsync://rsyncuser@192.168.179.165/backup Password: #非交互式查看共享目录 [root@centos7-slave etc]# rsync --password-file=/etc/rsync.pas rsync://rsyncuser@192.168.179.165/backup drwxrwxrwx 34 2022/12/07 16:20:07 . -rw-r--r-- 0 2022/12/07 16:20:07 xy.log -rw-r--r-- 0 2022/12/07 16:09:50 zz.log [root@centos7-slave etc]# #客户端测试同步数据 [root@data-centos8 ~]#rsync -avz --delete --password-file=/etc/rsync.pas /data/www/ rsyncuser@rsync服务器IP::backup [root@data-centos8 ~]#rsync -avz --delete --password-file=/etc/rsync.pas rsyncuser@rsync服务器IP::backup /data/www/ inotify+rsync+shell 脚本实现实时数据同步 按 5.3 搭建好 rsyncd的备份服务器，在数据服务器上创建inotify_rsync.sh脚本 注意: 此脚本执行前先确保两主机初始数据处于同步状态,此脚本实现后续的数据同步\n[root@centos7-slave ~]# vim inotify_rsync.sh #!/bin/bash SRC='/data/www/' #注意最后的/ DEST='rsyncuser@rsync服务器IP::backup' rpm -q inotify-tools \u0026\u003e /dev/null ||yum -y install inotify-tools rpm -q rsync \u0026\u003e /dev/null || yum -y install rsync inotifywait -mrq --exclude=\".*\\.swp\" --timefmt '%Y-%m-%d %H:%M:%S' --format '%T %w %f' -e create,delete,moved_to,close_write,attrib ${SRC} |while read DATE TIME DIR FILE;do FILEPATH=${DIR}${FILE} rsync -az --delete --password-file=/etc/rsync.pas $SRC $DEST \u0026\u0026 echo \"At ${TIME} on ${DATE}, file $FILEPATH was backuped up via rsync\" \u003e\u003e /var/log/changelist.log done #查看文件传输日志 [root@centos7-slave www]# tail -f /var/log/changelist.log sersync 实现实时数据同步 sersync介绍 sersync类似于inotify，同样用于监控，但它克服了inotify的缺点. inotify最大的不足是会产生重复事件，或者同一个目录下多个文件的操作会产生多个事件，例如，当监 控目录中有5个文件时，删除目录时会产生6个监控事件，从而导致重复调用rsync命令。另外比如：vim 文件时，inotify会监控到临时文件的事件，但这些事件相对于rsync来说是不应该被监控的\nsersync 优点：\nsersync是使用c++编写，而且对linux系统文件系统产生的临时文件和重复的文件操作进行过滤， 所以在结合rsync同步的时候，节省了运行时耗和网络资源。因此更快。 sersync配置很简单，其中提供了静态编译好的二进制文件和xml配置文件，直接使用即可 sersync使用多线程进行同步，尤其在同步较大文件时，能够保证多个服务器实时保持同步状态 sersync有出错处理机制，通过失败队列对出错的文件重新同步，如果仍旧失败，则按设定时长对 同步失败的文件重新同步 sersync不仅可以实现实时同步，另外还自带crontab功能，只需在xml配置文件中开启，即也可以 按要求隔一段时间整体同步一次，而无需再额外配置crontab功能 sersync 可以二次开发 sersync项目地址：\nhttps://code.google.com/archive/p/sersync/ sersync下载地址：\nhttps://code.google.com/archive/p/sersync/downloads 基于rsync daemon 实现 sersync # #在数据服务器上下载sersync，并拷贝至相应的目录，设置PATH变量 wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/sersync/sersync2.5.4_64bit_binary_stable_final.tar.gz [root@centos7-slave ~]# tar -vxf sersync2.5.4_64bit_binary_stable_final.tar.gz [root@centos7-slave ~]# cp -r GNU-Linux-x86/ /usr/local/sersync [root@centos7-slave sersync]# echo 'PATH=/usr/local/sersync:$PATH' \u003e /etc/profile.d/sersync.sh [root@centos7-slave sersync]# source /etc/profile.d/sersync.sh [root@centos7-slave sersync]# #确认安装rsync客户端工具 rpm -q rsync \u0026\u003e /dev/null || dnf -y install rsync #备份sersync配置文件 cp /usr/local/sersync/confxml.xml{,.bak} # 修改配置文件 vim /usr/local/sersync/confxml.xml \u003c?xml version=\"1.0\" encoding=\"ISO-8859-1\"?\u003e # 是否开启调试模式 #不开启文件过滤功能，当为true时,以下类型的文件将不同 步 # 监控事件，默认监控 delete/close_write/moved_from/moved_to/create folder #修改此行为true，文件属性变化后也会同步 # rsync命令的配置段 #修改此行,需要同步的源目录或文件，建议同步目 录 #修改此行,指定备份服务器地址和rsync daemon的模块名，如果下面开启了ssh start，此时name为远程shell方式运行时的目标目录 # 指定rsync选项 #修 改此行为true,指定备份服务器的rsync配置的用户和密码文件 #指定rsync的非 标准端口号 #默认使用rsync daemon运行rsync命令,true为使用远程shell模 式 #错误重传及日志文件路径 #不开启crontab功能 #不开启crontab定时传输的筛选功能 #####################################以下行不需要修改 #################################### ",
   "wordCount" : "8146",
   "inLanguage": "en",
-  "image":"https://colorfulgz.com/posts.images/banner/3.jpg","datePublished": "2022-12-04T12:03:44Z",
+  "image":"https://old.colorfulgz.com/posts.images/banner/3.jpg","datePublished": "2022-12-04T12:03:44Z",
   "dateModified": "2022-12-04T12:03:44Z",
   "author":[{
     "@type": "Person",
@@ -131,14 +131,14 @@ var _hmt = _hmt || [];
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/"
+    "@id": "https://old.colorfulgz.com/posts/%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "DevOpsHub",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://colorfulgz.com/img/Q.gif"
+      "url": "https://old.colorfulgz.com/img/Q.gif"
     }
   }
 }
@@ -173,8 +173,8 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
-            <img src="https://colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
+            <a href="https://old.colorfulgz.com" accesskey="h" title="DevOpsHub (Alt + H)">
+            <img src="https://old.colorfulgz.com/img/Q.gif" alt="logo" aria-label="logo"
                  height="35">DevOpsHub</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -201,32 +201,32 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li>
-                <a href="https://colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://old.colorfulgz.com/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                 <span>🔍 搜索</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/" title="🏠 主页">
+                <a href="https://old.colorfulgz.com/" title="🏠 主页">
                 <span>🏠 主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/posts" title="📚 文章">
+                <a href="https://old.colorfulgz.com/posts" title="📚 文章">
                 <span>📚 文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/tags" title="🧩 标签">
+                <a href="https://old.colorfulgz.com/tags" title="🧩 标签">
                 <span>🧩 标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/archives/" title="⏱️ 时间轴">
+                <a href="https://old.colorfulgz.com/archives/" title="⏱️ 时间轴">
                 <span>⏱️ 时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
+                <a href="https://old.colorfulgz.com/about" title="🙋🏻‍♂️ 关于">
                 <span>🙋🏻‍♂️ 关于</span>
                 </a>
             </li>
@@ -245,7 +245,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://colorfulgz.com/posts/">📚文章</a></div>
+            <div class="breadcrumbs"><a href="https://old.colorfulgz.com">🏠 主页</a>&nbsp;»&nbsp;<a href="https://old.colorfulgz.com/posts/">📚文章</a></div>
             <h1 class="post-title">
                 网络文件共享服务
             </h1>
@@ -304,7 +304,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
+                <a href="https://old.colorfulgz.com/tags/linux/" style="color: var(--secondary)!important;">Linux</a>
             </span>
         </span>
     </span>
@@ -325,7 +325,7 @@ var _hmt = _hmt || [];
                             <script>
                                 let url = document.documentURI
                                 
-                                let dnsUrl = "https://colorfulgz.com"
+                                let dnsUrl = "https://old.colorfulgz.com"
                                 let urlSplit = url.split(dnsUrl)
                                 let finalUrl = urlSplit[1]
                                 if (finalUrl[0] !== '/') {
@@ -358,7 +358,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://colorfulgz.com/posts.images/banner/3.jpg" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://old.colorfulgz.com/posts.images/banner/3.jpg" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -1165,12 +1165,12 @@ inotify最大的不足是会产生重复事件，或者同一个目录下多个�
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://colorfulgz.com/posts/nginx/">
+  <a class="prev" href="https://old.colorfulgz.com/posts/nginx/">
     <span class="title">« 上一页</span>
     <br>
     <span>Nginx</span>
   </a>
-  <a class="next" href="https://colorfulgz.com/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
+  <a class="next" href="https://old.colorfulgz.com/posts/%E6%97%A5%E5%BF%97%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
     <span class="title">下一页 »</span>
     <br>
     <span>日志服务管理</span>
@@ -1186,16 +1186,16 @@ inotify最大的不足是会产生重复事件，或者同一个目录下多个�
     <span>
         Copyright
         &copy;
-        2022-2023
-        <a href="https://colorfulgz.com" style="color:#939393;">DevOpsHub</a>
+        -2024
+        <a href="https://old.colorfulgz.com" style="color:#939393;">DevOpsHub</a>
         All Rights Reserved
     </span>
-    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;">黔ICP备2023014549号</a>&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#939393;"></a>&nbsp;
     <span>
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=null"
            style="display:inline-block;text-decoration:none;height:20px;color:#939393;">
-            <img src="/img/beian.png" style="float:left;margin: 0px 5px 0px 0px;"/>
-            粤公网安备44030002001370号
+            <img src="" style="float:left;margin: 0px 5px 0px 0px;"/>
+            
         </a>
     </span>
     <span id="busuanzi_container">
